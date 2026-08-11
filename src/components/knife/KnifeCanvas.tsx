@@ -18,6 +18,8 @@ type Props = {
   /** Static rotation per tool in degrees; omit for closed (0). GSAP overrides these at runtime via [data-tool] targets. */
   angles?: Partial<Record<CapabilityId, number>>;
   className?: string;
+  /** Pose under prefers-reduced-motion: "open" forces every blade to its open angle via CSS. */
+  reducedPose?: "open" | "closed";
 };
 
 /**
@@ -25,9 +27,12 @@ type Props = {
  * (transform-origin 50.5% 63%), so rotating a [data-tool] layer swings
  * that tool open around the pin.
  */
-export default function KnifeCanvas({ angles, className }: Props) {
+export default function KnifeCanvas({ angles, className, reducedPose = "open" }: Props) {
   return (
-    <div className={`${styles.canvas} ${className ?? ""}`} aria-hidden="true">
+    <div
+      className={`${styles.canvas} ${reducedPose === "open" ? styles.rmOpen : ""} ${className ?? ""}`}
+      aria-hidden="true"
+    >
       <div className={styles.shadow} style={{ zIndex: 10 }} />
       {capabilities.map((c) => (
         <div
@@ -37,6 +42,7 @@ export default function KnifeCanvas({ angles, className }: Props) {
           style={{
             zIndex: LAYER_Z[c.id],
             transform: `rotate(${angles?.[c.id] ?? 0}deg)`,
+            ["--open" as string]: `${c.openAngle}deg`,
           }}
         >
           <KnifeLayer id={c.id} />
