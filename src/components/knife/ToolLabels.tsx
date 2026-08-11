@@ -14,14 +14,14 @@ const LABEL_POS: Record<CapabilityId, { left: string; top: string }> = {
   gtm: { left: "44%", top: "95%" },
 };
 
-export default function ToolLabels() {
+export default function ToolLabels({ visible = false }: { visible?: boolean }) {
   return (
     <div className={styles.labels} aria-hidden="true">
       {capabilities.map((c) => (
         <span
           key={c.id}
           data-label={c.id}
-          className={`mono-label ${styles.label}`}
+          className={`mono-label ${styles.label} ${visible ? styles.labelVisible : ""}`}
           style={{
             left: LABEL_POS[c.id].left,
             top: LABEL_POS[c.id].top,

@@ -1,0 +1,70 @@
+.section {
+	position: relative;
+	height: 250vh;
+}
+
+.stage {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	overflow: hidden;
+	display: grid;
+	place-items: center;
+}
+
+.knifeWrap {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+}
+
+.knifeWrap > div {
+	position: relative;
+	width: min(60vh, 56vw, 700px);
+}
+
+.statement {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	text-align: center;
+	font-size: var(--text-statement);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(20px);
+	padding-inline: var(--gutter);
+}
+
+.statement em {
+	font-style: normal;
+	color: var(--accent);
+}
+
+/* reduced motion: no pin, no second knife — just the two statements (spec §34) */
+@media (prefers-reduced-motion: reduce) {
+	.section {
+		height: auto;
+		padding-block: var(--space-section);
+	}
+
+	.stage {
+		position: static;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.knifeWrap {
+		display: none;
+	}
+
+	.statement {
+		position: static;
+		opacity: 1 !important;
+		visibility: visible !important;
+		transform: none !important;
+	}
+}

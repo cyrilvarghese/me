@@ -103,6 +103,11 @@
 	white-space: nowrap;
 }
 
+.labelVisible {
+	opacity: 1;
+	visibility: visible;
+}
+
 /* ---- reduced motion: static, sequential, text-first (spec §34) ---- */
 
 @media (prefers-reduced-motion: reduce) {
