@@ -4,9 +4,11 @@
 
 **Goal:** Single-page portfolio where a layered 2D Swiss Army knife unfolds on scroll, one tool per capability, ending in "Give it to me."
 
-**Architecture:** SvelteKit static site. One `capabilities` data array drives placeholder SVG layers, GSAP ScrollTrigger timeline, labels, narrative copy, and case-study indicators. Knife layers are asset-agnostic components (SVG placeholder now, raster `<img>` later via config flip).
+**Architecture:** Next.js App Router static export. One `capabilities` data array drives placeholder SVG layers, GSAP ScrollTrigger timeline, labels, narrative copy, and case-study indicators. Knife layers are asset-agnostic components (SVG placeholder now, raster `<img>` later via config flip).
 
-**Tech Stack:** SvelteKit 2, Svelte 5 (runes), TypeScript, GSAP + ScrollTrigger, @sveltejs/adapter-static, Vitest, @fontsource fonts.
+**Tech Stack:** Next.js 15+ (App Router, `output: 'export'`), React 19, TypeScript, GSAP + ScrollTrigger via `@gsap/react` `useGSAP`, Vitest, `next/font/google` (self-hosted at build).
+
+> **Stack pivot 2026-08-11:** User overrode SvelteKit → Next.js + React mid-execution. Task text below was written for SvelteKit; translate mechanically: `*.svelte` components → `*.tsx` in `src/components/…`, `src/routes/+page.svelte` → `src/app/page.tsx`, `+layout.svelte` → `src/app/layout.tsx`, `static/` → `public/`, `npm run check` → `npx tsc --noEmit` (and `npm run lint` if configured), Svelte stores/runes → React state/refs, `onMount` timeline code → `useGSAP(() => {...}, { scope })`. Interfaces, copy, angles, windows, z-order, and verification intent are unchanged.
 
 ## Global Constraints
 
@@ -19,7 +21,7 @@
 - Easing `power3.inOut`, ~6% mechanical overshoot then settle; all motion scrubbed to scroll.
 - `prefers-reduced-motion: reduce` → static fully-open knife, no sticky/scrub, opacity-only transitions, all info available as text.
 - Voice: no "passionate", "ninja", "rockstar", "10x", "polymath", "jack of all trades". Never say "Swiss Army knife" in copy.
-- Verification gates per task: `npm run check` (svelte-check), `npm test` (vitest) when tests exist, `npm run build`. Visual work: confirm in dev server.
+- Verification gates per task: `npx tsc --noEmit` (typecheck), `npm test` (vitest) when tests exist, `npm run build` (must emit static `out/`). Visual work: confirm in dev server.
 - Commit after every task. Windows dev machine; use POSIX paths in code, quote paths in shell.
 
 ---

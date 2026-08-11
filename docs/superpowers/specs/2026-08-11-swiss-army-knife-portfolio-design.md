@@ -38,8 +38,10 @@ closed) → CTA.
    - Code: main blade with etched `</>`
    - AI: awl with spark tip
    - GTM: corkscrew
-4. **Stack pinned:** SvelteKit 2 + Svelte 5 + TypeScript + GSAP ScrollTrigger.
-   Static adapter (it's a static single page). No canvas/WebGL.
+4. **Stack pinned: Next.js + React** (user override, 2026-08-11 — "wait do in
+   next js react"). App Router, TypeScript, GSAP ScrollTrigger via `@gsap/react`,
+   `output: 'export'` static build. No canvas/WebGL. The spec's SvelteKit
+   recommendation is superseded.
 
 ## Key build parameters (from spec)
 
@@ -68,14 +70,15 @@ closed) → CTA.
 ```
 src/lib/data/capabilities.ts     — single source of truth for the 6 tools
 src/lib/data/cases.ts            — 3 case studies
-src/lib/components/knife/
-    KnifeStage.svelte            — sticky stage, owns the GSAP timeline
-    KnifeLayer.svelte            — one layer: SVG placeholder or raster img
-    placeholders/*.svelte        — inline SVG placeholder art per layer
-src/lib/components/sections/     — Hero, OutcomeTransition, OperatingModel,
+src/components/knife/
+    KnifeStory.tsx               — sticky stage, owns the GSAP timeline
+    KnifeCanvas.tsx              — stacked layers at shared hinge
+    KnifeLayer.tsx               — one layer: SVG placeholder or raster img
+    placeholders/*.tsx           — inline SVG placeholder art per layer
+src/components/sections/         — Hero, OutcomeTransition, OperatingModel,
                                    CaseStudy, Career, UnknownProblem, FinalCTA
-src/routes/+page.svelte          — assembles the narrative
-static/assets/knife/             — final raster layers land here (webp/avif)
+src/app/page.tsx                 — assembles the narrative
+public/assets/knife/             — final raster layers land here (webp/avif)
 docs/knife-art-prompts.md        — generation prompt pack + alignment guide
 ```
 
