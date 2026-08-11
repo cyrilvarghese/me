@@ -1,12 +1,17 @@
+import Header from "@/components/sections/Header";
+import Hero from "@/components/sections/Hero";
 import KnifeStory from "@/components/knife/KnifeStory";
 
 export default function Home() {
   return (
-    <main>
-      {/* temp spacers to test scroll entry/exit; replaced by Hero (Task 6) and OutcomeTransition (Task 7) */}
-      <div style={{ height: "60vh" }} />
-      <KnifeStory />
-      <div style={{ height: "60vh" }} />
-    </main>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <KnifeStory />
+        {/* temp spacer; replaced by OutcomeTransition (Task 7) */}
+        <div style={{ height: "60vh" }} />
+      </main>
+    </>
   );
 }
