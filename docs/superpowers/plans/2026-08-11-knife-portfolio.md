@@ -13,7 +13,7 @@
 ## Global Constraints
 
 - Spec of record: `docs/superpowers/specs/2026-08-11-swiss-army-knife-portfolio-design.md` (read it before starting; all copy strings come from it verbatim).
-- Palette: bg `#0E0E0E`, fg `#F1EFEA`, secondary `#99958E`, accent muted brass (start `#C2A878`, tune visually).
+- Palette (user override 2026-08-11): bg `#111111`, fg `#F8F8F8`, muted `#9A9A9A`, accent `#EA0000`, accent-deep `#C90000`. Black/white/red only — no warm tints, no brass. Red never used for small body text.
 - Type: Newsreader (editorial serif) / Space Grotesk (body) / JetBrains Mono (labels, uppercase, letter-spacing 0.12–0.18em). All self-hosted via @fontsource — no external font CDN.
 - Shared knife coordinate system: square canvas, hinge at 50.5% / 63% (`transform-origin` on every tool layer).
 - Scroll windows (fraction of knife-section progress): intro 0–.10, then six 0.13-wide windows starting at .10 (research, product, design, code, ai, gtm), complete .88–1.

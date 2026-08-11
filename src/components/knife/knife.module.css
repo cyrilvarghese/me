@@ -1,0 +1,37 @@
+.canvas {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 1;
+}
+
+.layer {
+	position: absolute;
+	inset: 0;
+}
+
+.tool {
+	position: absolute;
+	inset: 0;
+	/* Shared hinge — spec §10. Every layer uses the same canvas, so the
+	   origin percentage is identical for placeholder SVG and future raster. */
+	transform-origin: 50.5% 63%;
+	will-change: transform;
+}
+
+.shadow {
+	position: absolute;
+	left: 14%;
+	right: 14%;
+	top: 56%;
+	height: 20%;
+	background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.6), transparent 72%);
+	filter: blur(22px);
+	pointer-events: none;
+}
+
+.tool img,
+.layer img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}

@@ -42,6 +42,11 @@ closed) → CTA.
    next js react"). App Router, TypeScript, GSAP ScrollTrigger via `@gsap/react`,
    `output: 'export'` static build. No canvas/WebGL. The spec's SvelteKit
    recommendation is superseded.
+5. **Palette override: black / white / red** (user, 2026-08-11, via two palette
+   images + "and white"). Supersedes spec §30's warm bone + brass: bg `#111111`,
+   fg `#f8f8f8`, muted `#9a9a9a`, accent `#ea0000`, accent-deep `#c90000`.
+   Swiss international-style palette; red reserved for highlights and large
+   type (contrast), never small body text.
 
 ## Key build parameters (from spec)
 
