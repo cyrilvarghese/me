@@ -3,6 +3,7 @@ import Hero from "@/components/sections/Hero";
 import KnifeStory from "@/components/knife/KnifeStory";
 import OutcomeTransition from "@/components/sections/OutcomeTransition";
 import OperatingModel from "@/components/sections/OperatingModel";
+import CaseStudies from "@/components/sections/CaseStudies";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <KnifeStory />
         <OutcomeTransition />
         <OperatingModel />
+        <CaseStudies />
       </main>
     </>
   );
