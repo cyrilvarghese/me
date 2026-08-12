@@ -1,0 +1,46 @@
+.section {
+	padding-block: var(--space-section);
+}
+
+.headline {
+	font-size: var(--text-statement);
+	max-width: 20ch;
+}
+
+.sub {
+	color: var(--fg-soft);
+	margin-top: 1.25rem;
+	max-width: 40ch;
+}
+
+.stages {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	margin-top: clamp(3rem, 8vh, 5rem);
+}
+
+.stageLabel {
+	color: var(--fg-soft);
+	margin-bottom: 0.6rem;
+	display: block;
+}
+
+.bar {
+	height: 10px;
+	background: #262626;
+	border-right: 3px solid var(--accent);
+	transform-origin: left center;
+}
+
+.kicker {
+	margin-top: 3.5rem;
+	font-size: var(--text-h3);
+	color: var(--fg-soft);
+}
+
+.kicker em {
+	font-style: italic;
+	color: var(--accent);
+}

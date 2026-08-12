@@ -4,6 +4,10 @@ import KnifeStory from "@/components/knife/KnifeStory";
 import OutcomeTransition from "@/components/sections/OutcomeTransition";
 import OperatingModel from "@/components/sections/OperatingModel";
 import CaseStudies from "@/components/sections/CaseStudies";
+import Career from "@/components/sections/Career";
+import UnknownProblem from "@/components/sections/UnknownProblem";
+import FinalCTA from "@/components/sections/FinalCTA";
+import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
@@ -15,7 +19,11 @@ export default function Home() {
         <OutcomeTransition />
         <OperatingModel />
         <CaseStudies />
+        <Career />
+        <UnknownProblem />
+        <FinalCTA />
       </main>
+      <Footer />
     </>
   );
 }

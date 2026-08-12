@@ -30,7 +30,7 @@ type Props = {
 export default function KnifeCanvas({ angles, className, reducedPose = "open" }: Props) {
   return (
     <div
-      className={`${styles.canvas} ${reducedPose === "open" ? styles.rmOpen : ""} ${className ?? ""}`}
+      className={`${styles.canvas} ${reducedPose === "open" ? styles.rmOpen : styles.rmClosed} ${className ?? ""}`}
       aria-hidden="true"
     >
       <div className={styles.shadow} style={{ zIndex: 10 }} />

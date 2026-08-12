@@ -41,4 +41,9 @@
 	.rmOpen .tool {
 		transform: rotate(var(--open)) !important;
 	}
+
+	/* the closing pose (final CTA): folded regardless of inline open angles */
+	.rmClosed .tool {
+		transform: rotate(0deg) !important;
+	}
 }

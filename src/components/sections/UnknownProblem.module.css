@@ -1,0 +1,61 @@
+.section {
+	padding-block: var(--space-section);
+}
+
+.block {
+	min-height: 70vh;
+	display: grid;
+	place-items: center;
+	text-align: center;
+	padding-inline: var(--gutter);
+}
+
+.question {
+	font-size: var(--text-display);
+	max-width: 18ch;
+	text-wrap: balance;
+}
+
+.good {
+	font-size: clamp(5rem, 16vw, 12rem);
+	color: var(--accent);
+	font-style: italic;
+}
+
+.resolve {
+	font-size: var(--text-h3);
+	font-family: var(--font-serif);
+	font-variation-settings: 'opsz' 40;
+	max-width: 34ch;
+	color: var(--fg-soft);
+	line-height: 1.4;
+	text-wrap: balance;
+}
+
+.pairs {
+	list-style: none;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 2.5rem clamp(2rem, 6vw, 6rem);
+	max-width: 46rem;
+	margin-inline: auto;
+	min-height: 40vh;
+	align-content: center;
+}
+
+.pairQ {
+	color: var(--muted);
+	margin-bottom: 0.5rem;
+}
+
+.pairA {
+	font-family: var(--font-serif);
+	font-size: var(--text-h3);
+	color: var(--fg);
+}
+
+@media (max-width: 600px) {
+	.pairs {
+		grid-template-columns: 1fr;
+	}
+}

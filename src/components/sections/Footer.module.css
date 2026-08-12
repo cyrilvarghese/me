@@ -1,0 +1,31 @@
+.footer {
+	border-top: 1px solid var(--hairline);
+	padding-block: 2rem;
+}
+
+.inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.brand {
+	color: var(--muted);
+}
+
+.brand em {
+	color: var(--accent);
+	font-style: normal;
+}
+
+.mail {
+	color: var(--muted);
+	transition: color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.mail:hover {
+		color: var(--fg);
+	}
+}

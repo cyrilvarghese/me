@@ -1,0 +1,128 @@
+.section {
+	position: relative;
+	height: 300vh;
+}
+
+.stage {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.knifeWrap {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+}
+
+.knifeWrap > div {
+	width: min(52vh, 50vw, 640px);
+}
+
+.copy {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: 1.5rem;
+	padding-top: 24vh;
+	padding-inline: var(--gutter);
+}
+
+.question {
+	font-size: var(--text-h3);
+	color: var(--fg-soft);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(18px);
+}
+
+.give {
+	font-size: clamp(3.5rem, 10vw, 8rem);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(22px);
+}
+
+.give em {
+	font-style: italic;
+	color: var(--accent);
+}
+
+.ctas {
+	display: flex;
+	gap: 1.25rem;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 1rem;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(16px);
+}
+
+.btnPrimary {
+	border: 1px solid var(--accent);
+	color: var(--fg);
+	padding: 0.9rem 1.6rem;
+	transition: background-color 150ms ease, color 150ms ease;
+}
+
+.btnSecondary {
+	border: 1px solid var(--hairline);
+	color: var(--muted);
+	padding: 0.9rem 1.6rem;
+	transition: color 150ms ease, border-color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.btnPrimary:hover {
+		background: var(--accent);
+		color: #111;
+	}
+
+	.btnSecondary:hover {
+		color: var(--fg);
+		border-color: var(--muted);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.section {
+		height: auto;
+		padding-block: var(--space-section);
+	}
+
+	.stage {
+		position: static;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.knifeWrap {
+		position: static;
+	}
+
+	.knifeWrap > div {
+		margin-inline: auto;
+	}
+
+	.copy {
+		position: static;
+		padding-top: 0;
+	}
+
+	.question,
+	.give,
+	.ctas {
+		opacity: 1 !important;
+		visibility: visible !important;
+		transform: none !important;
+	}
+}
