@@ -158,7 +158,7 @@
 	}
 }
 
-/* ---- narrow screens: stacked copy/knife (full pass in Task 10) ---- */
+/* ---- narrow screens: stacked copy/knife (spec §32–33) ---- */
 
 @media (max-width: 768px) {
 	.stageInner {
@@ -173,10 +173,15 @@
 	}
 
 	.narrative {
-		height: 40vh;
+		height: 42vh;
 	}
 
 	.statement {
 		font-size: clamp(1.6rem, 7vw, 2.2rem);
+	}
+
+	/* §33: no labels orbiting the object on mobile — the panel eyebrow names the tool */
+	.labels {
+		display: none;
 	}
 }

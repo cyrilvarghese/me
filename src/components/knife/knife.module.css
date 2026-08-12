@@ -18,6 +18,18 @@
 	will-change: transform;
 }
 
+/* Hover hit-testing (spec §39): only painted SVG shapes catch the pointer,
+   so overlapping full-canvas layers don't swallow each other's hovers. */
+.tool,
+.layer {
+	pointer-events: none;
+}
+
+.tool svg *,
+.layer svg * {
+	pointer-events: visiblePainted;
+}
+
 .shadow {
 	position: absolute;
 	left: 14%;

@@ -6,11 +6,13 @@ const positions = (process.argv[4] ?? "0.05,0.16,0.3,0.43,0.56,0.69,0.82,0.95")
   .split(",")
   .map(Number);
 const prefix = process.argv[5] ?? "shots-story";
+const width = Number(process.argv[6] ?? 1440);
+const height = Number(process.argv[7] ?? 900);
 
 const browser = await chromium.launch({
   executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
 });
-const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const page = await browser.newPage({ viewport: { width, height } });
 const errors = [];
 page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 page.on("pageerror", (e) => errors.push(String(e)));
@@ -29,7 +31,7 @@ if (!metrics) {
 }
 
 for (const p of positions) {
-  const y = Math.round(metrics.top + p * (metrics.height - 900));
+  const y = Math.round(metrics.top + p * (metrics.height - height));
   await page.evaluate((yy) => window.scrollTo(0, yy), y);
   await page.waitForTimeout(900);
   await page.screenshot({ path: `${prefix}-${String(p).replace(".", "_")}.png` });

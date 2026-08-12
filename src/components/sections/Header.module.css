@@ -29,6 +29,7 @@
 .nav a {
 	color: var(--muted);
 	transition: color 150ms ease;
+	padding-block: 0.6rem;
 }
 
 @media (hover: hover) and (pointer: fine) {

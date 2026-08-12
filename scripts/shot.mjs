@@ -4,12 +4,16 @@ const url = process.argv[2] ?? "http://localhost:3000";
 const out = process.argv[3] ?? "shot.png";
 const width = Number(process.argv[4] ?? 1440);
 const height = Number(process.argv[5] ?? 900);
-const fullPage = process.argv[6] === "full";
+const fullPage = process.argv[6] === "full" || process.argv[7] === "full";
+const reduced = process.argv[6] === "reduce" || process.argv[7] === "reduce";
 
 const browser = await chromium.launch({
   executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
 });
-const page = await browser.newPage({ viewport: { width, height } });
+const page = await browser.newPage({
+  viewport: { width, height },
+  reducedMotion: reduced ? "reduce" : "no-preference",
+});
 const errors = [];
 page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 page.on("pageerror", (e) => errors.push(String(e)));
