@@ -1,4 +1,4 @@
-import { svgProps, TOOL_BACK, TOOL_BACK_DETAIL, RED_DEEP } from "./common";
+import { svgProps, TOOL_BACK, TOOL_BACK_DETAIL, RED_DEEP, SCREW } from "./common";
 
 /** Product: compass / reamer spike (back layer). */
 export default function Product() {
@@ -7,6 +7,8 @@ export default function Product() {
       <polygon points="500,614 250,621 172,630 250,639 500,646" fill={TOOL_BACK} />
       <rect x="246" y="598" width="16" height="64" rx="6" fill={TOOL_BACK_DETAIL} />
       <polygon points="204,626 172,630 204,634" fill={RED_DEEP} />
+      <circle cx="500" cy="630" r="11" fill="#0f0f0f" stroke={SCREW} strokeWidth="3" />
+      <circle cx="500" cy="630" r="3.5" fill={SCREW} />
     </svg>
   );
 }

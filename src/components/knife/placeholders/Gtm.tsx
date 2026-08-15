@@ -1,4 +1,4 @@
-import { svgProps, TOOL_FRONT, TOOL_FRONT_DETAIL, RED_DEEP } from "./common";
+import { svgProps, TOOL_FRONT, TOOL_FRONT_DETAIL, RED_DEEP, SCREW } from "./common";
 
 /** GTM: corkscrew — things that open bottles ship things (front layer). */
 export default function Gtm() {
@@ -17,6 +17,8 @@ export default function Gtm() {
         strokeWidth="9"
         strokeLinecap="round"
       />
+      <circle cx="500" cy="648" r="11" fill="#0f0f0f" stroke={SCREW} strokeWidth="3" />
+      <circle cx="500" cy="648" r="3.5" fill={SCREW} />
     </svg>
   );
 }

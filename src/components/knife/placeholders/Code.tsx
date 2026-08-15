@@ -1,4 +1,4 @@
-import { svgProps, TOOL_FRONT, EDGE_WHITE, RED_EDGE, ETCH } from "./common";
+import { svgProps, TOOL_FRONT, EDGE_WHITE, RED_EDGE, ETCH, SCREW } from "./common";
 
 /** Code: main blade with etched markup (front layer, spine visible when closed). */
 export default function Code() {
@@ -18,6 +18,8 @@ export default function Code() {
       >
         &lt;/&gt;
       </text>
+      <circle cx="498" cy="628" r="11" fill="#0f0f0f" stroke={SCREW} strokeWidth="3" />
+      <circle cx="498" cy="628" r="3.5" fill={SCREW} />
     </svg>
   );
 }

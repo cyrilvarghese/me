@@ -1,4 +1,4 @@
-import { svgProps, TOOL_BACK, TOOL_BACK_DETAIL, RED } from "./common";
+import { svgProps, TOOL_BACK, TOOL_BACK_DETAIL, RED, SCREW } from "./common";
 
 /** Design: pen nib blade (back layer). */
 export default function Design() {
@@ -9,6 +9,8 @@ export default function Design() {
       <path d="M262 638 L190 638" stroke="#111111" strokeWidth="3" />
       <circle cx="232" cy="638" r="5" fill="#111111" />
       <polygon points="178,634.5 160,638 178,641.5" fill={RED} />
+      <circle cx="500" cy="638" r="11" fill="#0f0f0f" stroke={SCREW} strokeWidth="3" />
+      <circle cx="500" cy="638" r="3.5" fill={SCREW} />
     </svg>
   );
 }
