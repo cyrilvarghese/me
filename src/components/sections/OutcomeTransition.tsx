@@ -219,7 +219,6 @@ export default function OutcomeTransition() {
             });
 
             // beat 3: captions leave; circles wrap each still-standing tool
-            // while "Tools aren't the point." gradually rises
             tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.56);
             capabilities.forEach((c, k) => {
               const s = START[c.id];
@@ -269,14 +268,7 @@ export default function OutcomeTransition() {
           // slower arrival: the dial eases in over a tenth of the section
           tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power2.out" }, 0.87);
 
-          // copy — the tools statement stays, shrinking and dimming so it
-          // reads together with "Outcomes are." (user direction)
-          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.09, ease: "power1.inOut" }, 0.58);
-          tl.to(
-            "[data-statement='tools']",
-            { scale: 0.6, opacity: 0.5, transformOrigin: "center bottom", duration: 0.05, ease: "power2.inOut" },
-            0.9
-          );
+          // copy — the outcomes statement lands with the compass
           tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.92);
           tl.to("[data-statement='navigate']", { autoAlpha: 1, duration: 0.03, ease: "power2.out" }, 0.965);
 
@@ -337,11 +329,8 @@ export default function OutcomeTransition() {
         </div>
 
         <div className={styles.copy}>
-          <h2 className={`serif-display ${styles.statement}`} data-statement="tools">
-            Tools aren&apos;t the point.
-          </h2>
           <h2 className={`serif-display ${styles.statement}`} data-statement="outcomes">
-            <em>Outcomes</em> are.
+            <em>Outcomes</em> are the point.
           </h2>
           <p className={styles.navigate} data-statement="navigate">
             I navigate to them.
