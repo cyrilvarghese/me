@@ -18,7 +18,10 @@ export default function Career() {
       <h2 className={`serif-display ${styles.headline}`}>
         I didn&apos;t set out to become a generalist.
       </h2>
-      <p className={styles.sub}>I kept expanding the part of the outcome I could own.</p>
+      <p className={styles.sub}>
+        I just kept getting curious about the next part of the problem — and wanted to own the
+        outcome.
+      </p>
 
       <ol className={styles.stages}>
         {STAGES.map((s, i) => (
@@ -37,7 +40,7 @@ export default function Career() {
       </ol>
 
       <p className={`serif-display ${styles.kicker}`}>
-        Expansion of ownership, <em>not career switching.</em>
+        Curiosity, <em>not career switching.</em>
       </p>
     </section>
   );
