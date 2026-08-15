@@ -110,6 +110,7 @@
 	line-height: 1.45;
 	max-width: 20ch;
 	margin-inline: auto;
+	text-wrap: balance; /* even line lengths — no orphaned last word */
 	white-space: pre-line; /* \n in data = deliberate line break */
 }
 
