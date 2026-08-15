@@ -14,7 +14,7 @@ const OPEN_ANGLES = Object.fromEntries(capabilities.map((c) => [c.id, c.openAngl
 const START: Record<CapabilityId, { x: number; y: number }> = {
   research: { x: 39, y: 24 },
   product: { x: 21, y: 36 },
-  design: { x: 13, y: 50 },
+  design: { x: 12, y: 46 },
   code: { x: 15, y: 79 },
   ai: { x: 25, y: 90 },
   gtm: { x: 44, y: 95 },

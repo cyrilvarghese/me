@@ -8,7 +8,7 @@ import styles from "./knife-story.module.css";
 const LABEL_POS: Record<CapabilityId, { left: string; top: string }> = {
   research: { left: "39%", top: "24%" },
   product: { left: "21%", top: "36%" },
-  design: { left: "13%", top: "50%" },
+  design: { left: "12%", top: "46%" },
   code: { left: "15%", top: "79%" },
   ai: { left: "25%", top: "90%" },
   gtm: { left: "44%", top: "95%" },

@@ -59,7 +59,7 @@ export const capabilities: Capability[] = [
     years: "2019 — 2026",
     duration: "7 yrs",
     line: "Led design at DMart; enterprise UX for Razorpay, 1Finance and MSIG.",
-    openAngle: 18,
+    openAngle: 28,
     layer: "back",
   },
   {
