@@ -19,10 +19,9 @@
 .brand {
 	color: var(--accent);
 	font-size: 0.9rem;
-	/* echoes the knife body plate: CV etched inside a pill outline */
-	padding: 0.3rem 0.75rem;
+	/* stamp box around the wordmark, square like the CTA button */
+	padding: 0.3rem 0.65rem;
 	border: 1px solid var(--hairline-red);
-	border-radius: 999px;
 }
 
 .nav {
