@@ -28,7 +28,9 @@ export default function OperatingModel() {
   return (
     <section className={`section-shell ${styles.section}`} aria-label="Operating model">
       <p className={`mono-label ${styles.eyebrow}`}>How I navigate</p>
-      <h2 className={`serif-display ${styles.headline}`}>I work backwards from the outcome.</h2>
+      <h2 className={`serif-display ${styles.headline}`}>
+        Everything works backwards from the outcome.
+      </h2>
 
       <m.ol
         className={styles.loop}
