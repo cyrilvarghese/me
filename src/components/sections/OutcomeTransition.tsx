@@ -69,7 +69,8 @@ export default function OutcomeTransition() {
             .fromTo(
               "[data-needle]",
               { rotation: -130 },
-              { rotation: 0, duration: 2.6, ease: "elastic.out(1, 0.28)" }
+              { rotation: 0, duration: 2.2, ease: "elastic.out(1, 0.38)" },
+              0.25 // breath after the dial is fully in
             );
 
           const tl = gsap.timeline({
@@ -81,10 +82,12 @@ export default function OutcomeTransition() {
               scrub: 0.4,
               invalidateOnRefresh: true,
               onUpdate(self) {
-                if (self.progress >= 0.85 && !needlePlayed) {
+                // fire only after the dial's fade-in (0.84–0.90) has finished,
+                // so appearing and swinging never overlap
+                if (self.progress >= 0.905 && !needlePlayed) {
                   needlePlayed = true;
                   swing.restart();
-                } else if (self.progress < 0.78 && needlePlayed) {
+                } else if (self.progress < 0.8 && needlePlayed) {
                   needlePlayed = false;
                   swing.pause(0);
                   gsap.set("[data-needle]", { rotation: -130 });
