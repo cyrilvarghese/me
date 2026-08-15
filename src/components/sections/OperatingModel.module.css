@@ -2,6 +2,11 @@
 	padding-block: var(--space-section);
 }
 
+.eyebrow {
+	color: var(--muted);
+	margin-bottom: 1rem;
+}
+
 .headline {
 	font-size: var(--text-statement);
 	max-width: 18ch;

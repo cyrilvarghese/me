@@ -20,6 +20,8 @@ type Props = {
   className?: string;
   /** Pose under prefers-reduced-motion: "open" forces every blade to its open angle via CSS. */
   reducedPose?: "open" | "closed";
+  /** CSS-transition blade rotations when the angles prop changes (state-driven knives, no GSAP). */
+  animated?: boolean;
 };
 
 /**
@@ -27,10 +29,10 @@ type Props = {
  * (transform-origin 50.5% 63%), so rotating a [data-tool] layer swings
  * that tool open around the pin.
  */
-export default function KnifeCanvas({ angles, className, reducedPose = "open" }: Props) {
+export default function KnifeCanvas({ angles, className, reducedPose = "open", animated = false }: Props) {
   return (
     <div
-      className={`${styles.canvas} ${reducedPose === "open" ? styles.rmOpen : styles.rmClosed} ${className ?? ""}`}
+      className={`${styles.canvas} ${reducedPose === "open" ? styles.rmOpen : styles.rmClosed} ${animated ? styles.animated : ""} ${className ?? ""}`}
       aria-hidden="true"
     >
       <div className={styles.shadow} style={{ zIndex: 10 }} />

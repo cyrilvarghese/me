@@ -27,6 +27,7 @@ const stepVariants = {
 export default function OperatingModel() {
   return (
     <section className={`section-shell ${styles.section}`} aria-label="Operating model">
+      <p className={`mono-label ${styles.eyebrow}`}>How I navigate</p>
       <h2 className={`serif-display ${styles.headline}`}>I work backwards from the outcome.</h2>
 
       <m.ol
@@ -58,7 +59,7 @@ export default function OperatingModel() {
       <div className={styles.returnPath} aria-hidden="true" />
 
       <p className={`serif-display ${styles.footerLine}`}>
-        Different tools. <em>Same loop.</em>
+        Different terrain. <em>Same compass.</em>
       </p>
     </section>
   );

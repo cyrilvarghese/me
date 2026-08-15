@@ -48,6 +48,17 @@
 	object-fit: contain;
 }
 
+/* State-driven knives (experience timeline): blades ease between poses via CSS. */
+.animated .tool {
+	transition: transform 650ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animated .tool {
+		transition: none;
+	}
+}
+
 /* Spec §34: with reduced motion the knife is shown fully open, no animation. */
 @media (prefers-reduced-motion: reduce) {
 	.rmOpen .tool {
