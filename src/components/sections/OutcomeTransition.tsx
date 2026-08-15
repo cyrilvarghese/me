@@ -130,6 +130,13 @@ export default function OutcomeTransition() {
 
           tl.to({}, { duration: 1 }, 0);
 
+          // In-place swap: this section's knife appears exactly where the
+          // story knife just centered; the story knife and its statement
+          // hide in the same tick. Reversible on scroll-back.
+          const storyBits = Array.from(document.querySelectorAll("[data-story-handoff]"));
+          tl.set("[data-knife-el]", { autoAlpha: 1 }, 0.004);
+          if (storyBits.length) tl.set(storyBits, { autoAlpha: 0 }, 0.005);
+
           const circles = gsap.utils.toArray<HTMLElement>("[data-circle]");
           circles.forEach((el) => gsap.set(el, { xPercent: -50, yPercent: -50, scale: 0.4 }));
           gsap.set("[data-compass]", { scale: 0.92 });

@@ -1,6 +1,9 @@
 .section {
 	position: relative;
 	height: 520vh;
+	/* starts one viewport early: the pin engages exactly as the story knife
+	   finishes centering, so the handoff is an in-place swap */
+	margin-top: -100vh;
 }
 
 .stage {
@@ -141,7 +144,8 @@
 	.compassWrap,
 	.statement,
 	.navigate,
-	.col {
+	.col,
+	.knifeEl {
 		opacity: 0;
 	}
 }
@@ -150,6 +154,7 @@
 	.section {
 		height: auto;
 		padding-block: var(--space-section);
+		margin-top: 0;
 	}
 
 	.stage {
