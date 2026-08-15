@@ -142,17 +142,12 @@
 	color: var(--accent);
 }
 
-.navigate {
-	color: var(--fg-soft);
-}
-
 /* Scrub-driven elements start hidden only when motion is allowed —
    reduced-motion users get the finished composition from CSS alone. */
 @media (prefers-reduced-motion: no-preference) {
 	.circle,
 	.compassWrap,
 	.statement,
-	.navigate,
 	.col,
 	.knifeEl {
 		opacity: 0;

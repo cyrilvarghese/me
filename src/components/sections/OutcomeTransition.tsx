@@ -278,7 +278,6 @@ export default function OutcomeTransition() {
             0.9
           );
           tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.92);
-          tl.to("[data-statement='navigate']", { autoAlpha: 1, duration: 0.03, ease: "power2.out" }, 0.965);
 
           return () => {
             unlockScroll();
@@ -343,9 +342,6 @@ export default function OutcomeTransition() {
           <h2 className={`serif-display ${styles.statement}`} data-statement="outcomes">
             <em>Outcomes</em> matter more.
           </h2>
-          <p className={styles.navigate} data-statement="navigate">
-            I navigate to them.
-          </p>
         </div>
       </div>
     </section>
