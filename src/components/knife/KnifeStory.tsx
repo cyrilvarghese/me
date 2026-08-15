@@ -165,17 +165,29 @@ export default function KnifeStory() {
           // meaning from here, and the handoff has no label-size mismatch
           tl.to("[data-label]", { autoAlpha: 0, duration: 0.025, ease: "power2.in" }, 0.9);
 
-          tl.to("[data-story-statement]", { autoAlpha: 1, y: 0, duration: 0.028, ease: "power2.out" }, 0.952);
-          tl.to("[data-story-line]", { autoAlpha: 1, y: 0, duration: 0.018, ease: "power2.out" }, 0.978);
+          tl.to("[data-story-statement]", { autoAlpha: 1, y: 0, duration: 0.028, ease: "power2.out" }, 0.94);
+          tl.to("[data-story-line]", { autoAlpha: 1, y: 0, duration: 0.018, ease: "power2.out" }, 0.956);
 
-          // In-place swap on THIS scrubbed timeline: fires only after the
-          // centering has actually rendered, so the morph knife replaces the
-          // story knife frame-accurately (no two-knife overlap, reversible).
+          // Crossfade handoff on THIS scrubbed timeline: the story knife
+          // dissolves out while the morph knife dissolves in over the last
+          // stretch of the section. A dissolve between two near-identical
+          // frames absorbs any scrub lag — no hard swap, no double knife.
           const morphKnife = document.querySelector("[data-knife-el]");
           if (morphKnife && wrap && sectionRef.current) {
             const bits = Array.from(sectionRef.current.querySelectorAll("[data-story-handoff]"));
-            tl.set(morphKnife, { autoAlpha: 1 }, 0.9995);
-            tl.set(bits, { autoAlpha: 0 }, 0.9996);
+            tl.to(morphKnife, { autoAlpha: 1, duration: 0.022, ease: "none" }, 0.978);
+            tl.to(bits, { autoAlpha: 0, duration: 0.022, ease: "none" }, 0.978);
+            // The morph stage hasn't pinned yet during the crossfade — its
+            // knife would ride up ~11vh into place. This counter-translation
+            // cancels that rise exactly (both are linear in scroll), so the
+            // incoming knife holds dead center while dissolving in.
+            const range = () => sectionRef.current!.offsetHeight - window.innerHeight;
+            tl.fromTo(
+              morphKnife,
+              { y: () => -0.022 * range() },
+              { y: 0, duration: 0.022, ease: "none", immediateRender: false },
+              0.978
+            );
           }
 
           // §39: once fully open, hovering a blade dims the others (desktop only)
