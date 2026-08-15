@@ -7,8 +7,8 @@ export default function Footer() {
         <p className={`mono-label ${styles.brand}`}>
           <em>CV</em> · Cyril Varghese · 2026
         </p>
-        <a href="mailto:cyril@yuvabe.com" className={`mono-label ${styles.mail}`}>
-          cyril@yuvabe.com
+        <a href="mailto:cyrilpdev@gmail.com" className={`mono-label ${styles.mail}`}>
+          cyrilpdev@gmail.com
         </a>
       </div>
     </footer>

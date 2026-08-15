@@ -68,16 +68,8 @@ export default function FinalCTA() {
             Give it <em>to me.</em>
           </p>
           <div className={styles.ctas} data-final="ctas">
-            <a href="mailto:cyril@yuvabe.com" className={`mono-label ${styles.btnPrimary}`}>
+            <a href="mailto:cyrilpdev@gmail.com" className={`mono-label ${styles.btnPrimary}`}>
               Start a conversation
-            </a>
-            <a
-              href="https://cyril.design"
-              target="_blank"
-              rel="noreferrer"
-              className={`mono-label ${styles.btnSecondary}`}
-            >
-              cyril.design
             </a>
           </div>
         </div>
