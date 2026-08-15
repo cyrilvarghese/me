@@ -28,24 +28,21 @@
 	justify-self: end;
 }
 
-/* the story knife stays hidden until its pin starts — the hero's knife
-   is the visible object until the in-place swap */
-@media (prefers-reduced-motion: no-preference) {
-	.knifeWrap {
-		opacity: 0;
-	}
-}
-
 /* closing statement under the centered knife (user storyboard) */
 .centerCopy {
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	top: calc(50% + 0.24 * min(58vh, 54vw, 660px));
+	/* below the knife box's lower blades (gtm tip ≈ 0.45 of the box) */
+	top: calc(50% + 0.46 * min(58vh, 54vw, 660px));
 	text-align: center;
 	width: max-content;
 	max-width: 92vw;
 	pointer-events: none;
+}
+
+.centerCopy .centerStatement {
+	font-size: clamp(1.6rem, 3.2vw, 2.6rem);
 }
 
 .centerStatement {

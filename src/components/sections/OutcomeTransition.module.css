@@ -1,9 +1,6 @@
 .section {
 	position: relative;
 	height: 520vh;
-	/* starts one viewport early so the pin engages exactly as the story's
-	   knife finishes centering — seamless single-knife handoff */
-	margin-top: -100vh;
 }
 
 .stage {
@@ -13,7 +10,6 @@
 	overflow: hidden;
 	display: grid;
 	place-items: center;
-	/* transparent: the story's knife shows through until the in-place swap */
 }
 
 .inner {
@@ -145,8 +141,7 @@
 	.compassWrap,
 	.statement,
 	.navigate,
-	.col,
-	.knifeEl {
+	.col {
 		opacity: 0;
 	}
 }
@@ -155,7 +150,6 @@
 	.section {
 		height: auto;
 		padding-block: var(--space-section);
-		margin-top: 0;
 	}
 
 	.stage {

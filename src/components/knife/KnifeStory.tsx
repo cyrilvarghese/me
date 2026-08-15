@@ -43,46 +43,21 @@ export default function KnifeStory() {
           // §32: compress blade angles on small screens
           const factor = compact ? 0.8 : 1;
 
-          // ---- hero → story: the hero knife travels to this stage's knife
-          // box as the hero scrolls out, then the story knife takes over
-          // in-place at pin start.
-          const heroKnife = document.querySelector<HTMLElement>("[data-hero-knife]");
-          const heroSection = document.getElementById("top");
-          if (heroKnife && heroSection && wrap && stage) {
-            const target = () => {
-              const wr = wrap.getBoundingClientRect();
-              const st = stage.getBoundingClientRect();
-              return { x: wr.left + wr.width / 2, y: wr.top - st.top + wr.height / 2, w: wr.width };
+          // The story knife's untransformed box, stage-relative — safe to
+          // evaluate at any scroll position or refresh moment.
+          const knifeBox = () => {
+            const w = wrapRef.current!;
+            const wr = w.getBoundingClientRect();
+            const st = stageRef.current!.getBoundingClientRect();
+            const wx = Number(gsap.getProperty(w, "x")) || 0;
+            const wy = Number(gsap.getProperty(w, "y")) || 0;
+            const ws = Number(gsap.getProperty(w, "scale")) || 1;
+            return {
+              x: wr.left + wr.width / 2 - wx,
+              yInStage: wr.top - st.top + wr.height / 2 - wy,
+              w: wr.width / ws,
             };
-            const cur = (p: string) => Number(gsap.getProperty(heroKnife, p)) || 0;
-
-            gsap.to(heroKnife, {
-              scrollTrigger: {
-                trigger: heroSection,
-                start: "top top",
-                end: "bottom top",
-                scrub: 0.4,
-                invalidateOnRefresh: true,
-              },
-              x: () => {
-                const r = heroKnife.getBoundingClientRect();
-                return target().x - (r.left + r.width / 2 - cur("x"));
-              },
-              y: () => {
-                const r = heroKnife.getBoundingClientRect();
-                const cyPage = r.top + window.scrollY + r.height / 2 - cur("y");
-                return target().y - cyPage + heroSection.offsetHeight;
-              },
-              scale: () => {
-                const r = heroKnife.getBoundingClientRect();
-                const s = Number(gsap.getProperty(heroKnife, "scaleX")) || 1;
-                return target().w / (r.width / s);
-              },
-              rotation: 0,
-              transformOrigin: "50% 50%",
-              ease: "power1.inOut",
-            });
-          }
+          };
 
           const tl = gsap.timeline({
             defaults: { ease: "none" },
@@ -91,15 +66,11 @@ export default function KnifeStory() {
               start: "top top",
               end: "bottom bottom",
               scrub: 0.4,
+              invalidateOnRefresh: true,
             },
           });
 
           tl.to({}, { duration: 1 }, 0);
-
-          // in-place swap: story knife appears exactly where the hero knife
-          // landed; the hero knife hides in the same tick (reversible)
-          if (wrap) tl.set(wrap, { autoAlpha: 1 }, 0.004);
-          if (heroKnife) tl.set(heroKnife, { autoAlpha: 0 }, 0.005);
 
           capabilities.forEach((c, i) => {
             const { start, end } = windowFor(i);
@@ -137,26 +108,23 @@ export default function KnifeStory() {
 
           // storyboard order: text out → knife moves to center → statement
           // appears beneath the centered knife.
-          if (wrap) {
+          if (wrap && stage) {
+            // Center of the (100vh, pinned) stage == viewport center, but
+            // stage-relative math stays correct no matter when the lazy
+            // function values are evaluated (load mid-page, refresh, resize).
             const targetW = () => Math.min(0.58 * window.innerHeight, 0.54 * window.innerWidth, 660);
             tl.to(
               wrap,
               {
                 x: () => {
-                  const r = wrap.getBoundingClientRect();
-                  const cur = (Number(gsap.getProperty(wrap, "x")) as number) || 0;
-                  return cur + window.innerWidth / 2 - (r.left + r.width / 2);
+                  const st = stage.getBoundingClientRect();
+                  return st.left + st.width / 2 - knifeBox().x;
                 },
                 y: () => {
-                  const r = wrap.getBoundingClientRect();
-                  const cur = (Number(gsap.getProperty(wrap, "y")) as number) || 0;
-                  return cur + window.innerHeight / 2 - (r.top + r.height / 2);
+                  const st = stage.getBoundingClientRect();
+                  return st.height / 2 - knifeBox().yInStage;
                 },
-                scale: () => {
-                  const r = wrap.getBoundingClientRect();
-                  const s = (Number(gsap.getProperty(wrap, "scale")) as number) || 1;
-                  return targetW() / (r.width / s);
-                },
+                scale: () => targetW() / knifeBox().w,
                 duration: 0.05,
                 ease: "power2.inOut",
               },

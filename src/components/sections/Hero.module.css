@@ -3,9 +3,7 @@
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
-	/* no overflow clip: the knife travels out of the hero into the story;
-	   horizontal spill is clipped globally by body { overflow-x: clip } */
-	z-index: 2;
+	overflow: hidden;
 }
 
 .inner {
