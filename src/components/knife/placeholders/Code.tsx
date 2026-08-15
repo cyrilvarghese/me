@@ -5,7 +5,7 @@ export default function Code() {
   return (
     <svg {...svgProps}>
       <path d="M500 600 L240 600 C205 602 176 612 166 622 L500 654 Z" fill={TOOL_FRONT} />
-      <path d="M166 623 L500 655" stroke={RED_EDGE} strokeWidth="2.5" />
+      <path data-tip="" d="M166 623 L500 655" stroke={RED_EDGE} strokeWidth="2.5" />
       <path d="M240 601 H500" stroke={EDGE_WHITE} strokeWidth="1.5" />
       <text
         x="282"

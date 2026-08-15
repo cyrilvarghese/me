@@ -8,6 +8,7 @@ export default function Ai() {
       <path
         d="M262 610 L268 628 L286 634 L268 640 L262 658 L256 640 L238 634 L256 628 Z"
         fill={RED_DEEP}
+        data-tip=""
       />
       <circle cx="500" cy="634" r="11" fill="#0f0f0f" stroke={SCREW} strokeWidth="3" />
       <circle cx="500" cy="634" r="3.5" fill={SCREW} />
