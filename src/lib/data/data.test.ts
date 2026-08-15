@@ -29,9 +29,10 @@ describe("capabilities", () => {
     }
   });
 
-  it("every tool carries lineup years and a one-line history", () => {
+  it("every tool carries lineup years, duration, and a one-line history", () => {
     for (const c of capabilities) {
       expect(c.years).toMatch(/\d{4}/);
+      expect(c.duration).toMatch(/\d+\s*yrs/);
       expect(c.line.length).toBeGreaterThan(10);
     }
   });

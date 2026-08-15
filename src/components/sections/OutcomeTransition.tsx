@@ -293,7 +293,8 @@ export default function OutcomeTransition() {
           {capabilities.map((c) => (
             <div key={c.id} data-col="" className={styles.col}>
               <p className={`mono-label ${styles.colLabel}`}>{c.label}</p>
-              <p className={`mono-label ${styles.colYears}`}>{c.years}</p>
+              <p className={`mono-label ${styles.colYears}`}>{c.duration}</p>
+              <p className={`mono-label ${styles.colPeriod}`}>{c.years}</p>
               <p className={styles.colLine}>{c.line}</p>
             </div>
           ))}

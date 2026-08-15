@@ -9,6 +9,8 @@ export type Capability = {
   hover: string;
   /** Date range shown in the lineup beat (user sketch, 2026-08-15). */
   years: string;
+  /** Featured duration, e.g. "17 yrs". */
+  duration: string;
   /** One-line history shown under the standing tool in the lineup. */
   line: string;
   /** Signed degrees from closed (0). Positive = back-of-body tools sweeping up. */
@@ -29,6 +31,7 @@ export const capabilities: Capability[] = [
     hover:
       "Every problem starts with finding out what people actually do — interviews, observation and market context before any solution.",
     years: "2019 — 2022",
+    duration: "3 yrs",
     line: "Product research as a designer.",
     openAngle: 72,
     layer: "back",
@@ -41,6 +44,7 @@ export const capabilities: Capability[] = [
     hover:
       "Deciding what to build matters more than building it well — scope, sequence, and the discipline to say no.",
     years: "2023 — 2026",
+    duration: "3 yrs",
     line: "Founded CaseChat — built the platform ground up.",
     openAngle: 42,
     layer: "back",
@@ -53,6 +57,7 @@ export const capabilities: Capability[] = [
     hover:
       "From complex workflow to an interface people understand without a manual — interaction, prototyping, system design.",
     years: "2019 — 2026",
+    duration: "7 yrs",
     line: "Led design at DMart; enterprise UX for Razorpay, 1Finance and MSIG.",
     openAngle: 18,
     layer: "back",
@@ -65,7 +70,8 @@ export const capabilities: Capability[] = [
     hover:
       "Built software professionally before moving into product design, and continue to build working products rather than stopping at prototypes.",
     years: "2009 — Present",
-    line: "Software engineer — products for mobile, web and XR.",
+    duration: "17 yrs",
+    line: "Software engineer — products for mobile, web, XR and AI.",
     openAngle: -22,
     layer: "front",
   },
@@ -77,7 +83,8 @@ export const capabilities: Capability[] = [
     hover:
       "Agentic systems, structured outputs, evals — AI as product behaviour, not a bolt-on chatbot.",
     years: "2023 — Present",
-    line: "Design-system tooling, sketches-to-code, AI-assisted building.",
+    duration: "3 yrs",
+    line: "Built CaseChat's AI platform for simulated medical learning; now building a D2C AI product for social-media assets.",
     openAngle: -48,
     layer: "front",
   },
@@ -89,6 +96,7 @@ export const capabilities: Capability[] = [
     hover:
       "Positioning, pilots and adoption work — a product isn't shipped until people rely on it.",
     years: "2024 — 2026",
+    duration: "2 yrs",
     line: "Lead GTM at CaseChat.",
     openAngle: -76,
     layer: "front",
