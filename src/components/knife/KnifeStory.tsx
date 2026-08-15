@@ -69,7 +69,9 @@ export default function KnifeStory() {
             wobble.fromTo(
               `[data-tool="${c.id}"]`,
               { rotation: open + 2 * Math.sign(open) },
-              { rotation: open, duration: 0.9, ease: "elastic.out(1, 0.3)" },
+              // immediateRender: false — otherwise the "from" pose renders at
+              // build time and the knife starts fully open
+              { rotation: open, duration: 0.9, ease: "elastic.out(1, 0.3)", immediateRender: false },
               i * 0.025
             );
           });
@@ -88,7 +90,7 @@ export default function KnifeStory() {
                   wobble.restart();
                 } else if (self.progress < 0.9 && wobblePlayed) {
                   wobblePlayed = false;
-                  wobble.progress(1).pause();
+                  wobble.pause(); // scrub owns blade rotation below 0.9
                 }
               },
             },
