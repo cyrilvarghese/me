@@ -65,7 +65,7 @@ export default function FinalCTA() {
             Got an outcome nobody owns?
           </p>
           <p className={`serif-display ${styles.give}`} data-final="give">
-            Give it <em>to me.</em>
+            Let&apos;s get <em>started.</em>
           </p>
           <div className={styles.ctas} data-final="ctas">
             <a href="mailto:cyrilpdev@gmail.com" className={`mono-label ${styles.btnPrimary}`}>
