@@ -78,8 +78,41 @@ export default function KnifeStory() {
           });
 
           tl.to('[data-panel="intro"]', { autoAlpha: 0, y: -16, duration: 0.02, ease: "power2.in" }, INTRO_END - 0.012);
-          tl.to('[data-panel="complete"]', { autoAlpha: 1, y: 0, duration: 0.03, ease: "power2.out" }, 0.905);
-          tl.to("[data-complete-line]", { autoAlpha: 1, duration: 0.025 }, 0.955);
+          tl.to('[data-panel="complete"]', { autoAlpha: 1, y: 0, duration: 0.03, ease: "power2.out" }, 0.9);
+          tl.to("[data-complete-line]", { autoAlpha: 1, duration: 0.02 }, 0.935);
+
+          // Handoff: the story knife travels to viewport center and matches
+          // the morph section's knife box exactly — that section starts one
+          // viewport early, so its pinned knife takes over in-place with no
+          // duplicate ever on screen.
+          if (wrapRef.current) {
+            const wrap = wrapRef.current;
+            const targetW = () => Math.min(0.58 * window.innerHeight, 0.54 * window.innerWidth, 660);
+            tl.to('[data-panel="complete"]', { autoAlpha: 0, y: -16, duration: 0.02, ease: "power2.in" }, 0.958);
+            tl.to(
+              wrap,
+              {
+                x: () => {
+                  const r = wrap.getBoundingClientRect();
+                  const cur = (gsap.getProperty(wrap, "x") as number) || 0;
+                  return cur + window.innerWidth / 2 - (r.left + r.width / 2);
+                },
+                y: () => {
+                  const r = wrap.getBoundingClientRect();
+                  const cur = (gsap.getProperty(wrap, "y") as number) || 0;
+                  return cur + window.innerHeight / 2 - (r.top + r.height / 2);
+                },
+                scale: () => {
+                  const r = wrap.getBoundingClientRect();
+                  const s = (gsap.getProperty(wrap, "scale") as number) || 1;
+                  return targetW() / (r.width / s);
+                },
+                duration: 0.042,
+                ease: "power2.inOut",
+              },
+              0.956
+            );
+          }
 
           // §39: once fully open, hovering a blade dims the others (desktop only)
           if (hoverOk && !compact && wrapRef.current) {
@@ -157,7 +190,7 @@ export default function KnifeStory() {
             </div>
           </div>
 
-          <div className={styles.knifeWrap} ref={wrapRef}>
+          <div className={styles.knifeWrap} ref={wrapRef} data-story-knife="">
             <KnifeCanvas />
             <ToolLabels />
           </div>
