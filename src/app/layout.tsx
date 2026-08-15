@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Newsreader, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Work_Sans, JetBrains_Mono } from "next/font/google";
 import "./tokens.css";
 import "./globals.css";
 
-const serif = Newsreader({
+const serif = Fraunces({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  axes: ["opsz"],
+  axes: ["opsz", "SOFT", "WONK"],
   variable: "--font-serif",
 });
 
-const sans = Space_Grotesk({
+const sans = Work_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
 });

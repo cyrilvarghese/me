@@ -25,7 +25,10 @@
 .resolve {
 	font-size: var(--text-h3);
 	font-family: var(--font-serif);
-	font-variation-settings: 'opsz' 40;
+	font-variation-settings:
+		'opsz' 40,
+		'SOFT' 30,
+		'WONK' 0.9;
 	max-width: 34ch;
 	color: var(--fg-soft);
 	line-height: 1.4;

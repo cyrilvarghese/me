@@ -63,7 +63,10 @@
 
 .resultValue {
 	font-family: var(--font-serif);
-	font-variation-settings: 'opsz' 72;
+	font-variation-settings:
+		'opsz' 56,
+		'SOFT' 30,
+		'WONK' 0.9;
 	font-size: clamp(1.8rem, 3vw, 2.6rem);
 	color: var(--fg);
 	line-height: 1;

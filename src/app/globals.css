@@ -80,8 +80,12 @@ button {
 
 .serif-display {
 	font-family: var(--font-serif);
-	font-variation-settings: 'opsz' 72;
-	font-weight: 420;
+	/* Fraunces axes — tuned by Cyril 2026-08-15 */
+	font-variation-settings:
+		'opsz' 56,
+		'SOFT' 30,
+		'WONK' 0.9;
+	font-weight: 380;
 	line-height: 1.02;
 	letter-spacing: -0.015em;
 }
