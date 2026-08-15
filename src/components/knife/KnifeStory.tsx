@@ -59,10 +59,12 @@ export default function KnifeStory() {
             const open = c.openAngle * factor;
 
             // §15 mechanical overshoot: sweep past resting angle, settle back.
-            tl.to(blade, { rotation: open * 1.06, duration: dur * 0.8, ease: "power3.inOut" }, start).to(
+            // Fast-start ease + compressed sweep so the blade is visibly
+            // opening the moment the panel text lands, not after the tags.
+            tl.to(blade, { rotation: open * 1.06, duration: dur * 0.45, ease: "power2.out" }, start + 0.004).to(
               blade,
-              { rotation: open, duration: dur * 0.2, ease: "power1.out" },
-              start + dur * 0.8
+              { rotation: open, duration: dur * 0.15, ease: "power1.out" },
+              start + dur * 0.45 + 0.004
             );
 
             tl.to(panel, { autoAlpha: 1, y: 0, duration: 0.025, ease: "power2.out" }, start + 0.005).to(
@@ -74,7 +76,7 @@ export default function KnifeStory() {
             const fadeAt = i === capabilities.length - 1 ? COMPLETE_START : end;
             tl.to(panel, { autoAlpha: 0, y: -16, duration: 0.018, ease: "power2.in" }, fadeAt - 0.014);
 
-            tl.to(`[data-label="${c.id}"]`, { autoAlpha: 1, duration: 0.015 }, start + dur * 0.55);
+            tl.to(`[data-label="${c.id}"]`, { autoAlpha: 1, duration: 0.015 }, start + dur * 0.35);
           });
 
           tl.to('[data-panel="intro"]', { autoAlpha: 0, y: -16, duration: 0.02, ease: "power2.in" }, INTRO_END - 0.012);
