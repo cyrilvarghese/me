@@ -161,8 +161,22 @@ export default function KnifeStory() {
             );
           }
 
+          // labels retire as the knife centers — the statement carries the
+          // meaning from here, and the handoff has no label-size mismatch
+          tl.to("[data-label]", { autoAlpha: 0, duration: 0.025, ease: "power2.in" }, 0.9);
+
           tl.to("[data-story-statement]", { autoAlpha: 1, y: 0, duration: 0.028, ease: "power2.out" }, 0.952);
           tl.to("[data-story-line]", { autoAlpha: 1, y: 0, duration: 0.018, ease: "power2.out" }, 0.978);
+
+          // In-place swap on THIS scrubbed timeline: fires only after the
+          // centering has actually rendered, so the morph knife replaces the
+          // story knife frame-accurately (no two-knife overlap, reversible).
+          const morphKnife = document.querySelector("[data-knife-el]");
+          if (morphKnife && wrap && sectionRef.current) {
+            const bits = Array.from(sectionRef.current.querySelectorAll("[data-story-handoff]"));
+            tl.set(morphKnife, { autoAlpha: 1 }, 0.9995);
+            tl.set(bits, { autoAlpha: 0 }, 0.9996);
+          }
 
           // §39: once fully open, hovering a blade dims the others (desktop only)
           if (hoverOk && !compact && wrap) {

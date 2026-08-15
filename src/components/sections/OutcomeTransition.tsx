@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { capabilities, type CapabilityId } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
-import ToolLabels from "@/components/knife/ToolLabels";
 import CompassRose from "@/components/compass/CompassRose";
 import styles from "./OutcomeTransition.module.css";
 
@@ -130,12 +129,9 @@ export default function OutcomeTransition() {
 
           tl.to({}, { duration: 1 }, 0);
 
-          // In-place swap: this section's knife appears exactly where the
-          // story knife just centered; the story knife and its statement
-          // hide in the same tick. Reversible on scroll-back.
-          const storyBits = Array.from(document.querySelectorAll("[data-story-handoff]"));
-          tl.set("[data-knife-el]", { autoAlpha: 1 }, 0.004);
-          if (storyBits.length) tl.set(storyBits, { autoAlpha: 0 }, 0.005);
+          // NOTE: the story timeline performs the in-place knife swap at its
+          // own scrubbed completion (KnifeStory.tsx) — swapping from here
+          // fired before the centering had rendered (scrub lag = two knives).
 
           const circles = gsap.utils.toArray<HTMLElement>("[data-circle]");
           circles.forEach((el) => gsap.set(el, { xPercent: -50, yPercent: -50, scale: 0.4 }));
@@ -143,8 +139,8 @@ export default function OutcomeTransition() {
           gsap.set("[data-needle]", { rotation: -130 });
           gsap.set("[data-statement]", { y: 16 });
 
-          // labels go first, then the body dissolves out from under the tools
-          tl.to("[data-label]", { autoAlpha: 0, duration: 0.05, stagger: 0.008, ease: "power2.in" }, 0.06);
+          // the body dissolves out from under the tools (labels already
+          // retired during the story's centering)
           tl.to("[data-body]", { autoAlpha: 0, duration: 0.08, ease: "power2.in" }, 0.12);
 
           // the tools come apart, drifting free (user reference)
@@ -269,7 +265,6 @@ export default function OutcomeTransition() {
         <div className={styles.inner} ref={innerRef}>
           <div className={styles.knifeEl} data-knife-el="">
             <KnifeCanvas angles={OPEN_ANGLES} />
-            <ToolLabels visible />
           </div>
 
           <div className={styles.circles} aria-hidden="true">
