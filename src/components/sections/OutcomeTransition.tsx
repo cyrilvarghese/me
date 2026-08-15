@@ -73,6 +73,24 @@ export default function OutcomeTransition() {
               0.25 // breath after the dial is fully in
             );
 
+          // scroll holds still while the needle performs (user direction) —
+          // wheel/touch are blocked briefly so the hunt can't be skipped
+          let unlockTimer: number | undefined;
+          const prevent = (e: Event) => e.preventDefault();
+          const unlockScroll = () => {
+            window.removeEventListener("wheel", prevent);
+            window.removeEventListener("touchmove", prevent);
+            if (unlockTimer) {
+              window.clearTimeout(unlockTimer);
+              unlockTimer = undefined;
+            }
+          };
+          const lockScroll = (ms: number) => {
+            window.addEventListener("wheel", prevent, { passive: false });
+            window.addEventListener("touchmove", prevent, { passive: false });
+            unlockTimer = window.setTimeout(unlockScroll, ms);
+          };
+
           const tl = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
@@ -95,11 +113,12 @@ export default function OutcomeTransition() {
                 ease: "power1.inOut",
               },
               onUpdate(self) {
-                // fire only after the dial's fade-in (0.84–0.90) has finished,
+                // fire only after the dial's fade-in (0.87–0.97) has finished,
                 // so appearing and swinging never overlap
-                if (self.progress >= 0.905 && !needlePlayed) {
+                if (self.progress >= 0.96 && !needlePlayed) {
                   needlePlayed = true;
                   swing.restart();
+                  lockScroll(2900);
                 } else if (self.progress < 0.8 && needlePlayed) {
                   needlePlayed = false;
                   swing.pause(0);
@@ -206,21 +225,29 @@ export default function OutcomeTransition() {
             const a = ((k * 60 - 90) * Math.PI) / 180;
             const cl = { x: 50 + CLUSTER_R * Math.cos(a), y: 50 + CLUSTER_R * Math.sin(a) };
 
-            tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.1, ease: "power2.inOut" }, 0.68);
+            tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.1, ease: "power2.inOut" }, 0.66);
             tl.to(el, { x: frac(50 - s.x), y: frac(50 - s.y), duration: 0.08, ease: "power2.inOut" }, 0.78);
             if (k > 0) tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.83);
           });
 
           // the last circle grows into the compass ring
-          tl.to(circles[0], { scale: 1.9, duration: 0.08, ease: "power2.inOut" }, 0.8);
-          tl.to(circles[0], { autoAlpha: 0, duration: 0.04 }, 0.86);
-          tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.06, ease: "power2.out" }, 0.84);
+          tl.to(circles[0], { scale: 1.9, duration: 0.1, ease: "power2.inOut" }, 0.8);
+          tl.to(circles[0], { autoAlpha: 0, duration: 0.05 }, 0.89);
+          // slower arrival: the dial eases in over a tenth of the section
+          tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power2.out" }, 0.87);
 
-          // copy
-          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.09, ease: "power1.inOut" }, 0.58)
-            .to("[data-statement='tools']", { autoAlpha: 0, y: -16, duration: 0.04, ease: "power2.in" }, 0.8);
-          tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.88);
-          tl.to("[data-statement='navigate']", { autoAlpha: 1, duration: 0.04, ease: "power2.out" }, 0.95);
+          // copy — the tools statement stays, shrinking and dimming so it
+          // reads together with "Outcomes are." (user direction)
+          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.09, ease: "power1.inOut" }, 0.58);
+          tl.to(
+            "[data-statement='tools']",
+            { scale: 0.6, opacity: 0.5, transformOrigin: "center bottom", duration: 0.05, ease: "power2.inOut" },
+            0.9
+          );
+          tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.92);
+          tl.to("[data-statement='navigate']", { autoAlpha: 1, duration: 0.03, ease: "power2.out" }, 0.965);
+
+          return () => unlockScroll();
         }
       );
 
