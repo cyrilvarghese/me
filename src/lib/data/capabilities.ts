@@ -7,6 +7,10 @@ export type Capability = {
   tags: string[];
   /** Contextual line shown on desktop blade hover (spec §39). */
   hover: string;
+  /** Date range shown in the lineup beat (user sketch, 2026-08-15). */
+  years: string;
+  /** One-line history shown under the standing tool in the lineup. */
+  line: string;
   /** Signed degrees from closed (0). Positive = back-of-body tools sweeping up. */
   openAngle: number;
   /** Whether the tool emerges from behind the knife body or in front of it. */
@@ -24,6 +28,8 @@ export const capabilities: Capability[] = [
     tags: ["User research", "Workflow observation", "Market research"],
     hover:
       "Every problem starts with finding out what people actually do — interviews, observation and market context before any solution.",
+    years: "2019 — 2022",
+    line: "Product research as a designer.",
     openAngle: 72,
     layer: "back",
   },
@@ -34,6 +40,8 @@ export const capabilities: Capability[] = [
     tags: ["0→1", "MVP", "Systems", "Prioritisation"],
     hover:
       "Deciding what to build matters more than building it well — scope, sequence, and the discipline to say no.",
+    years: "2023 — 2026",
+    line: "Founded CaseChat — built the platform ground up.",
     openAngle: 42,
     layer: "back",
   },
@@ -44,6 +52,8 @@ export const capabilities: Capability[] = [
     tags: ["Interaction", "Prototyping", "System design"],
     hover:
       "From complex workflow to an interface people understand without a manual — interaction, prototyping, system design.",
+    years: "2019 — 2026",
+    line: "Led design at DMart; enterprise UX for Razorpay, 1Finance and MSIG.",
     openAngle: 18,
     layer: "back",
   },
@@ -54,6 +64,8 @@ export const capabilities: Capability[] = [
     tags: ["TypeScript", "Svelte", "React", "APIs"],
     hover:
       "Built software professionally before moving into product design, and continue to build working products rather than stopping at prototypes.",
+    years: "2009 — Present",
+    line: "Software engineer — products for mobile, web and XR.",
     openAngle: -22,
     layer: "front",
   },
@@ -64,6 +76,8 @@ export const capabilities: Capability[] = [
     tags: ["Agents", "LLMs", "Evals", "Generation"],
     hover:
       "Agentic systems, structured outputs, evals — AI as product behaviour, not a bolt-on chatbot.",
+    years: "2023 — Present",
+    line: "Design-system tooling, sketches-to-code, AI-assisted building.",
     openAngle: -48,
     layer: "front",
   },
@@ -74,6 +88,8 @@ export const capabilities: Capability[] = [
     tags: ["Positioning", "Pilots", "Adoption", "Customer discovery"],
     hover:
       "Positioning, pilots and adoption work — a product isn't shipped until people rely on it.",
+    years: "2024 — 2026",
+    line: "Lead GTM at CaseChat.",
     openAngle: -76,
     layer: "front",
   },

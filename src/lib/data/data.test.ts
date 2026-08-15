@@ -28,6 +28,13 @@ describe("capabilities", () => {
       expect(c.hover.length).toBeGreaterThan(20);
     }
   });
+
+  it("every tool carries lineup years and a one-line history", () => {
+    for (const c of capabilities) {
+      expect(c.years).toMatch(/\d{4}/);
+      expect(c.line.length).toBeGreaterThan(10);
+    }
+  });
 });
 
 describe("scroll windows", () => {

@@ -1,6 +1,6 @@
 .section {
 	position: relative;
-	height: 350vh;
+	height: 450vh;
 }
 
 .stage {
@@ -56,6 +56,49 @@
 	width: 86%;
 }
 
+/* ---- the lineup captions (user sketch: parts standing side by side) ---- */
+
+.lineup {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: calc(50% + 0.145 * min(58vh, 54vw, 660px) + 18px);
+	width: min(92vw, 1200px);
+	display: flex;
+	pointer-events: none;
+}
+
+.col {
+	flex: 1;
+	text-align: center;
+	padding-inline: 0.6rem;
+	transform: translateY(14px);
+}
+
+.colLabel {
+	color: var(--fg);
+	margin-bottom: 0.35rem;
+}
+
+.colYears {
+	color: var(--accent);
+	margin-bottom: 0.6rem;
+}
+
+.colLine {
+	color: var(--muted);
+	font-size: 0.8rem;
+	line-height: 1.45;
+	max-width: 20ch;
+	margin-inline: auto;
+}
+
+@media (max-width: 768px) {
+	.lineup {
+		display: none;
+	}
+}
+
 /* ---- copy ---- */
 
 .copy {
@@ -89,7 +132,8 @@
 	.circle,
 	.compassWrap,
 	.statement,
-	.navigate {
+	.navigate,
+	.col {
 		opacity: 0;
 	}
 }
@@ -114,7 +158,8 @@
 	}
 
 	.knifeEl,
-	.circles {
+	.circles,
+	.lineup {
 		display: none;
 	}
 
