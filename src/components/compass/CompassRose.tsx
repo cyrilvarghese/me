@@ -15,7 +15,7 @@ export default function CompassRose() {
   return (
     <div style={{ position: "relative", width: "100%", aspectRatio: "1" }}>
       <svg {...svgProps} style={layer}>
-        <circle cx="500" cy="500" r="310" stroke="rgba(248,248,248,0.25)" strokeWidth="2" />
+        <circle cx="500" cy="500" r="310" stroke="rgba(248,242,240,0.25)" strokeWidth="2" />
         <circle cx="500" cy="500" r="270" stroke="rgba(234,0,0,0.28)" strokeWidth="1.5" />
 
         {ticks.map((a) => {
@@ -33,7 +33,7 @@ export default function CompassRose() {
               y1={px(500 + r0 * sin)}
               x2={px(500 + 310 * cos)}
               y2={px(500 + 310 * sin)}
-              stroke={major ? "rgba(248,248,248,0.55)" : "rgba(248,248,248,0.18)"}
+              stroke={major ? "rgba(248,242,240,0.55)" : "rgba(248,242,240,0.18)"}
               strokeWidth={major ? 3 : 2}
             />
           );
@@ -52,7 +52,7 @@ export default function CompassRose() {
 
       {/* center pin above the needle — same element as the knife hinge */}
       <svg {...svgProps} style={layer}>
-        <circle cx="500" cy="500" r="16" fill="#0f0f0f" stroke={RED} strokeWidth="3" />
+        <circle cx="500" cy="500" r="16" fill="#150f0f" stroke={RED} strokeWidth="3" />
         <circle cx="500" cy="500" r="5" fill={RED} />
       </svg>
     </div>

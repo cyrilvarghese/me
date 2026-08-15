@@ -18,7 +18,7 @@ export default function Gtm() {
         strokeLinecap="round"
         data-tip=""
       />
-      <circle cx="500" cy="648" r="11" fill="#0f0f0f" stroke={SCREW} strokeWidth="3" />
+      <circle cx="500" cy="648" r="11" fill="#150f0f" stroke={SCREW} strokeWidth="3" />
       <circle cx="500" cy="648" r="3.5" fill={SCREW} />
     </svg>
   );

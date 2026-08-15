@@ -202,13 +202,13 @@ export default function KnifeStory() {
               tools.forEach((t) =>
                 gsap.to(t, { opacity: t === hit ? 1 : 0.55, duration: 0.2, overwrite: "auto" })
               );
-              gsap.to(`[data-label]:not([data-label="${id}"])`, { color: "#9a9a9a", duration: 0.2, overwrite: "auto" });
-              gsap.to(`[data-label="${id}"]`, { color: "#f8f8f8", duration: 0.2, overwrite: "auto" });
+              gsap.to(`[data-label]:not([data-label="${id}"])`, { color: "#a09290", duration: 0.2, overwrite: "auto" });
+              gsap.to(`[data-label="${id}"]`, { color: "#f8f2f0", duration: 0.2, overwrite: "auto" });
             };
 
             const onLeave = () => {
               tools.forEach((t) => gsap.to(t, { opacity: 1, duration: 0.2, overwrite: "auto" }));
-              gsap.to("[data-label]", { color: "#ededed", duration: 0.2, overwrite: "auto" });
+              gsap.to("[data-label]", { color: "#efe6e4", duration: 0.2, overwrite: "auto" });
             };
 
             wrap.addEventListener("mouseover", onOver);

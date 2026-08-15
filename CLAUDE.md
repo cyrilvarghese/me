@@ -80,8 +80,11 @@ visible content straight from CSS. Don't move hidden states into `initial`
 props (breaks reduced motion) and don't add framer to the scrubbed sections.
 
 **Visual system**: tokens in `src/app/tokens.css` — black/white/red Swiss
-palette (bg `#111111`, fg `#f8f8f8`, accent `#ea0000`). Red is decorative and
-large-type only; it fails AA contrast for small text on this background. Type
+palette (bg `#171111`, fg `#f8f2f0`, accent `#ea0000`). Every neutral —
+including the knife steels in `placeholders/common.ts` and compass strokes —
+carries a ~3% tinge of the accent; never plain black or plain white (user
+rule, 2026-08-16). Red is decorative and large-type only; it fails AA
+contrast for small text on this background. Type
 is Fraunces + Work Sans + JetBrains Mono via `next/font`; the display face has
 hand-tuned baked axes (`'opsz' 56, 'SOFT' 30, 'WONK' 0.9`, weight 380 in
 `.serif-display`) — Cyril chose these deliberately, don't normalize them.

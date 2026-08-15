@@ -45,7 +45,7 @@
 	.tool:hover svg,
 	.tool.glow svg {
 		/* lift + one faint tight glow — wide low-alpha blurs band and stutter */
-		filter: brightness(1.16) drop-shadow(0 0 9px rgba(248, 248, 248, 0.09));
+		filter: brightness(1.16) drop-shadow(0 0 9px rgba(248, 242, 240, 0.09));
 	}
 
 	.tool:hover svg [data-tip],

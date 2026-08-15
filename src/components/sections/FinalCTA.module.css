@@ -89,7 +89,7 @@
 @media (hover: hover) and (pointer: fine) {
 	.btnPrimary:hover {
 		background: var(--accent);
-		color: #111;
+		color: var(--bg);
 	}
 }
 
