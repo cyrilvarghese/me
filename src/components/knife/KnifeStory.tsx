@@ -99,7 +99,7 @@ export default function KnifeStory() {
             };
 
             const onLeave = () => {
-              tools.forEach((t) => gsap.to(t, { opacity: 1, duration: 0.25, overwrite: "auto" }));
+              tools.forEach((t) => gsap.to(t, { opacity: 1, duration: 0.2, overwrite: "auto" }));
               gsap.to("[data-label]", { color: "#ededed", duration: 0.2, overwrite: "auto" });
             };
 

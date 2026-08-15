@@ -95,3 +95,13 @@ button {
 	margin-inline: auto;
 	padding-inline: var(--gutter);
 }
+
+/* Starting state for Framer Motion whileInView reveals. Lives in CSS so
+   reduced-motion users (and pre-hydration paint) get visible content —
+   the media query simply never hides it for them. */
+@media (prefers-reduced-motion: no-preference) {
+	.fx-hidden {
+		opacity: 0;
+		transform: var(--fx-from, translateY(28px));
+	}
+}

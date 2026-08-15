@@ -1,7 +1,7 @@
 "use client";
 
-import { Fragment, useRef } from "react";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { Fragment } from "react";
+import { m } from "motion/react";
 import styles from "./OperatingModel.module.css";
 
 const STEPS = [
@@ -12,32 +12,30 @@ const STEPS = [
   { name: "Learn", copy: "Observe behaviour and improve the model." },
 ];
 
+const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
+
+/* Hidden start state comes from .fx-hidden in globals.css (gated behind
+   prefers-reduced-motion: no-preference), so variants only define "show". */
+const stepVariants = {
+  show: {
+    opacity: 1,
+    transform: "translateY(0px)",
+    transition: { duration: 0.45, ease: EASE_OUT_CUBIC },
+  },
+};
+
 export default function OperatingModel() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from("[data-step]", {
-          autoAlpha: 0,
-          y: 24,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: { trigger: sectionRef.current, start: "top 70%", once: true },
-        });
-      });
-      return () => mm.revert();
-    },
-    { scope: sectionRef }
-  );
-
   return (
-    <section ref={sectionRef} className={`section-shell ${styles.section}`} aria-label="Operating model">
+    <section className={`section-shell ${styles.section}`} aria-label="Operating model">
       <h2 className={`serif-display ${styles.headline}`}>I work backwards from the outcome.</h2>
 
-      <ol className={styles.loop}>
+      <m.ol
+        className={styles.loop}
+        initial={false}
+        whileInView="show"
+        viewport={{ once: true, margin: "0px 0px -22% 0px" }}
+        transition={{ staggerChildren: 0.08 }}
+      >
         {STEPS.map((s, i) => (
           <Fragment key={s.name}>
             {i > 0 && (
@@ -45,13 +43,17 @@ export default function OperatingModel() {
                 →
               </li>
             )}
-            <li className={styles.step} data-step="">
+            <m.li
+              className={`${styles.step} fx-hidden`}
+              style={{ ["--fx-from" as string]: "translateY(20px)" }}
+              variants={stepVariants}
+            >
               <span className={`mono-label ${styles.stepName}`}>{s.name}</span>
               <p className={styles.stepCopy}>{s.copy}</p>
-            </li>
+            </m.li>
           </Fragment>
         ))}
-      </ol>
+      </m.ol>
 
       <div className={styles.returnPath} aria-hidden="true" />
 

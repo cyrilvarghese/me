@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { m } from "motion/react";
 import styles from "./UnknownProblem.module.css";
 
 const PAIRS = [
@@ -11,57 +10,78 @@ const PAIRS = [
   { q: "Unknown industry?", a: "Learn fast." },
 ];
 
+const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
+
+/* Hidden start state comes from .fx-hidden (globals.css), gated behind
+   prefers-reduced-motion: no-preference — so reduced users see everything. */
+const reveal = {
+  show: {
+    opacity: 1,
+    transform: "translateY(0px)",
+    transition: { duration: 0.6, ease: EASE_OUT_CUBIC },
+  },
+};
+
+const viewport = { once: true, margin: "0px 0px -22% 0px" };
+const fromY32 = { ["--fx-from" as string]: "translateY(32px)" };
+
 export default function UnknownProblem() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-          gsap.from(el, {
-            autoAlpha: 0,
-            y: 40,
-            duration: 0.8,
-            ease: "power2.out",
-            scrollTrigger: { trigger: el, start: "top 75%", once: true },
-          });
-        });
-      });
-      return () => mm.revert();
-    },
-    { scope: sectionRef }
-  );
-
   return (
-    <section ref={sectionRef} className={styles.section} aria-label="Unknown problems">
+    <section className={styles.section} aria-label="Unknown problems">
       <div className={styles.block}>
-        <h2 className={`serif-display ${styles.question}`} data-reveal="">
+        <m.h2
+          className={`serif-display ${styles.question} fx-hidden`}
+          style={fromY32}
+          variants={reveal}
+          initial={false}
+          whileInView="show"
+          viewport={viewport}
+        >
           What if I&apos;ve never done it before?
-        </h2>
+        </m.h2>
       </div>
 
       <div className={styles.block}>
-        <p className={`serif-display ${styles.good}`} data-reveal="">
+        <m.p
+          className={`serif-display ${styles.good} fx-hidden`}
+          style={fromY32}
+          variants={reveal}
+          initial={false}
+          whileInView="show"
+          viewport={viewport}
+        >
           Good.
-        </p>
+        </m.p>
       </div>
 
       <div className={styles.block}>
-        <p className={styles.resolve} data-reveal="">
+        <m.p
+          className={`${styles.resolve} fx-hidden`}
+          style={fromY32}
+          variants={reveal}
+          initial={false}
+          whileInView="show"
+          viewport={viewport}
+        >
           I&apos;ll understand the problem, find the people who know what I don&apos;t, build a model
           of how it works, and start moving.
-        </p>
+        </m.p>
       </div>
 
-      <ul className={styles.pairs}>
+      <m.ul
+        className={styles.pairs}
+        initial={false}
+        whileInView="show"
+        viewport={viewport}
+        transition={{ staggerChildren: 0.06 }}
+      >
         {PAIRS.map((p) => (
-          <li key={p.q} data-reveal="">
+          <m.li key={p.q} className="fx-hidden" style={fromY32} variants={reveal}>
             <p className={`mono-label ${styles.pairQ}`}>{p.q}</p>
             <p className={styles.pairA}>{p.a}</p>
-          </li>
+          </m.li>
         ))}
-      </ul>
+      </m.ul>
     </section>
   );
 }

@@ -1,40 +1,27 @@
 "use client";
 
-import { useRef } from "react";
+import { m } from "motion/react";
 import { cases } from "@/lib/data/cases";
-import { gsap, useGSAP } from "@/lib/gsap";
 import ToolDots from "./ToolDots";
 import styles from "./CaseStudies.module.css";
 
+const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
+
 export default function CaseStudies() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.utils.toArray<HTMLElement>("[data-case]").forEach((el) => {
-          gsap.from(el, {
-            autoAlpha: 0,
-            y: 32,
-            duration: 0.7,
-            ease: "power2.out",
-            scrollTrigger: { trigger: el, start: "top 78%", once: true },
-          });
-        });
-      });
-      return () => mm.revert();
-    },
-    { scope: sectionRef }
-  );
-
   return (
-    <section ref={sectionRef} className={`section-shell ${styles.section}`} aria-label="Selected work">
+    <section className={`section-shell ${styles.section}`} aria-label="Selected work">
       <p className={`mono-label ${styles.sectionEyebrow}`}>Proof</p>
       <h2 className={`serif-display ${styles.sectionTitle}`}>Three shipped systems.</h2>
 
       {cases.map((c) => (
-        <article key={c.num} className={styles.case} data-case="">
+        <m.article
+          key={c.num}
+          className={`${styles.case} fx-hidden`}
+          initial={false}
+          whileInView={{ opacity: 1, transform: "translateY(0px)" }}
+          viewport={{ once: true, margin: "0px 0px -18% 0px" }}
+          transition={{ duration: 0.55, ease: EASE_OUT_CUBIC }}
+        >
           <div className={styles.caseText}>
             <p className={`mono-label ${styles.caseNum}`}>
               {c.num} / {c.category}
@@ -72,7 +59,7 @@ export default function CaseStudies() {
             </div>
             <ToolDots tools={c.tools} />
           </aside>
-        </article>
+        </m.article>
       ))}
     </section>
   );

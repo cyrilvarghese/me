@@ -56,6 +56,17 @@ labels; reduced-motion builds **no** timelines — CSS renders the story static
 and open via the `--open` custom property (`rmOpen`/`rmClosed` in
 `knife.module.css`) and `!important` overrides in the section modules.
 
+**Animation library split** (deliberate — keep it): GSAP ScrollTrigger owns the
+three scrubbed pinned sections and the hover-dim; Framer Motion (`motion`
+package via `LazyMotion`/`m` in `MotionProvider.tsx`, strict mode — always
+import `m`, never `motion.*`) owns the time-based `whileInView` once-reveals
+(OperatingModel, CaseStudies, Career, UnknownProblem). Reveal starting states
+live in the `.fx-hidden` class in `globals.css`, gated behind
+`@media (prefers-reduced-motion: no-preference)` with the per-element offset in
+`--fx-from` — components use `initial={false}` so reduced-motion users get
+visible content straight from CSS. Don't move hidden states into `initial`
+props (breaks reduced motion) and don't add framer to the scrubbed sections.
+
 **Visual system**: tokens in `src/app/tokens.css` — black/white/red Swiss
 palette (bg `#111111`, fg `#f8f8f8`, accent `#ea0000`). Red is decorative and
 large-type only; it fails AA contrast for small text on this background. Type

@@ -69,14 +69,31 @@
 	border: 1px solid var(--accent);
 	color: var(--fg);
 	padding: 0.9rem 1.6rem;
-	transition: background-color 150ms ease, color 150ms ease;
+	transition: background-color 150ms ease, color 150ms ease, transform 100ms ease;
 }
 
 .btnSecondary {
 	border: 1px solid var(--hairline);
 	color: var(--muted);
 	padding: 0.9rem 1.6rem;
-	transition: color 150ms ease, border-color 150ms ease;
+	transition: color 150ms ease, border-color 150ms ease, transform 100ms ease;
+}
+
+.btnPrimary:active,
+.btnSecondary:active {
+	transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.btnPrimary,
+	.btnSecondary {
+		transition: none;
+	}
+
+	.btnPrimary:active,
+	.btnSecondary:active {
+		transform: none;
+	}
 }
 
 @media (hover: hover) and (pointer: fine) {
