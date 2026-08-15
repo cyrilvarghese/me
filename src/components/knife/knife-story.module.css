@@ -28,6 +28,43 @@
 	justify-self: end;
 }
 
+/* the story knife stays hidden until its pin starts — the hero's knife
+   is the visible object until the in-place swap */
+@media (prefers-reduced-motion: no-preference) {
+	.knifeWrap {
+		opacity: 0;
+	}
+}
+
+/* closing statement under the centered knife (user storyboard) */
+.centerCopy {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: calc(50% + 0.24 * min(58vh, 54vw, 660px));
+	text-align: center;
+	width: max-content;
+	max-width: 92vw;
+	pointer-events: none;
+}
+
+.centerStatement {
+	font-size: var(--text-statement);
+}
+
+.centerLine {
+	color: var(--muted);
+	margin-top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.centerStatement,
+	.centerLine {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+}
+
 /* ---- narrative panels ---- */
 
 .narrative {
@@ -155,6 +192,19 @@
 	.knifeWrap {
 		justify-self: center;
 		order: -1;
+		opacity: 1;
+	}
+
+	.centerCopy {
+		position: static;
+		transform: none;
+		margin-top: 2rem;
+	}
+
+	.centerStatement,
+	.centerLine {
+		opacity: 1;
+		transform: none;
 	}
 }
 

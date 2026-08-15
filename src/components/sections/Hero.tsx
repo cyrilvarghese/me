@@ -22,7 +22,7 @@ export default function Hero() {
           </span>
         </a>
       </div>
-      <div className={styles.knifePeek} aria-hidden="true">
+      <div className={styles.knifePeek} data-hero-knife="" aria-hidden="true">
         <KnifeCanvas reducedPose="closed" />
       </div>
     </section>
