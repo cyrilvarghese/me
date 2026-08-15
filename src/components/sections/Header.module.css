@@ -21,7 +21,7 @@
 	font-size: 0.9rem;
 	/* stamp box around the wordmark, square-cornered like the CTA button */
 	padding: 0.65rem 0.7rem;
-	border: 1.5px solid var(--accent-deep);
+	border: 2px solid var(--accent-deep);
 }
 
 .nav {
