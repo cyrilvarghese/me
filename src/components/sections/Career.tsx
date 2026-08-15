@@ -1,41 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { m } from "motion/react";
-import { capabilities } from "@/lib/data/capabilities";
-import { experience } from "@/lib/data/experience";
-import KnifeCanvas from "@/components/knife/KnifeCanvas";
 import styles from "./Career.module.css";
 
-const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
+const STAGES = [
+  { label: "Code", width: 26 },
+  { label: "Code + Design", width: 46 },
+  { label: "Code + Design + Product", width: 70 },
+  { label: "Research + Product + Design + Code + AI", width: 100 },
+];
 
-/**
- * Experience timeline: a sticky knife reconfigures per role — only the
- * blades that era actually used stay open (entry.caps). Entries are
- * one-liners + a single impact line by explicit user rule.
- */
+const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
+
 export default function Career() {
-  const [active, setActive] = useState(0);
-  const listRef = useRef<HTMLOListElement>(null);
-
-  useEffect(() => {
-    const items = Array.from(listRef.current?.querySelectorAll<HTMLElement>("[data-exp]") ?? []);
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.exp));
-        }
-      },
-      { rootMargin: "-42% 0px -42% 0px" }
-    );
-    items.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
-  const angles = Object.fromEntries(
-    capabilities.map((c) => [c.id, experience[active].caps[c.id] ? c.openAngle : 0])
-  );
-
   return (
     <section className={`section-shell ${styles.section}`} id="about" aria-label="Career">
       <h2 className={`serif-display ${styles.headline}`}>
@@ -43,36 +20,21 @@ export default function Career() {
       </h2>
       <p className={styles.sub}>I kept expanding the part of the outcome I could own.</p>
 
-      <div className={styles.timeline}>
-        <div className={styles.knifeCol} aria-hidden="true">
-          <KnifeCanvas angles={angles} animated />
-        </div>
-
-        <ol className={styles.entries} ref={listRef}>
-          {experience.map((e, i) => (
-            <li
-              key={e.period}
-              data-exp={i}
-              className={`${styles.entry} ${i === active ? styles.entryActive : ""}`}
-            >
-              <m.div
-                className="fx-hidden"
-                initial={false}
-                whileInView={{ opacity: 1, transform: "translateY(0px)" }}
-                viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-                transition={{ duration: 0.55, ease: EASE_OUT_CUBIC }}
-              >
-                <p className={`mono-label ${styles.meta}`}>
-                  <span className={styles.duration}>{e.duration}</span>
-                  <span className={styles.period}>{e.period}</span>
-                </p>
-                <h3 className={`serif-display ${styles.role}`}>{e.role}</h3>
-                <p className={styles.impact}>{e.impact}</p>
-              </m.div>
-            </li>
-          ))}
-        </ol>
-      </div>
+      <ol className={styles.stages}>
+        {STAGES.map((s, i) => (
+          <li key={s.label}>
+            <span className={`mono-label ${styles.stageLabel}`}>{s.label}</span>
+            <m.div
+              className={`${styles.bar} fx-hidden`}
+              style={{ width: `${s.width}%`, ["--fx-from" as string]: "scaleX(0)" }}
+              initial={false}
+              whileInView={{ opacity: 1, transform: "scaleX(1)" }}
+              viewport={{ once: true, margin: "0px 0px -30% 0px" }}
+              transition={{ duration: 0.7, ease: EASE_OUT_QUART, delay: i * 0.12 }}
+            />
+          </li>
+        ))}
+      </ol>
 
       <p className={`serif-display ${styles.kicker}`}>
         Expansion of ownership, <em>not career switching.</em>
