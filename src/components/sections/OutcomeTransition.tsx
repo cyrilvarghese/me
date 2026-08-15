@@ -61,16 +61,39 @@ export default function OutcomeTransition() {
         gsap.set("[data-needle]", { rotation: -130 });
         gsap.set("[data-statement]", { y: 16 });
 
-        // knife exits: labels, blades, then the rest
+        // labels go first, then the body dissolves out from under the tools
         tl.to("[data-label]", { autoAlpha: 0, duration: 0.06, stagger: 0.01, ease: "power2.in" }, 0.08);
-        tl.to("[data-tool]", { autoAlpha: 0, duration: 0.1, stagger: 0.012, ease: "power2.in" }, 0.18);
-        tl.to("[data-knife-el]", { autoAlpha: 0, duration: 0.1, ease: "power2.in" }, 0.28);
+        tl.to("[data-body]", { autoAlpha: 0, duration: 0.1, ease: "power2.in" }, 0.16);
 
-        // circles are born at the blade tips
+        // the tools come apart: each blade drifts outward along its open
+        // direction with a little released-tension rotation, floating free
+        // for a beat before it fades (user reference, 2026-08-15)
+        const HINGE = { x: 50.5, y: 63 };
+        gsap.utils.toArray<HTMLElement>("[data-tool]").forEach((el, k) => {
+          const id = el.dataset.tool as CapabilityId;
+          const cap = capabilities.find((c) => c.id === id);
+          if (!cap) return;
+          const dir = { x: START[id].x - HINGE.x, y: START[id].y - HINGE.y };
+          const len = Math.hypot(dir.x, dir.y) || 1;
+          tl.to(
+            el,
+            {
+              x: frac((dir.x / len) * 14),
+              y: frac((dir.y / len) * 14),
+              rotation: cap.openAngle + 12 * Math.sign(cap.openAngle),
+              duration: 0.2,
+              ease: "power2.out",
+            },
+            0.14
+          );
+          tl.to(el, { autoAlpha: 0, duration: 0.09, ease: "power2.in" }, 0.3 + k * 0.008);
+        });
+
+        // circles are born at the blade tips while the parts float apart
         tl.to(
           "[data-circle]",
           { autoAlpha: 1, scale: 1, duration: 0.08, stagger: 0.014, ease: "power2.out" },
-          0.2
+          0.24
         );
 
         // converge into an overlapping cluster, then merge into one ring

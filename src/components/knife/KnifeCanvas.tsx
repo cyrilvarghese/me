@@ -35,7 +35,7 @@ export default function KnifeCanvas({ angles, className, reducedPose = "open", a
       className={`${styles.canvas} ${reducedPose === "open" ? styles.rmOpen : styles.rmClosed} ${animated ? styles.animated : ""} ${className ?? ""}`}
       aria-hidden="true"
     >
-      <div className={styles.shadow} style={{ zIndex: 10 }} />
+      <div className={styles.shadow} data-body="" style={{ zIndex: 10 }} />
       {capabilities.map((c) => (
         <div
           key={c.id}
@@ -50,10 +50,10 @@ export default function KnifeCanvas({ angles, className, reducedPose = "open", a
           <KnifeLayer id={c.id} />
         </div>
       ))}
-      <div className={styles.layer} style={{ zIndex: LAYER_Z.body }}>
+      <div className={styles.layer} data-body="" style={{ zIndex: LAYER_Z.body }}>
         <KnifeLayer id="body" />
       </div>
-      <div className={styles.layer} style={{ zIndex: LAYER_Z["front-scale"] }}>
+      <div className={styles.layer} data-body="" style={{ zIndex: LAYER_Z["front-scale"] }}>
         <KnifeLayer id="front-scale" />
       </div>
     </div>
