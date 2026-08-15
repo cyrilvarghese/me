@@ -118,7 +118,10 @@ export default function KnifeStory() {
               {
                 x: () => {
                   const st = stage.getBoundingClientRect();
-                  return st.left + st.width / 2 - knifeBox().x;
+                  // +0.135W: the knife art is left-biased inside its square
+                  // canvas, so nudge right until its VISUAL center aligns
+                  // with the centered statement below
+                  return st.left + st.width / 2 - knifeBox().x + 0.135 * targetW();
                 },
                 y: () => {
                   const st = stage.getBoundingClientRect();

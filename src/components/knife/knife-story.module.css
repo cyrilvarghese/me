@@ -33,8 +33,9 @@
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	/* below the knife box's lower blades (gtm tip ≈ 0.45 of the box) */
-	top: calc(50% + 0.46 * min(58vh, 54vw, 660px));
+	/* below the knife box's lower blades (gtm tip ≈ 0.45 of the box),
+	   with breathing room */
+	top: calc(50% + 0.5 * min(58vh, 54vw, 660px));
 	text-align: center;
 	width: max-content;
 	max-width: 92vw;
