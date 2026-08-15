@@ -120,16 +120,16 @@ export default function OutcomeTransition() {
                 0.26
               );
             });
+            // beat 2: captions appear beneath each part, then dwell
             tl.to(
               "[data-col]",
               { autoAlpha: 1, y: 0, duration: 0.06, stagger: 0.015, ease: "power2.out" },
               0.4
             );
-            // dwell 0.48–0.58, then the lineup dissolves
-            tl.to("[data-col]", { autoAlpha: 0, duration: 0.05, ease: "power2.in" }, 0.58);
-            tl.to("[data-tool]", { autoAlpha: 0, duration: 0.05, stagger: 0.008, ease: "power2.in" }, 0.6);
 
-            // circles are born wrapped around each standing tool's column
+            // beat 3: captions leave; circles wrap each still-standing tool
+            // while "Tools aren't the point." gradually rises
+            tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.56);
             capabilities.forEach((c, k) => {
               const s = START[c.id];
               tl.set(
@@ -138,14 +138,17 @@ export default function OutcomeTransition() {
                   x: () => colX(k) - (innerLeft() + (s.x / 100) * S()),
                   y: () => (0.45 - s.y / 100) * S(),
                 },
-                0.59
+                0.56
               );
             });
             tl.to(
               "[data-circle]",
               { autoAlpha: 1, scale: 1, duration: 0.05, stagger: 0.008, ease: "power2.out" },
-              0.6
+              0.58
             );
+
+            // beat 4: only now do the tools leave
+            tl.to("[data-tool]", { autoAlpha: 0, duration: 0.05, stagger: 0.006, ease: "power2.in" }, 0.62);
           } else {
             // compact: no room for the lineup — tools snap out, circles are
             // born at the blade tips as before
@@ -164,7 +167,7 @@ export default function OutcomeTransition() {
             const a = ((k * 60 - 90) * Math.PI) / 180;
             const cl = { x: 50 + CLUSTER_R * Math.cos(a), y: 50 + CLUSTER_R * Math.sin(a) };
 
-            tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.1, ease: "power2.inOut" }, 0.66);
+            tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.1, ease: "power2.inOut" }, 0.68);
             tl.to(el, { x: frac(50 - s.x), y: frac(50 - s.y), duration: 0.08, ease: "power2.inOut" }, 0.78);
             if (k > 0) tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.83);
           });
@@ -182,7 +185,7 @@ export default function OutcomeTransition() {
           );
 
           // copy
-          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.68)
+          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.09, ease: "power1.inOut" }, 0.58)
             .to("[data-statement='tools']", { autoAlpha: 0, y: -16, duration: 0.04, ease: "power2.in" }, 0.8);
           tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.88);
           tl.to("[data-statement='navigate']", { autoAlpha: 1, duration: 0.04, ease: "power2.out" }, 0.95);
