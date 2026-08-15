@@ -4,6 +4,8 @@
 	/* starts one viewport early: the pin engages exactly as the story knife
 	   finishes centering, so the handoff is an in-place swap */
 	margin-top: -100vh;
+	/* the overlapping viewport must not swallow the story's hover */
+	pointer-events: none;
 }
 
 .stage {
@@ -13,6 +15,10 @@
 	overflow: hidden;
 	display: grid;
 	place-items: center;
+	/* pointer-transparent: while riding over the story during the overlap,
+	   this stage must not swallow hover; painted tool shapes and caption
+	   blocks re-enable their own pointer-events */
+	pointer-events: none;
 }
 
 .inner {
@@ -76,6 +82,8 @@
 	text-align: center;
 	padding-inline: 0.6rem;
 	transform: translateY(14px);
+	/* catches the pointer so caption hover never lights the tool above */
+	pointer-events: auto;
 }
 
 .colLabel {

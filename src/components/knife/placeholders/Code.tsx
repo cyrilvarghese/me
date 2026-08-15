@@ -8,6 +8,7 @@ export default function Code() {
       <path data-tip="" d="M166 623 L500 655" stroke={RED_EDGE} strokeWidth="2.5" />
       <path d="M240 601 H500" stroke={EDGE_WHITE} strokeWidth="1.5" />
       <text
+        pointerEvents="none"
         x="282"
         y="634"
         textAnchor="middle"

@@ -26,6 +26,10 @@ the build plan in `docs/superpowers/plans/2026-08-11-knife-portfolio.md`.
   screenshot the running dev server via playwright-core + system Edge. Scripts
   must live inside the repo (ESM resolves `playwright-core` from here). Visual
   changes are verified by screenshotting, not assumed.
+- **Do not create new one-off probe/debug scripts without asking Cyril first**
+  (user rule, 2026-08-15). Use the two scripts above; if a new script seems
+  needed, ask before writing it, and delete any temporary script in the same
+  change that stops needing it.
 
 ## Architecture
 

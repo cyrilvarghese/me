@@ -40,7 +40,9 @@
 	text-align: center;
 	width: max-content;
 	max-width: 92vw;
-	pointer-events: none;
+	/* catches the pointer so reading the statement never triggers
+	   blade hover behind it */
+	pointer-events: auto;
 }
 
 .centerCopy .centerStatement {
@@ -137,6 +139,9 @@
 	opacity: 0;
 	visibility: hidden;
 	white-space: nowrap;
+	/* labels catch their own pointer so hovering label text never
+	   triggers the blade hover underneath */
+	pointer-events: auto;
 }
 
 .labelVisible {
