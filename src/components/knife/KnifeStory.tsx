@@ -59,6 +59,21 @@ export default function KnifeStory() {
             };
           };
 
+          // Inertia wobble: when the knife lands center, the blades take a
+          // small outward kick and settle elastically — time-based, not
+          // scrubbed, so it reads as physical mass (user direction).
+          let wobblePlayed = false;
+          const wobble = gsap.timeline({ paused: true });
+          capabilities.forEach((c, i) => {
+            const open = c.openAngle * factor;
+            wobble.fromTo(
+              `[data-tool="${c.id}"]`,
+              { rotation: open + 2 * Math.sign(open) },
+              { rotation: open, duration: 0.9, ease: "elastic.out(1, 0.3)" },
+              i * 0.025
+            );
+          });
+
           const tl = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
@@ -67,6 +82,15 @@ export default function KnifeStory() {
               end: "bottom bottom",
               scrub: 0.4,
               invalidateOnRefresh: true,
+              onUpdate(self) {
+                if (self.progress >= 0.952 && !wobblePlayed) {
+                  wobblePlayed = true;
+                  wobble.restart();
+                } else if (self.progress < 0.9 && wobblePlayed) {
+                  wobblePlayed = false;
+                  wobble.progress(1).pause();
+                }
+              },
             },
           });
 
