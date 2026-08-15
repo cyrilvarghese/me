@@ -19,9 +19,9 @@
 .brand {
 	color: var(--accent);
 	font-size: 0.9rem;
-	/* stamp box around the wordmark, square like the CTA button */
-	padding: 0.3rem 0.65rem;
-	border: 1px solid var(--hairline-red);
+	/* stamp box around the wordmark, square-cornered like the CTA button */
+	padding: 0.35rem 1.1rem;
+	border: 2px solid var(--accent-deep);
 }
 
 .nav {
