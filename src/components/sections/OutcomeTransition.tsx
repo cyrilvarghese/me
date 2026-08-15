@@ -5,6 +5,7 @@ import { capabilities, type CapabilityId } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
 import CompassRose from "@/components/compass/CompassRose";
+import knifeStyles from "@/components/knife/knife.module.css";
 import styles from "./OutcomeTransition.module.css";
 
 const OPEN_ANGLES = Object.fromEntries(capabilities.map((c) => [c.id, c.openAngle]));
@@ -90,6 +91,15 @@ export default function OutcomeTransition() {
             unlockTimer = window.setTimeout(unlockScroll, ms);
           };
 
+          // Caption hover re-lights the tool standing above it: toggling the
+          // class that shares the tool's own :hover rule keeps one bloom.
+          let glowing: HTMLElement | null = null;
+          const clearGlow = () => {
+            glowing?.classList.remove(knifeStyles.glow);
+            glowing = null;
+          };
+          const colCleanups: Array<() => void> = [];
+
           const tl = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
@@ -112,6 +122,9 @@ export default function OutcomeTransition() {
                 ease: "power1.inOut",
               },
               onUpdate(self) {
+                // a scrub can hide a hovered caption without the pointer
+                // moving — no pointerleave, so drop stale glow here
+                if (glowing && (self.progress < 0.38 || self.progress > 0.6)) clearGlow();
                 // fire only after the dial's fade-in (0.87–0.97) has finished,
                 // so appearing and swinging never overlap
                 if (self.progress >= 0.96 && !needlePlayed) {
@@ -188,6 +201,23 @@ export default function OutcomeTransition() {
               0.4
             );
 
+            // hovering a caption blooms its standing tool (user request)
+            gsap.utils.toArray<HTMLElement>("[data-col]").forEach((col) => {
+              const tool = inner.querySelector<HTMLElement>(`[data-tool="${col.dataset.col}"]`);
+              if (!tool) return;
+              const enter = () => {
+                clearGlow();
+                glowing = tool;
+                tool.classList.add(knifeStyles.glow);
+              };
+              col.addEventListener("pointerenter", enter);
+              col.addEventListener("pointerleave", clearGlow);
+              colCleanups.push(() => {
+                col.removeEventListener("pointerenter", enter);
+                col.removeEventListener("pointerleave", clearGlow);
+              });
+            });
+
             // beat 3: captions leave; circles wrap each still-standing tool
             // while "Tools aren't the point." gradually rises
             tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.56);
@@ -250,7 +280,11 @@ export default function OutcomeTransition() {
           tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.92);
           tl.to("[data-statement='navigate']", { autoAlpha: 1, duration: 0.03, ease: "power2.out" }, 0.965);
 
-          return () => unlockScroll();
+          return () => {
+            unlockScroll();
+            colCleanups.forEach((fn) => fn());
+            clearGlow();
+          };
         }
       );
 
@@ -293,7 +327,7 @@ export default function OutcomeTransition() {
         {/* the lineup captions: one column per standing tool (user sketch) */}
         <div className={styles.lineup} aria-hidden="true">
           {capabilities.map((c) => (
-            <div key={c.id} data-col="" className={styles.col}>
+            <div key={c.id} data-col={c.id} className={styles.col}>
               <p className={`mono-label ${styles.colLabel}`}>{c.label}</p>
               <p className={`mono-label ${styles.colYears}`}>{c.duration}</p>
               <p className={`mono-label ${styles.colPeriod}`}>{c.years}</p>

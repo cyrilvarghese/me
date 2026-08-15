@@ -82,7 +82,8 @@
 	text-align: center;
 	padding-inline: 0.6rem;
 	transform: translateY(14px);
-	/* catches the pointer so caption hover never lights the tool above */
+	/* catches the pointer: caption hover re-lights the tool above via the
+	   knife glow class (wired in OutcomeTransition.tsx) */
 	pointer-events: auto;
 }
 
