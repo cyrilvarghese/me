@@ -18,10 +18,7 @@
 
 .brand {
 	color: var(--accent);
-	font-family: var(--font-sans);
-	font-size: 1rem;
-	font-weight: 500;
-	letter-spacing: 0.06em;
+	font-size: 0.9rem;
 	/* stamp box around the wordmark, square-cornered like the CTA button */
 	padding: 0.65rem 0.7rem;
 	border: 2px solid var(--accent-deep);

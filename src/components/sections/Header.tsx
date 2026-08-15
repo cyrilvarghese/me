@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={`section-shell ${styles.inner}`}>
-        <a href="#top" className={styles.brand}>
+        <a href="#top" className={`mono-label ${styles.brand}`}>
           CV
         </a>
         <nav className={styles.nav} aria-label="Site">
