@@ -58,7 +58,7 @@ export default function OutcomeTransition() {
         const circles = gsap.utils.toArray<HTMLElement>("[data-circle]");
         circles.forEach((el) => gsap.set(el, { xPercent: -50, yPercent: -50, scale: 0.4 }));
         gsap.set("[data-compass]", { scale: 0.92 });
-        gsap.set("[data-needle]", { rotation: -130, svgOrigin: "500 500" });
+        gsap.set("[data-needle]", { rotation: -130 });
         gsap.set("[data-statement]", { y: 16 });
 
         // knife exits: labels, blades, then the rest
@@ -91,15 +91,11 @@ export default function OutcomeTransition() {
         tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.08, ease: "power2.out" }, 0.66);
 
         // needle finds north — same mechanical settle as the blades.
-        // svgOrigin on every tween: invalidateOnRefresh re-parses transforms,
-        // and without it GSAP re-derives the pivot from the rotated bbox.
-        tl.to(
+        // The needle is an HTML layer with CSS transform-origin, so plain
+        // rotation is refresh-safe (SVG svgOrigin math was not).
+        tl.to("[data-needle]", { rotation: 10, duration: 0.12, ease: "power3.inOut" }, 0.72).to(
           "[data-needle]",
-          { rotation: 10, svgOrigin: "500 500", duration: 0.12, ease: "power3.inOut" },
-          0.72
-        ).to(
-          "[data-needle]",
-          { rotation: 0, svgOrigin: "500 500", duration: 0.05, ease: "power1.out" },
+          { rotation: 0, duration: 0.05, ease: "power1.out" },
           0.84
         );
 
