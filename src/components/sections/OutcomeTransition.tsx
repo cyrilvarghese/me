@@ -309,7 +309,7 @@ export default function OutcomeTransition() {
                 style={{ left: `${START[c.id].x}%`, top: `${START[c.id].y}%` }}
               >
                 <svg viewBox="0 0 100 100" fill="none">
-                  <circle cx="50" cy="50" r="48" stroke="rgba(248,242,240,0.4)" strokeWidth="1.2" />
+                  <circle cx="50" cy="50" r="48" stroke="rgba(248,244,242,0.4)" strokeWidth="1.2" />
                   <circle cx="50" cy="50" r="48" stroke="rgba(234,0,0,0.18)" strokeWidth="0.4" />
                 </svg>
               </div>

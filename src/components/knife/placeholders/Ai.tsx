@@ -10,7 +10,7 @@ export default function Ai() {
         fill={RED_DEEP}
         data-tip=""
       />
-      <circle cx="500" cy="634" r="11" fill="#150f0f" stroke={SCREW} strokeWidth="3" />
+      <circle cx="500" cy="634" r="11" fill="#130f0f" stroke={SCREW} strokeWidth="3" />
       <circle cx="500" cy="634" r="3.5" fill={SCREW} />
     </svg>
   );
