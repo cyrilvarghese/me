@@ -59,6 +59,19 @@ export default function OutcomeTransition() {
           };
           const innerLeft = () => (stage.clientWidth - S()) / 2;
 
+          // The needle hunt is time-based, not scrubbed (user direction):
+          // once the compass is up, the needle swings left and right and
+          // settles on north like a physical compass. Scrolling back below
+          // the compass re-arms it.
+          let needlePlayed = false;
+          const swing = gsap
+            .timeline({ paused: true })
+            .fromTo(
+              "[data-needle]",
+              { rotation: -130 },
+              { rotation: 0, duration: 2.6, ease: "elastic.out(1, 0.28)" }
+            );
+
           const tl = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
@@ -67,6 +80,16 @@ export default function OutcomeTransition() {
               end: "bottom bottom",
               scrub: 0.4,
               invalidateOnRefresh: true,
+              onUpdate(self) {
+                if (self.progress >= 0.85 && !needlePlayed) {
+                  needlePlayed = true;
+                  swing.restart();
+                } else if (self.progress < 0.78 && needlePlayed) {
+                  needlePlayed = false;
+                  swing.pause(0);
+                  gsap.set("[data-needle]", { rotation: -130 });
+                }
+              },
             },
           });
 
@@ -176,13 +199,6 @@ export default function OutcomeTransition() {
           tl.to(circles[0], { scale: 1.9, duration: 0.08, ease: "power2.inOut" }, 0.8);
           tl.to(circles[0], { autoAlpha: 0, duration: 0.04 }, 0.86);
           tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.06, ease: "power2.out" }, 0.84);
-
-          // needle finds north — same mechanical settle as the blades
-          tl.to("[data-needle]", { rotation: 10, duration: 0.08, ease: "power3.inOut" }, 0.87).to(
-            "[data-needle]",
-            { rotation: 0, duration: 0.04, ease: "power1.out" },
-            0.95
-          );
 
           // copy
           tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.09, ease: "power1.inOut" }, 0.58)
