@@ -81,6 +81,14 @@ export default function OutcomeTransition() {
               end: "bottom bottom",
               scrub: 0.4,
               invalidateOnRefresh: true,
+              // released scroll glides to the nearest beat so every phase
+              // is seen whole: apart → lineup → wrapped → cluster → compass
+              snap: {
+                snapTo: compact ? [0, 0.24, 0.55, 0.78, 1] : [0, 0.24, 0.5, 0.66, 0.78, 1],
+                duration: { min: 0.25, max: 0.9 },
+                delay: 0.08,
+                ease: "power1.inOut",
+              },
               onUpdate(self) {
                 // fire only after the dial's fade-in (0.84–0.90) has finished,
                 // so appearing and swinging never overlap
