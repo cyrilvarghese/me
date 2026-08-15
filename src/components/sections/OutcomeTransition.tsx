@@ -81,10 +81,15 @@ export default function OutcomeTransition() {
               end: "bottom bottom",
               scrub: 0.4,
               invalidateOnRefresh: true,
-              // released scroll glides to the nearest beat so every phase
-              // is seen whole: apart → lineup → wrapped → cluster → compass
+              // snapping only from the individual-tools lineup through to the
+              // compass — everything before scrubs freely (user direction)
               snap: {
-                snapTo: compact ? [0, 0.24, 0.55, 0.78, 1] : [0, 0.24, 0.5, 0.66, 0.78, 1],
+                snapTo(value: number) {
+                  const free = compact ? 0.5 : 0.45;
+                  if (value < free) return value;
+                  const beats = compact ? [0.55, 0.78, 1] : [0.5, 0.66, 0.78, 1];
+                  return beats.reduce((a, b) => (Math.abs(b - value) < Math.abs(a - value) ? b : a));
+                },
                 duration: { min: 0.25, max: 0.9 },
                 delay: 0.08,
                 ease: "power1.inOut",
