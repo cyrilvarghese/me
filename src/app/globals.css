@@ -24,6 +24,14 @@ body {
 	font-size: var(--text-body);
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
+}
+
+/* Horizontal-bleed guard (knife art) lives HERE, never on html/body:
+   a root-level overflow clip makes Chromium's backdrop-filter sample an
+   empty backdrop — the fixed header's frost silently dies. The header
+   sits outside main, so its backdrop chain stays clean; fixed/pinned
+   descendants escape this clip (main has no transform). */
+main {
 	overflow-x: clip;
 }
 
