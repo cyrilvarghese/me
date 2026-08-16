@@ -201,9 +201,9 @@ export default function OutcomeTransition() {
                 `[data-tool="${c.id}"]`,
                 {
                   x: () => colX(k) - (innerLeft() + 0.505 * S()),
-                  // stands 6% of the box above center — room for the white
+                  // stands 12% of the box above center — room for the white
                   // line below the captions (user sketch, 2026-08-16)
-                  y: () => -0.06 * S(),
+                  y: () => -0.12 * S(),
                   rotation: 90,
                   duration: 0.14,
                   ease: "power2.inOut",
@@ -244,8 +244,8 @@ export default function OutcomeTransition() {
                 `[data-circle="${c.id}"]`,
                 {
                   x: () => colX(k) - (innerLeft() + (s.x / 100) * S()),
-                  // 0.45 wraps the standing tool; minus the 6% lineup lift
-                  y: () => (0.39 - s.y / 100) * S(),
+                  // 0.45 wraps the standing tool; minus the 12% lineup lift
+                  y: () => (0.33 - s.y / 100) * S(),
                 },
                 0.56
               );

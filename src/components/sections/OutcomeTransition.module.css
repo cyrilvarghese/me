@@ -93,8 +93,8 @@
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	/* 0.145 hugs the standing tools; minus the 6% lineup lift */
-	top: calc(50% + 0.085 * min(58vh, 54vw, 660px) + 18px);
+	/* 0.145 hugs the standing tools; minus the 12% lineup lift */
+	top: calc(50% + 0.025 * min(58vh, 54vw, 660px) + 18px);
 	width: min(92vw, 1200px);
 	display: flex;
 	pointer-events: none;
@@ -168,7 +168,7 @@
 	position: absolute;
 	inset-inline: 0;
 	bottom: 0;
-	font-size: clamp(1.35rem, 2.6vw, 2.1rem);
+	font-size: var(--text-statement); /* same voice as "Tools matter." */
 	color: var(--fg);
 }
 
