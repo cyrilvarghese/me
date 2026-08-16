@@ -274,6 +274,12 @@ export default function OutcomeTransition() {
             if (k > 0) tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.83);
           });
 
+          // backlight: blooms up behind the merging circle so the compass
+          // emerges lit from behind, then settles to a faint ambient halo
+          gsap.set("[data-bloom]", { scale: 0.7 });
+          tl.to("[data-bloom]", { autoAlpha: 1, scale: 1, duration: 0.09, ease: "power2.out" }, 0.79);
+          tl.to("[data-bloom]", { opacity: 0.4, scale: 1.04, duration: 0.08, ease: "power1.inOut" }, 0.9);
+
           // the last circle grows into the compass ring
           tl.to(circles[0], { scale: 1.9, duration: 0.1, ease: "power2.inOut" }, 0.8);
           tl.to(circles[0], { autoAlpha: 0, duration: 0.05 }, 0.89);
@@ -306,6 +312,8 @@ export default function OutcomeTransition() {
   return (
     <section ref={sectionRef} className={styles.section} aria-label="From tools to navigation">
       <div className={styles.stage} ref={stageRef}>
+        <div className={styles.bloom} data-bloom="" aria-hidden="true" />
+
         <div className={styles.inner} ref={innerRef}>
           <div className={styles.knifeEl} data-knife-el="">
             <KnifeCanvas angles={OPEN_ANGLES} />

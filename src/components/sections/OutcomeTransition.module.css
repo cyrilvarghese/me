@@ -32,6 +32,25 @@
 	inset: 0;
 }
 
+/* stage-wide radial backlight behind the circle-to-compass merge */
+.bloom {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(
+		circle closest-side at 50% 50%,
+		rgba(234, 0, 0, 0.14),
+		rgba(234, 0, 0, 0.05) 55%,
+		transparent 100%
+	);
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.bloom {
+		opacity: 0;
+	}
+}
+
 /* ---- the six discipline circles ---- */
 
 .circles {
@@ -177,6 +196,7 @@
 
 	.knifeEl,
 	.circles,
+	.bloom,
 	.lineup {
 		display: none;
 	}
