@@ -32,7 +32,7 @@ export const capabilities: Capability[] = [
     tags: ["User research", "Workflow observation", "Market research"],
     hover:
       "Every problem starts with finding out what people actually do — interviews, observation and market context before any solution.",
-    years: "2019 — 2026",
+    years: "2019 — Present",
     duration: "7 yrs",
     line: "Product research as a designer.",
     openAngle: 72,
@@ -45,9 +45,9 @@ export const capabilities: Capability[] = [
     tags: ["0→1", "MVP", "Systems", "Prioritisation"],
     hover:
       "Deciding what to build matters more than building it well — scope, sequence, and the discipline to say no.",
-    years: "2023 — 2026",
+    years: "2023 — Present",
     duration: "3 yrs",
-    line: "Founded CaseChat\u00A0— built the platform ground up.\nLeading Product at Yuvabe\u00A0Studios.",
+    line: "Founded CaseChat\u00A0— built the platform ground up.\nCrrently Leading Product at Yuvabe\u00A0Studios.",
     openAngle: 42,
     layer: "back",
   },
@@ -58,7 +58,7 @@ export const capabilities: Capability[] = [
     tags: ["Interaction", "Prototyping", "System design"],
     hover:
       "From complex workflow to an interface people understand without a manual — interaction, prototyping, system design.",
-    years: "2019 — 2026",
+    years: "2019 — Present",
     duration: "7 yrs",
     line: "Led design at DMart.\nEnterprise UX for Razorpay, 1Finance and MSIG.",
     openAngle: 28,
@@ -97,9 +97,9 @@ export const capabilities: Capability[] = [
     tags: ["Positioning", "Pilots", "Adoption", "Customer discovery"],
     hover:
       "Positioning, pilots and adoption work — a product isn't shipped until people rely on it.",
-    years: "2024 — 2026",
+    years: "2024 — Present",
     duration: "2 yrs",
-    line: "GTM for CaseChat.\nLeading GTM at Yuvabe\u00A0Studios.",
+    line: "GTM for CaseChat.\nCurrently leading GTM at Yuvabe\u00A0Studios.",
     openAngle: -76,
     layer: "front",
   },
