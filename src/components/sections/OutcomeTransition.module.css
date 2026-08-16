@@ -1,6 +1,8 @@
 .section {
 	position: relative;
-	height: 520vh;
+	/* 100vh viewport + 420vh of story + ~105vh of compass runway — locked
+	   to DUR in OutcomeTransition.tsx (height = 100vh + 420vh × DUR) */
+	height: 625vh;
 	/* starts one viewport early: the pin engages exactly as the story knife
 	   finishes centering, so the handoff is an in-place swap */
 	margin-top: -100vh;

@@ -51,10 +51,11 @@ pointing left; positive angles swing up, negative down. Art is switchable:
 `docs/knife-art-prompts.md`).
 
 **Scroll choreography**: three pinned scrub sections — `KnifeStory` (600vh
-unfold), `OutcomeTransition` (350vh morph: knife dissolves → six discipline
+unfold), `OutcomeTransition` (625vh morph: knife dissolves → six discipline
 circles converge/overlap → merge into one ring → compass whose needle finds
-north; travel/navigation is the metaphor from there on), `FinalCTA` (300vh
-fold-back in reverse order). The compass (`src/components/compass/CompassRose`)
+north, then ~105vh of snap-free runway where the time-based needle hunt
+plays without blocking scroll; travel/navigation is the metaphor from there
+on), `FinalCTA` (300vh fold-back in reverse order). The compass (`src/components/compass/CompassRose`)
 shares the knife's element language, including the identical center pin.
 `Career` is a fourth knife scene without GSAP: a sticky knife reconfigures via
 CSS transitions (`animated` prop) as IntersectionObserver activates experience
@@ -62,7 +63,10 @@ entries — each role opens only the blades in its `caps`
 (`src/lib/data/experience.ts`; entries are one-liners + one impact line by
 user rule). Each builds one GSAP timeline
 inside `useGSAP` with a `duration: 1` spacer tween so tween positions are
-literally the scroll fractions from `scroll.ts`. All timelines live inside
+literally the scroll fractions from `scroll.ts` (OutcomeTransition's spacer
+is `DUR = 1.25`: positions 0–0.97 are the story at unchanged pacing, the
+rest is compass runway — snap beats and `onUpdate` thresholds there live in
+timeline time, ÷ `DUR` to get progress). All timelines live inside
 `gsap.matchMedia`: mobile (≤768px) compresses angles ×0.8 and hides orbit
 labels; reduced-motion builds **no** timelines — CSS renders the story static
 and open via the `--open` custom property (`rmOpen`/`rmClosed` in

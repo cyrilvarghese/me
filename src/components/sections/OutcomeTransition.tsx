@@ -27,6 +27,13 @@ const CLUSTER_R = 10;
     the statement to breathe below (user, 2026-08-16). */
 const LIFT = 5;
 
+/** Timeline length in spacer units. The choreography runs 0 → 0.97 at the
+    same vh-per-beat as always; 0.97 → DUR is pure runway — ~118vh of pinned
+    scroll where the time-based needle hunt plays out with the wheel never
+    blocked (replaces the old hard scroll lock). The module CSS height must
+    stay 100vh + 420vh × DUR. */
+const DUR = 1.25;
+
 /**
  * The metaphor turns (user direction, 2026-08-15): the tool kit comes
  * apart, the parts stand side by side in a lineup — each with its years
@@ -77,24 +84,6 @@ export default function OutcomeTransition() {
               0.25 // breath after the dial is fully in
             );
 
-          // scroll holds still while the needle performs (user direction) —
-          // wheel/touch are blocked briefly so the hunt can't be skipped
-          let unlockTimer: number | undefined;
-          const prevent = (e: Event) => e.preventDefault();
-          const unlockScroll = () => {
-            window.removeEventListener("wheel", prevent);
-            window.removeEventListener("touchmove", prevent);
-            if (unlockTimer) {
-              window.clearTimeout(unlockTimer);
-              unlockTimer = undefined;
-            }
-          };
-          const lockScroll = (ms: number) => {
-            window.addEventListener("wheel", prevent, { passive: false });
-            window.addEventListener("touchmove", prevent, { passive: false });
-            unlockTimer = window.setTimeout(unlockScroll, ms);
-          };
-
           // Caption hover re-lights the tool standing above it: toggling the
           // class that shares the tool's own :hover rule keeps one bloom.
           let glowing: HTMLElement | null = null;
@@ -113,29 +102,32 @@ export default function OutcomeTransition() {
               scrub: 0.4,
               invalidateOnRefresh: true,
               // snapping only from the individual-tools lineup through to the
-              // compass — everything before scrubs freely (user direction)
+              // compass landing — the scrub before is free (user direction),
+              // and so is the runway after: leaving is never tugged back
               snap: {
                 snapTo(value: number) {
-                  const free = compact ? 0.5 : 0.45;
-                  if (value < free) return value;
-                  const beats = compact ? [0.55, 0.78, 1] : [0.5, 0.66, 0.78, 1];
-                  return beats.reduce((a, b) => (Math.abs(b - value) < Math.abs(a - value) ? b : a));
+                  const t = value * DUR;
+                  if (t < (compact ? 0.5 : 0.45)) return value;
+                  if (t > 1.02) return value;
+                  const beats = compact ? [0.55, 0.78, 0.97] : [0.5, 0.66, 0.78, 0.97];
+                  return beats.reduce((a, b) => (Math.abs(b - t) < Math.abs(a - t) ? b : a)) / DUR;
                 },
                 duration: { min: 0.25, max: 0.9 },
                 delay: 0.08,
                 ease: "power1.inOut",
               },
               onUpdate(self) {
+                // beats live in timeline time (the spacer's units), not progress
+                const t = self.progress * DUR;
                 // a scrub can hide a hovered caption without the pointer
                 // moving — no pointerleave, so drop stale glow here
-                if (glowing && (self.progress < 0.38 || self.progress > 0.6)) clearGlow();
+                if (glowing && (t < 0.38 || t > 0.6)) clearGlow();
                 // fire only after the dial's fade-in (0.87–0.97) has finished,
                 // so appearing and swinging never overlap
-                if (self.progress >= 0.96 && !needlePlayed) {
+                if (t >= 0.96 && !needlePlayed) {
                   needlePlayed = true;
                   swing.restart();
-                  lockScroll(2900);
-                } else if (self.progress < 0.8 && needlePlayed) {
+                } else if (t < 0.8 && needlePlayed) {
                   needlePlayed = false;
                   swing.pause(0);
                   gsap.set("[data-needle]", { rotation: -130 });
@@ -144,7 +136,7 @@ export default function OutcomeTransition() {
             },
           });
 
-          tl.to({}, { duration: 1 }, 0);
+          tl.to({}, { duration: DUR }, 0);
 
           // NOTE: the story timeline performs the in-place knife swap at its
           // own scrubbed completion (KnifeStory.tsx) — swapping from here
@@ -338,8 +330,14 @@ export default function OutcomeTransition() {
           );
           tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.92);
 
+          // the runway: the story is told by 0.97 — from there the stage
+          // stays pinned while the compass and its backlight drift gently
+          // down with the scroll, at rest but alive, giving the needle hunt
+          // room to play before the pin releases (user direction, 2026-08-16)
+          tl.to("[data-compass]", { y: () => 0.05 * S(), duration: DUR - 0.97 }, 0.97);
+          tl.to("[data-bloom]", { y: () => 0.05 * S(), duration: DUR - 0.97 }, 0.97);
+
           return () => {
-            unlockScroll();
             colCleanups.forEach((fn) => fn());
             clearGlow();
           };
@@ -356,8 +354,9 @@ export default function OutcomeTransition() {
       ref={sectionRef}
       className={styles.section}
       aria-label="From tools to navigation"
-      /* chapter marks: lineup, cluster, merge, compass (the snap beats) */
-      data-ruler-beats="0.5,0.66,0.78,1"
+      /* chapter marks: lineup, cluster, merge, compass landing — the snap
+         beats as fractions of the section's scroll range (timeline ÷ DUR) */
+      data-ruler-beats="0.4,0.53,0.62,0.78"
     >
       <div className={styles.stage} ref={stageRef}>
         <div className={styles.bloom} data-bloom="" aria-hidden="true" />
@@ -415,7 +414,7 @@ export default function OutcomeTransition() {
 
         <div className={styles.copy}>
           <p className={`serif-display ${styles.interLine}`} data-statement="different">
-            Different problems require different tools.
+            One problem, many parts — a tool for each.
           </p>
           <h2 className={`serif-display ${styles.statement}`} data-statement="tools">
             Tools matter, but&nbsp;.&nbsp;.&nbsp;.
