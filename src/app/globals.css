@@ -17,6 +17,13 @@ html {
 	}
 }
 
+html {
+	/* horizontal overflow guard lives on html, NOT body — an overflow
+	   clip on body breaks backdrop-filter sampling in Chromium, which
+	   killed the header's frosted glass */
+	overflow-x: clip;
+}
+
 body {
 	background: var(--bg);
 	color: var(--fg);
@@ -24,7 +31,6 @@ body {
 	font-size: var(--text-body);
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
-	overflow-x: clip;
 }
 
 ::selection {
