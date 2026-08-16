@@ -72,7 +72,7 @@ export const capabilities: Capability[] = [
     hover:
       "Built software professionally before moving into product design, and continue to build working products rather than stopping at prototypes.",
     years: "2009 — Present",
-    duration: "17 yrs",
+    duration: "13 yrs",
     line: "Software engineer — products for mobile, web, XR and AI.",
     openAngle: -22,
     layer: "front",
