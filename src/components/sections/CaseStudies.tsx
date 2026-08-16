@@ -2,6 +2,7 @@
 
 import { m } from "motion/react";
 import { cases } from "@/lib/data/cases";
+import CaseVisual from "@/components/case/CaseVisual";
 import styles from "./CaseStudies.module.css";
 
 const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
@@ -53,9 +54,7 @@ export default function CaseStudies() {
           </div>
 
           <aside className={styles.caseAside}>
-            <div className={styles.visual} aria-hidden="true">
-              <p className={`mono-label ${styles.visualCaption}`}>Interface visual — in production</p>
-            </div>
+            <CaseVisual cover={c.cover} className={styles.visual} />
           </aside>
         </m.article>
       ))}

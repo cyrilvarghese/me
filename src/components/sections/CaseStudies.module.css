@@ -89,39 +89,10 @@
 	gap: 2rem;
 }
 
+/* sizing only — the frame itself lives in CaseVisual.module.css */
 .visual {
-	position: relative;
 	aspect-ratio: 16 / 10;
-	border: 1px solid var(--hairline);
-	background: var(--surface);
-	display: grid;
-	place-items: center;
-}
-
-.visual::before,
-.visual::after {
-	content: "";
-	position: absolute;
-	width: 14px;
-	height: 14px;
-	border-color: var(--accent);
-	border-style: solid;
-}
-
-.visual::before {
-	top: -1px;
-	left: -1px;
-	border-width: 1px 0 0 1px;
-}
-
-.visual::after {
-	bottom: -1px;
-	right: -1px;
-	border-width: 0 1px 1px 0;
-}
-
-.visualCaption {
-	color: var(--muted);
+	width: 100%;
 }
 
 @media (max-width: 900px) {
