@@ -33,7 +33,7 @@ export const cases: CaseStudy[] = [
   },
   {
     num: "03",
-    category: "Operational Systems",
+    category: "Product Designer",
     headline: "Making complex operations move faster through software.",
     startedWith:
       "A growing operation where quoting, dispatch and scheduling lived in spreadsheets, phone calls and institutional memory.",
