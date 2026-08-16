@@ -53,14 +53,8 @@
 	font-size: var(--text-statement);
 }
 
-.centerLine {
-	color: var(--muted);
-	margin-top: 0.75rem;
-}
-
 @media (prefers-reduced-motion: no-preference) {
-	.centerStatement,
-	.centerLine {
+	.centerStatement {
 		opacity: 0;
 		transform: translateY(16px);
 	}
@@ -205,8 +199,7 @@
 		margin-top: 2rem;
 	}
 
-	.centerStatement,
-	.centerLine {
+	.centerStatement {
 		opacity: 1;
 		transform: none;
 	}

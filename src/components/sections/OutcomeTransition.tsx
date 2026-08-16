@@ -201,7 +201,9 @@ export default function OutcomeTransition() {
                 `[data-tool="${c.id}"]`,
                 {
                   x: () => colX(k) - (innerLeft() + 0.505 * S()),
-                  y: 0,
+                  // stands 6% of the box above center — room for the white
+                  // line below the captions (user sketch, 2026-08-16)
+                  y: () => -0.06 * S(),
                   rotation: 90,
                   duration: 0.14,
                   ease: "power2.inOut",
@@ -242,7 +244,8 @@ export default function OutcomeTransition() {
                 `[data-circle="${c.id}"]`,
                 {
                   x: () => colX(k) - (innerLeft() + (s.x / 100) * S()),
-                  y: () => (0.45 - s.y / 100) * S(),
+                  // 0.45 wraps the standing tool; minus the 6% lineup lift
+                  y: () => (0.39 - s.y / 100) * S(),
                 },
                 0.56
               );
@@ -265,6 +268,20 @@ export default function OutcomeTransition() {
               0.52
             );
           }
+
+          // the split's name-plate: the white line lands after the last
+          // caption renders and leaves the moment the circles arrive
+          // (compact has no lineup — it rides the drift instead)
+          tl.to(
+            "[data-statement='different']",
+            { autoAlpha: 1, y: 0, duration: 0.03, ease: "power2.out" },
+            compact ? 0.14 : 0.52
+          );
+          tl.to(
+            "[data-statement='different']",
+            { autoAlpha: 0, duration: 0.035, ease: "power2.in" },
+            compact ? 0.46 : 0.575
+          );
 
           // converge into the overlapping cluster, then merge into one ring
           circles.forEach((el, k) => {
@@ -361,6 +378,9 @@ export default function OutcomeTransition() {
         </div>
 
         <div className={styles.copy}>
+          <p className={`serif-display ${styles.interLine}`} data-statement="different">
+            Different problems require different tools.
+          </p>
           <h2 className={`serif-display ${styles.statement}`} data-statement="tools">
             Tools matter.
           </h2>

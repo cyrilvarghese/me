@@ -167,7 +167,6 @@ export default function KnifeStory() {
           tl.to("[data-label]", { autoAlpha: 0, duration: 0.025, ease: "power2.in" }, 0.9);
 
           tl.to("[data-story-statement]", { autoAlpha: 1, y: 0, duration: 0.028, ease: "power2.out" }, 0.94);
-          tl.to("[data-story-line]", { autoAlpha: 1, y: 0, duration: 0.018, ease: "power2.out" }, 0.956);
 
           // Crossfade handoff on THIS scrubbed timeline: the story knife
           // dissolves out while the morph knife dissolves in over the last
@@ -267,9 +266,6 @@ export default function KnifeStory() {
             <br />
             Multiple points of leverage.
           </h2>
-          <p className={styles.centerLine} data-story-line="">
-            Different problems require different tools.
-          </p>
         </div>
       </div>
     </section>
