@@ -201,9 +201,9 @@ export default function OutcomeTransition() {
                 `[data-tool="${c.id}"]`,
                 {
                   x: () => colX(k) - (innerLeft() + 0.505 * S()),
-                  // stands 12% of the box above center — room for the white
-                  // line below the captions (user sketch, 2026-08-16)
-                  y: () => -0.12 * S(),
+                  // stands 16% of the box above center — clear air around
+                  // the settled headline below (user direction, 2026-08-16)
+                  y: () => -0.16 * S(),
                   rotation: 90,
                   duration: 0.14,
                   ease: "power2.inOut",
@@ -211,12 +211,12 @@ export default function OutcomeTransition() {
                 0.26
               );
             });
-            // beat 2: the headline has landed first (0.405) — captions
-            // follow beneath it, then dwell
+            // beat 2: captions wait until the descending headline has
+            // cleared their band (0.50), then fill it column by column
             tl.to(
               "[data-col]",
-              { autoAlpha: 1, y: 0, duration: 0.055, stagger: 0.014, ease: "power2.out" },
-              0.43
+              { autoAlpha: 1, y: 0, duration: 0.05, stagger: 0.01, ease: "power2.out" },
+              0.5
             );
 
             // hovering a caption blooms its standing tool (user request)
@@ -236,29 +236,30 @@ export default function OutcomeTransition() {
               });
             });
 
-            // beat 3: captions leave; circles wrap each still-standing tool
-            // while "Tools matter." gradually rises
-            tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.56);
+            // beat 3: captions leave; circles wrap each still-standing tool.
+            // Starts at 0.63, not sooner — the full lineup composition
+            // (captions done 0.60) needs its reading dwell.
+            tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.63);
             capabilities.forEach((c, k) => {
               const s = START[c.id];
               tl.set(
                 `[data-circle="${c.id}"]`,
                 {
                   x: () => colX(k) - (innerLeft() + (s.x / 100) * S()),
-                  // 0.45 wraps the standing tool; minus the 12% lineup lift
-                  y: () => (0.33 - s.y / 100) * S(),
+                  // 0.45 wraps the standing tool; minus the 16% lineup lift
+                  y: () => (0.29 - s.y / 100) * S(),
                 },
-                0.56
+                0.63
               );
             });
             tl.to(
               "[data-circle]",
               { autoAlpha: 1, scale: 1, duration: 0.05, stagger: 0.008, ease: "power2.out" },
-              0.58
+              0.64
             );
 
-            // beat 4: only now do the tools leave
-            tl.to("[data-tool]", { autoAlpha: 0, duration: 0.05, stagger: 0.006, ease: "power2.in" }, 0.62);
+            // beat 4: only now do the tools leave — the circles lift off them
+            tl.to("[data-tool]", { autoAlpha: 0, duration: 0.05, stagger: 0.006, ease: "power2.in" }, 0.655);
           } else {
             // compact: no room for the lineup — tools snap out, circles are
             // born at the blade tips as before
@@ -270,18 +271,35 @@ export default function OutcomeTransition() {
             );
           }
 
-          // the split's name-plate: the white line lands the moment the
-          // tools settle upright — BEFORE the captions — and leaves as the
-          // circles arrive (compact has no lineup — it rides the drift)
-          tl.to(
-            "[data-statement='different']",
-            { autoAlpha: 1, y: 0, duration: 0.03, ease: "power2.out" },
-            compact ? 0.14 : 0.405
-          );
+          // the split's name-plate: fades in high the moment the tools
+          // settle, then drifts slowly down to its resting spot while the
+          // captions appear above it; leaves as the circles arrive
+          // (compact has no lineup — it rides the drift instead)
+          if (!compact) {
+            tl.fromTo(
+              "[data-statement='different']",
+              { autoAlpha: 0, y: () => -0.16 * window.innerHeight },
+              { autoAlpha: 1, duration: 0.03, ease: "power2.out" },
+              0.405
+            );
+            // holds high through 0.46 (reading dwell), then descends the
+            // still-empty caption band before the captions fill it at 0.50
+            tl.to(
+              "[data-statement='different']",
+              { y: 0, duration: 0.045, ease: "power1.inOut" },
+              0.455
+            );
+          } else {
+            tl.to(
+              "[data-statement='different']",
+              { autoAlpha: 1, y: 0, duration: 0.03, ease: "power2.out" },
+              0.14
+            );
+          }
           tl.to(
             "[data-statement='different']",
             { autoAlpha: 0, duration: 0.035, ease: "power2.in" },
-            compact ? 0.46 : 0.575
+            compact ? 0.46 : 0.63
           );
 
           // converge into the overlapping cluster, then merge into one ring
