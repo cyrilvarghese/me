@@ -11,7 +11,9 @@ export type Capability = {
   years: string;
   /** Featured duration, e.g. "17 yrs". */
   duration: string;
-  /** One-line history shown under the standing tool in the lineup. */
+  /** History shown under the standing tool in the lineup. Facts are
+      \n-separated; when there are several, the LAST is the current role
+      and renders brighter (OutcomeTransition .factNow). */
   line: string;
   /** Signed degrees from closed (0). Positive = back-of-body tools sweeping up. */
   openAngle: number;

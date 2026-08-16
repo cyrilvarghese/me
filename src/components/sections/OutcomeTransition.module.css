@@ -129,12 +129,25 @@
 
 .colLine {
 	color: var(--muted);
-	font-size: 0.8rem;
+	font-size: 0.85rem;
 	line-height: 1.45;
 	max-width: 20ch;
 	margin-inline: auto;
 	text-wrap: balance; /* even line lengths — no orphaned last word */
-	white-space: pre-line; /* \n in data = deliberate line break */
+}
+
+/* each \n-separated fact chunks into its own block for scanning */
+.fact {
+	display: block;
+}
+
+.fact + .fact {
+	margin-top: 0.5em;
+}
+
+/* the current role (last of several facts) reads brighter than past work */
+.factNow {
+	color: var(--fg-soft);
 }
 
 @media (max-width: 768px) {

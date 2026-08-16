@@ -372,7 +372,18 @@ export default function OutcomeTransition() {
               <p className={`mono-label ${styles.colLabel}`}>{c.label}</p>
               <p className={`mono-label ${styles.colYears}`}>{c.duration}</p>
               <p className={`mono-label ${styles.colPeriod}`}>{c.years}</p>
-              <p className={styles.colLine}>{c.line}</p>
+              <p className={styles.colLine}>
+                {c.line.split("\n").map((fact, fi, facts) => (
+                  <span
+                    key={fact}
+                    className={`${styles.fact} ${
+                      facts.length > 1 && fi === facts.length - 1 ? styles.factNow : ""
+                    }`}
+                  >
+                    {fact}
+                  </span>
+                ))}
+              </p>
             </div>
           ))}
         </div>
