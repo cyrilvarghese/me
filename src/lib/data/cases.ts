@@ -23,7 +23,7 @@ export const cases: CaseStudy[] = [
   },
   {
     num: "02",
-    category: "Founder + AI",
+    category: "Founder + AI + Design Engineering",
     headline: "Turning clinical reasoning into an interactive AI simulation.",
     startedWith:
       "Medical students need repeated opportunities to make clinical decisions and receive useful feedback.",
