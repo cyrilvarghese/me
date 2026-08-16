@@ -21,12 +21,33 @@ export default function ScrollRuler() {
     const marker = markerRef.current;
     if (!rail || !marker) return;
 
+    const ticks = Array.from(rail.querySelectorAll<HTMLElement>("span"));
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     let raf = 0;
     const update = () => {
       raf = 0;
+      const H = rail.clientHeight;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
-      marker.style.transform = `translateY(${p * (rail.clientHeight - 2)}px)`;
+      const y = p * (H - 2);
+      marker.style.transform = `translateY(${y}px)`;
+
+      if (reduce) return;
+      // proximity wave: ticks swell as the playhead nears and relax as it
+      // leaves — distance-driven, so the bulge physically rides with it
+      const step = H / (TICKS - 1);
+      const RADIUS = 3.5; // in ticks
+      for (let i = 0; i < ticks.length; i++) {
+        const d = Math.abs(i * step - y) / step;
+        if (d >= RADIUS) {
+          if (ticks[i].style.transform) ticks[i].style.transform = "";
+          continue;
+        }
+        const t = 1 - d / RADIUS;
+        const ease = t * t * (3 - 2 * t); // smoothstep falloff
+        ticks[i].style.transform = `scaleX(${1 + 1.1 * ease})`;
+      }
     };
     const queue = () => {
       if (!raf) raf = requestAnimationFrame(update);

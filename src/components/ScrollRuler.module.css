@@ -17,6 +17,8 @@
 	width: 12px;
 	height: 1px;
 	background: rgba(248, 244, 242, 0.22);
+	/* the playhead's proximity wave stretches ticks from their left edge */
+	transform-origin: left center;
 }
 
 .major {
