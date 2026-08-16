@@ -3,10 +3,21 @@
 	inset-inline: 0;
 	top: 0;
 	z-index: 200;
+	border-bottom: 1px solid var(--hairline);
+}
+
+/* The veil lives on a NON-FIXED child layer: some Chromium builds
+   silently no-op backdrop-filter applied directly to position:fixed
+   elements (crbug 40683387 family) — an absolute layer inside samples
+   fine (verified in Cyril's browser via a DevTools inline test). */
+.header::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
 	background: color-mix(in srgb, var(--bg) var(--glass-tint, 78%), transparent);
 	backdrop-filter: blur(var(--glass-blur, 10px));
 	-webkit-backdrop-filter: blur(var(--glass-blur, 10px));
-	border-bottom: 1px solid var(--hairline);
 }
 
 .inner {
