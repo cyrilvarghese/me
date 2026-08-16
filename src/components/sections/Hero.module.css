@@ -37,11 +37,35 @@
 	align-items: center;
 	gap: 0.5rem;
 	width: fit-content;
+	transform-origin: left center;
+	transition: transform 120ms ease;
+}
+
+/* press feedback — instant scale-down, eased release */
+.cue:active {
+	transform: scale(0.97);
 }
 
 .cue .arrow {
 	display: inline-block;
 	animation: nudge 1.8s ease-in-out infinite alternate;
+	transition: transform 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.cue {
+		transition: transform 120ms ease, filter 180ms ease;
+	}
+
+	.cue:hover {
+		filter: brightness(1.25);
+	}
+
+	/* the idle drift yields to a held, decisive point downward */
+	.cue:hover .arrow {
+		animation: none;
+		transform: translateY(4px);
+	}
 }
 
 @keyframes nudge {
@@ -54,8 +78,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+	.cue,
 	.cue .arrow {
 		animation: none;
+		transition: none;
 	}
 }
 

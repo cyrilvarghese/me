@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Work_Sans, JetBrains_Mono } from "next/font/google";
 import MotionProvider from "@/components/MotionProvider";
+import SmoothAnchors from "@/components/SmoothAnchors";
 import "./tokens.css";
 import "./globals.css";
 
@@ -35,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
       <body>
+        <SmoothAnchors />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
