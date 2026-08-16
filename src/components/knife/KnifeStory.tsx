@@ -14,6 +14,10 @@ import styles from "./knife-story.module.css";
  * unfolds window by window, then — text out, knife to center, statement
  * beneath (user storyboard) — hands off to the morph section's knife.
  */
+/** Chapter marks for the scroll ruler: each blade's window end, plus the
+    centered-knife completion — straight from the shared scroll math. */
+const STORY_BEATS = [...capabilities.map((_, i) => windowFor(i).end), 1].join(",");
+
 export default function KnifeStory() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -227,7 +231,13 @@ export default function KnifeStory() {
   );
 
   return (
-    <section ref={sectionRef} className={styles.story} id="work" aria-label="Capabilities">
+    <section
+      ref={sectionRef}
+      className={styles.story}
+      id="work"
+      aria-label="Capabilities"
+      data-ruler-beats={STORY_BEATS}
+    >
       <div className={styles.stage} ref={stageRef}>
         <div className={styles.stageInner}>
           <div className={styles.narrative}>

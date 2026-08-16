@@ -352,7 +352,13 @@ export default function OutcomeTransition() {
   );
 
   return (
-    <section ref={sectionRef} className={styles.section} aria-label="From tools to navigation">
+    <section
+      ref={sectionRef}
+      className={styles.section}
+      aria-label="From tools to navigation"
+      /* chapter marks: lineup, cluster, merge, compass (the snap beats) */
+      data-ruler-beats="0.5,0.66,0.78,1"
+    >
       <div className={styles.stage} ref={stageRef}>
         <div className={styles.bloom} data-bloom="" aria-hidden="true" />
 

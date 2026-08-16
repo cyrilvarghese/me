@@ -24,6 +24,30 @@ export default function ScrollRuler() {
     const ticks = Array.from(rail.querySelectorAll<HTMLElement>("span"));
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // major ticks land on the page's real beats: every section start is a
+    // chapter, and scrubbed sections declare their internal completion
+    // beats via data-ruler-beats (fractions of their own scroll range) —
+    // the ruler is a map of the choreography, not decoration
+    const measure = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max <= 0) return;
+      const majors = new Set<number>();
+      const add = (f: number) =>
+        majors.add(Math.round(Math.min(1, Math.max(0, f)) * (TICKS - 1)));
+      document.querySelectorAll<HTMLElement>("main > section").forEach((s) => {
+        const top = s.getBoundingClientRect().top + window.scrollY;
+        add(top / max);
+        const range = s.offsetHeight - window.innerHeight;
+        if (s.dataset.rulerBeats && range > 0) {
+          for (const b of s.dataset.rulerBeats.split(",")) {
+            const f = parseFloat(b);
+            if (!Number.isNaN(f)) add((top + f * range) / max);
+          }
+        }
+      });
+      ticks.forEach((el, i) => el.classList.toggle(styles.major, majors.has(i)));
+    };
+
     let raf = 0;
     const update = () => {
       raf = 0;
@@ -53,12 +77,24 @@ export default function ScrollRuler() {
       if (!raf) raf = requestAnimationFrame(update);
     };
 
+    const remeasure = () => {
+      measure();
+      queue();
+    };
+
+    measure();
     update();
+    // GSAP pin spacers finish laying out after hydration — measure again
+    // once the dust settles so the beats sit at their final offsets
+    const settle = window.setTimeout(measure, 1000);
+    window.addEventListener("load", remeasure);
     window.addEventListener("scroll", queue, { passive: true });
-    window.addEventListener("resize", queue);
+    window.addEventListener("resize", remeasure);
     return () => {
+      window.clearTimeout(settle);
+      window.removeEventListener("load", remeasure);
       window.removeEventListener("scroll", queue);
-      window.removeEventListener("resize", queue);
+      window.removeEventListener("resize", remeasure);
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
@@ -66,7 +102,7 @@ export default function ScrollRuler() {
   return (
     <div ref={railRef} className={styles.rail} aria-hidden="true">
       {Array.from({ length: TICKS }, (_, i) => (
-        <span key={i} className={`${styles.tick} ${i % 8 === 0 ? styles.major : ""}`} />
+        <span key={i} className={styles.tick} />
       ))}
       <div ref={markerRef} className={styles.marker} />
     </div>
