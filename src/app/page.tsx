@@ -1,4 +1,5 @@
 import Header from "@/components/sections/Header";
+import ScrollRuler from "@/components/ScrollRuler";
 import Hero from "@/components/sections/Hero";
 import KnifeStory from "@/components/knife/KnifeStory";
 import OutcomeTransition from "@/components/sections/OutcomeTransition";
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <Header />
+      <ScrollRuler />
       <main>
         <Hero />
         <KnifeStory />
