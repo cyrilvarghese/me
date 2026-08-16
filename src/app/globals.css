@@ -113,3 +113,38 @@ button {
 		transform: var(--fx-from, translateY(28px));
 	}
 }
+
+/* ---- view transitions (case-study expand morph) ---- */
+
+/* keep the page clickable while a transition runs */
+::view-transition {
+	pointer-events: none;
+}
+
+::view-transition-group(.morph) {
+	animation-duration: 420ms;
+}
+
+/* the fixed header must never appear to move: pin its group, hide the
+   old snapshot so both headers never show at once */
+::view-transition-group(site-header) {
+	animation: none;
+	z-index: 300;
+}
+
+::view-transition-old(site-header) {
+	display: none;
+}
+
+::view-transition-new(site-header) {
+	animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(*),
+	::view-transition-new(*),
+	::view-transition-group(*) {
+		animation-duration: 0s !important;
+		animation-delay: 0s !important;
+	}
+}

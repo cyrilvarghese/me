@@ -34,7 +34,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      /* Next 16 no longer overrides CSS smooth-scroll during navigation;
+         without this the scroll-to-top animates mid view-transition */
+      data-scroll-behavior="smooth"
+      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+    >
       <body>
         <SmoothAnchors />
         <MotionProvider>{children}</MotionProvider>
