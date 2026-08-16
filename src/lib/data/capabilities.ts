@@ -60,7 +60,7 @@ export const capabilities: Capability[] = [
       "From complex workflow to an interface people understand without a manual — interaction, prototyping, system design.",
     years: "2019 — 2026",
     duration: "7 yrs",
-    line: "Led design at DMart; enterprise UX for Razorpay, 1Finance and MSIG.",
+    line: "Led design at DMart.\nEnterprise UX for Razorpay, 1Finance and MSIG.",
     openAngle: 28,
     layer: "back",
   },
