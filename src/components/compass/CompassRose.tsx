@@ -14,7 +14,19 @@ export default function CompassRose() {
   const layer: React.CSSProperties = { position: "absolute", inset: 0 };
   return (
     <div style={{ position: "relative", width: "100%", aspectRatio: "1" }}>
+      {/* cast shadow: the solid dial blocks the stage bloom and throws a
+          soft penumbra just past its rim */}
+      <div
+        aria-hidden
+        style={{
+          ...layer,
+          background:
+            "radial-gradient(circle closest-side, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.28) 70%, transparent 80%)",
+        }}
+      />
       <svg {...svgProps} style={layer}>
+        {/* opaque face — the dial is a solid object in front of the light */}
+        <circle cx="500" cy="500" r="310" fill="#1a1414" />
         <circle cx="500" cy="500" r="310" stroke="rgba(248,244,242,0.25)" strokeWidth="2" />
         <circle cx="500" cy="500" r="270" stroke="rgba(234,0,0,0.28)" strokeWidth="1.5" />
 

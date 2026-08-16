@@ -38,8 +38,8 @@
 	inset: 0;
 	background: radial-gradient(
 		circle closest-side at 50% 50%,
-		rgba(234, 0, 0, 0.14),
-		rgba(234, 0, 0, 0.05) 55%,
+		rgba(248, 244, 242, 0.12),
+		rgba(248, 244, 242, 0.045) 55%,
 		transparent 100%
 	);
 	pointer-events: none;
