@@ -1,8 +1,10 @@
+import GlassTuner from "@/components/GlassTuner";
 import styles from "./Header.module.css";
 
 export default function Header() {
   return (
     <header className={styles.header}>
+      {process.env.NODE_ENV === "development" && <GlassTuner />}
       <div className={`section-shell ${styles.inner}`}>
         <a href="#top" className={`mono-label ${styles.brand}`}>
           CV
