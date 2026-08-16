@@ -13,7 +13,7 @@ export type CaseStudy = {
 export const cases: CaseStudy[] = [
   {
     num: "01",
-    category: "AI Product System",
+    category: "Product + Design Engineering",
     headline: "Turning a fragmented AI production process into one agentic workspace.",
     startedWith:
       "Creative teams moved between scripts, prompts, references and multiple generation tools to produce individual shots.",
