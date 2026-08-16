@@ -1,0 +1,76 @@
+.page {
+	min-height: 100vh;
+	padding: clamp(3rem, 8vh, 6rem) var(--gutter);
+	max-width: var(--content-max);
+	margin-inline: auto;
+}
+
+.eyebrow {
+	color: var(--accent);
+	margin-bottom: 0.75rem;
+}
+
+.headline {
+	font-size: var(--text-h3);
+	margin-bottom: 3rem;
+}
+
+.rule {
+	color: var(--muted);
+	max-width: 52ch;
+	margin-bottom: 3rem;
+}
+
+.sectionLabel {
+	color: var(--fg-soft);
+	margin-block: 2.5rem 1rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--hairline);
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 1rem;
+}
+
+.swatch {
+	border: 1px solid var(--hairline);
+}
+
+.chip {
+	aspect-ratio: 4 / 2.4;
+	/* checker under translucent colors so alpha reads honestly */
+	background-image: linear-gradient(45deg, var(--surface) 25%, transparent 25%),
+		linear-gradient(-45deg, var(--surface) 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, var(--surface) 75%),
+		linear-gradient(-45deg, transparent 75%, var(--surface) 75%);
+	background-size: 16px 16px;
+	background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+.chip > div {
+	width: 100%;
+	height: 100%;
+}
+
+.meta {
+	padding: 0.6rem 0.7rem;
+	display: grid;
+	gap: 0.2rem;
+}
+
+.name {
+	color: var(--fg);
+	font-size: 0.7rem;
+}
+
+.value {
+	color: var(--muted);
+	font-size: 0.65rem;
+}
+
+.note {
+	color: var(--muted);
+	font-size: 0.75rem;
+}
