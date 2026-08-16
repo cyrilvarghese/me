@@ -146,6 +146,17 @@ export default function OutcomeTransition() {
           // own scrubbed completion (KnifeStory.tsx) — swapping from here
           // fired before the centering had rendered (scrub lag = two knives).
 
+          // starts where the story knife lands: shifted right so the
+          // left-biased art reads centered (KnifeStory.tsx). Slides back to
+          // neutral while the tools drift apart — the motion masks it and
+          // every later beat (lineup, circles, compass) keeps plain math.
+          tl.fromTo(
+            "[data-knife-el]",
+            { x: () => 0.135 * S() },
+            { x: 0, duration: 0.16, ease: "power2.inOut" },
+            0.1
+          );
+
           const circles = gsap.utils.toArray<HTMLElement>("[data-circle]");
           circles.forEach((el) => gsap.set(el, { xPercent: -50, yPercent: -50, scale: 0.4 }));
           gsap.set("[data-compass]", { scale: 0.92 });

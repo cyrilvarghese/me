@@ -31,8 +31,8 @@
 /* closing statement under the centered knife (user storyboard) */
 .centerCopy {
 	position: absolute;
-	/* under the knife art's visual center (art is left-biased in its box) */
-	left: calc(50% - 0.135 * min(58vh, 54vw, 660px));
+	/* the knife box lands art-centered (KnifeStory.tsx), so plain center */
+	left: 50%;
 	transform: translateX(-50%);
 	/* below the knife box's lower blades (gtm tip ≈ 0.45 of the box),
 	   with breathing room */

@@ -144,10 +144,11 @@ export default function KnifeStory() {
               {
                 x: () => {
                   const st = stage.getBoundingClientRect();
-                  // plain box-centering — must match the morph knife exactly
-                  // for the in-place handoff; the statement below shifts to
-                  // the art's visual center instead
-                  return st.left + st.width / 2 - knifeBox().x;
+                  // the art is left-biased inside its box, so the box lands
+                  // shifted right — the ART's visual center hits mid-stage.
+                  // The morph knife starts pre-shifted the same amount so the
+                  // crossfade handoff still coincides (OutcomeTransition).
+                  return st.left + st.width / 2 - knifeBox().x + 0.135 * targetW();
                 },
                 y: () => {
                   const st = stage.getBoundingClientRect();
