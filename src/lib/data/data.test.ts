@@ -50,10 +50,8 @@ describe("scroll windows", () => {
 });
 
 describe("cases", () => {
-  it("has three cases each flagging at least four tools", () => {
+  it("has three cases", () => {
     expect(cases).toHaveLength(3);
-    for (const c of cases)
-      expect(Object.values(c.tools).filter(Boolean).length).toBeGreaterThanOrEqual(4);
   });
 
   it("operational case carries big-number results", () => {

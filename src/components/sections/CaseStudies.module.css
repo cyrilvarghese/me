@@ -124,34 +124,6 @@
 	color: var(--muted);
 }
 
-.dots {
-	list-style: none;
-	display: flex;
-	flex-direction: column;
-	gap: 0.55rem;
-	max-width: 14rem;
-}
-
-.dotsTitle {
-	color: var(--muted);
-	margin-bottom: 0.75rem;
-}
-
-.dotRow {
-	display: flex;
-	justify-content: space-between;
-	color: var(--fg-soft);
-}
-
-.dotOn {
-	color: var(--accent);
-}
-
-.dotOff {
-	color: var(--muted);
-	opacity: 0.5;
-}
-
 @media (max-width: 900px) {
 	.case {
 		grid-template-columns: 1fr;

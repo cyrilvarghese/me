@@ -1,5 +1,3 @@
-import type { CapabilityId } from "./capabilities";
-
 export type CaseStudy = {
   num: string;
   category: string;
@@ -7,7 +5,6 @@ export type CaseStudy = {
   startedWith: string;
   built: string;
   results?: { value: string; label: string }[];
-  tools: Record<CapabilityId, boolean>;
 };
 
 export const cases: CaseStudy[] = [
@@ -19,7 +16,6 @@ export const cases: CaseStudy[] = [
       "Creative teams moved between scripts, prompts, references and multiple generation tools to produce individual shots.",
     built:
       "A canvas-based production system where agents help compose shots, create prompts, manage references and generate image and video assets.",
-    tools: { research: true, product: true, design: true, code: true, ai: true, gtm: false },
   },
   {
     num: "02",
@@ -29,7 +25,6 @@ export const cases: CaseStudy[] = [
       "Medical students need repeated opportunities to make clinical decisions and receive useful feedback.",
     built:
       "An interactive system where students work through AI-generated clinical cases, make diagnostic decisions and receive structured feedback.",
-    tools: { research: true, product: true, design: true, code: true, ai: true, gtm: true },
   },
   {
     num: "03",
@@ -45,6 +40,5 @@ export const cases: CaseStudy[] = [
       { value: "8 min", label: "Faster quote issuance" },
       { value: "25%", label: "Fewer no-shows" },
     ],
-    tools: { research: true, product: true, design: true, code: true, ai: false, gtm: true },
   },
 ];

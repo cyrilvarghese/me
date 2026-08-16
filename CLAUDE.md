@@ -35,8 +35,8 @@ the build plan in `docs/superpowers/plans/2026-08-11-knife-portfolio.md`.
 
 **Everything is driven by `src/lib/data/capabilities.ts`** — id, label,
 statement, tags, hover copy, `openAngle`, and back/front layer for the six
-tools. The knife layers, GSAP rotations, orbit labels, narrative panels, and
-case-study ●/○ indicators all render from this one array; `scroll.ts` holds the
+tools. The knife layers, GSAP rotations, orbit labels, and narrative panels
+all render from this one array; `scroll.ts` holds the
 shared scroll-window math (intro ends 0.10, six 0.13 windows, complete at
 0.88), and `data.test.ts` locks both invariants.
 
