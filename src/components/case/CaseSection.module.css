@@ -1,0 +1,52 @@
+.section {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3.5rem, 8vh, 6rem);
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: 14rem minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vw, 4rem);
+	align-items: start;
+}
+
+.eyebrow {
+	color: var(--muted);
+	display: flex;
+	gap: 0.75rem;
+	align-items: baseline;
+}
+
+/* scaffold marker — muted on purpose; disappears with the real copy */
+.mockTag {
+	font-size: 0.6rem;
+	border: 1px solid var(--hairline);
+	padding: 0.1rem 0.4rem;
+}
+
+.heading {
+	font-size: var(--text-h3);
+	max-width: 24ch;
+	margin-bottom: 1.25rem;
+}
+
+.body {
+	color: var(--fg-soft);
+	max-width: 60ch;
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+
+.body ul {
+	padding-left: 1.1em;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+
+@media (max-width: 768px) {
+	.grid {
+		grid-template-columns: 1fr;
+	}
+}
