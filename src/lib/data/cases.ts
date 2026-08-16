@@ -1,14 +1,18 @@
 export type CaseStudy = {
+  slug: string;
   num: string;
   category: string;
   headline: string;
   startedWith: string;
   built: string;
+  cover?: string;
   results?: { value: string; label: string }[];
 };
 
 export const cases: CaseStudy[] = [
   {
+    slug: "creative-os",
+    cover: "/assets/CreativeOS/cover.png",
     num: "01",
     category: "Product + Design Engineering",
     headline: "Turning a fragmented AI production process into one agentic workspace.",
@@ -18,6 +22,8 @@ export const cases: CaseStudy[] = [
       "A canvas-based production system where agents help compose shots, create prompts, manage references and generate image and video assets.",
   },
   {
+    slug: "case-chat",
+    cover: "/assets/CaseChat/thumbnail.png",
     num: "02",
     category: "Founder + Design Engineering",
     headline: "Turning clinical reasoning into an interactive AI simulation.",
@@ -27,6 +33,8 @@ export const cases: CaseStudy[] = [
       "An interactive system where students work through AI-generated clinical cases, make diagnostic decisions and receive structured feedback.",
   },
   {
+    slug: "msig",
+    cover: "/assets/MSIG/cover.png",
     num: "03",
     category: "Product Designer",
     headline: "Making complex operations move faster through software.",

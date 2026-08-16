@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { describe, it, expect } from "vitest";
 import { capabilities } from "./capabilities";
 import { windowFor, INTRO_END, COMPLETE_START } from "./scroll";
@@ -57,5 +59,19 @@ describe("cases", () => {
   it("operational case carries big-number results", () => {
     const ops = cases[2];
     expect(ops.results?.length).toBe(4);
+  });
+
+  it("every case has a unique url-safe slug", () => {
+    const slugs = cases.map((c) => c.slug);
+    expect(new Set(slugs).size).toBe(cases.length);
+    for (const s of slugs) expect(s).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+  });
+
+  it("cover paths resolve to files under public/", () => {
+    for (const c of cases) {
+      if (!c.cover) continue;
+      expect(c.cover).toMatch(/^\/assets\//);
+      expect(existsSync(join("public", c.cover))).toBe(true);
+    }
   });
 });
