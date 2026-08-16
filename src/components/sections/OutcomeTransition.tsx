@@ -23,6 +23,10 @@ const START: Record<CapabilityId, { x: number; y: number }> = {
 /** Overlapping cluster: six circles on a small hexagon around center. */
 const CLUSTER_R = 10;
 
+/** The cluster/ring/compass sit this % of the box above center — room for
+    the statement to breathe below (user, 2026-08-16). */
+const LIFT = 5;
+
 /**
  * The metaphor turns (user direction, 2026-08-15): the tool kit comes
  * apart, the parts stand side by side in a lineup — each with its years
@@ -267,10 +271,10 @@ export default function OutcomeTransition() {
             const id = el.dataset.circle as CapabilityId;
             const s = START[id];
             const a = ((k * 60 - 90) * Math.PI) / 180;
-            const cl = { x: 50 + CLUSTER_R * Math.cos(a), y: 50 + CLUSTER_R * Math.sin(a) };
+            const cl = { x: 50 + CLUSTER_R * Math.cos(a), y: 50 - LIFT + CLUSTER_R * Math.sin(a) };
 
             tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.1, ease: "power2.inOut" }, 0.66);
-            tl.to(el, { x: frac(50 - s.x), y: frac(50 - s.y), duration: 0.08, ease: "power2.inOut" }, 0.78);
+            tl.to(el, { x: frac(50 - s.x), y: frac(50 - LIFT - s.y), duration: 0.08, ease: "power2.inOut" }, 0.78);
             if (k > 0) tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.83);
           });
 
@@ -286,9 +290,11 @@ export default function OutcomeTransition() {
           // slower arrival: the dial eases in over a tenth of the section
           tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power2.out" }, 0.87);
 
-          // copy — the tools statement stays, shrinking and dimming so it
-          // reads together with "Outcomes matter more." (user direction)
-          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.09, ease: "power1.inOut" }, 0.58);
+          // copy — sequenced, not simultaneous: the circles gather (0.66–0.76),
+          // the statement rises as the cluster locks, THEN they fuse into one
+          // ring at 0.78 — gather, name it, merge. The statement then stays,
+          // shrinking and dimming so it reads with "Outcomes matter more."
+          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.745);
           tl.to(
             "[data-statement='tools']",
             { scale: 0.6, opacity: 0.5, transformOrigin: "center bottom", duration: 0.05, ease: "power2.inOut" },

@@ -37,7 +37,7 @@
 	position: absolute;
 	inset: 0;
 	background: radial-gradient(
-		circle closest-side at 50% 50%,
+		circle closest-side at 50% calc(50% - 0.05 * min(58vh, 54vw, 660px)),
 		rgba(248, 244, 242, 0.12),
 		rgba(248, 244, 242, 0.045) 57%,
 		transparent 100%
@@ -82,6 +82,9 @@
 
 .compassWrap > div {
 	width: 86%;
+	/* rides 5% of the box above center, matching the lifted merge ring
+	   (LIFT in OutcomeTransition.tsx); GSAP animates the wrap, not this */
+	transform: translateY(-5.8%);
 }
 
 /* ---- the lineup captions (user sketch: parts standing side by side) ---- */
@@ -144,7 +147,7 @@
 .copy {
 	position: absolute;
 	inset-inline: 0;
-	bottom: 7vh;
+	bottom: 14vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
