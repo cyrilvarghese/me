@@ -63,8 +63,8 @@ export default function UnknownProblem() {
           whileInView="show"
           viewport={viewport}
         >
-          Learning is one of my core strengths — I&apos;ll understand the problem, find the people
-          who know what I don&apos;t, build a model of how it works, and start moving.
+          Learning is my edge — I&apos;ll map the problem, find the people who know what
+          I don&apos;t, and start moving.
         </m.p>
       </div>
 
