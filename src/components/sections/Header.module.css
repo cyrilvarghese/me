@@ -3,20 +3,10 @@
 	inset-inline: 0;
 	top: 0;
 	z-index: 200;
+	background: color-mix(in srgb, var(--bg) 78%, transparent);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
 	border-bottom: 1px solid var(--hairline);
-}
-
-/* frosted glass: one blur layer under the header content. Works only
-   because the page's overflow-x guard sits on html, not body — a body
-   clip breaks Chromium's backdrop sampling (globals.css). */
-.header::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	z-index: -1;
-	background: color-mix(in srgb, var(--bg) 65%, transparent);
-	backdrop-filter: blur(16px);
-	-webkit-backdrop-filter: blur(16px);
 }
 
 .inner {
