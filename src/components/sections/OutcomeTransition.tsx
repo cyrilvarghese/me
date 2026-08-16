@@ -211,11 +211,12 @@ export default function OutcomeTransition() {
                 0.26
               );
             });
-            // beat 2: captions appear beneath each part, then dwell
+            // beat 2: the headline has landed first (0.405) — captions
+            // follow beneath it, then dwell
             tl.to(
               "[data-col]",
-              { autoAlpha: 1, y: 0, duration: 0.06, stagger: 0.015, ease: "power2.out" },
-              0.4
+              { autoAlpha: 1, y: 0, duration: 0.055, stagger: 0.014, ease: "power2.out" },
+              0.43
             );
 
             // hovering a caption blooms its standing tool (user request)
@@ -269,13 +270,13 @@ export default function OutcomeTransition() {
             );
           }
 
-          // the split's name-plate: the white line lands after the last
-          // caption renders and leaves the moment the circles arrive
-          // (compact has no lineup — it rides the drift instead)
+          // the split's name-plate: the white line lands the moment the
+          // tools settle upright — BEFORE the captions — and leaves as the
+          // circles arrive (compact has no lineup — it rides the drift)
           tl.to(
             "[data-statement='different']",
             { autoAlpha: 1, y: 0, duration: 0.03, ease: "power2.out" },
-            compact ? 0.14 : 0.52
+            compact ? 0.14 : 0.405
           );
           tl.to(
             "[data-statement='different']",
