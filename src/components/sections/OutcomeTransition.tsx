@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { capabilities, type CapabilityId } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
@@ -22,67 +22,6 @@ const START: Record<CapabilityId, { x: number; y: number }> = {
 
 /** Overlapping cluster: six circles on a small hexagon around center. */
 const CLUSTER_R = 10;
-
-/** Dev-only sliders for the compass-shadow and bloom spreads. Values feed
-    CSS custom properties live; bake the chosen numbers in and delete this
-    once tuned (never ships — stripped from the production build). */
-function BloomTuner() {
-  const [shadow, setShadow] = useState(20);
-  const [bloom, setBloom] = useState(55);
-  const set = (name: string, v: number) =>
-    document.documentElement.style.setProperty(name, `${v}%`);
-  return (
-    <div
-      style={{
-        position: "fixed",
-        right: 16,
-        bottom: 16,
-        zIndex: 500,
-        /* the surrounding stage is pointer-transparent — re-enable here */
-        pointerEvents: "auto",
-        display: "grid",
-        gap: 8,
-        padding: "0.75rem 1rem",
-        background: "rgba(21, 17, 17, 0.92)",
-        border: "1px solid rgba(248, 244, 242, 0.25)",
-        fontFamily: "var(--font-mono)",
-        fontSize: 11,
-        color: "#f8f4f2",
-      }}
-    >
-      <label>
-        shadow spread {shadow}%
-        <input
-          type="range"
-          min={5}
-          max={45}
-          value={shadow}
-          style={{ display: "block", width: 180 }}
-          onChange={(e) => {
-            const v = Number(e.currentTarget.value);
-            setShadow(v);
-            set("--compass-shadow-spread", v);
-          }}
-        />
-      </label>
-      <label>
-        bloom spread {bloom}%
-        <input
-          type="range"
-          min={25}
-          max={85}
-          value={bloom}
-          style={{ display: "block", width: 180 }}
-          onChange={(e) => {
-            const v = Number(e.currentTarget.value);
-            setBloom(v);
-            set("--bloom-spread", v);
-          }}
-        />
-      </label>
-    </div>
-  );
-}
 
 /**
  * The metaphor turns (user direction, 2026-08-15): the tool kit comes
@@ -414,8 +353,6 @@ export default function OutcomeTransition() {
             </div>
           ))}
         </div>
-
-        {process.env.NODE_ENV === "development" && <BloomTuner />}
 
         <div className={styles.copy}>
           <h2 className={`serif-display ${styles.statement}`} data-statement="tools">

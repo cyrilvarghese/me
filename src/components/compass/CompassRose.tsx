@@ -21,7 +21,7 @@ export default function CompassRose() {
         style={{
           ...layer,
           background:
-            "radial-gradient(circle closest-side, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.28) calc(60% + var(--compass-shadow-spread, 20%) / 2), transparent calc(60% + var(--compass-shadow-spread, 20%)))",
+            "radial-gradient(circle closest-side, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.28) 63%, transparent 66%)",
         }}
       />
       <svg {...svgProps} style={layer}>

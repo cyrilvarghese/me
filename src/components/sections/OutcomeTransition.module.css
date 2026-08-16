@@ -39,7 +39,7 @@
 	background: radial-gradient(
 		circle closest-side at 50% 50%,
 		rgba(248, 244, 242, 0.12),
-		rgba(248, 244, 242, 0.045) var(--bloom-spread, 55%),
+		rgba(248, 244, 242, 0.045) 57%,
 		transparent 100%
 	);
 	pointer-events: none;
