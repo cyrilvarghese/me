@@ -1,0 +1,96 @@
+.hero {
+	position: relative;
+	height: 100svh;
+}
+
+.heroVisual {
+	position: absolute;
+	inset: 0;
+}
+
+.fill {
+	width: 100%;
+	height: 100%;
+}
+
+/* readable ground for the hero text. The covers are light UI
+   screenshots, so the band gets close to opaque where the kicker and
+   headline sit (screenshot-judged, 2026-08-16). The stops are --bg
+   (#151111, the accent-tinged near-black) as rgba literals — color-mix
+   inside a stylesheet gradient silently no-ops in Cyril's browser, the
+   same quirk family as the header veil (see Header.tsx). */
+.scrim {
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0;
+	height: 55vh;
+	background: linear-gradient(
+		transparent,
+		rgba(21, 17, 17, 0.75) 55%,
+		rgba(21, 17, 17, 1)
+	);
+	pointer-events: none;
+	/* own compositor layer: a translucent overlay painted against the
+	   vt-promoted heroVisual gets dropped by Cyril's Edge build (same
+	   compositing quirk family as the header veil) — promoting the scrim
+	   makes the blend happen in the compositor, which works */
+	transform: translateZ(0);
+}
+
+.heroText {
+	position: absolute;
+	inset-inline: 0;
+	bottom: clamp(2rem, 6vh, 4rem);
+}
+
+.heroInner {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 1.1rem;
+}
+
+.backLink {
+	color: var(--muted);
+	transition: color 0.2s ease;
+}
+
+.backLink:hover {
+	color: var(--fg);
+}
+
+.kicker {
+	color: var(--accent);
+	font-size: 0.9rem;
+}
+
+.headline {
+	font-size: var(--text-statement);
+	max-width: 22ch;
+}
+
+.cta {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(4rem, 10vh, 7rem);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2rem;
+}
+
+.ctaLine {
+	font-size: var(--text-h3);
+	max-width: 24ch;
+}
+
+.btn {
+	display: inline-block;
+	border: 1px solid var(--fg);
+	padding: 0.9rem 1.5rem;
+	transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover {
+	background: var(--fg);
+	color: var(--bg);
+}
