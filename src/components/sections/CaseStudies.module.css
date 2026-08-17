@@ -81,6 +81,15 @@
 	color: var(--muted);
 	margin-top: 0.5rem;
 	width: fit-content;
+	transition: color 0.2s ease;
+}
+
+.explore:hover {
+	color: var(--fg);
+}
+
+.visualLink {
+	display: block;
 }
 
 .caseAside {

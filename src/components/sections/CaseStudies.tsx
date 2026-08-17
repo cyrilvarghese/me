@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ViewTransition } from "react";
 import { m } from "motion/react";
 import { cases } from "@/lib/data/cases";
 import CaseVisual from "@/components/case/CaseVisual";
@@ -14,15 +16,18 @@ export default function CaseStudies() {
       <h2 className={`serif-display ${styles.sectionTitle}`}>Three shipped systems.</h2>
 
       {cases.map((c) => (
-        <m.article
-          key={c.num}
-          className={`${styles.case} fx-hidden`}
-          initial={false}
-          whileInView={{ opacity: 1, transform: "translateY(0px)" }}
-          viewport={{ once: true, margin: "0px 0px -18% 0px" }}
-          transition={{ duration: 0.55, ease: EASE_OUT_CUBIC }}
-        >
-          <div className={styles.caseText}>
+        /* The reveal lives on the TEXT column, not the article: a hidden
+           ancestor above the ViewTransition would snapshot the visual at
+           opacity 0 on back-navigation and the morph pair would never
+           form. The visual is statically visible. */
+        <article key={c.num} className={styles.case}>
+          <m.div
+            className={`${styles.caseText} fx-hidden`}
+            initial={false}
+            whileInView={{ opacity: 1, transform: "translateY(0px)" }}
+            viewport={{ once: true, margin: "0px 0px -18% 0px" }}
+            transition={{ duration: 0.55, ease: EASE_OUT_CUBIC }}
+          >
             <p className={`mono-label ${styles.caseNum}`}>
               {c.num} / {c.category}
             </p>
@@ -48,15 +53,23 @@ export default function CaseStudies() {
               </div>
             )}
 
-            <p className={`mono-label ${styles.explore}`} title="Case study pages coming soon">
+            <Link href={`/work/${c.slug}`} className={`mono-label ${styles.explore}`}>
               Explore →
-            </p>
-          </div>
+            </Link>
+          </m.div>
 
           <aside className={styles.caseAside}>
-            <CaseVisual cover={c.cover} className={styles.visual} />
+            <Link
+              href={`/work/${c.slug}`}
+              className={styles.visualLink}
+              aria-label={`Open case study: ${c.headline}`}
+            >
+              <ViewTransition name={`case-visual-${c.slug}`} share="morph" default="none">
+                <CaseVisual cover={c.cover} className={styles.visual} />
+              </ViewTransition>
+            </Link>
           </aside>
-        </m.article>
+        </article>
       ))}
     </section>
   );
