@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ViewTransition } from "react";
 import type { CaseStudy } from "@/lib/data/cases";
+import CaseClose from "./CaseClose";
 import CaseVisual from "./CaseVisual";
 import styles from "./CaseShell.module.css";
 
@@ -17,6 +18,7 @@ export default function CaseShell({
 }) {
   return (
     <>
+      <CaseClose />
       <div className={styles.hero}>
         <ViewTransition name={`case-visual-${caseStudy.slug}`} share="morph" default="none">
           <div className={styles.heroVisual}>
