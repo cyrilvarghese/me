@@ -9,16 +9,20 @@ export type Tab = { id: string; label: string; panel: React.ReactNode };
     that slides between triggers rather than a border per trigger, so the
     move reads as one object travelling — and it travels on transform
     alone (translate + scaleX against the list width), never on left/width,
-    which would lay out on every frame. */
+    which would lay out on every frame.
+
+    Each panel scrolls inside itself rather than lengthening the page, so
+    switching tabs resets that panel to its top and leaves the page scroll
+    exactly where the reader left it. */
 export default function CaseTabs({ tabs, label }: { tabs: Tab[]; label: string }) {
   const [active, setActive] = useState(0);
   const [dir, setDir] = useState(1);
   const [bar, setBar] = useState<{ x: number; s: number } | null>(null);
+  const [barH, setBarH] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
-  const mounted = useRef(false);
 
   const measure = useCallback(() => {
     const el = refs.current[active];
@@ -26,44 +30,31 @@ export default function CaseTabs({ tabs, label }: { tabs: Tab[]; label: string }
     if (!el || !list) return;
     const width = list.offsetWidth || 1;
     setBar({ x: el.offsetLeft, s: el.offsetWidth / width });
+    if (barRef.current) setBarH(barRef.current.offsetHeight);
   }, [active]);
 
   /* before paint, so the bar is never seen at the wrong place */
   useLayoutEffect(measure, [measure]);
 
-  /* the label widths move with the type scale, so re-measure on resize */
+  /* the label widths and the bar's height move with the type scale */
   useEffect(() => {
     const list = listRef.current;
     if (!list || typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(measure);
     ro.observe(list);
+    if (barRef.current) ro.observe(barRef.current);
     return () => ro.disconnect();
   }, [measure]);
 
-  /* Every switch starts the new panel at its top. Left alone the reader
-     keeps whatever scroll position they had, which lands them in the
-     middle — or, when the new panel is shorter, past its end, where the
-     browser clamps and the scroll looks thrown away.
-
-     Measured from the PANEL, not the bar: the bar is sticky, so once
-     pinned its getBoundingClientRect().top is 0 by definition and
-     `rect.top + scrollY` merely returns the current scroll position —
-     scrolling there does nothing. The panel is in normal flow, so its
-     rect is honest; subtracting the bar's height puts the panel's first
-     line directly under the pinned bar.
-
-     Instant, not smooth: the content has already swapped, so a glide
-     would only animate toward something that already changed. */
+  /* Each switch starts the new panel at its own top. Because the panel is
+     the scroll container, this is a scrollTop reset on that element — the
+     page scroll is never touched, so the reader stays where they were and
+     only the tab body rewinds. Safe to run on mount and safe under
+     StrictMode's double-invoke: setting an already-zero scrollTop to zero
+     does nothing. */
   useLayoutEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
     const panel = panelRefs.current[active];
-    const barEl = barRef.current;
-    if (!panel || !barEl) return;
-    const top = panel.getBoundingClientRect().top + window.scrollY - barEl.offsetHeight;
-    window.scrollTo({ top: Math.max(0, top), behavior: "instant" });
+    if (panel) panel.scrollTop = 0;
   }, [active]);
 
   const go = (next: number) => {
@@ -141,9 +132,16 @@ export default function CaseTabs({ tabs, label }: { tabs: Tab[]; label: string }
           role="tabpanel"
           id={`panel-${t.id}`}
           aria-labelledby={`tab-${t.id}`}
+          /* a scroll container needs to be focusable, or its content is
+             unreachable by keyboard alone */
+          tabIndex={0}
           hidden={i !== active}
           className={styles.panel}
           data-dir={dir > 0 ? "forward" : "back"}
+          /* the pane fills what the sticky bar leaves of the viewport;
+             barH is measured, since the bar's height moves with the
+             type scale */
+          style={{ maxHeight: `calc(100svh - ${barH}px)` }}
         >
           {t.panel}
         </div>
