@@ -45,7 +45,7 @@ export default function CaseShell({
         <p className={`serif-display ${styles.ctaLine}`}>
           Have a problem that doesn't fit a job title?
         </p>
-        <a href="mailto:cyrilpdev@gmail.com" className={`mono-label ${styles.btn}`}>
+        <a href="mailto:cyrilpdev@gmail.com" className="mono-label btn">
           Start a conversation
         </a>
         <Link href="/#work" className={`mono-label ${styles.backLink}`}>

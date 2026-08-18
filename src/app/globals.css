@@ -104,6 +104,64 @@ button {
 	padding-inline: var(--gutter);
 }
 
+/* ---- controls ----
+   Every button, CTA and icon control on the site is one of these, so
+   geometry and hover behaviour stay identical everywhere. Pair with
+   .mono-label for the label voice. Variants: .btn-ghost (quiet, hairline
+   border) and .btn-icon (square, fixed size). */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	border: var(--control-border) solid var(--accent);
+	border-radius: var(--radius);
+	background: transparent;
+	color: var(--fg);
+	padding: var(--control-pad);
+	transition: background-color 150ms ease, color 150ms ease, transform 100ms ease;
+}
+
+.btn:active {
+	transform: scale(0.97);
+}
+
+.btn-ghost {
+	border-color: var(--hairline);
+	color: var(--fg-soft);
+}
+
+.btn-icon {
+	width: var(--control-size);
+	height: var(--control-size);
+	padding: 0;
+	font-size: 1.05rem;
+	line-height: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.btn:hover {
+		background: var(--accent);
+		color: var(--bg);
+	}
+
+	.btn-ghost:hover {
+		background: transparent;
+		border-color: var(--fg-soft);
+		color: var(--fg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.btn {
+		transition: none;
+	}
+
+	.btn:active {
+		transform: none;
+	}
+}
+
 /* Starting state for Framer Motion whileInView reveals. Lives in CSS so
    reduced-motion users (and pre-hydration paint) get visible content —
    the media query simply never hides it for them. */

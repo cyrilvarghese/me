@@ -65,33 +65,7 @@
 	transform: translateY(16px);
 }
 
-.btnPrimary {
-	border: 1px solid var(--accent);
-	color: var(--fg);
-	padding: 0.9rem 1.6rem;
-	transition: background-color 150ms ease, color 150ms ease, transform 100ms ease;
-}
-
-.btnPrimary:active {
-	transform: scale(0.97);
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.btnPrimary {
-		transition: none;
-	}
-
-	.btnPrimary:active {
-		transform: none;
-	}
-}
-
-@media (hover: hover) and (pointer: fine) {
-	.btnPrimary:hover {
-		background: var(--accent);
-		color: var(--bg);
-	}
-}
+/* the CTA uses the global .btn voice — nothing to add here */
 
 @media (prefers-reduced-motion: reduce) {
 	.section {

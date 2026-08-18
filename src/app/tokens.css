@@ -12,6 +12,18 @@
 	--hairline: rgba(248, 244, 242, 0.1);
 	--hairline-red: rgba(234, 0, 0, 0.28);
 
+	/* geometry — the system is square-cornered (Swiss); the only rounding
+	   is the 2px hairline used on knife plates and etched panels. Nothing
+	   on this site is pill-shaped. */
+	--radius: 0;
+	--radius-sm: 2px;
+
+	/* controls — one geometry for every button, link-button and icon
+	   control (the .btn voices in globals.css) */
+	--control-border: 1px;
+	--control-pad: 0.9rem 1.6rem;
+	--control-size: 2.75rem;
+
 	/* type scale */
 	--text-display: clamp(2.75rem, 7.5vw, 6.5rem);
 	--text-statement: clamp(2rem, 5vw, 4.25rem);

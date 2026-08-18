@@ -105,3 +105,9 @@ hand-tuned baked axes (`'opsz' 56, 'SOFT' 30, 'WONK' 0.9`, weight 380 in
 - Section styling is per-component CSS Modules; shared voices are the
   `.mono-label` / `.serif-display` / `.section-shell` classes in `globals.css`.
   Animate only `transform` and `opacity`.
+- **Controls all come from the `.btn` voices in `globals.css`** — accent
+  outline, square corners (`--radius: 0`), accent fill on hover; variants
+  `.btn-ghost` (hairline border) and `.btn-icon` (square, `--control-size`).
+  Never hand-roll a button in a module; geometry tokens (`--radius`,
+  `--radius-sm`, `--control-*`) live in `tokens.css` and both are shown live
+  on `/design`, which is the reference for anything new.

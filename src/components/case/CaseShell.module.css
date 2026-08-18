@@ -83,14 +83,4 @@
 	max-width: 24ch;
 }
 
-.btn {
-	display: inline-block;
-	border: 1px solid var(--fg);
-	padding: 0.9rem 1.5rem;
-	transition: background 0.2s ease, color 0.2s ease;
-}
-
-.btn:hover {
-	background: var(--fg);
-	color: var(--bg);
-}
+/* the CTA uses the global .btn voice — nothing to add here */

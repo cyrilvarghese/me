@@ -69,7 +69,7 @@ export default function CaseClose({ slug }: { slug: string }) {
     <button
       type="button"
       aria-label="Close case study"
-      className={`mono-label ${styles.close}`}
+      className={`mono-label btn btn-icon ${styles.close}`}
       onClick={close}
     >
       ×
