@@ -10,8 +10,10 @@
 	background: var(--bg);
 	border-top: 1px solid var(--hairline);
 	border-bottom: 1px solid var(--hairline);
-	/* room for the indicator, which hangs 11px below the list */
-	padding-block: clamp(1.1rem, 2.6vh, 1.75rem);
+	/* no bottom padding: the list's lower edge meets the bar's rule, so
+	   the active indicator lands ON that rule rather than floating above
+	   it with a band of ground in between */
+	padding-block: clamp(1.1rem, 2.6vh, 1.75rem) 0;
 }
 
 /* shadcn's "line" variant: the list hugs its content and carries no box
