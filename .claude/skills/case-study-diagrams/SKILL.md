@@ -37,6 +37,17 @@ every animation reference silently dies.
 - **Third-party marks**: `grayscale(1) brightness(2.1)` — hue gone, shape
   still readable on the dark ground.
 
+## Type
+
+Text is the mono voice already (`CaseDiagram.module.css` sets
+`var(--font-mono)` and `0.02em` tracking on every `.diagram text`), and
+labels keep their own case — `ChatGPT`, not `CHATGPT`.
+
+**Sizes are ratios of the viewBox width, not absolute pixels.** Every file
+is scaled to the same panel width, so the same `font-size` renders bigger
+in a narrower viewBox. Labels and captions: `0.025 × viewBox width` —
+20px at 800, 15px at 600, 13.7px at 548. Text inside a box: `0.030`.
+
 ## Motion
 
 **Speed is fixed at 246 units/second** (set by diagram 01: 2,954 units in
@@ -76,8 +87,11 @@ mid-travel.
 - **No inner frames.** The panel title already names the side ("Today —
   …" / "With CreativeOS"); a second bordered box repeating it is
   redundant. Crop the viewBox to the drawing instead.
-- Nodes: dark disc, neutral ring (`r≈30`), small centre dot; red centre
-  marks the flawed one.
+- **Nodes are three layers**, sized as ratios of the viewBox width so they
+  paint identically across files: a halo (`0.05 × vb`, `--surface` fill,
+  `rgba(248,244,242,0.14)` hairline, plus a `#eee8e622` tint), a ring
+  (`0.0325 × vb`, `--surface` fill, `#eee8e6` stroke at `0.005 × vb`), and
+  a centre dot (`0.01 × vb`). A red centre marks the flawed one.
 - Both sides share one visual language, so the difference the reader sees
   is the argument, not the styling.
 

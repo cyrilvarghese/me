@@ -27,12 +27,12 @@
 
   <!-- the run, dotted until the work reaches it -->
   <path d="M240,170 H560 V334 H240 Z" fill="none"
-        stroke="rgba(248,244,242,0.24)" stroke-width="2.5"
+        stroke="rgba(248,244,242,0.24)" stroke-width="2.06"
         stroke-dasharray="2 14" stroke-linecap="round" />
 
   <!-- filled in behind the runner -->
   <path class="cosCanvasFill" d="M240,170 H560 V334 H240 Z" pathLength="100" fill="none"
-        stroke="#eee8e6" stroke-width="2.5" stroke-linecap="round"
+        stroke="#eee8e6" stroke-width="2.4" stroke-linecap="round"
         stroke-dasharray="100 100" stroke-dashoffset="100" />
 
   <!-- the work itself, moving: a round cap on a zero-length dash -->
@@ -40,24 +40,38 @@
         stroke="#ea0000" stroke-width="11" stroke-linecap="round"
         stroke-dasharray="0.01 967.99" />
 
-  <!-- nodes -->
-  <g fill="#1e1818" stroke="rgba(248,244,242,0.42)" stroke-width="2.5">
-    <circle cx="240" cy="170" r="30" />
-    <circle cx="560" cy="170" r="30" />
-    <circle cx="560" cy="334" r="30" />
-    <circle cx="240" cy="334" r="30" />
+  <!-- nodes: the shared three-layer treatment (halo / ring / centre),
+       sized off this file's viewBox so they paint the same as every other
+       diagram — 0.05, 0.0325 and 0.01 of the viewBox width -->
+  <g fill="#1e1818" stroke="rgba(248,244,242,0.14)" stroke-width="1.37">
+    <circle cx="240" cy="170" r="27.4" />
+    <circle cx="560" cy="170" r="27.4" />
+    <circle cx="560" cy="334" r="27.4" />
+    <circle cx="240" cy="334" r="27.4" />
+  </g>
+  <g fill="#eee8e622">
+    <circle cx="240" cy="170" r="27.4" />
+    <circle cx="560" cy="170" r="27.4" />
+    <circle cx="560" cy="334" r="27.4" />
+    <circle cx="240" cy="334" r="27.4" />
+  </g>
+  <g fill="#1e1818" stroke="#eee8e6" stroke-width="2.74">
+    <circle cx="240" cy="170" r="17.8" />
+    <circle cx="560" cy="170" r="17.8" />
+    <circle cx="560" cy="334" r="17.8" />
+    <circle cx="240" cy="334" r="17.8" />
   </g>
   <g fill="#eee8e6">
-    <circle cx="240" cy="170" r="6" />
-    <circle cx="560" cy="170" r="6" />
-    <circle cx="560" cy="334" r="6" />
-    <circle cx="240" cy="334" r="6" />
+    <circle cx="240" cy="170" r="5.5" />
+    <circle cx="560" cy="170" r="5.5" />
+    <circle cx="560" cy="334" r="5.5" />
+    <circle cx="240" cy="334" r="5.5" />
   </g>
 
-  <g text-anchor="middle" style="font-size:19px" fill="#eee8e6">
-    <text x="240" y="122">Script</text>
-    <text x="560" y="122">Images</text>
-    <text x="560" y="392">Video</text>
-    <text x="240" y="392">Review</text>
+  <g text-anchor="middle" style="font-size:13.7px" fill="#eee8e6">
+    <text x="240" y="128">Script</text>
+    <text x="560" y="128">Images</text>
+    <text x="560" y="382">Video</text>
+    <text x="240" y="382">Review</text>
   </g>
 </svg>
