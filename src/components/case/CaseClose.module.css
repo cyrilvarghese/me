@@ -3,7 +3,8 @@
    no-ops in Cyril's browser (see the header veil + hero scrim notes). */
 .close {
 	position: fixed;
-	top: 5rem;
+	/* the case page is a takeover — no header bar to clear */
+	top: 1.5rem;
 	right: var(--gutter);
 	z-index: 190;
 	width: 44px;

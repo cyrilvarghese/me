@@ -20,17 +20,21 @@
 	display: block;
 }
 
-/* the logo already draws its own red box — the global focus ring would
-   double it, so on focus the ring sits ON the baked border instead of
-   floating outside it (keyboard users still get an indicator) */
+/* the logo already draws its own red box — a focus ring would read as a
+   second border, so keyboard focus brightens the mark instead */
 .brand:focus-visible {
-	outline-offset: -2px;
+	outline: none;
 }
 
+.brand:focus-visible .brandImg {
+	filter: brightness(1.55);
+}
+
+/* sized to the 3.75rem bar with a little air above and below */
 .brandImg {
 	display: block;
-	width: 46px;
-	height: 46px;
+	width: 2.5rem;
+	height: 2.5rem;
 }
 
 .nav {

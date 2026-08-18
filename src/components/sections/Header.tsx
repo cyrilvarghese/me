@@ -1,10 +1,8 @@
-import Link from "next/link";
 import styles from "./Header.module.css";
 
-/** sub: rendered on a sub-page — brand and nav become real route links
-    back to the home sections (there is no #work element off the home
-    page). Home keeps plain hash anchors so SmoothAnchors owns the glide. */
-export default function Header({ sub }: { sub?: boolean }) {
+/** Home-page chrome. Case pages are takeovers and render no header, so
+    the nav is plain hash anchors and SmoothAnchors owns the glide. */
+export default function Header() {
   return (
     <header className={styles.header} style={{ viewTransitionName: "site-header" }}>
       {/* inline veil: Cyril's browser only honors backdrop-filter set
@@ -22,33 +20,19 @@ export default function Header({ sub }: { sub?: boolean }) {
         }}
       />
       <div className={`section-shell ${styles.inner}`}>
-        {sub ? (
-          <Link href="/" className={styles.brand} aria-label="Home">
-            <img src="/logo.png" alt="" className={styles.brandImg} />
-          </Link>
-        ) : (
-          <a href="#top" className={styles.brand} aria-label="Home">
-            <img src="/logo.png" alt="" className={styles.brandImg} />
-          </a>
-        )}
+        <a href="#top" className={styles.brand} aria-label="Home">
+          <img src="/logo.png" alt="" className={styles.brandImg} />
+        </a>
         <nav className={styles.nav} aria-label="Site">
-          {(
-            [
-              ["Work", "#work"],
-              ["About", "#about"],
-              ["Contact", "#contact"],
-            ] as const
-          ).map(([label, hash]) =>
-            sub ? (
-              <Link key={hash} href={`/${hash}`} className="mono-label">
-                {label}
-              </Link>
-            ) : (
-              <a key={hash} href={hash} className="mono-label">
-                {label}
-              </a>
-            )
-          )}
+          <a href="#work" className="mono-label">
+            Work
+          </a>
+          <a href="#about" className="mono-label">
+            About
+          </a>
+          <a href="#contact" className="mono-label">
+            Contact
+          </a>
         </nav>
       </div>
     </header>
