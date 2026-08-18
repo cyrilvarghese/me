@@ -23,10 +23,16 @@
 	position: absolute;
 	inset-inline: 0;
 	bottom: 0;
-	height: 55vh;
+	height: 74vh;
+	/* the covers are bright, daylit photographs: the ramp starts earlier and
+	   lands denser so the kicker and headline sit on near-solid ground
+	   rather than on whatever the photograph happens to put behind them.
+	   rgba literals, not color-mix — the latter no-ops in Cyril's Edge */
 	background: linear-gradient(
 		transparent,
-		rgba(21, 17, 17, 0.75) 55%,
+		rgba(21, 17, 17, 0.45) 26%,
+		rgba(21, 17, 17, 0.82) 55%,
+		rgba(21, 17, 17, 0.97) 80%,
 		rgba(21, 17, 17, 1)
 	);
 	pointer-events: none;
