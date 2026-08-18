@@ -1,0 +1,74 @@
+.section {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3.5rem, 9vh, 6.5rem);
+}
+
+.eyebrow {
+	color: var(--muted);
+	margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(1rem, 2.5vw, 2rem);
+	margin-bottom: clamp(1rem, 2.5vw, 2rem);
+}
+
+.shot {
+	margin: 0;
+}
+
+.frame {
+	aspect-ratio: 16 / 10;
+	width: 100%;
+}
+
+.caption {
+	color: var(--muted);
+	margin-top: 0.6rem;
+}
+
+.demo {
+	margin: 0;
+}
+
+.player {
+	width: 100%;
+	display: block;
+	border: 1px solid var(--hairline);
+	background: var(--surface);
+	aspect-ratio: 16 / 9;
+}
+
+/* waiting frame — same footprint as the player, so the page does not
+   reflow when the file lands */
+.waiting {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	border: 1px solid var(--hairline);
+	background: var(--surface);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1.25rem;
+}
+
+.play {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 18px 0 18px 30px;
+	border-color: transparent transparent transparent var(--accent);
+}
+
+.waitingLabel {
+	color: var(--muted);
+}
+
+@media (max-width: 900px) {
+	.grid {
+		grid-template-columns: 1fr;
+	}
+}
