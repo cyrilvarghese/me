@@ -105,10 +105,10 @@ hand-tuned baked axes (`'opsz' 56, 'SOFT' 30, 'WONK' 0.9`, weight 380 in
 - Section styling is per-component CSS Modules; shared voices are the
   `.mono-label` / `.serif-display` / `.section-shell` classes in `globals.css`.
   Animate only `transform` and `opacity`.
-- **Case-study diagrams follow `docs/diagram-motion-guidelines.md`** — one
-  hue (red only on the moment that matters), mono text, markers at 246
-  units/second, finished states hold, no inner frames. Read it before
-  drawing or editing any diagram.
+- **Case-study diagrams follow the `case-study-diagrams` skill**
+  (`.claude/skills/case-study-diagrams/`) — one hue (red only on the moment
+  that matters), mono text, markers at 246 units/second, finished states
+  hold, no inner frames. Invoke it before drawing or editing any diagram.
 - **Controls all come from the `.btn` voices in `globals.css`** — accent
   outline, square corners (`--radius: 0`), accent fill on hover; variants
   `.btn-ghost` (hairline border) and `.btn-icon` (square, `--control-size`).
