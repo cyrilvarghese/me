@@ -11,8 +11,7 @@
 	letter-spacing: 0.02em;
 }
 
-/* third-party marks are embedded bitmaps — drop the hue so red stays the
-   only colour, then lift them so the shapes still read on the dark ground */
-.diagram image {
-	filter: grayscale(1) brightness(2.1) contrast(1.15);
-}
+/* Third-party marks keep their own brand colour — they are identity, not
+   decoration, and are the one exception to the single-hue rule. They sit
+   on a light disc inside the diagram, as in the source deck, so no filter
+   is applied. */

@@ -40,47 +40,35 @@
         stroke="#ea0000" stroke-width="3.4" stroke-linecap="round"
         stroke-dasharray="9.6 958.4" />
 
-  <!-- nodes: shared three-layer treatment, sized off this viewBox
-       (0.05 halo / 0.0325 ring), each holding the icon of its stage -->
-  <g fill="#1e1818" stroke="rgba(248,244,242,0.14)" stroke-width="1.37">
+  <!-- nodes: one light disc each, matching the tool discs on the other
+       card in this section; sized off this viewBox (0.05 × width) -->
+  <g fill="#f8f4f2" stroke="rgba(248,244,242,0.28)" stroke-width="2">
     <circle cx="240" cy="170" r="27.4" />
     <circle cx="560" cy="170" r="27.4" />
     <circle cx="560" cy="334" r="27.4" />
     <circle cx="240" cy="334" r="27.4" />
-  </g>
-  <g fill="#eee8e622">
-    <circle cx="240" cy="170" r="27.4" />
-    <circle cx="560" cy="170" r="27.4" />
-    <circle cx="560" cy="334" r="27.4" />
-    <circle cx="240" cy="334" r="27.4" />
-  </g>
-  <g fill="#1e1818" stroke="#eee8e6" stroke-width="2.74">
-    <circle cx="240" cy="170" r="17.8" />
-    <circle cx="560" cy="170" r="17.8" />
-    <circle cx="560" cy="334" r="17.8" />
-    <circle cx="240" cy="334" r="17.8" />
   </g>
 
-  <!-- stage marks: 24-unit art scaled to sit inside the ring -->
-  <g fill="none" stroke="#eee8e6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- stage marks, drawn dark on the disc -->
+  <g fill="none" stroke="#151111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <!-- script: lines of text -->
-    <g transform="translate(231.5 161.5) scale(0.75)">
+    <g transform="translate(229.8 159.8) scale(0.85)">
       <path d="M4 3h11l5 5v13H4z" />
       <path d="M8 11h8M8 15h8M8 19h5" />
     </g>
     <!-- images: frame with a horizon and a sun -->
-    <g transform="translate(551.5 161.5) scale(0.75)">
+    <g transform="translate(549.8 159.8) scale(0.85)">
       <rect x="3" y="5" width="18" height="14" rx="2" />
       <circle cx="8.5" cy="10" r="1.8" />
       <path d="M4 17l5-5 4 4 3-2 4 4" />
     </g>
     <!-- video: play -->
-    <g transform="translate(551.5 325.5) scale(0.75)">
+    <g transform="translate(549.8 323.8) scale(0.85)">
       <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="M11 9.5l5 2.5-5 2.5z" fill="#eee8e6" />
+      <path d="M11 9.5l5 2.5-5 2.5z" fill="#151111" />
     </g>
     <!-- review: a check -->
-    <g transform="translate(231.5 325.5) scale(0.75)">
+    <g transform="translate(229.8 323.8) scale(0.85)">
       <path d="M4 12.5l5 5L20 6.5" />
     </g>
   </g>

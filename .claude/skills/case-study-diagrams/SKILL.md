@@ -34,8 +34,12 @@ every animation reference silently dies.
   frames, labels) stays neutral. A mostly-red diagram is wrong.
 - **Sequential inputs climb in saturation** toward the accent, identically
   on both sides: `#b39a9a` → `#c98080` → `#d95a5a` → `#ea0000`.
-- **Third-party marks**: `grayscale(1) brightness(2.1)` — hue gone, shape
-  still readable on the dark ground.
+- **Third-party marks are the one exception** and keep their brand colour —
+  they are identity, not decoration. Give them a light disc to sit on
+  (`--fg` fill, `rgba(248,244,242,0.28)` hairline) rather than filtering
+  them; a filtered logo on the dark ground reads as a smudge. When one
+  diagram in a section uses light discs, its partner matches — light disc,
+  `--bg` icons — so the pair stays one language.
 
 ## Type
 
