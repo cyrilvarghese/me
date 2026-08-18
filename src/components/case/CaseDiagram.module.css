@@ -1,0 +1,18 @@
+.diagram svg {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* the diagrams speak the site's label voice: mono, lightly tracked.
+   Sizes stay as drawn (set inline per element) so the layouts hold. */
+.diagram text {
+	font-family: var(--font-mono);
+	letter-spacing: 0.02em;
+}
+
+/* third-party marks are embedded bitmaps — neutralise them so red stays
+   the only hue in the diagrams; the shapes still read as the tools */
+.diagram image {
+	filter: grayscale(1) contrast(0.9) opacity(0.85);
+}

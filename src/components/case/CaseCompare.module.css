@@ -72,10 +72,7 @@
 	background: var(--accent);
 }
 
-.diagram {
-	width: 100%;
-	height: auto;
-}
+/* the drawing itself is styled in CaseDiagram.module.css */
 
 .stat {
 	display: flex;

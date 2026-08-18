@@ -1,3 +1,4 @@
+import CaseDiagram from "./CaseDiagram";
 import styles from "./CaseCompare.module.css";
 
 type Panel = {
@@ -44,7 +45,7 @@ export default function CaseCompare({
               <span className={styles.dot} aria-hidden="true" />
               {p.title}
             </figcaption>
-            <img src={p.diagram} alt="" className={styles.diagram} loading="lazy" />
+            <CaseDiagram src={p.diagram} />
             {p.stat && (
               <p className={styles.stat}>
                 <span className={styles.statValue}>{p.stat.value}</span>
