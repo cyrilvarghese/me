@@ -15,7 +15,7 @@ export const cases: CaseStudy[] = [
     cover: "/assets/CreativeOS/web-cover.png",
     num: "01",
     category: "Product + Design Engineering",
-    headline: "Turning a fragmented AI production process into one agentic workspace.",
+    headline: "Turning a fragmented AI production process into one creative workspace.",
     startedWith:
       "Creative teams moved between scripts, prompts, references and multiple generation tools to produce individual shots.",
     built:
