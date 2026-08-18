@@ -1,13 +1,15 @@
-<svg viewBox="0 0 800 470" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="126 92 548 322" xmlns="http://www.w3.org/2000/svg">
   <style>
-    /* Same technique as the deck's other diagrams: a short dash runs the
-       path while a second copy of the path fills in behind it. The loop
-       is 968 units around (320+164+320+164), so the runner travels
-       exactly that far in one cycle and the fill tracks it. */
+    /* Same technique as the deck's other diagrams: a marker runs the path
+       while a second copy of the path fills in behind it. The loop is 968
+       units around (320+164+320+164); at section 01's speed (246 units a
+       second) that is 3.93s, so travel takes 49.15% of the 8s cycle and
+       the rest is the hold. The marker is a zero-length dash with a round
+       cap — a dot that rides the line exactly as the fill does. */
     @keyframes cosCanvasRun {
       0%       { stroke-dashoffset: 0; opacity: 1; }
       49.15%   { stroke-dashoffset: -968; opacity: 1; }
-      49.65% { opacity: 0; }
+      49.65%   { opacity: 0; }
       100%     { stroke-dashoffset: -968; opacity: 0; }
     }
     @keyframes cosCanvasFill {
@@ -23,26 +25,20 @@
     }
   </style>
 
-  <!-- the canvas everything lives on -->
-  <rect x="46" y="36" width="708" height="400" rx="26" fill="none"
-        stroke="rgba(248,244,242,0.22)" stroke-width="2"
-        stroke-dasharray="2 10" stroke-linecap="round" />
-  <text x="84" y="78" style="font-size:17px;letter-spacing:3.9px" fill="#9e9493">CREATIVEOS</text>
-
   <!-- the run, dotted until the work reaches it -->
   <path d="M240,170 H560 V334 H240 Z" fill="none"
         stroke="rgba(248,244,242,0.24)" stroke-width="2.5"
         stroke-dasharray="2 14" stroke-linecap="round" />
 
-  <!-- filled behind the runner -->
+  <!-- filled in behind the runner -->
   <path class="cosCanvasFill" d="M240,170 H560 V334 H240 Z" pathLength="100" fill="none"
         stroke="#eee8e6" stroke-width="2.5" stroke-linecap="round"
         stroke-dasharray="100 100" stroke-dashoffset="100" />
 
-  <!-- the work itself, moving -->
+  <!-- the work itself, moving: a round cap on a zero-length dash -->
   <path class="cosCanvasRunner" d="M240,170 H560 V334 H240 Z" fill="none"
-        stroke="#ea0000" stroke-width="5" stroke-linecap="round"
-        stroke-dasharray="16 952" />
+        stroke="#ea0000" stroke-width="11" stroke-linecap="round"
+        stroke-dasharray="0.01 967.99" />
 
   <!-- nodes -->
   <g fill="#1e1818" stroke="rgba(248,244,242,0.42)" stroke-width="2.5">
