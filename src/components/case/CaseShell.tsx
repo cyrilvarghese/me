@@ -18,10 +18,10 @@ export default function CaseShell({
 }) {
   return (
     <>
-      <CaseClose />
+      <CaseClose slug={caseStudy.slug} />
       <div className={styles.hero}>
         <ViewTransition name={`case-visual-${caseStudy.slug}`} share="morph" default="none">
-          <div className={styles.heroVisual}>
+          <div className={styles.heroVisual} data-case-visual={caseStudy.slug}>
             <CaseVisual cover={caseStudy.cover} className={styles.fill} />
           </div>
         </ViewTransition>

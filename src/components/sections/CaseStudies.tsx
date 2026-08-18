@@ -63,6 +63,7 @@ export default function CaseStudies() {
               href={`/work/${c.slug}`}
               className={styles.visualLink}
               aria-label={`Open case study: ${c.headline}`}
+              data-case-visual={c.slug}
             >
               <ViewTransition name={`case-visual-${c.slug}`} share="morph" default="none">
                 <CaseVisual cover={c.cover} className={styles.visual} />

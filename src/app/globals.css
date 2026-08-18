@@ -125,6 +125,14 @@ button {
 	animation-duration: 420ms;
 }
 
+/* the manual reverse morph (CaseClose) pairs by name, not class — keep
+   its pace identical to the forward morph */
+::view-transition-group(case-visual-creative-os),
+::view-transition-group(case-visual-case-chat),
+::view-transition-group(case-visual-msig) {
+	animation-duration: 420ms;
+}
+
 /* the fixed header must never appear to move: pin its group, hide the
    old snapshot so both headers never show at once */
 ::view-transition-group(site-header) {
