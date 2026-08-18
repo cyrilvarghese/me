@@ -45,13 +45,20 @@ export default function CaseCompare({
               <span className={styles.dot} aria-hidden="true" />
               {p.title}
             </figcaption>
-            <CaseDiagram src={p.diagram} />
-            {p.stat && (
-              <p className={styles.stat}>
-                <span className={styles.statValue}>{p.stat.value}</span>
-                <span className={`mono-label ${styles.statLabel}`}>{p.stat.label}</span>
-              </p>
-            )}
+            <div className={styles.drawing}>
+              <CaseDiagram src={p.diagram} />
+            </div>
+            {/* the stat slot always renders: the two panels share subgrid
+                rows, so a missing element here would pull the caption up
+                into the stat band and break the alignment */}
+            <p className={styles.stat}>
+              {p.stat && (
+                <>
+                  <span className={styles.statValue}>{p.stat.value}</span>
+                  <span className={`mono-label ${styles.statLabel}`}>{p.stat.label}</span>
+                </>
+              )}
+            </p>
             <p className={styles.caption}>{p.caption}</p>
           </figure>
         ))}
