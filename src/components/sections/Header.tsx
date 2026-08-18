@@ -20,8 +20,8 @@ export default function Header() {
         }}
       />
       <div className={`section-shell ${styles.inner}`}>
-        <a href="#top" className={styles.brand} aria-label="Home">
-          <img src="/logo.png" alt="" className={styles.brandImg} />
+        <a href="#top" className={`mono-label ${styles.brand}`}>
+          CV
         </a>
         <nav className={styles.nav} aria-label="Site">
           <a href="#work" className="mono-label">
