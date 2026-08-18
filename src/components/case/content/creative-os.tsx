@@ -36,11 +36,11 @@ export default function CreativeOsContent() {
         meta={[
           {
             label: "Role",
-            body: "Product manager, design engineer and AI engineer.",
+            body: "Design engineer & Product manager.",
           },
           {
             label: "Team",
-            body: "Two developers and a product designer.",
+            body: "Two AI engineers and one product designer.",
           },
         ]}
       />
