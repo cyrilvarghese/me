@@ -21,10 +21,12 @@
 	z-index: 1;
 }
 
+/* both marks sit on the bottom edge — left and right corners cradle the
+   visual rather than bracketing it diagonally */
 .frame::before {
-	top: -1px;
+	bottom: -1px;
 	left: -1px;
-	border-width: 1px 0 0 1px;
+	border-width: 0 0 1px 1px;
 }
 
 .frame::after {

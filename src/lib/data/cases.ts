@@ -12,7 +12,7 @@ export type CaseStudy = {
 export const cases: CaseStudy[] = [
   {
     slug: "creative-os",
-    cover: "/assets/CreativeOS/cover.png",
+    cover: "/assets/CreativeOS/web-cover.png",
     num: "01",
     category: "Product + Design Engineering",
     headline: "Turning a fragmented AI production process into one agentic workspace.",
