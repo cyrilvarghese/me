@@ -11,7 +11,7 @@ const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
 
 export default function CaseStudies() {
   return (
-    <section className={`section-shell ${styles.section}`} aria-label="Selected work">
+    <section className={`section-shell ${styles.section}`} id="work" aria-label="Selected work">
       <p className={`mono-label ${styles.sectionEyebrow}`}>Proof</p>
       <h2 className={`serif-display ${styles.sectionTitle}`}>Three shipped systems.</h2>
 
