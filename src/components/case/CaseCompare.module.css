@@ -127,3 +127,16 @@
 		grid-template-columns: 1fr;
 	}
 }
+
+/* The panel's role, named. It carries the side's colour and a hairline
+   divides it from the title, so the caption reads as tag + statement
+   rather than one long run of mono. */
+.tag {
+	color: var(--fg);
+	padding-right: 0.6rem;
+	border-right: 1px solid var(--hairline);
+}
+.panel[data-side="after"] .tag {
+	color: var(--accent);
+	border-right-color: var(--hairline-red);
+}

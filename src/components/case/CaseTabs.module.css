@@ -1,0 +1,129 @@
+/* pinned to the top of the viewport for the length of the case: the two
+   panels are long, and a control you have to scroll back up to find is a
+   control most readers never use again. Solid ground rather than a
+   translucent veil — translucent paint over the view-transition-promoted
+   hero drops out in Cyril's Edge build. Under CaseClose (190). */
+.bar {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: var(--bg);
+	border-top: 1px solid var(--hairline);
+	border-bottom: 1px solid var(--hairline);
+	/* room for the indicator, which hangs 11px below the list */
+	padding-block: clamp(1.1rem, 2.6vh, 1.75rem);
+}
+
+/* shadcn's "line" variant: the list hugs its content and carries no box
+   and no rule of its own. Relative, because the travelling bar is
+   positioned against it. */
+.list {
+	position: relative;
+	display: inline-flex;
+	width: fit-content;
+	align-items: center;
+	gap: clamp(0.5rem, 1.5vw, 1.25rem);
+}
+
+.tab {
+	appearance: none;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	/* the line variant's geometry, scaled up: these two are the page's
+	   main control, so they read at sub-heading size rather than at the
+	   0.75rem label size .mono-label would otherwise give them */
+	padding: 0.5rem 0.75rem;
+	font-size: clamp(1rem, 1.9vw, 1.4rem);
+	letter-spacing: 0.06em;
+	/* unselected sits well back so the selected one carries the eye —
+	   an rgba literal, since color-mix no-ops in Cyril's Edge build */
+	color: rgba(248, 244, 242, 0.45);
+	font-weight: 700;
+	cursor: pointer;
+	/* a hover colour change: `ease` is the right curve for that */
+	transition: color 150ms ease;
+}
+
+.tab:hover {
+	color: var(--fg);
+}
+
+.tab[aria-selected="true"] {
+	color: var(--fg);
+}
+
+.tab:focus-visible {
+	outline: 1px solid var(--accent);
+	outline-offset: 4px;
+}
+
+/* their after:bottom-[-5px] after:h-0.5, but as ONE element for the whole
+   list so it can travel. Full-width and scaled down by transform, so the
+   move never touches layout — transform and opacity only. */
+.indicator {
+	position: absolute;
+	left: 0;
+	bottom: -7px;
+	width: 100%;
+	height: 4px;
+	background: var(--accent);
+	transform-origin: 0 0;
+	pointer-events: none;
+}
+
+.indicator[data-ready="false"] {
+	opacity: 0;
+}
+
+/* an element already on screen, moving to a new place: ease-in-out, the
+   accelerate-then-brake curve. 220ms — standard UI range, and the travel
+   is short. The transition is only armed once measured, so the first
+   paint places the bar instead of sliding it in from the left. */
+.indicator[data-ready="true"] {
+	transition: transform 220ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* the panel is entering, so ease-out, and it starts 12px off rather than
+   from nothing — an element that appears from zero reads as a glitch */
+.panel[data-dir="forward"] {
+	animation: caseTabIn 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.panel[data-dir="back"] {
+	animation: caseTabInBack 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@keyframes caseTabIn {
+	from {
+		opacity: 0;
+		transform: translateX(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes caseTabInBack {
+	from {
+		opacity: 0;
+		transform: translateX(-12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tab,
+	.indicator[data-ready="true"] {
+		transition: none;
+	}
+
+	.panel[data-dir="forward"],
+	.panel[data-dir="back"] {
+		animation: none;
+	}
+}

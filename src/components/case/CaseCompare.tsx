@@ -43,6 +43,9 @@ export default function CaseCompare({
           <figure key={p.title} className={styles.panel} data-side={i === 0 ? "today" : "after"}>
             <figcaption className={`mono-label ${styles.panelTitle}`}>
               <span className={styles.dot} aria-hidden="true" />
+              {/* the role in words: the dot said it in colour alone, which
+                  neither a screen reader nor a red-blind eye can read */}
+              <span className={styles.tag}>{i === 0 ? "Pain" : "Solution"}</span>
               {p.title}
             </figcaption>
             <div className={styles.drawing}>
