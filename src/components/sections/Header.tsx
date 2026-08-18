@@ -23,12 +23,12 @@ export default function Header({ sub }: { sub?: boolean }) {
       />
       <div className={`section-shell ${styles.inner}`}>
         {sub ? (
-          <Link href="/" className={`mono-label ${styles.brand}`}>
-            CV
+          <Link href="/" className={styles.brand} aria-label="Home">
+            <img src="/logo.png" alt="" className={styles.brandImg} />
           </Link>
         ) : (
-          <a href="#top" className={`mono-label ${styles.brand}`}>
-            CV
+          <a href="#top" className={styles.brand} aria-label="Home">
+            <img src="/logo.png" alt="" className={styles.brandImg} />
           </a>
         )}
         <nav className={styles.nav} aria-label="Site">

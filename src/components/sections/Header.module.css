@@ -15,14 +15,15 @@
 	height: 3.75rem;
 }
 
+/* the stamp box now lives inside logo.png itself */
 .brand {
-	color: var(--accent);
-	font-size: 0.9rem;
-	/* stamp box around the wordmark, square-cornered like the CTA button;
-	   solid token black so nothing ever shows through the plate */
-	background: var(--bg);
-	padding: 0.65rem 0.7rem;
-	border: 2px solid var(--accent-deep);
+	display: block;
+}
+
+.brandImg {
+	display: block;
+	width: 46px;
+	height: 46px;
 }
 
 .nav {
