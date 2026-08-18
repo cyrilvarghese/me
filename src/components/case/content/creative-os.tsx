@@ -51,10 +51,10 @@ export default function CreativeOsContent() {
             "Every fix bounces back across every platform — re-brief, re-upload, regenerate.",
         }}
         after={{
-          title: "With CreativeOS",
+          title: "With CreativeOS — one canvas",
           diagram: `${D}/02-canvas.svg`,
           caption:
-            "One canvas: script, images, video and review are nodes on the same run — a fix never leaves it.",
+            "One canvas: script, images, reels and posts are nodes on the same run — a fix never leaves it.",
         }}
       />
 
