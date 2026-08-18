@@ -20,6 +20,13 @@
 	display: block;
 }
 
+/* the logo already draws its own red box — the global focus ring would
+   double it, so on focus the ring sits ON the baked border instead of
+   floating outside it (keyboard users still get an indicator) */
+.brand:focus-visible {
+	outline-offset: -2px;
+}
+
 .brandImg {
 	display: block;
 	width: 46px;
