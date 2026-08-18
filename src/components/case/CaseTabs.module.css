@@ -89,12 +89,6 @@
 	transition: transform 220ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* the panel carries its own scroll: switching rewinds this box rather
-   than the page, so the reader's place on the page survives the switch */
-.panel {
-	overflow-y: auto;
-}
-
 /* the panel is entering, so ease-out, and it starts 12px off rather than
    from nothing — an element that appears from zero reads as a glitch */
 .panel[data-dir="forward"] {

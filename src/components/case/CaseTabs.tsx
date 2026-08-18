@@ -9,20 +9,16 @@ export type Tab = { id: string; label: string; panel: React.ReactNode };
     that slides between triggers rather than a border per trigger, so the
     move reads as one object travelling — and it travels on transform
     alone (translate + scaleX against the list width), never on left/width,
-    which would lay out on every frame.
-
-    Each panel scrolls inside itself rather than lengthening the page, so
-    switching tabs resets that panel to its top and leaves the page scroll
-    exactly where the reader left it. */
+    which would lay out on every frame. */
 export default function CaseTabs({ tabs, label }: { tabs: Tab[]; label: string }) {
   const [active, setActive] = useState(0);
   const [dir, setDir] = useState(1);
   const [bar, setBar] = useState<{ x: number; s: number } | null>(null);
-  const [barH, setBarH] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
+  const prevActive = useRef(active);
 
   const measure = useCallback(() => {
     const el = refs.current[active];
@@ -30,31 +26,48 @@ export default function CaseTabs({ tabs, label }: { tabs: Tab[]; label: string }
     if (!el || !list) return;
     const width = list.offsetWidth || 1;
     setBar({ x: el.offsetLeft, s: el.offsetWidth / width });
-    if (barRef.current) setBarH(barRef.current.offsetHeight);
   }, [active]);
 
   /* before paint, so the bar is never seen at the wrong place */
   useLayoutEffect(measure, [measure]);
 
-  /* the label widths and the bar's height move with the type scale */
+  /* the label widths move with the type scale, so re-measure on resize */
   useEffect(() => {
     const list = listRef.current;
     if (!list || typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(measure);
     ro.observe(list);
-    if (barRef.current) ro.observe(barRef.current);
     return () => ro.disconnect();
   }, [measure]);
 
-  /* Each switch starts the new panel at its own top. Because the panel is
-     the scroll container, this is a scrollTop reset on that element — the
-     page scroll is never touched, so the reader stays where they were and
-     only the tab body rewinds. Safe to run on mount and safe under
-     StrictMode's double-invoke: setting an already-zero scrollTop to zero
-     does nothing. */
+  /* Switching tabs starts the new panel at its top. Without this the
+     reader keeps whatever scroll position they had, which lands them mid
+     panel — or, when the new panel is shorter, past its end, where the
+     browser clamps and the scroll looks thrown away.
+
+     Measured from the PANEL, not the bar: the bar is sticky, so once
+     pinned its rect top is 0 by definition and `rect.top + scrollY` just
+     returns the current scroll position, making the scroll a silent
+     no-op. The panel is in normal flow, so its rect is honest; taking
+     off the bar's height puts the panel's first line under it.
+
+     Guarded on the PREVIOUS value rather than a "have I mounted" flag:
+     React StrictMode runs layout effects twice on mount in development
+     and refs survive the replay, so a mount flag is already spent by the
+     second run and the page scrolls itself into the tabs on load.
+     Comparing values cannot be fooled — on both mount runs nothing has
+     changed.
+
+     Instant, not smooth: the content has already swapped, so a glide
+     would only animate toward something that already changed. */
   useLayoutEffect(() => {
+    if (prevActive.current === active) return;
+    prevActive.current = active;
     const panel = panelRefs.current[active];
-    if (panel) panel.scrollTop = 0;
+    const barEl = barRef.current;
+    if (!panel || !barEl) return;
+    const top = panel.getBoundingClientRect().top + window.scrollY - barEl.offsetHeight;
+    window.scrollTo({ top: Math.max(0, top), behavior: "instant" });
   }, [active]);
 
   const go = (next: number) => {
@@ -132,16 +145,9 @@ export default function CaseTabs({ tabs, label }: { tabs: Tab[]; label: string }
           role="tabpanel"
           id={`panel-${t.id}`}
           aria-labelledby={`tab-${t.id}`}
-          /* a scroll container needs to be focusable, or its content is
-             unreachable by keyboard alone */
-          tabIndex={0}
           hidden={i !== active}
           className={styles.panel}
           data-dir={dir > 0 ? "forward" : "back"}
-          /* the pane fills what the sticky bar leaves of the viewport;
-             barH is measured, since the bar's height moves with the
-             type scale */
-          style={{ maxHeight: `calc(100svh - ${barH}px)` }}
         >
           {t.panel}
         </div>
