@@ -10,14 +10,9 @@
     stroke: rgba(248,244,242,0.28);
   }
   34%,
-  45% {
+  100% {
     fill: rgba(107, 114, 128, 0.16);
     stroke: #eee8e6;
-  }
-  56%,
-  100% {
-    fill: rgba(107, 114, 128, 0.04);
-    stroke: rgba(248,244,242,0.28);
   }
 }
 @keyframes cossnake {
@@ -128,15 +123,15 @@
   100% { fill: #eee8e6; transform: scale(1); }
 }
 @keyframes cosChipPulse {
-  0% {
+  0.00% {
     transform: scale(0.8);
     opacity: 0.9;
   }
-  4% {
+  2.00% {
     transform: scale(2.6);
     opacity: 0;
   }
-  100% {
+  50.00% {
     transform: scale(2.6);
     opacity: 0;
   }
@@ -201,182 +196,182 @@
   }
 }
 @keyframes cosrowP {
-  0% {
+  0.00% {
     stroke-dashoffset: 0;
     opacity: 1;
   }
-  41.8% {
+  20.90% {
     stroke-dashoffset: -360;
     opacity: 1;
   }
-  42.5% {
+  21.25% {
     opacity: 0;
   }
-  100% {
+  50.00% {
     stroke-dashoffset: -360;
     opacity: 0;
   }
 }
 @keyframes cosfanA {
-  0%,
-  41.8% {
+  0.00%,
+  20.90% {
     stroke-dashoffset: 0;
     opacity: 0;
   }
-  42.6% {
+  21.30% {
     opacity: 1;
   }
-  76% {
+  38.00% {
     stroke-dashoffset: -94;
     opacity: 1;
   }
-  77% {
+  38.50% {
     opacity: 0;
   }
-  100% {
+  50.00% {
     stroke-dashoffset: -94;
     opacity: 0;
   }
 }
 @keyframes cosfanB {
-  0%,
-  41.8% {
+  0.00%,
+  20.90% {
     stroke-dashoffset: 0;
     opacity: 0;
   }
-  42.6% {
+  21.30% {
     opacity: 1;
   }
-  76% {
+  38.00% {
     stroke-dashoffset: -186;
     opacity: 1;
   }
-  77% {
+  38.50% {
     opacity: 0;
   }
-  100% {
+  50.00% {
     stroke-dashoffset: -186;
     opacity: 0;
   }
 }
 @keyframes cosfanC {
-  0%,
-  41.8% {
+  0.00%,
+  20.90% {
     stroke-dashoffset: 0;
     opacity: 0;
   }
-  42.6% {
+  21.30% {
     opacity: 1;
   }
-  76% {
+  38.00% {
     stroke-dashoffset: -300;
     opacity: 1;
   }
-  77% {
+  38.50% {
     opacity: 0;
   }
-  100% {
+  50.00% {
     stroke-dashoffset: -300;
     opacity: 0;
   }
 }
 @keyframes cosringP {
-  0%,
-  39% {
+  0.00%,
+  19.50% {
     transform: scale(0.7);
     opacity: 0;
   }
-  43% {
+  21.50% {
     opacity: 0.9;
   }
-  58% {
+  29.00% {
     transform: scale(2.1);
     opacity: 0;
   }
-  100% {
+  50.00% {
     transform: scale(2.1);
     opacity: 0;
   }
 }
 @keyframes cosflashP {
-  0%,
-  73% {
+  0.00%,
+  36.50% {
     fill: rgba(88, 41, 199, 0.04);
     stroke: rgba(248,244,242,0.28);
   }
-  78%,
-  100% {
+  39.00%,
+  50.00% {
     fill: rgba(88, 41, 199, 0.16);
     stroke: #eee8e6;
   }
 }
 @keyframes costickP {
-  0%,
-  76% {
+  0.00%,
+  38.00% {
     opacity: 0;
   }
-  80%,
-  100% {
+  40.00%,
+  50.00% {
     opacity: 1;
   }
 }
 @keyframes cosdKP0 {
-  0%, 4.644% { fill: #1e1818; transform: scale(1); }
-  5.344% { fill: #b39a9a; transform: scale(1.5); }
-  10.344% { transform: scale(1); }
-  100% { fill: #b39a9a; transform: scale(1); }
+  0.00%, 2.32% { fill: #1e1818; transform: scale(1); }
+  2.67% { fill: #b39a9a; transform: scale(1.5); }
+  5.17% { transform: scale(1); }
+  50.00% { fill: #b39a9a; transform: scale(1); }
 }
 @keyframes cosdKP1 {
-  0%, 13.933% { fill: #1e1818; transform: scale(1); }
-  14.633% { fill: #c98080; transform: scale(1.5); }
-  19.633% { transform: scale(1); }
-  100% { fill: #c98080; transform: scale(1); }
+  0.00%, 6.97% { fill: #1e1818; transform: scale(1); }
+  7.32% { fill: #c98080; transform: scale(1.5); }
+  9.82% { transform: scale(1); }
+  50.00% { fill: #c98080; transform: scale(1); }
 }
 @keyframes cosdKP2 {
-  0%, 23.222% { fill: #1e1818; transform: scale(1); }
-  23.922% { fill: #d95a5a; transform: scale(1.5); }
-  28.922% { transform: scale(1); }
-  100% { fill: #d95a5a; transform: scale(1); }
+  0.00%, 11.61% { fill: #1e1818; transform: scale(1); }
+  11.96% { fill: #d95a5a; transform: scale(1.5); }
+  14.46% { transform: scale(1); }
+  50.00% { fill: #d95a5a; transform: scale(1); }
 }
 @keyframes cosdKP3 {
-  0%, 32.511% { fill: #1e1818; transform: scale(1); }
-  33.211% { fill: #eee8e6; transform: scale(1.5); }
-  38.211% { transform: scale(1); }
-  100% { fill: #eee8e6; transform: scale(1); }
+  0.00%, 16.26% { fill: #1e1818; transform: scale(1); }
+  16.61% { fill: #eee8e6; transform: scale(1.5); }
+  19.11% { transform: scale(1); }
+  50.00% { fill: #eee8e6; transform: scale(1); }
 }
 @keyframes cosChipPulseP {
-  0% {
+  0.00% {
     transform: scale(0.8);
     opacity: 0.9;
   }
-  14% {
+  7.00% {
     transform: scale(2.6);
     opacity: 0;
   }
-  100% {
+  50.00% {
     transform: scale(2.6);
     opacity: 0;
   }
 }
 @keyframes cosrowTrail {
-  0% {
+  0.00% {
     stroke-dashoffset: 100;
     opacity: 0.8;
   }
-  41.8%,
-  100% {
+  20.90%,
+  50.00% {
     stroke-dashoffset: 0;
     opacity: 0.8;
   }
 }
 @keyframes cosfanTrail {
-  0%,
-  41.8% {
+  0.00%,
+  20.90% {
     stroke-dashoffset: 100;
     opacity: 0.8;
   }
-  76%,
-  100% {
+  38.00%,
+  50.00% {
     stroke-dashoffset: 0;
     opacity: 0.8;
   }

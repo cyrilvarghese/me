@@ -1,29 +1,27 @@
 <svg viewBox="0 0 800 470" xmlns="http://www.w3.org/2000/svg">
   <style>
-    @keyframes cosCanvasTravel {
-      from { offset-distance: 0%; }
-      to   { offset-distance: 100%; }
+    /* Same technique as the deck's other diagrams: a short dash runs the
+       path while a second copy of the path fills in behind it. The loop
+       is 968 units around (320+164+320+164), so the runner travels
+       exactly that far in one cycle and the fill tracks it. */
+    @keyframes cosCanvasRun {
+      0%       { stroke-dashoffset: 0; opacity: 1; }
+      90%      { stroke-dashoffset: -968; opacity: 1; }
+      90.5%    { opacity: 0; }
+      100%     { stroke-dashoffset: -968; opacity: 0; }
     }
-    @keyframes cosCanvasPulse {
-      0%, 100% { opacity: .28; }
-      50%      { opacity: .5; }
+    @keyframes cosCanvasFill {
+      0%       { stroke-dashoffset: 100; opacity: 0.9; }
+      90%      { stroke-dashoffset: 0; opacity: 0.9; }
+      100%     { stroke-dashoffset: 0; opacity: 0; }
     }
-    .cosDot {
-      offset-path: path("M240,170 H560 V334 H240 Z");
-      offset-rotate: 0deg;
-      animation: cosCanvasTravel 9s linear infinite;
-    }
+    .cosCanvasRunner { animation: cosCanvasRun 9s linear infinite; }
+    .cosCanvasFill   { animation: cosCanvasFill 9s linear infinite; }
     @media (prefers-reduced-motion: reduce) {
-      .cosDot { animation: none; offset-distance: 12%; }
-      .cosBloomRing { animation: none; }
+      .cosCanvasRunner,
+      .cosCanvasFill { animation: none; stroke-dashoffset: 0; opacity: 0.9; }
     }
   </style>
-
-  <defs>
-    <filter id="cosBloom" x="-300%" y="-300%" width="700%" height="700%">
-      <feGaussianBlur stdDeviation="7" />
-    </filter>
-  </defs>
 
   <!-- the canvas everything lives on -->
   <rect x="46" y="36" width="708" height="400" rx="26" fill="none"
@@ -31,9 +29,20 @@
         stroke-dasharray="2 10" stroke-linecap="round" />
   <text x="84" y="78" style="font-size:17px;letter-spacing:3.9px" fill="#9e9493">CREATIVEOS</text>
 
-  <!-- one continuous run: script → images → video → review → back -->
+  <!-- the run, dotted until the work reaches it -->
   <path d="M240,170 H560 V334 H240 Z" fill="none"
-        stroke="rgba(248,244,242,0.3)" stroke-width="2.5" stroke-linejoin="round" />
+        stroke="rgba(248,244,242,0.24)" stroke-width="2.5"
+        stroke-dasharray="2 14" stroke-linecap="round" />
+
+  <!-- filled behind the runner -->
+  <path class="cosCanvasFill" d="M240,170 H560 V334 H240 Z" pathLength="100" fill="none"
+        stroke="#eee8e6" stroke-width="2.5" stroke-linecap="round"
+        stroke-dasharray="100 100" stroke-dashoffset="100" />
+
+  <!-- the work itself, moving -->
+  <path class="cosCanvasRunner" d="M240,170 H560 V334 H240 Z" fill="none"
+        stroke="#ea0000" stroke-width="5" stroke-linecap="round"
+        stroke-dasharray="16 952" />
 
   <!-- nodes -->
   <g fill="#1e1818" stroke="rgba(248,244,242,0.42)" stroke-width="2.5">
@@ -54,11 +63,5 @@
     <text x="560" y="122">Images</text>
     <text x="560" y="392">Video</text>
     <text x="240" y="392">Review</text>
-  </g>
-
-  <!-- the work moving on the canvas, context intact -->
-  <g class="cosDot">
-    <circle r="13" fill="#ea0000" opacity="0.4" filter="url(#cosBloom)" />
-    <circle r="5" fill="#ea0000" />
   </g>
 </svg>
