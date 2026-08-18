@@ -52,9 +52,9 @@ export default function CreativeOsContent() {
         }}
         after={{
           title: "With CreativeOS",
-          diagram: `${D}/02-creativeos.svg`,
+          diagram: `${D}/02-canvas.svg`,
           caption:
-            "An error found in review goes straight back — fixed on the same canvas, context intact.",
+            "One canvas: script, images, video and review are nodes on the same run — a fix never leaves it.",
         }}
       />
 

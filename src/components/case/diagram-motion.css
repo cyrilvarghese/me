@@ -75,9 +75,9 @@
 }
 @keyframes cosdKF3 {
   0%, 10.833% { fill: #1e1818; transform: scale(1); }
-  11.033% { fill: #ea0000; transform: scale(1.5); }
+  11.033% { fill: #eee8e6; transform: scale(1.5); }
   12.733% { transform: scale(1); }
-  100% { fill: #ea0000; transform: scale(1); }
+  100% { fill: #eee8e6; transform: scale(1); }
 }
 @keyframes cosdKF4 {
   0%, 37.925% { fill: #1e1818; transform: scale(1); }
@@ -99,9 +99,9 @@
 }
 @keyframes cosdKF7 {
   0%, 48.536% { fill: #1e1818; transform: scale(1); }
-  48.736% { fill: #ea0000; transform: scale(1.5); }
+  48.736% { fill: #eee8e6; transform: scale(1.5); }
   50.436% { transform: scale(1); }
-  100% { fill: #ea0000; transform: scale(1); }
+  100% { fill: #eee8e6; transform: scale(1); }
 }
 @keyframes cosdKF8 {
   0%, 75.629% { fill: #1e1818; transform: scale(1); }
@@ -123,9 +123,9 @@
 }
 @keyframes cosdKF11 {
   0%, 86.239% { fill: #1e1818; transform: scale(1); }
-  86.439% { fill: #ea0000; transform: scale(1.5); }
+  86.439% { fill: #eee8e6; transform: scale(1.5); }
   88.139% { transform: scale(1); }
-  100% { fill: #ea0000; transform: scale(1); }
+  100% { fill: #eee8e6; transform: scale(1); }
 }
 @keyframes cosChipPulse {
   0% {
@@ -307,7 +307,7 @@
   78%,
   100% {
     fill: rgba(88, 41, 199, 0.16);
-    stroke: #ea0000;
+    stroke: #eee8e6;
   }
 }
 @keyframes costickP {
@@ -340,9 +340,9 @@
 }
 @keyframes cosdKP3 {
   0%, 32.511% { fill: #1e1818; transform: scale(1); }
-  33.211% { fill: #ea0000; transform: scale(1.5); }
+  33.211% { fill: #eee8e6; transform: scale(1.5); }
   38.211% { transform: scale(1); }
-  100% { fill: #ea0000; transform: scale(1); }
+  100% { fill: #eee8e6; transform: scale(1); }
 }
 @keyframes cosChipPulseP {
   0% {
@@ -496,15 +496,15 @@
 }
 @keyframes cosstage5 {
   0%, 60.25% { fill: #1e1818; stroke: #aab1bf; transform: scale(1); }
-  60.45% { fill: #ea0000; stroke: #ea0000; transform: scale(1.35); }
+  60.45% { fill: #eee8e6; stroke: #eee8e6; transform: scale(1.35); }
   62.15% { transform: scale(1); }
-  88% { fill: #ea0000; stroke: #ea0000; transform: scale(1); }
+  88% { fill: #eee8e6; stroke: #eee8e6; transform: scale(1); }
   99%, 100% { fill: #1e1818; stroke: #aab1bf; transform: scale(1); }
 }
 @keyframes cosstage6 {
   0%, 75.583% { fill: #1e1818; stroke: #aab1bf; transform: scale(1); }
-  75.783% { fill: #ea0000; stroke: #ea0000; transform: scale(1.35); }
+  75.783% { fill: #eee8e6; stroke: #eee8e6; transform: scale(1.35); }
   77.483% { transform: scale(1); }
-  88% { fill: #ea0000; stroke: #ea0000; transform: scale(1); }
+  88% { fill: #eee8e6; stroke: #eee8e6; transform: scale(1); }
   99%, 100% { fill: #1e1818; stroke: #aab1bf; transform: scale(1); }
 }
