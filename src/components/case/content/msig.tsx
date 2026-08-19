@@ -1,19 +1,13 @@
 import CaseSummary from "@/components/case/CaseSummary";
-import CaseCompare from "@/components/case/CaseCompare";
+import CaseFigure from "@/components/case/CaseFigure";
 import CaseImpact from "@/components/case/CaseImpact";
 import CaseQuote from "@/components/case/CaseQuote";
 import CaseShowcase from "@/components/case/CaseShowcase";
 import CaseNav from "@/components/case/CaseTabs";
 
-const D = "/assets/MSIG/diagrams";
+/** Spine: context → the PM in his own words → the impact → the screens.
 
-/** Spine: context → three pain points, each argued by the same diagram
-    told twice → the impact they add up to → the screens.
-
-    Every claim here traces to cyrilvarghese.framer.website/projects/msig
-    or to text drawn inside its two effort-curve diagrams — the agent
-    quotes ("It takes 20+ minutes just to fill a quote", "If I forget to
-    check, the policy just lapses") live in the artwork, not the copy. */
+    Every claim here traces to cyrilvarghese.framer.website/projects/msig. */
 export default function MsigContent() {
   return (
     <>
@@ -61,68 +55,14 @@ export default function MsigContent() {
         label="Case study sections"
         sections={[
           {
-            id: "pain-points",
-            label: "Pain points",
+            id: "user-journeys",
+            label: "User journeys",
             body: (
               <>
-                <CaseCompare
-                  index="01"
-                  eyebrow="New policy creation: slow, manual, error-prone"
-                  heading="Three spikes in every new sale."
-                  lede="Mapping the journey put the effort in the same three places every time: twenty minutes of cluttered form at the quote, a submission whose status nobody could read, and a payment the agent had to chase. Each one is a place the sale can stall."
-                  today={{
-                    title: "Effort spikes at quote, submit and payment",
-                    diagram: `${D}/01-today.svg`,
-                    stat: { value: "20+ min", label: "to fill one quote" },
-                    caption:
-                      "Cluttered forms, unclear statuses and manual payment follow-ups — every new sale takes longer and risks the revenue.",
-                  }}
-                  after={{
-                    title: "The same journey, each spike handled",
-                    diagram: `${D}/01-msig.svg`,
-                    stat: { value: "~8 min", label: "cut from issuance" },
-                    caption:
-                      "Fields grouped by context and autosaved, a legible status, and payment tracked rather than chased.",
-                  }}
-                />
-
-                <CaseCompare
-                  index="02"
-                  eyebrow="Renewal journey: manual tracking and missed upsells"
-                  heading="A renewal nobody is reminded about."
-                  lede="A renewal should be the easy one. Instead it began with the agent remembering to look, stalled waiting on customer documents, and ended in a payment reminder they had to send — with no cue anywhere to offer more than last year's cover."
-                  today={{
-                    title: "The agent is the reminder",
-                    diagram: `${D}/02-today.svg`,
-                    stat: { value: "Lapsed", label: "when the check is missed" },
-                    caption:
-                      "Manual tracking and missing reminders turn a simple renewal into a drawn-out process — and valuable upsells are lost along the way.",
-                  }}
-                  after={{
-                    title: "Renewals, payments and GWP tracked",
-                    diagram: `${D}/02-msig.svg`,
-                    caption:
-                      "Tracked automatically, so the due date surfaces on its own and neither a follow-up nor a target depends on memory.",
-                  }}
-                />
-
-                <CaseCompare
-                  index="03"
-                  eyebrow="Macro layouts for a scalable UI"
-                  heading="Blocks, not screens."
-                  lede="At its core the product was a multi-step data entry application, and every task moved agents through complex forms and validations. Treating the interface as a system built from modular blocks — navigation, data entry, context — is what let the same flow scale across screens instead of breaking at the edge of a desktop."
-                  today={{
-                    title: "Built for one screen width",
-                    diagram: `${D}/03-today.svg`,
-                    caption:
-                      "No mobile support: in the field the job stalls until the agent is back at a desk.",
-                  }}
-                  after={{
-                    title: "The same blocks, restacked",
-                    diagram: `${D}/03-msig.svg`,
-                    caption:
-                      "Stepper, form and details sidebar reflow into one column — the same task, in the hand.",
-                  }}
+                <CaseFigure
+                  eyebrow="The agent's day"
+                  heading="The day is half selling, half servicing."
+                  diagram="/assets/MSIG/diagrams/01-agent-day.svg"
                 />
 
                 <CaseImpact

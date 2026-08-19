@@ -105,6 +105,9 @@ hand-tuned baked axes (`'opsz' 56, 'SOFT' 30, 'WONK' 0.9`, weight 380 in
 - Section styling is per-component CSS Modules; shared voices are the
   `.mono-label` / `.serif-display` / `.section-shell` classes in `globals.css`.
   Animate only `transform` and `opacity`.
+- **Copy follows the `portfolio-copy` skill** (`.claude/skills/portfolio-copy/`)
+  — clarity first, never performed cleverness; titles name their content
+  plainly. Invoke it before writing or editing any user-facing copy.
 - **Case-study diagrams follow the `case-study-diagrams` skill**
   (`.claude/skills/case-study-diagrams/`) — one hue (red only on the moment
   that matters), mono text, markers at 246 units/second, finished states

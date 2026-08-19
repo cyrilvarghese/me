@@ -16,7 +16,7 @@ export default function CaseFigure({
   heading?: string;
   lede?: string;
   diagram: string;
-  caption: string;
+  caption?: string;
 }) {
   return (
     <section className={`section-shell ${styles.block}`}>
@@ -32,7 +32,7 @@ export default function CaseFigure({
         <div className={styles.drawing}>
           <CaseDiagram src={diagram} />
         </div>
-        <figcaption className={styles.caption}>{caption}</figcaption>
+        {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
       </figure>
     </section>
   );

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 430" role="img"
+     aria-label="How an agent spends her time: selling a new policy 45 per cent, servicing an existing policy 45 per cent, and other admin tasks 10 per cent.">
+  <defs>
+    <!-- the callout arrowhead, in the same neutral as the line it ends -->
+    <marker id="msA-01" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor" opacity=".45"/>
+    </marker>
+  </defs>
+
+  <!-- The agent. A disc and two strokes, in the site's element language —
+       an illustrated portrait would be the only rendered thing on the page
+       and would read as clip art next to the knife and the compass. -->
+  <circle cx="130" cy="95" r="68" fill="#1e1818"
+          stroke="currentColor" stroke-opacity=".28" stroke-width="2"/>
+  <circle cx="130" cy="74" r="19" fill="none"
+          stroke="currentColor" stroke-opacity=".85" stroke-width="2.5"/>
+  <path d="M98,139 C98,112 162,112 162,139" fill="none"
+        stroke="currentColor" stroke-opacity=".85" stroke-width="2.5"/>
+
+  <!-- avatar → pie: the leader from the person to how her day divides -->
+  <circle cx="178" cy="143" r="3" fill="currentColor" opacity=".5"/>
+  <path d="M178,143 L226,276 H400 L435,295" fill="none"
+        stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"
+        stroke-dasharray="2 6" marker-end="url(#msA-01)"/>
+
+  <text x="240" y="234" font-size="15" fill="currentColor">How Jane spends</text>
+  <text x="240" y="254" font-size="15" fill="currentColor">her time</text>
+
+  <!-- The day, at 45 / 45 / 10. One hue: selling carries the accent because
+       it is the half the quote form was eating; servicing steps down the
+       same ramp, and admin is a neutral. Slices are separated by the page
+       ground rather than a stroke colour of their own. -->
+  <g stroke="#151111" stroke-width="2">
+    <!-- selling, 45% — the left half -->
+    <path d="M490,330 L490,408 A78,78 0 0,1 465.9,255.8 Z" fill="#ea0000"/>
+    <!-- servicing, 45% — the right half -->
+    <path d="M490,330 L514.1,255.8 A78,78 0 0,1 490,408 Z" fill="#c98080"/>
+    <!-- other admin, 10% — the wedge at the top -->
+    <path d="M490,330 L465.9,255.8 A78,78 0 0,1 514.1,255.8 Z" fill="#6d6362"/>
+  </g>
+
+  <!-- Other admin tasks -->
+  <circle cx="490" cy="282" r="3" fill="currentColor" opacity=".5"/>
+  <path d="M490,282 V196" fill="none" stroke="currentColor" stroke-opacity=".28"
+        stroke-width="1.5" stroke-dasharray="2 6" marker-end="url(#msA-01)"/>
+  <text x="452" y="136" font-size="13" fill="currentColor">Other admin tasks (10%)</text>
+  <text x="452" y="160" font-size="12" fill="currentColor" opacity=".62">Training, coordination, compliance.</text>
+
+  <!-- Servicing a policy -->
+  <circle cx="530" cy="345" r="3" fill="currentColor" opacity=".5"/>
+  <path d="M530,345 L613,288" fill="none" stroke="currentColor" stroke-opacity=".28"
+        stroke-width="1.5" stroke-dasharray="2 6" marker-end="url(#msA-01)"/>
+  <text x="623" y="292" font-size="13" fill="currentColor">Servicing a policy (45%)</text>
+  <text x="623" y="316" font-size="12" fill="currentColor" opacity=".62">Renewals, changes, claims.</text>
+
+  <!-- Selling a new policy -->
+  <circle cx="454" cy="342" r="3" fill="currentColor" opacity=".5"/>
+  <path d="M454,342 L400,363" fill="none" stroke="currentColor" stroke-opacity=".28"
+        stroke-width="1.5" stroke-dasharray="2 6" marker-end="url(#msA-01)"/>
+  <text x="171" y="374" font-size="13" fill="currentColor">Selling a new policy (45%)</text>
+  <text x="171" y="398" font-size="12" fill="currentColor" opacity=".62">Quotes, negotiations, onboarding.</text>
+</svg>
