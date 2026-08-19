@@ -266,7 +266,11 @@
    avatar hold still while the text fades in, half-present to fully present. No movement — a fade alone. */
 @media (prefers-reduced-motion: no-preference) {
 	.words {
-		animation: msjEnter var(--msj-fade, 1100ms) var(--msj-curve, ease-in-out);
+		/* the swap happens at departure; the fade waits until the dot is
+		   halfway to the node, holding the from-state (backwards fill)
+		   through the delay */
+		animation: msjEnter var(--msj-fade, 1100ms) var(--msj-curve, ease-in-out)
+			calc(var(--msj-travel, 900ms) / 2) backwards;
 	}
 }
 
