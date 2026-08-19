@@ -1,0 +1,36 @@
+/* full-bleed: the band breaks the page rhythm on purpose — the three
+   pain points accumulate into this one number */
+.band {
+	border-top: 1px solid var(--hairline);
+	border-bottom: 1px solid var(--hairline);
+	background: var(--surface);
+	padding-block: clamp(4rem, 12vh, 8rem);
+}
+
+.inner {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.9rem;
+}
+
+.eyebrow {
+	color: var(--muted);
+}
+
+.value {
+	font-size: var(--text-statement);
+	color: var(--accent);
+	line-height: 0.95;
+}
+
+.detail {
+	color: var(--fg);
+	font-size: 0.95rem;
+}
+
+.note {
+	color: var(--muted);
+	max-width: 52ch;
+	margin-top: 0.4rem;
+}

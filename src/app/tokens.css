@@ -4,13 +4,29 @@
 	   plain black or plain white (user rule, 2026-08-16). */
 	--bg: #151111;
 	--surface: #1e1818;
-	--fg: #f8f4f2;
-	--fg-soft: #eee8e6;
+	/* dimmed 7% from near-white 2026-08-19: at 17.2:1 the old value ran
+	   nearly 4x the AA floor, and that much luminance blooms on this
+	   ground — the glyph edges halate and the type reads coarse. 14.7:1
+	   and 13.3:1 keep the hierarchy fg > fg-soft > muted intact. */
+	--fg: #e7e3e1;
+	--fg-soft: #ddd8d6;
 	--muted: #9e9493;
 	--accent: #ea0000;
 	--accent-deep: #c90000;
 	--hairline: rgba(248, 244, 242, 0.1);
 	--hairline-red: rgba(234, 0, 0, 0.28);
+
+	/* geometry — the system is square-cornered (Swiss); the only rounding
+	   is the 2px hairline used on knife plates and etched panels. Nothing
+	   on this site is pill-shaped. */
+	--radius: 0;
+	--radius-sm: 2px;
+
+	/* controls — one geometry for every button, link-button and icon
+	   control (the .btn voices in globals.css) */
+	--control-border: 1px;
+	--control-pad: 0.9rem 1.6rem;
+	--control-size: 2.75rem;
 
 	/* type scale */
 	--text-display: clamp(2.75rem, 7.5vw, 6.5rem);

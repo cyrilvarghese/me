@@ -12,7 +12,7 @@ export type CaseStudy = {
 export const cases: CaseStudy[] = [
   {
     slug: "creative-os",
-    cover: "/assets/CreativeOS/web-cover.png",
+    cover: "/assets/CreativeOS/cover-desk.webp",
     num: "01",
     category: "Product + Design Engineering",
     headline: "Turning a fragmented AI production process into one creative workspace.",
@@ -23,10 +23,10 @@ export const cases: CaseStudy[] = [
   },
   {
     slug: "case-chat",
-    cover: "/assets/CaseChat/thumbnail.png",
+    cover: "/assets/CaseChat/cover-desk.webp",
     num: "02",
     category: "Founder + Design Engineering",
-    headline: "Turning clinical reasoning into an interactive AI simulation.",
+    headline: "A safe space for medical students to learn from their mistakes.",
     startedWith:
       "Medical students need repeated opportunities to make clinical decisions and receive useful feedback.",
     built:

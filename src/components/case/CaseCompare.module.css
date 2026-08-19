@@ -1,0 +1,142 @@
+.block {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3.5rem, 9vh, 6.5rem);
+}
+
+.head {
+	display: grid;
+	grid-template-columns: 14rem minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vw, 4rem);
+	align-items: start;
+	margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+.index {
+	color: var(--accent);
+}
+
+.eyebrow {
+	color: var(--muted);
+	margin-bottom: 0.9rem;
+}
+
+.heading {
+	font-size: var(--text-h3);
+	max-width: 24ch;
+	margin-bottom: 1rem;
+}
+
+.lede {
+	color: var(--fg-soft);
+	max-width: 62ch;
+}
+
+/* The two tellings sit side by side — same width, so the difference in
+   the drawing is the argument. Rows are shared: title, drawing, stat,
+   caption are subgrid tracks, so those bands line up across both cards
+   however tall each drawing happens to be. */
+.pair {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-rows: auto 1fr auto auto;
+	column-gap: clamp(1rem, 2.5vw, 2rem);
+	row-gap: 0;
+}
+
+.panel {
+	margin: 0;
+	border: 1px solid var(--hairline);
+	background: var(--surface);
+	padding: clamp(1rem, 2vw, 1.5rem);
+	display: grid;
+	grid-row: span 4;
+	grid-template-rows: subgrid;
+	row-gap: 1.25rem;
+}
+
+.panel[data-side="after"] {
+	border-color: var(--hairline-red);
+}
+
+.panelTitle {
+	color: var(--muted);
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	/* air between the title and the drawing */
+	margin-bottom: clamp(0.5rem, 2vh, 1.25rem);
+}
+
+.dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--muted);
+	flex: none;
+}
+
+.panel[data-side="after"] .dot {
+	background: var(--accent);
+}
+
+/* the drawing sits in the flexible row; it centres there so a shorter
+   diagram is not stranded at the top of a taller pair */
+.drawing {
+	align-self: center;
+	width: 100%;
+}
+
+.stat {
+	display: flex;
+	align-items: baseline;
+	gap: 0.75rem;
+	align-self: end;
+}
+
+.statValue {
+	font-family: var(--font-serif);
+	font-variation-settings:
+		'opsz' 56,
+		'SOFT' 30,
+		'WONK' 0.9;
+	font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+	line-height: 1;
+	color: var(--fg);
+}
+
+.panel[data-side="after"] .statValue {
+	color: var(--accent);
+}
+
+.statLabel {
+	color: var(--muted);
+}
+
+.caption {
+	color: var(--muted);
+	font-size: var(--text-small);
+	max-width: 46ch;
+}
+
+@media (max-width: 900px) {
+	.head {
+		grid-template-columns: 1fr;
+	}
+
+	.pair {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* The panel's role, named. It carries the side's colour and a hairline
+   divides it from the title, so the caption reads as tag + statement
+   rather than one long run of mono. */
+.tag {
+	color: var(--fg);
+	padding-right: 0.6rem;
+	border-right: 1px solid var(--hairline);
+}
+.panel[data-side="after"] .tag {
+	color: var(--accent);
+	border-right-color: var(--hairline-red);
+}

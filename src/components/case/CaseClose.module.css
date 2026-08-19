@@ -1,25 +1,15 @@
 /* Fixed just below the header's strip, at the right gutter. Ground is
    an rgba literal of --bg, not color-mix — stylesheet color-mix silently
    no-ops in Cyril's browser (see the header veil + hero scrim notes). */
+/* geometry and hover come from the global .btn / .btn-icon voices — this
+   only places the control and gives it a ground to sit on over artwork
+   (rgba literal of --bg: stylesheet color-mix silently no-ops in Cyril's
+   browser). */
 .close {
 	position: fixed;
 	/* the case page is a takeover — no header bar to clear */
 	top: 1.5rem;
 	right: var(--gutter);
 	z-index: 190;
-	width: 44px;
-	height: 44px;
-	display: grid;
-	place-items: center;
-	border: 1px solid var(--hairline);
 	background: rgba(21, 17, 17, 0.78);
-	font-size: 1.05rem;
-	line-height: 1;
-	color: var(--fg-soft);
-	transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.close:hover {
-	color: var(--fg);
-	border-color: var(--fg-soft);
 }

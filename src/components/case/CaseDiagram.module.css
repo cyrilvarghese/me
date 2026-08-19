@@ -1,0 +1,17 @@
+.diagram svg {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* the diagrams speak the site's label voice: mono, lightly tracked.
+   Sizes stay as drawn (set inline per element) so the layouts hold. */
+.diagram text {
+	font-family: var(--font-mono);
+	letter-spacing: 0.02em;
+}
+
+/* Third-party marks keep their own brand colour — they are identity, not
+   decoration, and are the one exception to the single-hue rule. They sit
+   on a light disc inside the diagram, as in the source deck, so no filter
+   is applied. */

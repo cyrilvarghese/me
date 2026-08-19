@@ -1,0 +1,85 @@
+/* Motion for the CaseChat diagrams. The CreativeOS sheet next door was
+   generated from a source deck and its keyframes are named for that
+   deck's elements; these are hand-authored, so they are a small general
+   vocabulary instead — draw a connector on, fade a node in, run a dash
+   round a loop — driven by classes the SVGs carry and lengths they set
+   inline as --len.
+
+   Global rather than a CSS module for the same reason diagram-motion.css
+   is: CaseDiagram inlines the SVG markup into the document, so the rules
+   have to reach class names that live inside those files. */
+
+@keyframes ccdraw {
+	from {
+		stroke-dashoffset: var(--len, 400);
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+/* travelling dash — the gap chases itself round a closed path, which is
+   the only honest way to say "this repeats" in a still figure */
+@keyframes ccorbit {
+	to {
+		stroke-dashoffset: calc(var(--len, 400) * -1);
+	}
+}
+
+@keyframes ccfade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* the one element each drawing turns on, breathing rather than blinking */
+@keyframes ccbeat {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.55;
+	}
+}
+
+.cc-draw {
+	stroke-dasharray: var(--len, 400);
+	stroke-dashoffset: var(--len, 400);
+	animation: ccdraw 1s ease-out var(--d, 0s) forwards;
+}
+
+.cc-orbit {
+	stroke-dasharray: 6 10;
+	animation: ccorbit 9s linear infinite;
+}
+
+.cc-in {
+	opacity: 0;
+	animation: ccfade 0.5s ease-out var(--d, 0s) forwards;
+}
+
+.cc-beat {
+	animation: ccbeat 3.4s ease-in-out var(--d, 0s) infinite;
+}
+
+/* Reduced motion gets the finished frame, not a paused first one: the
+   connectors are drawn, the nodes are present, the loop simply does not
+   travel. */
+@media (prefers-reduced-motion: reduce) {
+	.cc-draw,
+	.cc-orbit,
+	.cc-in,
+	.cc-beat {
+		animation: none;
+		stroke-dashoffset: 0;
+		opacity: 1;
+	}
+
+	.cc-orbit {
+		stroke-dasharray: 6 10;
+	}
+}

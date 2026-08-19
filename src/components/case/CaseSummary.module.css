@@ -1,0 +1,118 @@
+.block {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3.5rem, 9vh, 6.5rem);
+}
+
+/* same two-track head as the comparison bands, so the eyebrow column
+   lines up down the whole page */
+.head {
+	display: grid;
+	grid-template-columns: 14rem minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vw, 4rem);
+	align-items: start;
+	margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+.eyebrow {
+	color: var(--muted);
+}
+
+.heading {
+	font-size: var(--text-h3);
+	max-width: 24ch;
+	margin-bottom: 1rem;
+}
+
+.lede {
+	color: var(--fg-soft);
+	max-width: 62ch;
+}
+
+.cols {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(1rem, 2.5vw, 2rem);
+}
+
+/* a rule per column rather than a box: the summary is prose, not cards —
+   the boxed treatment belongs to the diagrams below */
+.col {
+	border-top: 1px solid var(--hairline);
+	padding-top: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+}
+
+.col[data-role="solution"],
+.col[data-role="impact"] {
+	border-top-color: var(--hairline-red);
+}
+
+.label {
+	color: var(--muted);
+}
+
+.col[data-role="solution"] .label,
+.col[data-role="impact"] .label {
+	color: var(--accent);
+}
+
+.value {
+	font-size: var(--text-h3);
+	color: var(--accent);
+	line-height: 1;
+}
+
+/* The unit that belongs to a number. Mono, muted and small-caps — the
+   label voice — so "20 students : 1 patient" reads as a measurement
+   rather than as a sentence set far too large. Keeping the units off the
+   accent also stops the ratio turning into a block of red. */
+.value small {
+	font-size: 0.44em;
+	font-family: var(--font-mono);
+	color: var(--muted);
+	letter-spacing: var(--track-label);
+	text-transform: uppercase;
+	/* em here is the unit's own size, not the number's — 0.18 computed to
+	   about two pixels and read as "20STUDENTS" */
+	margin-left: 0.45em;
+}
+
+.body {
+	color: var(--fg-soft);
+}
+
+@media (max-width: 768px) {
+	.head,
+	.cols {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* engagement facts, on the same tracks as the columns above */
+.meta {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(1rem, 2.5vw, 2rem);
+	margin: clamp(2rem, 5vh, 3rem) 0 0;
+}
+
+.metaItem {
+	border-top: 1px solid var(--hairline);
+	padding-top: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+}
+
+.metaBody {
+	color: var(--fg-soft);
+	margin: 0;
+}
+
+@media (max-width: 768px) {
+	.meta {
+		grid-template-columns: 1fr;
+	}
+}

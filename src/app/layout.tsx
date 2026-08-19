@@ -14,6 +14,10 @@ const serif = Fraunces({
 
 const sans = Work_Sans({
   subsets: ["latin"],
+  /* the real italic, not a synthesised slant: body copy carries emphasis
+     with <em>, and without this the browser shears the roman instead of
+     using Work Sans' own italic letterforms */
+  style: ["normal", "italic"],
   variable: "--font-sans",
 });
 

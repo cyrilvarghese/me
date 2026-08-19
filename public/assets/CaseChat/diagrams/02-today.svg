@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" role="img"
+     aria-label="A case has to be written by hand by the one person with no time, runs once for one room, and ends with students watching rather than deciding.">
+  <defs>
+    <marker id="ccA-02t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor" opacity=".5"/>
+    </marker>
+    <marker id="ccR-02t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#ea0000"/>
+    </marker>
+  </defs>
+
+  <!-- A line, not a loop. Every arrow costs somebody's scarce hour, and
+       the last box has nothing leaving it — which is the failure. -->
+  <rect x="130" y="30" width="300" height="56" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".22"/>
+  <text x="280" y="56" font-size="15" text-anchor="middle" fill="currentColor" opacity=".85">DOCTOR</text>
+  <text x="280" y="75" font-size="12" text-anchor="middle" fill="currentColor" opacity=".45">already overburdened</text>
+
+  <line class="cc-draw" style="--len:52;--d:.2s" x1="280" y1="86" x2="280" y2="134" stroke="currentColor" stroke-opacity=".38" marker-end="url(#ccA-02t)"/>
+  <text class="cc-in" style="--d:.6s" x="300" y="114" font-size="12" fill="currentColor" opacity=".55">authors it by hand</text>
+
+  <rect x="130" y="138" width="300" height="56" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".22"/>
+  <text x="280" y="164" font-size="15" text-anchor="middle" fill="currentColor" opacity=".85">ONE CASE</text>
+  <text x="280" y="183" font-size="12" text-anchor="middle" fill="currentColor" opacity=".45">hours to prepare</text>
+
+  <line class="cc-draw" style="--len:52;--d:.35s" x1="280" y1="194" x2="280" y2="242" stroke="currentColor" stroke-opacity=".38" marker-end="url(#ccA-02t)"/>
+  <text class="cc-in" style="--d:.75s" x="300" y="222" font-size="12" fill="currentColor" opacity=".55">runs once, one room</text>
+
+  <rect x="130" y="246" width="300" height="56" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".22"/>
+  <text x="280" y="272" font-size="15" text-anchor="middle" fill="currentColor" opacity=".85">STUDENTS WATCH</text>
+  <text x="280" y="291" font-size="12" text-anchor="middle" fill="currentColor" opacity=".45">no turn to decide</text>
+
+  <line class="cc-draw" style="--len:52;--d:.5s" x1="280" y1="302" x2="280" y2="350" stroke="#ea0000" stroke-opacity=".8" marker-end="url(#ccR-02t)"/>
+  <text class="cc-in" style="--d:.9s" x="300" y="330" font-size="12" fill="#ea0000">nothing to practise</text>
+
+  <rect x="130" y="354" width="300" height="56" fill="#ea0000" fill-opacity=".07" stroke="#ea0000" stroke-opacity=".55"/>
+  <text x="280" y="387" font-size="15" text-anchor="middle" fill="#ea0000">THEORY STAYS THEORY</text>
+</svg>

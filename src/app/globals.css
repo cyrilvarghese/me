@@ -22,6 +22,10 @@ body {
 	color: var(--fg);
 	font-family: var(--font-sans);
 	font-size: var(--text-body);
+	/* 350, not 400: Work Sans is loaded variable, and light-on-dark gains
+	   optical weight — 400 here reads like 450 would on a light ground.
+	   The display face keeps its own 380; that tuning is deliberate. */
+	font-weight: 350;
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
 }
@@ -94,14 +98,89 @@ button {
 		'SOFT' 30,
 		'WONK' 0.9;
 	font-weight: 380;
-	line-height: 1.02;
+	/* Leading is optical: it has to loosen as the type gets smaller. This
+	   voice runs from --text-h3 (1.35rem) to --text-display (6.5rem), a
+	   4.8x range, and the flat 1.02 it used to carry was tuned for the top
+	   of that range — at the bottom it crammed ascenders into the
+	   descenders above, which only ever showed on a heading that wrapped.
+
+	   em is the element's own size and rem is fixed, so this one
+	   expression falls as the type grows: 1.00 at 6.5rem, 1.02 at 4.25rem,
+	   1.06 at 2.75rem, 1.11 at 2rem, 1.18 at 1.35rem. The display end is
+	   where it was; only the small end moves. Modules that set their own
+	   line-height (CaseCompare, CaseStats, CaseImpact…) still win. */
+	line-height: calc(0.95em + 0.31rem);
 	letter-spacing: -0.015em;
 }
+
+/* Emphasis in running copy is plain <em>, with no class and no colour.
+   The red rule this used to carry read as a third accent on a row that
+   already spends red on two labels and a value — the italic says the
+   same thing and lets the sentence stay a sentence. Work Sans' real
+   italic is loaded in layout.tsx so this is not a synthesised slant. */
 
 .section-shell {
 	max-width: var(--content-max);
 	margin-inline: auto;
 	padding-inline: var(--gutter);
+}
+
+/* ---- controls ----
+   Every button, CTA and icon control on the site is one of these, so
+   geometry and hover behaviour stay identical everywhere. Pair with
+   .mono-label for the label voice. Variants: .btn-ghost (quiet, hairline
+   border) and .btn-icon (square, fixed size). */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	border: var(--control-border) solid var(--accent);
+	border-radius: var(--radius);
+	background: transparent;
+	color: var(--fg);
+	padding: var(--control-pad);
+	transition: background-color 150ms ease, color 150ms ease, transform 100ms ease;
+}
+
+.btn:active {
+	transform: scale(0.97);
+}
+
+.btn-ghost {
+	border-color: var(--hairline);
+	color: var(--fg-soft);
+}
+
+.btn-icon {
+	width: var(--control-size);
+	height: var(--control-size);
+	padding: 0;
+	font-size: 1.05rem;
+	line-height: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.btn:hover {
+		background: var(--accent);
+		color: var(--bg);
+	}
+
+	.btn-ghost:hover {
+		background: transparent;
+		border-color: var(--fg-soft);
+		color: var(--fg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.btn {
+		transition: none;
+	}
+
+	.btn:active {
+		transform: none;
+	}
 }
 
 /* Starting state for Framer Motion whileInView reveals. Lives in CSS so
