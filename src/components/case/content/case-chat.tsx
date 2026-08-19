@@ -33,9 +33,15 @@ export default function CaseChatContent() {
         items={[
           {
             label: "Pain",
-            value: "20 : 1",
+            /* the units sit in the number rather than under it, so the
+               ratio is legible without reading the body at all */
+            value: (
+              <>
+                20<small>students</small> : 1<small>patient</small>
+              </>
+            ),
             body:
-              "Twenty students to one patient, fifteen minutes each. Live patients teach best, and logistics ration them.",
+              "Fifteen minutes each. Live patients teach best, and logistics ration them.",
           },
           {
             label: "Solution",
