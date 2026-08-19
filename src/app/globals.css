@@ -113,22 +113,11 @@ button {
 	letter-spacing: -0.015em;
 }
 
-/* Emphasis inside running copy. The accent arrives as a rule under the
-   words rather than in them: red fails AA for small text on this ground,
-   but a line is not being read, so it can carry the stress at full
-   strength. skip-ink lifts it over the descenders and the offset keeps it
-   clear of the baseline, so the sentence still reads as a sentence.
-
-   Pair with <em>, which is what this means; the italic is dropped because
-   the underline is already doing the work. */
-.mark {
-	font-style: inherit;
-	text-decoration: underline;
-	text-decoration-color: var(--accent);
-	text-decoration-thickness: 2px;
-	text-underline-offset: 0.24em;
-	text-decoration-skip-ink: auto;
-}
+/* Emphasis in running copy is plain <em>, with no class and no colour.
+   The red rule this used to carry read as a third accent on a row that
+   already spends red on two labels and a value — the italic says the
+   same thing and lets the sentence stay a sentence. Work Sans' real
+   italic is loaded in layout.tsx so this is not a synthesised slant. */
 
 .section-shell {
 	max-width: var(--content-max);

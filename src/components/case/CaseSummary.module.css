@@ -58,10 +58,19 @@
 	color: var(--accent);
 }
 
+/* Red is this row's "what we did about it" colour — solution and impact
+   carry it in their label and hairline, pain deliberately does not. So a
+   value takes its own column's voice rather than always going accent,
+   otherwise a number stating the problem reads as a win. */
 .value {
 	font-size: var(--text-h3);
-	color: var(--accent);
+	color: var(--fg);
 	line-height: 1;
+}
+
+.col[data-role="solution"] .value,
+.col[data-role="impact"] .value {
+	color: var(--accent);
 }
 
 .body {

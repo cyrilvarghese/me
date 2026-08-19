@@ -23,7 +23,7 @@ export default function CaseChatContent() {
           <>
             Medical school teaches the facts well and the judgement badly — not
             by choice, but because{" "}
-            <em className="mark">
+            <em>
               judgement needs patients, and patients are the one thing a
               curriculum cannot hand out
             </em>
@@ -33,13 +33,14 @@ export default function CaseChatContent() {
         items={[
           {
             label: "Pain",
+            value: "20 : 1",
             body:
-              "A fifth of a student's time is spent on real patients, and most of that is spent watching. Cases are the fix everyone agrees on, and the doctors who would write them have no hours left.",
+              "Twenty students to one patient, fifteen minutes each. Live patients teach best, and logistics ration them.",
           },
           {
             label: "Solution",
             body:
-              "A virtual clinic of generated patients. A student takes the history, orders the tests, commits to a diagnosis, treats — and is told where the reasoning went wrong, then does it again.",
+              "AI generates the patients. The student talks, examines, tests, treats — then sees where the reasoning broke, and goes again.",
           },
           {
             label: "Impact",
