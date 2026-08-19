@@ -263,8 +263,7 @@
 }
 
 /* the card swap: only the words move — the card's hairline and the
-   avatar hold still while the text eases in from above, half-present
-   to fully present */
+   avatar hold still while the text fades in, half-present to fully present. No movement — a fade alone. */
 @media (prefers-reduced-motion: no-preference) {
 	.words {
 		animation: msjEnter var(--msj-fade, 1100ms) cubic-bezier(0.22, 1, 0.36, 1);
@@ -274,11 +273,9 @@
 @keyframes msjEnter {
 	from {
 		opacity: 0.4;
-		transform: translateY(-14px);
 	}
 	to {
 		opacity: 1;
-		transform: none;
 	}
 }
 
