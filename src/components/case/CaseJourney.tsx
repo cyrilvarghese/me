@@ -57,7 +57,7 @@ export default function CaseJourney({
   const [target, setTarget] = useState(quoted[0] ?? 0);
   const [shown, setShown] = useState(quoted[0] ?? 0);
   const [instant, setInstant] = useState(false); // kills the slide for one swap
-  const [driven, setDriven] = useState(false); // reader took over
+  const [paused, setPaused] = useState(false); // by the reader: nav or the pause button
   const [inView, setInView] = useState(false);
   /* ?tune in the URL swaps the shipped timings for live sliders — a
      tuning bench, not a shipped control, so it costs nothing unasked */
@@ -109,7 +109,7 @@ export default function CaseJourney({
      or for the journey's end after the last quote. From the end: hold
      the finished rail, then restart in place rather than rewinding. */
   useEffect(() => {
-    if (driven || !inView || target !== shown) return;
+    if (paused || !inView || target !== shown) return;
     if (reduced()) return;
     const at = quoted.indexOf(shown);
     const t = setTimeout(
@@ -130,7 +130,7 @@ export default function CaseJourney({
       at === -1 || shown === last ? END_HOLD : dwell
     );
     return () => clearTimeout(t);
-  }, [shown, target, driven, inView, quoted, last, dwell]);
+  }, [shown, target, paused, inView, quoted, last, dwell]);
 
   /* the instant flag lives for exactly one swap */
   useEffect(() => {
@@ -140,7 +140,7 @@ export default function CaseJourney({
   }, [instant]);
 
   const go = (i: number) => {
-    setDriven(true);
+    setPaused(true);
     setInstant(false);
     setTarget(i);
   };
@@ -241,6 +241,14 @@ export default function CaseJourney({
         </div>
 
         <div className={styles.controls}>
+          <button
+            type="button"
+            className="btn btn-ghost btn-icon"
+            onClick={() => setPaused((p) => !p)}
+            aria-label={paused ? "Play the walk" : "Pause the walk"}
+          >
+            {paused ? "▸" : "‖"}
+          </button>
           <button
             type="button"
             className="btn btn-ghost btn-icon"
