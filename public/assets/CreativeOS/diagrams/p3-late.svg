@@ -1,9 +1,19 @@
-<svg viewBox="0 0 360 240" role="img"
-     aria-label="A mistake made at a small early step and found at a step four times its size.">
-  <!-- the cost is the size: r doubles, so the node where the mistake is
-       found covers four times the area of the one that made it -->
-  <line x1="70" y1="120" x2="270" y2="120"
-        stroke="#ea0000" stroke-width="2.5" stroke-linecap="round"/>
-  <circle cx="70" cy="120" r="6" fill="#ea0000"/>
-  <circle cx="270" cy="120" r="12" fill="#ea0000"/>
+<svg viewBox="0 0 360 250" role="img"
+     aria-label="One unreviewed image fans out into a batch of four videos, each carrying the same mistake at four times the size.">
+  <!-- the fan from 03-today: one mistake at the image becomes a whole
+       batch in video. The end nodes are r12 against r6 — four times the
+       area, which is the cost the number names. -->
+  <g fill="none" stroke="#ea0000" stroke-width="2.5" stroke-linecap="round">
+    <line x1="56" y1="125" x2="278" y2="45"/>
+    <line x1="56" y1="125" x2="278" y2="98"/>
+    <line x1="56" y1="125" x2="278" y2="152"/>
+    <line x1="56" y1="125" x2="278" y2="205"/>
+  </g>
+  <circle cx="56" cy="125" r="6" fill="#ea0000"/>
+  <g fill="#ea0000">
+    <circle cx="278" cy="45" r="12"/>
+    <circle cx="278" cy="98" r="12"/>
+    <circle cx="278" cy="152" r="12"/>
+    <circle cx="278" cy="205" r="12"/>
+  </g>
 </svg>
