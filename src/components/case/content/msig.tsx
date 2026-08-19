@@ -20,23 +20,29 @@ export default function MsigContent() {
       <CaseSummary
         eyebrow="Context"
         heading="Selling insurance through a twenty-year-old portal."
-        lede="MSIG's legacy agent portal ran the working day for its agents — new business and renewals both — with inefficient workflows, poor usability and no mobile support."
+        lede="Every quote and every renewal went through it, and no agent could work around it — which is what made replacing it risky."
         items={[
           {
             label: "Pain",
+            value: "20+ min",
             body:
-              "A quote took twenty minutes of cluttered form, statuses never said where a submission stood, renewals ran on manual tracking, and nothing worked on mobile.",
+              "To fill one quote. Statuses never said where a submission stood, renewals ran on memory, and none of it worked on mobile.",
           },
           {
             label: "Solution",
-            body:
-              "A scalable, responsive design system built from modular blocks — stepper, form, details sidebar — with logically grouped fields, wizards that autosave, and renewals, payments and GWP tracked automatically.",
+            body: (
+              <>
+                <em>One responsive design system</em> — stepper, form, details
+                sidebar. Fields grouped by context, wizards that autosave, and
+                renewals, payments and GWP tracked rather than remembered.
+              </>
+            ),
           },
           {
             label: "Impact",
             value: "~8 min",
             body:
-              "Cut from quote-issuance time, with fewer errors from semantically grouped data entry.",
+              "Cut from every quote issued, with fewer errors from fields grouped by meaning.",
           },
         ]}
         meta={[
