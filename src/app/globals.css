@@ -22,6 +22,10 @@ body {
 	color: var(--fg);
 	font-family: var(--font-sans);
 	font-size: var(--text-body);
+	/* 350, not 400: Work Sans is loaded variable, and light-on-dark gains
+	   optical weight — 400 here reads like 450 would on a light ground.
+	   The display face keeps its own 380; that tuning is deliberate. */
+	font-weight: 350;
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
 }

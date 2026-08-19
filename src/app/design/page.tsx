@@ -25,8 +25,8 @@ export const metadata: Metadata = {
 const TOKENS = [
   { name: "--bg", value: "#151111", note: "page ground" },
   { name: "--surface", value: "#1e1818", note: "lifted panels" },
-  { name: "--fg", value: "#f8f4f2", note: "text" },
-  { name: "--fg-soft", value: "#eee8e6", note: "secondary text" },
+  { name: "--fg", value: "#e7e3e1", note: "text" },
+  { name: "--fg-soft", value: "#ddd8d6", note: "secondary text" },
   { name: "--muted", value: "#9e9493", note: "captions, labels" },
   { name: "--accent", value: "#ea0000", note: "signal red — decorative / large type only" },
   { name: "--accent-deep", value: "#c90000", note: "deep red — frames, needle" },
