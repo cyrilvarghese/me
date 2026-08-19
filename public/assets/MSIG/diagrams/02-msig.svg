@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img"
+     aria-label="The same renewal journey with renewals, payments and gross written premium tracked automatically, so the due date surfaces on its own and the payment is followed without the agent chasing it.">
+  <path d="M140,95 H660" fill="none" stroke="rgba(248,244,242,0.28)" stroke-width="3"
+        stroke-linecap="round" stroke-dasharray="2 14"/>
+
+  <path d="M140,95 H660" fill="none" stroke="rgba(248,244,242,0.55)" stroke-width="3"
+        stroke-linecap="round" pathLength="100"
+        stroke-dasharray="100 100" stroke-dashoffset="100" class="ms-trail-520"/>
+
+  <g fill="#1e1818" stroke="#eee8e6" stroke-width="3">
+    <circle cx="140" cy="95" r="10"/>
+    <circle cx="270" cy="95" r="10"/>
+    <circle cx="400" cy="95" r="10"/>
+    <circle cx="530" cy="95" r="10"/>
+    <circle cx="660" cy="95" r="10"/>
+  </g>
+
+  <path d="M140,95 H660" fill="none" stroke="#ea0000" stroke-linecap="round" stroke-width="16"
+        stroke-dasharray="0.01 519.99" class="ms-run-520"/>
+
+  <g text-anchor="middle" style="font-weight:500;font-size:20px" fill="#eee8e6">
+    <text x="140" y="52">Track</text>
+    <text x="270" y="52">Initiate</text>
+    <text x="400" y="52">Review</text>
+    <text x="530" y="52">Payment</text>
+    <text x="660" y="52">Confirm</text>
+  </g>
+
+  <g fill="none" stroke="#ea0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M131,134 L140,143 L155,124" opacity="0" class="ms-at0"/>
+    <path d="M391,134 L400,143 L415,124" opacity="0" class="ms-at132"/>
+    <path d="M521,134 L530,143 L545,124" opacity="0" class="ms-at198"/>
+  </g>
+
+  <g text-anchor="middle" style="font-weight:500;font-size:20px" fill="#eee8e6">
+    <text x="140" y="190" opacity="0" class="ms-at0">due date surfaces</text>
+    <text x="400" y="190" opacity="0" class="ms-at132">docs requested</text>
+    <text x="530" y="230" opacity="0" class="ms-at198">payment tracked</text>
+  </g>
+
+  <text x="270" y="230" text-anchor="middle" style="font-weight:500;font-size:20px" fill="#9e9493"
+        opacity="0" class="ms-at66">cover in view</text>
+
+  <text x="400" y="285" text-anchor="middle" style="font-weight:500;font-size:20px" fill="#9e9493"
+        opacity="0" class="ms-at400">nothing here depends on remembering</text>
+</svg>

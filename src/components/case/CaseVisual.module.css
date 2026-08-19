@@ -43,15 +43,6 @@
 	object-fit: cover;
 }
 
-/* documentation screenshots and annotated diagrams: show the whole
-   frame, letterboxed against the surface, rather than crop the labels.
-   The inset keeps light screenshots off the hairline and clear of the
-   accent corner marks. */
-.contain {
-	object-fit: contain;
-	inset: clamp(0.5rem, 1.5vw, 1rem);
-}
-
 .caption {
 	color: var(--muted);
 }

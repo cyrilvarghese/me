@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" role="img"
+     aria-label="A desktop-only layout: stepper, form and sidebar side by side, and no version of the task that survives the handoff to a phone.">
+  <!-- the desktop the portal was built for. A device outline, not a frame
+       around the diagram: it is the thing being drawn -->
+  <rect x="60" y="62" width="400" height="212" rx="6"
+        fill="#1e1818" stroke="rgba(248,244,242,0.28)" stroke-width="2"/>
+
+  <!-- the three blocks are structure, not sequence: neutral, so the only
+       red in the drawing is the handoff and the mark that ends it -->
+  <g stroke="rgba(248,244,242,0.5)" stroke-width="2" fill="#eee8e622">
+    <rect x="82" y="86" width="66" height="164" rx="3"/>
+    <rect x="160" y="86" width="196" height="164" rx="3"/>
+    <rect x="368" y="86" width="70" height="164" rx="3"/>
+  </g>
+
+  <text x="260" y="42" text-anchor="middle" style="font-weight:500;font-size:20px" fill="#eee8e6">One screen width</text>
+
+  <!-- the handoff that does not land -->
+  <path d="M478,168 H640" fill="none" stroke="rgba(248,244,242,0.28)" stroke-width="3"
+        stroke-linecap="round" stroke-dasharray="2 14"/>
+  <path d="M478,168 H640" fill="none" stroke="rgba(248,244,242,0.55)" stroke-width="3"
+        stroke-linecap="round" pathLength="100"
+        stroke-dasharray="100 100" stroke-dashoffset="100" class="ms-trail-162"/>
+  <path d="M478,168 H640" fill="none" stroke="#ea0000" stroke-linecap="round" stroke-width="16"
+        stroke-dasharray="0.01 161.99" class="ms-run-162"/>
+
+  <!-- the phone, empty: there is nothing to reflow into -->
+  <rect x="655" y="78" width="100" height="180" rx="14"
+        fill="#1e1818" stroke="rgba(248,244,242,0.28)" stroke-width="2"/>
+
+  <g opacity="0" class="ms-at0">
+    <path d="M683,146 L727,190 M727,146 L683,190"
+          fill="none" stroke="#ea0000" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- no label under the phone: at this viewBox width it would run past the
+       panel's padding and clip. The mark says it, and the caption names it -->
+  <text x="400" y="342" text-anchor="middle" style="font-weight:500;font-size:20px" fill="#9e9493"
+        opacity="0" class="ms-at400">in the field, the job waits for a desk</text>
+</svg>

@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import "./diagram-motion.css";
 import "./casechat-motion.css";
+import "./msig-motion.css";
 import styles from "./CaseDiagram.module.css";
 
 /** Inlines a diagram SVG at build time (server component, static export —

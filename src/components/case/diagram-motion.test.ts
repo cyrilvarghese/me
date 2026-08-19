@@ -7,6 +7,7 @@ const sheet = (name: string) =>
 
 const creativeOs = sheet("diagram-motion.css");
 const caseChat = sheet("casechat-motion.css");
+const msig = sheet("msig-motion.css");
 
 /** Every animated block, as { name, selectors-of-each-step }. */
 function keyframeBlocks(css: string) {
@@ -44,6 +45,7 @@ describe("diagram motion", () => {
   it.each([
     ["diagram-motion.css", creativeOs],
     ["casechat-motion.css", caseChat],
+    ["msig-motion.css", msig],
   ])("every keyframe block in %s terminates at 100%%", (_name, css) => {
     const short = keyframeBlocks(css)
       .filter((b) => Math.max(...b.stops) < 100)
@@ -93,5 +95,39 @@ describe("casechat diagrams", () => {
       }
     }
     expect(clashes).toEqual([]);
+  });
+});
+
+/* The MSIG drawings follow the same class-driven pattern, so they get the
+   same build step: a mistyped class is otherwise silent — the element
+   simply never animates and nothing is looking. */
+describe("msig diagrams", () => {
+  const dir = join(process.cwd(), "public/assets/MSIG/diagrams");
+  const files = readdirSync(dir).filter((f) => f.endsWith(".svg"));
+  const declared = new Set([...msig.matchAll(/^\.([\w-]+)\s*\{/gm)].map((m) => m[1]));
+
+  it("has the diagrams the sheet was written for", () => {
+    expect(files.length).toBe(6);
+    expect(declared.size).toBeGreaterThan(0);
+  });
+
+  it.each(files.map((f) => [f] as const))(
+    "%s only uses classes the sheet declares",
+    (file) => {
+      const svg = readFileSync(join(dir, file), "utf8");
+      const used = [...svg.matchAll(/class="([^"]+)"/g)].flatMap((m) => m[1].split(/\s+/));
+      expect([...new Set(used)].filter((c) => !declared.has(c))).toEqual([]);
+    }
+  );
+
+  /* Speed is fixed at 246 units/second, so a run's share of the 8s cycle is
+     arithmetic: length / 1968. The class name carries the length, and the
+     keyframe carries the fraction — this checks they still agree. */
+  it("derives every run's travel fraction from its path length", () => {
+    for (const m of msig.matchAll(/@keyframes msigRun(\d+)\s*\{([^}]*\}[^}]*\}[^}]*)\}/g)) {
+      const len = Number(m[1]);
+      const stop = Number(/([\d.]+)%\s*\{\s*stroke-dashoffset:\s*-/.exec(m[2])?.[1]);
+      expect(stop).toBeCloseTo((len / 1968) * 100, 1);
+    }
   });
 });

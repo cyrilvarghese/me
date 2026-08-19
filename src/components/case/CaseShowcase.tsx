@@ -51,8 +51,13 @@ export default function CaseShowcase({
       actually asks for it. */
   youtube?: string;
   poster?: string;
-  videoCaption: string;
+  /** Doubles as the switch for the demo tile. A case with no demo — a
+      delivered client project rather than a product still shipping — omits
+      it, and the bento drops the demo block instead of standing a "in
+      production" placeholder over a demo that is never coming. */
+  videoCaption?: string;
 }) {
+  const hasDemo = Boolean(video || youtube || videoCaption);
   const [playing, setPlaying] = useState(false);
   /* an index, not the shot itself: the lightbox is a position in the list
      now, and prev/next/dots all just move that position */
@@ -120,7 +125,7 @@ export default function CaseShowcase({
 
       {/* the count picks the area map: the stylesheet describes a five-tile
           bento and an eight-tile one, and auto-places anything else */}
-      <div className={styles.bento} data-shots={shots.length}>
+      <div className={styles.bento} data-shots={shots.length} data-demo={hasDemo}>
         {shots.map((s, i) => (
           <figure key={s.src} className={styles.cell}>
             {/* the button wraps only the frame; the caption stays outside
@@ -141,6 +146,7 @@ export default function CaseShowcase({
           </figure>
         ))}
 
+        {hasDemo && (
         <figure className={`${styles.cell} ${styles.demo}`}>
           {video ? (
             <div className={styles.playerWrap}>
@@ -198,6 +204,7 @@ export default function CaseShowcase({
           )}
           <figcaption className={`mono-label ${styles.caption}`}>{videoCaption}</figcaption>
         </figure>
+        )}
 
         {/* Native dialog: the top layer, the backdrop, Esc, and focus
             containment are the browser's job here rather than ours. It is

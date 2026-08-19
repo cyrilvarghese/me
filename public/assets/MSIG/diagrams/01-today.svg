@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img"
+     aria-label="The new-policy journey — lead, quote, review, submit, payment, confirm — with the effort spiking at the quote, the submission and the payment.">
+  <!-- viewBox cropped to the drawing: the panel title already names the
+       side, so empty ground above the rail would only shrink the type -->
+  <path d="M110,95 H690" fill="none" stroke="rgba(248,244,242,0.28)" stroke-width="3"
+        stroke-linecap="round" stroke-dasharray="2 14"/>
+
+  <path d="M110,95 H690" fill="none" stroke="rgba(248,244,242,0.55)" stroke-width="3"
+        stroke-linecap="round" pathLength="100"
+        stroke-dasharray="100 100" stroke-dashoffset="100" class="ms-trail-580"/>
+
+  <!-- the six stages the source effort curve names. Neutral: the stage is
+       not the problem, what happens at it is -->
+  <g fill="#1e1818" stroke="#eee8e6" stroke-width="3">
+    <circle cx="110" cy="95" r="10"/>
+    <circle cx="226" cy="95" r="10"/>
+    <circle cx="342" cy="95" r="10"/>
+    <circle cx="458" cy="95" r="10"/>
+    <circle cx="574" cy="95" r="10"/>
+    <circle cx="690" cy="95" r="10"/>
+  </g>
+
+  <!-- the marker: stroke-width 16 = 11 × (800 / 548), so the dot paints
+       the same size here as in every other diagram -->
+  <path d="M110,95 H690" fill="none" stroke="#ea0000" stroke-linecap="round" stroke-width="16"
+        stroke-dasharray="0.01 579.99" class="ms-run-580"/>
+
+  <g text-anchor="middle" style="font-weight:500;font-size:20px" fill="#eee8e6">
+    <text x="110" y="52">Lead</text>
+    <text x="226" y="52">Quote</text>
+    <text x="342" y="52">Review</text>
+    <text x="458" y="52">Submit</text>
+    <text x="574" y="52">Payment</text>
+    <text x="690" y="52">Confirm</text>
+  </g>
+
+  <!-- where the effort spikes: red marks the moment that matters, and each
+       lands as the dot clears the stage it belongs to -->
+  <g fill="none" stroke="#ea0000" stroke-width="3" stroke-linecap="round">
+    <g opacity="0" class="ms-at59"><path d="M218,126 L234,142 M234,126 L218,142"/></g>
+    <g opacity="0" class="ms-at177"><path d="M450,126 L466,142 M466,126 L450,142"/></g>
+    <g opacity="0" class="ms-at236"><path d="M566,126 L582,142 M582,126 L566,142"/></g>
+  </g>
+
+  <!-- two rows: Submit sits between the other two marks, so its label would
+       collide with theirs on a single line -->
+  <g text-anchor="middle" style="font-weight:500;font-size:20px" fill="#ea0000">
+    <text x="226" y="190" opacity="0" class="ms-at59">20+ min</text>
+    <text x="574" y="190" opacity="0" class="ms-at236">chased by hand</text>
+    <text x="458" y="230" opacity="0" class="ms-at177">status unclear</text>
+  </g>
+
+  <text x="400" y="285" text-anchor="middle" style="font-weight:500;font-size:20px" fill="#9e9493"
+        opacity="0" class="ms-at400">three spikes, every new policy</text>
+</svg>

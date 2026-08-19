@@ -86,6 +86,24 @@
 	grid-area: h;
 }
 
+/* The third shape: no demo to build around, so the tiles take the whole
+   bento as two even rows of three. Used by a delivered project whose
+   evidence is screens rather than a walkthrough. */
+/* Explicit row heights, not 1fr: in the five- and eight-tile shapes the
+   demo's aspect ratio is what gives the flexible rows something to divide.
+   With no demo there is no such anchor, and 1fr rows collapse to the
+   height of the captions alone. */
+.bento[data-demo="false"][data-shots="6"] {
+	grid-template-rows: repeat(2, clamp(9rem, 18vw, 15rem));
+	grid-template-areas:
+		"a b c"
+		"d e f";
+}
+
+.bento[data-demo="false"][data-shots="6"] .cell:nth-child(6) {
+	grid-area: f;
+}
+
 /* the player already states its own height, so no flexible row to solve */
 .demo {
 	grid-area: demo;
@@ -167,14 +185,16 @@
 		grid-template-areas: none;
 	}
 
-	.bento[data-shots="8"] {
+	.bento[data-shots="8"],
+	.bento[data-demo="false"][data-shots="6"] {
 		grid-template-columns: minmax(0, 1fr);
 		grid-template-rows: none;
 		grid-template-areas: none;
 	}
 
 	.cell:not(.demo):nth-child(n),
-	.bento[data-shots="8"] .cell:not(.demo):nth-child(n) {
+	.bento[data-shots="8"] .cell:not(.demo):nth-child(n),
+	.bento[data-demo="false"][data-shots="6"] .cell:nth-child(n) {
 		grid-area: auto;
 		grid-template-rows: auto auto;
 	}
