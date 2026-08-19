@@ -157,6 +157,7 @@ export default function CaseChatContent() {
               <>
                 <CaseQuote
                   quote="We thought students wanted to think like doctors — but they were trying to succeed as students. Success in exams was critical for that."
+                  marks={false}
                 />
 
                 <CaseFigure

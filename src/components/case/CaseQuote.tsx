@@ -8,14 +8,19 @@ export default function CaseQuote({
   quote,
   name,
   role,
+  marks = true,
 }: {
   quote: string;
   name?: string;
   role?: string;
+  /** The outsized quotation marks behind the words. On a long attributed
+      quote they frame it; on a short unattributed one they crowd it, so
+      an instance can turn them off. */
+  marks?: boolean;
 }) {
   return (
     <section className={`section-shell ${styles.block}`}>
-      <figure className={styles.figure}>
+      <figure className={styles.figure} data-marks={marks ? "true" : "false"}>
         {/* the rule stands in for the quote mark: red, decorative, and
             large-type only — the same job the accent does everywhere */}
         <blockquote className={`serif-display ${styles.quote}`}>{quote}</blockquote>

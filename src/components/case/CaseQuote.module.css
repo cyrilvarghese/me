@@ -26,8 +26,8 @@
    heading: this is the largest and least type-like thing on the page.
    The colour is an rgba literal rather than a color-mix on --accent,
    which silently no-ops in Cyril's Edge build. */
-.figure::before,
-.figure::after {
+.figure[data-marks="true"]::before,
+.figure[data-marks="true"]::after {
 	content: "\201C" / "";
 	position: absolute;
 	z-index: 0;
@@ -47,7 +47,7 @@
    them — behind the words is the whole idea, and a mark parked in the
    margin is just an ornament. Offsets are in em, so they track the
    clamped size instead of drifting as the viewport changes. */
-.figure::before {
+.figure[data-marks="true"]::before {
 	content: "\201C" / "";
 	top: -0.2em;
 	left: 0.6rem;
@@ -55,7 +55,7 @@
 
 /* the closing mark answers from the far corner, quieter — an echo, and
    it lands in the open ground past the end of the last line */
-.figure::after {
+.figure[data-marks="true"]::after {
 	content: "\201D" / "";
 	right: 0.5rem;
 	bottom: -0.3em;
