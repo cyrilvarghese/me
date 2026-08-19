@@ -63,11 +63,25 @@
 	grid-template-rows: auto auto;
 }
 
+/* the tile is a button now — it, not the frame, is what fills the cell's
+   flexible row, so the frame can go on stating width/height 100% */
+.trigger {
+	display: block;
+	min-height: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	cursor: zoom-in;
+	font: inherit;
+}
+
 .frame {
 	width: 100%;
 	height: 100%;
 	min-height: 0;
 }
+
 
 .caption {
 	color: var(--muted);
@@ -133,5 +147,166 @@
 	.frame {
 		aspect-ratio: 16 / 10;
 		height: auto;
+	}
+}
+
+/* ---- demo: the red play mark, then the browser's own controls ---- */
+
+.playerWrap {
+	position: relative;
+}
+
+/* Covers the whole frame rather than sitting as a small target in the
+   middle: before first play there is nothing else on the panel to click,
+   so the whole panel may as well be the button. */
+.playBtn {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	border: 0;
+	background: none;
+	cursor: pointer;
+}
+
+/* the outline would otherwise be drawn outside the video */
+.playBtn:focus-visible {
+	outline-offset: -6px;
+}
+
+.playMark {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 26px 0 26px 44px;
+	border-color: transparent transparent transparent var(--accent);
+}
+
+/* ---- lightbox ---- */
+
+/* The dialog itself is only a box in the top layer: the visible frame is
+   .panel, so anything the reader clicks that is not the panel is the
+   backdrop, and closes. */
+.dialog {
+	width: min(94vw, 1280px);
+	max-width: none;
+	max-height: 94vh;
+	/* the UA centres a modal dialog with inset:0 + margin:auto; the global
+	   `* { margin: 0 }` reset outranks that and drops it in the top-left
+	   corner, so the centring has to be asked for again here */
+	margin: auto;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--fg);
+	overflow: visible;
+	opacity: 0;
+}
+
+/* rgba rather than color-mix: translucent paint written as color-mix
+   silently drops out in Edge here */
+.dialog::backdrop {
+	background: rgba(10, 8, 8, 0.86);
+	opacity: 0;
+}
+
+.dialog[data-open="true"],
+.dialog[data-open="true"]::backdrop {
+	opacity: 1;
+}
+
+.panel {
+	position: relative;
+	border: 1px solid var(--hairline);
+	background: var(--bg);
+	padding: clamp(1rem, 2.5vw, 2rem);
+}
+
+.close {
+	position: absolute;
+	top: clamp(0.4rem, 1vw, 0.75rem);
+	right: clamp(0.4rem, 1vw, 0.75rem);
+	z-index: 1;
+	width: 2.25rem;
+	height: 2.25rem;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	border: 1px solid var(--hairline);
+	background: var(--bg);
+	color: var(--muted);
+	font-size: 1.25rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.close:hover {
+	color: var(--fg);
+	border-color: var(--hairline-red);
+}
+
+.lightbox {
+	margin: 0;
+	opacity: 0;
+}
+
+.dialog[data-open="true"] .lightbox {
+	opacity: 1;
+}
+
+.lightboxImg {
+	display: block;
+	margin-inline: auto;
+	max-width: 100%;
+	max-height: 74vh;
+	width: auto;
+	height: auto;
+	border: 1px solid var(--hairline);
+	background: var(--surface);
+}
+
+.lightboxCaption {
+	color: var(--muted);
+	margin-top: 0.9rem;
+}
+
+/* Motion is opt-out, not opt-in: reduced-motion readers get the panel and
+   the image at full opacity on the first frame, and no hover travel. */
+@media (prefers-reduced-motion: no-preference) {
+	.trigger .frame img,
+	.playMark {
+		transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1);
+	}
+
+	/* the only hover affordance on a tile: the screenshot leans in behind
+	   its own frame, which already clips it */
+	.trigger:hover .frame img,
+	.trigger:focus-visible .frame img {
+		transform: scale(1.03);
+	}
+
+	.playBtn:hover .playMark,
+	.playBtn:focus-visible .playMark {
+		transform: scale(1.12);
+	}
+
+	/* panel and backdrop arrive first; the image resolves into the frame
+	   they leave behind */
+	.dialog,
+	.dialog::backdrop {
+		transition: opacity 200ms linear;
+	}
+
+	.lightbox {
+		transition: opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.dialog,
+	.dialog::backdrop,
+	.lightbox {
+		opacity: 1;
 	}
 }
