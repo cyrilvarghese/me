@@ -34,7 +34,7 @@ export const cases: CaseStudy[] = [
   },
   {
     slug: "msig",
-    cover: "/assets/MSIG/cover.png",
+    cover: "/assets/MSIG/cover-desk.webp",
     num: "03",
     category: "Lead Product Designer",
     headline: "Turning a legacy insurance portal into a consumer-grade one.",
