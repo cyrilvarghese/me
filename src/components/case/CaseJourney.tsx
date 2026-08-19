@@ -12,7 +12,7 @@ export type JourneyStage = {
 const TRAVEL = 900; // ms — the trail/marker transition (--msj-travel)
 const DWELL = 4200; // reading time at a quoted stage
 const END_HOLD = 1600; // the completed rail, held before the cycle restarts
-const FADE = 700; // ms — the card's entrance fade (--msj-fade)
+const FADE = 1100; // ms — the card's entrance fade (--msj-fade)
 
 /** A journey told one stage at a time: a straight rail of stages with a
     red marker sliding along it, and a card giving the active stage's

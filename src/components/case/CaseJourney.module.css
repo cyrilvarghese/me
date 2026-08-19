@@ -262,19 +262,21 @@
 	margin-left: 0.5rem;
 }
 
-/* the card swap: a slow fade alone — movement here read as a jump */
+/* the card swap: eases in from above and settles */
 @media (prefers-reduced-motion: no-preference) {
 	.card {
-		animation: msjEnter var(--msj-fade, 700ms) ease;
+		animation: msjEnter var(--msj-fade, 1100ms) cubic-bezier(0.22, 1, 0.36, 1);
 	}
 }
 
 @keyframes msjEnter {
 	from {
 		opacity: 0;
+		transform: translateY(-14px);
 	}
 	to {
 		opacity: 1;
+		transform: none;
 	}
 }
 
