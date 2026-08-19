@@ -36,14 +36,14 @@ export const cases: CaseStudy[] = [
     slug: "msig",
     cover: "/assets/MSIG/cover.png",
     num: "03",
-    category: "Product Design + Design Systems",
-    headline: "Keeping twenty years of insurance complexity out of the agent's way.",
+    category: "Lead Product Designer",
+    headline: "Turning a legacy insurance portal into a consumer-grade one.",
     startedWith:
-      "Agents ran their day inside a legacy portal — cluttered forms, statuses that explained nothing, renewals tracked from memory, and nothing that worked on a phone.",
+      "A legacy agent portal with inefficient workflows, poor usability and no mobile support — tedious data entry, unclear interactions, and deals that were hard to close in the field.",
     built:
-      "A responsive design system for multi-step data entry — grouped forms, autosaving wizards, and tracking that surfaces renewals, payments and targets on its own.",
+      "A scalable, responsive design system for multi-step data entry — logically grouped form fields, wizards with autosave, and renewals, payments and GWP tracked automatically.",
     results: [
-      { value: "20+ min", label: "To fill one quote, before" },
+      { value: "20+ min", label: "Agent estimate to fill a quote" },
       { value: "~8 min", label: "Cut from quote issuance" },
     ],
   },

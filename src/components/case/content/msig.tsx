@@ -6,78 +6,80 @@ import { cases } from "@/lib/data/cases";
 
 const msig = cases.find((c) => c.slug === "msig")!;
 
-/* Ordered as the work ran: diagnose the two journeys, explore layouts,
-   settle the system, then the product it produced. */
+/* Every caption below compresses the caption the source published for
+   that asset. The dashboard is the one exception — it shipped without a
+   caption, so its line only describes what is visible on screen.
+   Ordered as the work ran: diagnose both journeys, explore layouts,
+   settle the block system, then the product it produced. */
 const SCREENS = [
   {
     file: "6YxTcGaZtqhVPfIRfuA2QpbjW8.avif",
     alt: "Effort curve for selling a new policy, annotated with agent quotes",
-    caption: "Selling a new policy: where the effort spikes, and what agents said there",
+    caption: "Effort curve and pain points when selling a new policy",
     wide: true,
   },
   {
     file: "vyjEy11RDmS1QDnXv4S9TlqDs.webp",
     alt: "Effort curve for renewing a policy, annotated with agent quotes",
-    caption: "Renewals: tracked by memory, stalled by documents, closed by phone call",
+    caption: "Effort curve and pain points when renewing a policy",
     wide: true,
   },
   {
     file: "kn8Lr14RDdSdVfrbqqPrvPtW8M.avif",
     alt: "Hand-drawn sketches of three mobile screens",
-    caption: "Early mobile sketches — what a step looks like on a phone",
+    caption: "Early mobile sketches exploring flow and grouping",
   },
   {
     file: "e5nkT3tdjowEU0ttZEsvoSrxCLM.webp",
     alt: "Hand-drawn sketches of four desktop layout options",
-    caption: "Four ways to hold a long form on desktop, before picking one",
+    caption: "Design exploration of possible desktop layouts",
   },
   {
     file: "3zVXGHubwsDkSoRejI1kNsYWI.webp",
     alt: "Diagram of the stepper, form data entry block and details sidebar",
-    caption: "The three blocks everything is built from: stepper, form, details sidebar",
+    caption: "Core UI blocks defining stepper, form, and sidebar",
   },
   {
     file: "FZH5qRxSvJSwBEKVMgkv5TzbYU.webp",
     alt: "The same three blocks rearranged into a narrow mobile column",
-    caption: "The same blocks, restacked for a phone",
+    caption: "Responsive layout adapting the blocks for mobile",
   },
   {
     file: "Rqpyj1Ih5zkdEhilndGmKU7f8I.avif",
     alt: "Agent dashboard showing gross written premium, renewals, payments and claims",
-    caption: "The day in one view — premium against target, renewals due, payments outstanding",
+    caption: "Agent dashboard — gross written premium against target, renewals, payments, claims",
   },
   {
     file: "nHwgrwHqa2DjUR57calWQgQG8.webp",
     alt: "Work queue table with status chips and inline row actions",
-    caption: "Statuses that say where a submission stands, and act on it in the row",
+    caption: "Clear statuses and inline actions improved visibility across policies",
   },
   {
     file: "6aFnlZQqdKNvKKZwx1GtpCi4m1w.webp",
     alt: "Indicative quote panel drilling down over the work queue",
-    caption: "A drill-down that answers the question without losing the queue behind it",
+    caption: "Drill-down panel: grouped layouts and familiar terms made dense data easy to scan",
   },
   {
     file: "a5rRn65DtRvHwOYL9MfA5fQT7I.webp",
     alt: "Quotation details form with fields grouped under vehicle details",
-    caption: "Fields regrouped into the sets agents already think in",
+    caption: "Forms reorganized into logical, context-based groups — fewer errors, faster entry",
   },
 ].map(({ file, ...rest }) => ({ src: `/assets/MSIG/${file}`, ...rest }));
 
 export default function MsigContent() {
   return (
     <>
-      <CaseSection eyebrow="Problem" heading="One portal, twenty years of workarounds.">
+      <CaseSection eyebrow="Problem" heading="Deeply ingrained, and badly dated.">
         <p>
-          MSIG&apos;s agent portal had been in daily use long enough that its
-          quirks had become procedure. Agents worked around forms that asked
-          for everything at once, statuses that never said where a submission
-          stood, and payments chased by phone. None of it survived the trip to
-          a phone, which is where the selling happens.
+          MSIG&apos;s legacy agent portal carried inefficient workflows, poor
+          usability and no mobile support. Agents faced tedious data entry,
+          unclear interactions, and difficulty closing deals in the field.
         </p>
         <p>
-          Replacing it was never the hard part. The portal was load-bearing in
-          how agents worked, so anything unfamiliar would cost more than it
-          saved.
+          The portal was deeply ingrained in their daily workflow, so the
+          stakes were high. Success depended on understanding the mental model
+          agents already had — then holding the complexity at the backend so
+          the front could stay simple.
         </p>
       </CaseSection>
 
@@ -87,27 +89,32 @@ export default function MsigContent() {
         title="Senior Product Manager, Azentio (for MSIG)"
       />
 
+      {/* Each bullet is an agent quote or pain label from the two effort-curve
+          diagrams, compressed — not a characterisation of them. */}
       <CaseSection eyebrow="Pain points">
         <ul>
-          <li>Filling a single quote took twenty minutes of undifferentiated form.</li>
-          <li>Renewals ran on memory — miss the check and the policy lapses.</li>
-          <li>Statuses were opaque, so agents phoned underwriting to find out.</li>
-          <li>Payments were chased by hand, long after the selling was done.</li>
-          <li>No upsell cues, so agents renewed whatever was already there.</li>
+          <li>Filling a quote took twenty minutes or more.</li>
+          <li>Statuses were unclear, so agents called underwriting to check a submission went through.</li>
+          <li>Renewals ran on manual tracking — forget the check and the policy lapses.</li>
+          <li>Payments were followed up by hand; chasing them took longer than selling the policy.</li>
+          <li>No upselling guidance, so agents renewed last year&apos;s cover.</li>
+          <li>Nothing worked on mobile, so deals were hard to close in the field.</li>
         </ul>
       </CaseSection>
 
       <CaseSection eyebrow="Solutions" heading="Blocks, not screens.">
         <p>
-          Underneath, the product is multi-step data entry. We built it as one:
-          a stepper, a form block and a details sidebar that recombine per task
-          and restack onto a phone. Fields regrouped into the sets agents
-          already think in, wizards that autosave, drill-downs that use the
-          words printed on the policy.
+          At its core the product was a multi-step data entry application:
+          every task moved agents through complex forms and validations. We
+          treated the interface as a system built from modular blocks — for
+          navigation, data entry and context — which made the multi-step flow
+          scalable and responsive across screens.
         </p>
         <p>
-          Renewals, payments and gross written premium track themselves, so the
-          follow-up finds the agent rather than the other way round.
+          Form fields were grouped logically, wizards autosave, and drill-downs
+          used familiar terms so dense data stayed scannable. Renewals,
+          payments and gross written premium are tracked automatically, so
+          agents miss neither a follow-up nor a target.
         </p>
       </CaseSection>
 
