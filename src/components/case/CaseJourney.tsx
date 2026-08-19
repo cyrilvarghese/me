@@ -177,7 +177,21 @@ export default function CaseJourney({
       >
         {/* the rail. Dots are buttons — the timeline is the nav */}
         <div className={styles.rail} data-instant={instant || undefined}>
-          <span className={styles.track} aria-hidden="true" />
+          {/* a real SVG line, not a CSS gradient: the house ground is a
+              round-capped "2 14" dash, and gradient dots rasterize square
+              at this size */}
+          <svg className={styles.track} aria-hidden="true">
+            <line
+              x1="0"
+              y1="1.5"
+              x2="100%"
+              y2="1.5"
+              stroke="rgba(248,244,242,0.28)"
+              strokeWidth="3"
+              strokeDasharray="2 14"
+              strokeLinecap="round"
+            />
+          </svg>
           <span
             className={styles.trail}
             style={{ transform: `scaleX(${fraction})` }}

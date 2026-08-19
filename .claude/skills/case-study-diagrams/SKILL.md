@@ -103,6 +103,11 @@ other widths, and use them as raw px when a React component (e.g.
 | Cycle | 12s, linear, infinite |
 | Sequential rows | one `linearGradient` in `userSpaceOnUse` with stops on the ramp (`#b39a9a → #c98080 → #d95a5a → #ea0000`) rather than per-segment colours |
 
+The dotted ground's mark is a **round-capped dash, not a circle**:
+"2 14" at width 3 paints a 5×3 pill. In HTML, draw it with an inline
+SVG `<line>` (`x2="100%"`) carrying the same dash attributes — a CSS
+gradient imitation rasterizes square at this size and reads off-spec.
+
 The centreline is sacred: rails, trails, markers and nodes all register
 on one shared y — in CSS, one custom property (`--rail-y`) that every
 layer derives from, never four hand-matched offsets.
