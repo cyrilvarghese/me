@@ -1,0 +1,39 @@
+import CaseDiagram from "./CaseDiagram";
+import styles from "./CaseFigure.module.css";
+
+/** One diagram, full width, for a beat that has no counterpart to sit
+    beside. CaseCompare is the right shape when the argument is "this,
+    versus this"; when the drawing is the whole finding, pairing it with
+    an empty panel would only imply a comparison that is not being made. */
+export default function CaseFigure({
+  eyebrow,
+  heading,
+  lede,
+  diagram,
+  caption,
+}: {
+  eyebrow: string;
+  heading?: string;
+  lede?: string;
+  diagram: string;
+  caption: string;
+}) {
+  return (
+    <section className={`section-shell ${styles.block}`}>
+      <div className={styles.head}>
+        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
+        <div>
+          {heading && <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>}
+          {lede && <p className={styles.lede}>{lede}</p>}
+        </div>
+      </div>
+
+      <figure className={styles.figure}>
+        <div className={styles.drawing}>
+          <CaseDiagram src={diagram} />
+        </div>
+        <figcaption className={styles.caption}>{caption}</figcaption>
+      </figure>
+    </section>
+  );
+}

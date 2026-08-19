@@ -24,12 +24,27 @@ export default function CaseClose({ slug }: { slug: string }) {
     const name = `case-visual-${slug}`;
     const hero = document.querySelector<HTMLElement>(`[data-case-visual="${slug}"]`);
 
+    /* The landing at #work is a jump, never a glide. html carries
+       scroll-behavior: smooth (globals.css), so the restore on the way
+       back animates — under the collapse that reads as the page sliding
+       around beneath the morph. Clear it inline for the length of the
+       navigation and put it back after, so in-page anchors on the home
+       page keep their travel. */
+    const root = document.documentElement;
+    const inlineBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    const restoreBehavior = () => {
+      root.style.scrollBehavior = inlineBehavior;
+    };
+
     if (!hasHistory) {
       router.push("/#work");
+      setTimeout(restoreBehavior, 600);
       return;
     }
     if (reduce || !hero || typeof document.startViewTransition !== "function") {
       router.back();
+      setTimeout(restoreBehavior, 600);
       return;
     }
 
@@ -62,6 +77,7 @@ export default function CaseClose({ slug }: { slug: string }) {
       document
         .querySelectorAll<HTMLElement>(`[data-case-visual="${slug}"]`)
         .forEach((el) => el.style.removeProperty("view-transition-name"));
+      restoreBehavior();
     });
   };
 
@@ -69,7 +85,7 @@ export default function CaseClose({ slug }: { slug: string }) {
     <button
       type="button"
       aria-label="Close case study"
-      className={`mono-label ${styles.close}`}
+      className={`mono-label btn btn-icon ${styles.close}`}
       onClick={close}
     >
       ×

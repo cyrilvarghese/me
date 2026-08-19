@@ -19,10 +19,12 @@ export default function Home() {
         <Hero />
         <KnifeStory />
         <OutcomeTransition />
-        <OperatingModel />
         <CaseStudies />
         <Career />
         <UnknownProblem />
+        {/* the method reads last, after the proof — it explains how the
+            work above happened rather than promising it up front */}
+        <OperatingModel />
         <FinalCTA />
       </main>
       <Footer />

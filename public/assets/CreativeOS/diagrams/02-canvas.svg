@@ -1,0 +1,83 @@
+<svg viewBox="126 92 548 322" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* Same technique as the deck's other diagrams: a marker runs the path
+       while a second copy of the path fills in behind it. The loop is 968
+       units around (320+164+320+164); at section 01's speed (246 units a
+       second) that is 3.93s, so travel takes 49.15% of the 8s cycle and
+       the rest is the hold. The marker is a flat red dash, scaled from the
+       deck's 14-unit dash at 800 wide to this file's 548. */
+    @keyframes cosCanvasRun {
+      0%       { stroke-dashoffset: 0; opacity: 1; }
+      49.15%   { stroke-dashoffset: -968; opacity: 1; }
+      49.65%   { opacity: 0; }
+      100%     { stroke-dashoffset: -968; opacity: 0; }
+    }
+    @keyframes cosCanvasFill {
+      0%       { stroke-dashoffset: 100; opacity: 0.9; }
+      49.15%   { stroke-dashoffset: 0; opacity: 0.9; }
+      100%     { stroke-dashoffset: 0; opacity: 0; }
+    }
+    .cosCanvasRunner { animation: cosCanvasRun 8s linear infinite; }
+    .cosCanvasFill   { animation: cosCanvasFill 8s linear infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .cosCanvasRunner,
+      .cosCanvasFill { animation: none; stroke-dashoffset: 0; opacity: 0.9; }
+    }
+  </style>
+
+  <!-- the run, dotted until the work reaches it -->
+  <path d="M240,170 H560 V334 H240 Z" fill="none"
+        stroke="rgba(248,244,242,0.24)" stroke-width="2.06"
+        stroke-dasharray="2 14" stroke-linecap="round" />
+
+  <!-- filled in behind the runner -->
+  <path class="cosCanvasFill" d="M240,170 H560 V334 H240 Z" pathLength="100" fill="none"
+        stroke="#eee8e6" stroke-width="2.4" stroke-linecap="round"
+        stroke-dasharray="100 100" stroke-dashoffset="100" />
+
+  <!-- the work itself: a flat red dash riding the line -->
+  <path class="cosCanvasRunner" d="M240,170 H560 V334 H240 Z" fill="none"
+        stroke="#ea0000" stroke-width="3.4" stroke-linecap="round"
+        stroke-dasharray="9.6 958.4" />
+
+  <!-- nodes: one light disc each, matching the tool discs on the other
+       card in this section; sized off this viewBox (0.05 × width) -->
+  <g fill="#f8f4f2" stroke="rgba(248,244,242,0.28)" stroke-width="2">
+    <circle cx="240" cy="170" r="27.4" />
+    <circle cx="560" cy="170" r="27.4" />
+    <circle cx="560" cy="334" r="27.4" />
+    <circle cx="240" cy="334" r="27.4" />
+  </g>
+
+  <!-- stage marks, drawn dark on the disc -->
+  <g fill="none" stroke="#151111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- script: lines of text -->
+    <g transform="translate(229.8 159.8) scale(0.85)">
+      <path d="M4 3h11l5 5v13H4z" />
+      <path d="M8 11h8M8 15h8M8 19h5" />
+    </g>
+    <!-- images: frame with a horizon and a sun -->
+    <g transform="translate(549.8 159.8) scale(0.85)">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <circle cx="8.5" cy="10" r="1.8" />
+      <path d="M4 17l5-5 4 4 3-2 4 4" />
+    </g>
+    <!-- reels: an upright frame with a play -->
+    <g transform="translate(549.8 323.8) scale(0.85)">
+      <rect x="6" y="3" width="12" height="18" rx="2" />
+      <path d="M10.5 9.5l4.5 2.5-4.5 2.5z" fill="#151111" />
+    </g>
+    <!-- posts: a stack of them -->
+    <g transform="translate(229.8 323.8) scale(0.85)">
+      <rect x="7" y="3" width="14" height="14" rx="2" />
+      <path d="M17 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2" />
+    </g>
+  </g>
+
+  <g text-anchor="middle" style="font-size:13.7px" fill="#eee8e6">
+    <text x="240" y="128">Script</text>
+    <text x="560" y="128">Images</text>
+    <text x="560" y="382">Reels</text>
+    <text x="240" y="382">Posts</text>
+  </g>
+</svg>

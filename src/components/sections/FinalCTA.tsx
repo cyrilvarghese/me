@@ -68,7 +68,7 @@ export default function FinalCTA() {
             Let&apos;s get <em>started.</em>
           </p>
           <div className={styles.ctas} data-final="ctas">
-            <a href="mailto:cyrilpdev@gmail.com" className={`mono-label ${styles.btnPrimary}`}>
+            <a href="mailto:cyrilpdev@gmail.com" className="mono-label btn">
               Start a conversation
             </a>
           </div>

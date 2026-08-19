@@ -1,0 +1,110 @@
+/* pinned to the top of the viewport for the length of the case: the two
+   sections are long, and a control you have to scroll back up to find is a
+   control most readers never use again. Solid ground rather than a
+   translucent veil — translucent paint over the view-transition-promoted
+   hero drops out in Cyril's Edge build. Under CaseClose (190). */
+.bar {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: var(--bg);
+	border-top: 1px solid var(--hairline);
+	border-bottom: 1px solid var(--hairline);
+	/* no bottom padding: the list's lower edge meets the bar's rule, so
+	   the active indicator lands ON that rule rather than floating above
+	   it with a band of ground in between */
+	padding-block: clamp(1.1rem, 2.6vh, 1.75rem) 0;
+}
+
+/* shadcn's "line" variant: the list hugs its content and carries no box
+   and no rule of its own. Relative, because the travelling bar is
+   positioned against it. */
+.list {
+	position: relative;
+	display: inline-flex;
+	width: fit-content;
+	align-items: center;
+	gap: clamp(0.5rem, 1.5vw, 1.25rem);
+}
+
+/* CaseClose is fixed at the right gutter and paints an opaque ground, so
+   on a narrow screen the last tab disappears underneath it. Give the row
+   back the width the control takes rather than let a tab hide behind it. */
+@media (max-width: 700px) {
+	.list {
+		padding-right: calc(var(--control-size) + 0.75rem);
+	}
+}
+
+.tab {
+	appearance: none;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	/* the line variant's geometry: a step above the 0.75rem label size
+	   .mono-label would give them, since these two are the page's main
+	   control — but only a step. At 1.4rem they read as a heading and
+	   compete with the one below them. */
+	padding: 0.5rem 0.75rem 0.3rem;
+	font-size: clamp(0.85rem, 1.25vw, 1.05rem);
+	letter-spacing: 0.06em;
+	/* --muted is the system's de-emphasised voice; unselected sits back on
+	   it so the selected one carries the eye. No hand-mixed rgba here —
+	   the literal this replaced was built from the pre-2026-08-19 --fg and
+	   had already drifted off the palette. */
+	color: var(--muted);
+	/* light, not bold: at this size the weight would shout — the size and
+	   the 4px bar already carry it. JetBrains Mono loads as a variable
+	   font with no weight list, so 250 is a real cut, not synthesised. */
+	font-weight: 250;
+	cursor: pointer;
+	/* a hover colour change: `ease` is the right curve for that */
+	transition: color 150ms ease;
+}
+
+.tab:hover {
+	color: var(--fg);
+}
+
+.tab[aria-current="true"] {
+	color: var(--fg);
+}
+
+.tab:focus-visible {
+	outline: 1px solid var(--accent);
+	outline-offset: 4px;
+}
+
+/* their after:bottom-[-5px] after:h-0.5, but as ONE element for the whole
+   list so it can travel. Full-width and scaled down by transform, so the
+   move never touches layout — transform and opacity only. */
+.indicator {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 4px;
+	background: var(--accent);
+	transform-origin: 0 0;
+	pointer-events: none;
+}
+
+.indicator[data-ready="false"] {
+	opacity: 0;
+}
+
+/* an element already on screen, moving to a new place: ease-in-out, the
+   accelerate-then-brake curve. 220ms — standard UI range, and the travel
+   is short. The transition is only armed once measured, so the first
+   paint places the bar instead of sliding it in from the left. */
+.indicator[data-ready="true"] {
+	transition: transform 220ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tab,
+	.indicator[data-ready="true"] {
+		transition: none;
+	}
+
+}

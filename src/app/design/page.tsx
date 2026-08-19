@@ -25,8 +25,8 @@ export const metadata: Metadata = {
 const TOKENS = [
   { name: "--bg", value: "#151111", note: "page ground" },
   { name: "--surface", value: "#1e1818", note: "lifted panels" },
-  { name: "--fg", value: "#f8f4f2", note: "text" },
-  { name: "--fg-soft", value: "#eee8e6", note: "secondary text" },
+  { name: "--fg", value: "#e7e3e1", note: "text" },
+  { name: "--fg-soft", value: "#ddd8d6", note: "secondary text" },
   { name: "--muted", value: "#9e9493", note: "captions, labels" },
   { name: "--accent", value: "#ea0000", note: "signal red — decorative / large type only" },
   { name: "--accent-deep", value: "#c90000", note: "deep red — frames, needle" },
@@ -84,6 +84,44 @@ export default function DesignSystemPage() {
 
       <p className={`mono-label ${styles.sectionLabel}`}>Knife art — placeholders/common.ts</p>
       <Swatches items={STEELS} />
+
+      <p className={`mono-label ${styles.sectionLabel}`}>Geometry — tokens.css</p>
+      <p className={styles.rule}>
+        Square-cornered by system. The only rounding is the 2&nbsp;px hairline on knife plates and
+        etched panels — nothing on this site is pill-shaped.
+      </p>
+      <div className={styles.grid}>
+        {[
+          { name: "--radius", value: "0", note: "every panel, frame and control" },
+          { name: "--radius-sm", value: "2px", note: "knife plates, etched panels" },
+        ].map((r) => (
+          <div key={r.name} className={styles.swatch}>
+            <div className={styles.geo}>
+              <div style={{ borderRadius: r.value }} />
+            </div>
+            <div className={styles.meta}>
+              <p className={`mono-label ${styles.name}`}>{r.name}</p>
+              <p className={`mono-label ${styles.value}`}>{r.value}</p>
+              <p className={styles.note}>{r.note}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p className={`mono-label ${styles.sectionLabel}`}>Controls — .btn voices in globals.css</p>
+      <p className={styles.rule}>
+        One geometry for every button, link-button and icon control: accent outline, square
+        corners, fills with the accent on hover. Pair with <code>.mono-label</code> for the label.
+        Variants are <code>.btn-ghost</code> (quiet, hairline border) and <code>.btn-icon</code>{" "}
+        (square, <code>--control-size</code>).
+      </p>
+      <div className={styles.controls}>
+        <span className="mono-label btn">Start a conversation</span>
+        <span className="mono-label btn btn-ghost">Secondary</span>
+        <span className="mono-label btn btn-icon" aria-hidden="true">
+          ×
+        </span>
+      </div>
     </main>
   );
 }

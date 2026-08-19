@@ -234,7 +234,6 @@ export default function KnifeStory() {
     <section
       ref={sectionRef}
       className={styles.story}
-      id="work"
       aria-label="Capabilities"
       data-ruler-beats={STORY_BEATS}
     >
