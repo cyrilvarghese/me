@@ -14,6 +14,12 @@
 	   the active indicator lands ON that rule rather than floating above
 	   it with a band of ground in between */
 	padding-block: clamp(1.1rem, 2.6vh, 1.75rem) 0;
+	/* tall enough to enclose the fixed CaseClose, which ends at 4.25rem
+	   (top 1.5rem + a 2.75rem control). Added as top padding rather than
+	   a min-height with flex: .section-shell centres its own box, and
+	   making the bar a flex container hands the tab list to that
+	   centring instead of leaving it in the gutter */
+	padding-top: 2.25rem;
 }
 
 /* shadcn's "line" variant: the list hugs its content and carries no box
