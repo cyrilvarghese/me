@@ -13,6 +13,15 @@ const TRAVEL = 900; // ms — the trail/marker transition (--msj-travel)
 const DWELL = 4200; // reading time at a quoted stage
 const END_HOLD = 1600; // the completed rail, held before the cycle restarts
 const FADE = 1100; // ms — the card's entrance fade (--msj-fade)
+const CURVE = "ease-in-out"; // the fade's timing curve (--msj-curve)
+const CURVES = [
+  "ease-in-out",
+  "ease",
+  "ease-in",
+  "ease-out",
+  "linear",
+  "cubic-bezier(0.22, 1, 0.36, 1)",
+] as const;
 
 /** A journey told one stage at a time: a straight rail of stages with a
     red marker sliding along it, and a card giving the active stage's
@@ -56,18 +65,20 @@ export default function CaseJourney({
     fade: number;
     travel: number;
     dwell: number;
+    curve: string;
   }>(null);
   const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).has("tune")) {
-      setTune({ fade: FADE, travel: TRAVEL, dwell: DWELL });
+      setTune({ fade: FADE, travel: TRAVEL, dwell: DWELL, curve: CURVE });
     }
   }, []);
 
   const fade = tune?.fade ?? FADE;
   const travel = tune?.travel ?? TRAVEL;
   const dwell = tune?.dwell ?? DWELL;
+  const curve = tune?.curve ?? CURVE;
 
   const reduced = () =>
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -158,6 +169,7 @@ export default function CaseJourney({
           {
             "--msj-fade": `${fade}ms`,
             "--msj-travel": `${travel}ms`,
+            "--msj-curve": curve,
           } as React.CSSProperties
         }
       >
@@ -257,6 +269,19 @@ export default function CaseJourney({
                 {tune[key]}
               </label>
             ))}
+            <label className={`mono-label ${styles.tunerRow}`}>
+              Fade curve
+              <select
+                value={tune.curve}
+                onChange={(e) => setTune({ ...tune, curve: e.target.value })}
+              >
+                {CURVES.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
         )}
       </div>

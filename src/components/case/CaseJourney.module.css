@@ -266,7 +266,7 @@
    avatar hold still while the text fades in, half-present to fully present. No movement — a fade alone. */
 @media (prefers-reduced-motion: no-preference) {
 	.words {
-		animation: msjEnter var(--msj-fade, 1100ms) ease-in-out;
+		animation: msjEnter var(--msj-fade, 1100ms) var(--msj-curve, ease-in-out);
 	}
 }
 
@@ -314,6 +314,16 @@
 
 .tunerRow input {
 	accent-color: var(--accent);
+}
+
+.tunerRow select {
+	background: var(--bg);
+	color: var(--fg-soft);
+	border: 1px solid var(--hairline);
+	border-radius: var(--radius);
+	font: inherit;
+	padding: 0.25rem 0.4rem;
+	grid-column: 2 / 4;
 }
 
 /* ---- mobile ---- */
