@@ -266,7 +266,7 @@
    avatar hold still while the text fades in, half-present to fully present. No movement — a fade alone. */
 @media (prefers-reduced-motion: no-preference) {
 	.words {
-		animation: msjEnter var(--msj-fade, 1100ms) cubic-bezier(0.22, 1, 0.36, 1);
+		animation: msjEnter var(--msj-fade, 1100ms) ease-in-out;
 	}
 }
 
