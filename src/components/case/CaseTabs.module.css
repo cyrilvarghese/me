@@ -1,5 +1,5 @@
 /* pinned to the top of the viewport for the length of the case: the two
-   panels are long, and a control you have to scroll back up to find is a
+   sections are long, and a control you have to scroll back up to find is a
    control most readers never use again. Solid ground rather than a
    translucent veil — translucent paint over the view-transition-promoted
    hero drops out in Cyril's Edge build. Under CaseClose (190). */
@@ -89,46 +89,10 @@
 	transition: transform 220ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* the panel is entering, so ease-out, and it starts 12px off rather than
-   from nothing — an element that appears from zero reads as a glitch */
-.panel[data-dir="forward"] {
-	animation: caseTabIn 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-.panel[data-dir="back"] {
-	animation: caseTabInBack 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-@keyframes caseTabIn {
-	from {
-		opacity: 0;
-		transform: translateX(12px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-
-@keyframes caseTabInBack {
-	from {
-		opacity: 0;
-		transform: translateX(-12px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-
 @media (prefers-reduced-motion: reduce) {
 	.tab,
 	.indicator[data-ready="true"] {
 		transition: none;
 	}
 
-	.panel[data-dir="forward"],
-	.panel[data-dir="back"] {
-		animation: none;
-	}
 }

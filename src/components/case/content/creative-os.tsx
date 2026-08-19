@@ -2,7 +2,7 @@ import CaseSummary from "@/components/case/CaseSummary";
 import CaseCompare from "@/components/case/CaseCompare";
 import CaseImpact from "@/components/case/CaseImpact";
 import CaseShowcase from "@/components/case/CaseShowcase";
-import CaseTabs from "@/components/case/CaseTabs";
+import CaseNav from "@/components/case/CaseTabs";
 
 const D = "/assets/CreativeOS/diagrams";
 
@@ -45,19 +45,19 @@ export default function CreativeOsContent() {
         ]}
       />
 
-      <CaseTabs
+      <CaseNav
         label="Case study sections"
-        tabs={[
+        sections={[
           {
             id: "pain-points",
             label: "Pain points",
-            panel: (
+            body: (
               <>
                 <CaseCompare
                   index="01"
                   eyebrow="The hidden cost of AI production"
                   heading="Every new creative still starts from scratch."
-                  lede="Dozens of assets later, the knowledge still sits in chats, drives, and dashboards. Every new asset rebuilds the same context."
+                  lede="Dozens of assets later, the knowledge still sits in chats on disconnected platforms. Every new asset rebuilds the same context."
                   today={{
                     title: "Every reel needs its context set again",
                     diagram: `${D}/01-today.svg`,
@@ -122,7 +122,7 @@ export default function CreativeOsContent() {
           {
             id: "visual-assets",
             label: "Visual assets & Demo",
-            panel: <CaseShowcase
+            body: <CaseShowcase
                     eyebrow="Inside the system"
                 shots={[
                   { src: "/assets/CreativeOS/gallery.png", caption: "Canvas — shots in progress" },
