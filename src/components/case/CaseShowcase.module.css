@@ -455,7 +455,13 @@
 	margin: 0;
 	display: grid;
 	gap: 1.1rem;
-	justify-items: center;
+}
+
+/* the caption leads: above the shot, on the left — a heading for the
+   screen rather than a footnote under it */
+.stackFigure .caption {
+	order: -1;
+	margin-top: 0;
 }
 
 .stackImg {
@@ -463,9 +469,4 @@
 	width: 100%;
 	height: auto;
 	border: 1px solid var(--hairline);
-}
-
-.stackFigure .caption {
-	text-align: center;
-	margin-top: 0;
 }
