@@ -145,14 +145,16 @@ export default function CaseJourney({
     setTarget(i);
   };
   const step = (dir: 1 | -1) => {
-    const at = quoted.indexOf(quoted.includes(shown) ? shown : cardIndex);
+    const at = quoted.indexOf(cardIndex);
     go(quoted[(at + dir + quoted.length) % quoted.length]);
   };
 
-  /* the card voices the last quoted stage the dot has reached */
-  const cardIndex = quoted.includes(shown)
-    ? shown
-    : quoted.filter((q) => q <= shown).pop() ?? quoted[0];
+  /* the card voices where the dot is headed — its fade starts at
+     departure and plays while the dot travels, so the dwell at the node
+     is pure reading time. The node pop still waits for arrival. */
+  const cardIndex = quoted.includes(target)
+    ? target
+    : quoted.filter((q) => q <= target).pop() ?? quoted[0];
   const stage = stages[cardIndex];
   const fraction = target / last;
 
