@@ -39,6 +39,11 @@ export default function CaseCompare({
       </div>
 
       <div className={styles.pair}>
+        {/* the seam between the tellings: a hairline with the comparison
+            named on it, out of flow so the panels keep their subgrid rows */}
+        <span className={styles.seam} aria-hidden="true">
+          <span className={`mono-label ${styles.vs}`}>vs</span>
+        </span>
         {[today, after].map((p, i) => (
           <figure key={p.title} className={styles.panel} data-side={i === 0 ? "today" : "after"}>
             <figcaption className={`mono-label ${styles.panelTitle}`}>

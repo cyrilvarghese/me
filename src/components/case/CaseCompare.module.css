@@ -36,26 +36,53 @@
    caption are subgrid tracks, so those bands line up across both cards
    however tall each drawing happens to be. */
 .pair {
+	position: relative;
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	grid-template-rows: auto 1fr auto auto;
-	column-gap: clamp(1rem, 2.5vw, 2rem);
+	/* wider than the boxed version needed: with no panel borders, the
+	   gutter and its seam are what separate the two tellings */
+	column-gap: clamp(2.5rem, 7vw, 6rem);
 	row-gap: 0;
+}
+
+/* the seam: one hairline down the gutter with the comparison named on
+   it. Absolute, so the panels keep their shared subgrid rows. */
+.seam {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	bottom: 0;
+	width: 1px;
+	background: var(--hairline);
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.vs {
+	/* flex: none, or the 1px-wide seam squeezes its own badge flat */
+	flex: none;
+	/* the disc punches the line rather than sitting on top of it */
+	background: var(--bg);
+	color: var(--muted);
+	border: 1px solid var(--hairline);
+	border-radius: 50%;
+	width: 2.6rem;
+	height: 2.6rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.65rem;
 }
 
 .panel {
 	margin: 0;
-	border: 1px solid var(--hairline);
-	background: var(--surface);
-	padding: clamp(1rem, 2vw, 1.5rem);
 	display: grid;
 	grid-row: span 4;
 	grid-template-rows: subgrid;
 	row-gap: 1.25rem;
-}
-
-.panel[data-side="after"] {
-	border-color: var(--hairline-red);
 }
 
 .panelTitle {
@@ -125,6 +152,12 @@
 
 	.pair {
 		grid-template-columns: 1fr;
+		row-gap: clamp(2.5rem, 7vh, 4rem);
+	}
+
+	/* stacked, the seam would run down the middle of both drawings */
+	.seam {
+		display: none;
 	}
 }
 
