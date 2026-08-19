@@ -72,13 +72,15 @@
 	transition: none;
 }
 
+/* the traveller: a short round-capped dash — spread out, because flat
+   implies motion where a fat dot just sits */
 .marker {
 	position: absolute;
 	top: var(--rail-y);
-	width: 11px;
-	height: 11px;
-	margin: -5.5px 0 0 -5.5px;
-	border-radius: 50%;
+	width: 13px;
+	height: 3.4px;
+	margin: -1.7px 0 0 -6.5px;
+	border-radius: 1.7px;
 	background: var(--accent);
 	transition: left var(--msj-travel, 900ms) cubic-bezier(0.4, 0, 0.2, 1);
 }
