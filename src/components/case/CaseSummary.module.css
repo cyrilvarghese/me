@@ -63,6 +63,14 @@
 	text-wrap: balance;
 }
 
+/* Red is the outcome. Stating the pain and the answer in the reading
+   colour leaves exactly one red statement in the row, and it is the one
+   that is a result — the eye lands there without being told to. */
+.col[data-role="pain"] .value,
+.col[data-role="solution"] .value {
+	color: var(--fg);
+}
+
 /* The unit that belongs to a number. Mono, muted and small-caps — the
    label voice — so "20 students : 1 patient" reads as a measurement
    rather than as a sentence set far too large. Keeping the units off the
