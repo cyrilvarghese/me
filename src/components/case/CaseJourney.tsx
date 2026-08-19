@@ -9,9 +9,10 @@ export type JourneyStage = {
   consequence?: string;
 };
 
-const TRAVEL = 900; // ms — must match the trail/marker transition in the module
+const TRAVEL = 900; // ms — the trail/marker transition (--msj-travel)
 const DWELL = 4200; // reading time at a quoted stage
 const END_HOLD = 1600; // the completed rail, held before the cycle restarts
+const FADE = 700; // ms — the card's entrance fade (--msj-fade)
 
 /** A journey told one stage at a time: a straight rail of stages with a
     red marker sliding along it, and a card giving the active stage's
@@ -49,7 +50,24 @@ export default function CaseJourney({
   const [instant, setInstant] = useState(false); // kills the slide for one swap
   const [driven, setDriven] = useState(false); // reader took over
   const [inView, setInView] = useState(false);
+  /* ?tune in the URL swaps the shipped timings for live sliders — a
+     tuning bench, not a shipped control, so it costs nothing unasked */
+  const [tune, setTune] = useState<null | {
+    fade: number;
+    travel: number;
+    dwell: number;
+  }>(null);
   const rootRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).has("tune")) {
+      setTune({ fade: FADE, travel: TRAVEL, dwell: DWELL });
+    }
+  }, []);
+
+  const fade = tune?.fade ?? FADE;
+  const travel = tune?.travel ?? TRAVEL;
+  const dwell = tune?.dwell ?? DWELL;
 
   const reduced = () =>
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -71,10 +89,10 @@ export default function CaseJourney({
     if (target === shown) return;
     const t = setTimeout(
       () => setShown(target),
-      instant || reduced() ? 0 : TRAVEL
+      instant || reduced() ? 0 : travel
     );
     return () => clearTimeout(t);
-  }, [target, shown, instant]);
+  }, [target, shown, instant, travel]);
 
   /* the walk. From a quoted stage: dwell, then head for the next one —
      or for the journey's end after the last quote. From the end: hold
@@ -98,10 +116,10 @@ export default function CaseJourney({
           setTarget(quoted[(at + 1) % quoted.length]);
         }
       },
-      at === -1 || shown === last ? END_HOLD : DWELL
+      at === -1 || shown === last ? END_HOLD : dwell
     );
     return () => clearTimeout(t);
-  }, [shown, target, driven, inView, quoted, last]);
+  }, [shown, target, driven, inView, quoted, last, dwell]);
 
   /* the instant flag lives for exactly one swap */
   useEffect(() => {
@@ -134,7 +152,15 @@ export default function CaseJourney({
         <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>
       </div>
 
-      <div className={styles.panel}>
+      <div
+        className={styles.panel}
+        style={
+          {
+            "--msj-fade": `${fade}ms`,
+            "--msj-travel": `${travel}ms`,
+          } as React.CSSProperties
+        }
+      >
         {/* the rail. Dots are buttons — the timeline is the nav */}
         <div className={styles.rail} data-instant={instant || undefined}>
           <span className={styles.track} aria-hidden="true" />
@@ -206,6 +232,33 @@ export default function CaseJourney({
             {String(quoted.length).padStart(2, "0")}
           </span>
         </div>
+
+        {tune && (
+          <div className={styles.tuner}>
+            {(
+              [
+                ["fade", "Card fade (ms)", 100, 2000, 50],
+                ["travel", "Marker travel (ms)", 200, 2400, 50],
+                ["dwell", "Dwell per stage (ms)", 1500, 9000, 100],
+              ] as const
+            ).map(([key, label, min, max, stepBy]) => (
+              <label key={key} className={`mono-label ${styles.tunerRow}`}>
+                {label}
+                <input
+                  type="range"
+                  min={min}
+                  max={max}
+                  step={stepBy}
+                  value={tune[key]}
+                  onChange={(e) =>
+                    setTune({ ...tune, [key]: Number(e.target.value) })
+                  }
+                />
+                {tune[key]}
+              </label>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
