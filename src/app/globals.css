@@ -98,7 +98,18 @@ button {
 		'SOFT' 30,
 		'WONK' 0.9;
 	font-weight: 380;
-	line-height: 1.02;
+	/* Leading is optical: it has to loosen as the type gets smaller. This
+	   voice runs from --text-h3 (1.35rem) to --text-display (6.5rem), a
+	   4.8x range, and the flat 1.02 it used to carry was tuned for the top
+	   of that range — at the bottom it crammed ascenders into the
+	   descenders above, which only ever showed on a heading that wrapped.
+
+	   em is the element's own size and rem is fixed, so this one
+	   expression falls as the type grows: 1.00 at 6.5rem, 1.02 at 4.25rem,
+	   1.06 at 2.75rem, 1.11 at 2rem, 1.18 at 1.35rem. The display end is
+	   where it was; only the small end moves. Modules that set their own
+	   line-height (CaseCompare, CaseStats, CaseImpact…) still win. */
+	line-height: calc(0.95em + 0.31rem);
 	letter-spacing: -0.015em;
 }
 
