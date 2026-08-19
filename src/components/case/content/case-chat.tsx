@@ -124,8 +124,8 @@ export default function CaseChatContent() {
                 <CaseCompare
                   index="02"
                   eyebrow="Why cases stay rare"
-                  heading="The people who can write cases are the people with no time."
-                  lede="Every teacher interviewed called case-based teaching the most valuable thing they do. Every one of them also said they cannot afford to prepare it. A hand-written case runs once, for one room, and the students in it watch."
+                  heading="Every teacher interviewed agrees cases are the best way to learn."
+                  lede="Every teacher is also a practising physician who is stretched for time."
                   today={{
                     title: "A line that ends",
                     diagram: `${D}/02-today.svg`,
