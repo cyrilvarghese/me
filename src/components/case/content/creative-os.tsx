@@ -96,7 +96,7 @@ export default function CreativeOsContent() {
                     stat: { value: "4×", label: "cost of a late catch" },
                   }}
                   after={{
-                    title: "A review checkpoint before video",
+                    title: "A review component early in the pipeline",
                     diagram: `${D}/03-creativeos.svg`,
                   }}
                 />
