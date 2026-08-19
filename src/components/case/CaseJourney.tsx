@@ -249,7 +249,7 @@ export default function CaseJourney({
           <div className={styles.tuner}>
             {(
               [
-                ["fade", "Card fade (ms)", 100, 2000, 50],
+                ["fade", "Card fade (ms)", 100, 4000, 50],
                 ["travel", "Marker travel (ms)", 200, 2400, 50],
                 ["dwell", "Dwell per stage (ms)", 1500, 9000, 100],
               ] as const
