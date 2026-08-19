@@ -1,0 +1,42 @@
+.block {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3rem, 8vh, 5.5rem);
+}
+
+.figure {
+	margin: 0;
+	/* the accent enters as a rule, not as type: red fails AA for small
+	   text on this ground, so it carries weight here instead of colour */
+	border-left: 2px solid var(--accent);
+	padding-left: clamp(1.25rem, 3vw, 2.5rem);
+	max-width: 52rem;
+}
+
+.quote {
+	font-size: var(--text-h3);
+	color: var(--fg);
+	margin: 0 0 1.5rem;
+	text-wrap: balance;
+}
+
+.by {
+	color: var(--fg-soft);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.75rem;
+}
+
+.role {
+	color: var(--muted);
+	padding-left: 0.75rem;
+	border-left: 1px solid var(--hairline);
+}
+
+@media (max-width: 640px) {
+	.role {
+		padding-left: 0;
+		border-left: 0;
+		flex-basis: 100%;
+	}
+}

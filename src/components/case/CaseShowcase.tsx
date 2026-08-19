@@ -38,12 +38,18 @@ export default function CaseShowcase({
   eyebrow,
   shots,
   video,
+  youtube,
   poster,
   videoCaption,
 }: {
   eyebrow: string;
   shots: Shot[];
   video?: string;
+  /** YouTube id, for a demo that lives there rather than in the bucket.
+      Rendered as a facade: the poster and the same red play mark, with
+      the embed — and YouTube's request — held back until the reader
+      actually asks for it. */
+  youtube?: string;
   poster?: string;
   videoCaption: string;
 }) {
@@ -112,7 +118,9 @@ export default function CaseShowcase({
     <section className={`section-shell ${styles.section}`}>
       <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
 
-      <div className={styles.bento}>
+      {/* the count picks the area map: the stylesheet describes a five-tile
+          bento and an eight-tile one, and auto-places anything else */}
+      <div className={styles.bento} data-shots={shots.length}>
         {shots.map((s, i) => (
           <figure key={s.src} className={styles.cell}>
             {/* the button wraps only the frame; the caption stays outside
@@ -154,6 +162,32 @@ export default function CaseShowcase({
                 >
                   <span className={styles.playMark} aria-hidden="true" />
                 </button>
+              )}
+            </div>
+          ) : youtube ? (
+            <div className={styles.playerWrap}>
+              {playing ? (
+                <iframe
+                  className={styles.player}
+                  src={`https://www.youtube-nocookie.com/embed/${youtube}?autoplay=1&rel=0`}
+                  title={videoCaption}
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                />
+              ) : (
+                <>
+                  {/* a still, not a paused player: nothing of YouTube's is
+                      loaded until the mark is pressed */}
+                  <img src={poster} alt="" className={styles.player} />
+                  <button
+                    type="button"
+                    className={styles.playBtn}
+                    onClick={start}
+                    aria-label={`Play demo — ${videoCaption}`}
+                  >
+                    <span className={styles.playMark} aria-hidden="true" />
+                  </button>
+                </>
               )}
             </div>
           ) : (

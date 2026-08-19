@@ -57,6 +57,35 @@
 	grid-area: e;
 }
 
+/* The second shape the stylesheet knows: eight shots, as a strip above
+   and a strip below the demo block. Anything other than five or eight
+   falls back to the five areas plus auto-placement, which stacks the
+   remainder into short implicit rows — legible, but not composed. */
+.bento[data-shots="8"] {
+	grid-template-rows:
+		clamp(8rem, 15vw, 13rem)
+		1fr
+		1fr
+		clamp(8rem, 15vw, 13rem);
+	grid-template-areas:
+		"a b    c"
+		"d demo demo"
+		"e demo demo"
+		"f g    h";
+}
+
+.bento[data-shots="8"] .cell:not(.demo):nth-child(6) {
+	grid-area: f;
+}
+
+.bento[data-shots="8"] .cell:not(.demo):nth-child(7) {
+	grid-area: g;
+}
+
+.bento[data-shots="8"] .cell:not(.demo):nth-child(8) {
+	grid-area: h;
+}
+
 /* the player already states its own height, so no flexible row to solve */
 .demo {
 	grid-area: demo;
@@ -94,6 +123,9 @@
 	border: 1px solid var(--hairline);
 	background: var(--surface);
 	aspect-ratio: 16 / 9;
+	/* the class is shared with the facade still, which arrives 4:3 with
+	   the letterbox baked in — cover trims exactly those bars */
+	object-fit: cover;
 }
 
 /* Waiting frame. It keeps the player's ratio so the shape is honest, but
@@ -135,7 +167,14 @@
 		grid-template-areas: none;
 	}
 
-	.cell:not(.demo):nth-child(n) {
+	.bento[data-shots="8"] {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: none;
+		grid-template-areas: none;
+	}
+
+	.cell:not(.demo):nth-child(n),
+	.bento[data-shots="8"] .cell:not(.demo):nth-child(n) {
 		grid-area: auto;
 		grid-template-rows: auto auto;
 	}
