@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 240" role="img"
+     aria-label="A mistake made at the image is only found once it is video, where fixing it costs four times as much.">
+  <!-- the same mistake, twice the journey along: cheap where it is made,
+       expensive where it is found. Size carries the cost. -->
+  <g fill="none" stroke="rgba(248,244,242,0.28)" stroke-width="3"
+     stroke-linecap="round" stroke-dasharray="2 14">
+    <line x1="92" y1="140" x2="230" y2="140"/>
+  </g>
+
+  <!-- made here: small, cheap -->
+  <circle cx="70" cy="140" r="20" fill="#1e1818" stroke="#eee8e6" stroke-width="3"/>
+  <circle cx="70" cy="140" r="6" fill="#ea0000"/>
+
+  <!-- found here: four times the area, and wrong -->
+  <circle cx="270" cy="140" r="40" fill="#1e1818" stroke="rgba(248,244,242,0.28)" stroke-width="2.5"/>
+  <g stroke="#ea0000" stroke-width="3.5" stroke-linecap="round">
+    <path d="M256,126 L284,154 M284,126 L256,154"/>
+  </g>
+
+  <text x="70" y="196" text-anchor="middle" font-size="15" fill="currentColor" opacity=".55">image</text>
+  <text x="270" y="204" text-anchor="middle" font-size="15" fill="currentColor" opacity=".55">video</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 240" role="img"
+     aria-label="The same four pieces of context set again for every reel: three identical rows of setup, one per asset.">
+  <!-- three identical rows: the repetition is the whole point, so the
+       drawing says it by being three copies of one thing -->
+  <g>
+    <g fill="none" stroke="rgba(248,244,242,0.28)" stroke-width="3"
+       stroke-linecap="round" stroke-dasharray="2 14">
+      <line x1="40" y1="60" x2="250" y2="60"/>
+      <line x1="40" y1="120" x2="250" y2="120"/>
+      <line x1="40" y1="180" x2="250" y2="180"/>
+    </g>
+
+    <g fill="#ea0000">
+      <circle cx="40" cy="60" r="6"/><circle cx="110" cy="60" r="6"/>
+      <circle cx="180" cy="60" r="6"/><circle cx="250" cy="60" r="6"/>
+      <circle cx="40" cy="120" r="6"/><circle cx="110" cy="120" r="6"/>
+      <circle cx="180" cy="120" r="6"/><circle cx="250" cy="120" r="6"/>
+      <circle cx="40" cy="180" r="6"/><circle cx="110" cy="180" r="6"/>
+      <circle cx="180" cy="180" r="6"/><circle cx="250" cy="180" r="6"/>
+    </g>
+
+    <g fill="#1e1818" stroke="#eee8e6" stroke-width="2.5">
+      <rect x="286" y="44" width="46" height="32" rx="4"/>
+      <rect x="286" y="104" width="46" height="32" rx="4"/>
+      <rect x="286" y="164" width="46" height="32" rx="4"/>
+    </g>
+  </g>
+</svg>
