@@ -33,31 +33,41 @@ export default function CaseChatContent() {
         items={[
           {
             label: "Pain",
-            /* the units sit in the number rather than under it, so the
-               ratio is legible without reading the body at all */
+            /* the units sit in the number rather than under it, so the ratio
+               is legible without reading the body at all. The wait takes the
+               line under it: it is the second half of the same measurement,
+               not commentary on it */
             value: (
               <>
                 20<small>students</small> : 1<small>patient</small>
+                <br />
+                Fifteen minutes each.
               </>
             ),
-            body:
-              "Fifteen minutes each. Live patients teach best, and logistics ration them.",
+            body: "Live patients teach best, and logistics ration them.",
           },
           {
             label: "Solution",
-            body: (
-              <>
-                <em>AI generates the patients.</em> The student talks, examines,
-                tests, treats — then sees where the reasoning broke, and goes
-                again.
-              </>
-            ),
+            /* the answer is a single sentence, so it takes the value slot: it
+               reads at the size of the ratio it replaces and the outcome it
+               buys, and the detail underneath starts on its own line */
+            value: "AI generates the patients.",
+            body:
+              "The student talks, examines, tests, treats — then sees where the reasoning broke, and goes again.",
           },
           {
             label: "Impact",
-            value: "Unlimited",
+            /* the break is set rather than left to the wrapper: "Unlimited
+               patients" is the claim, "on demand" is the condition on it */
+            value: (
+              <>
+                Unlimited patients
+                <br />
+                on demand
+              </>
+            ),
             body:
-              "Patients on demand, so a case costs a doctor nothing to run and a student can be wrong as often as it takes.",
+              "A case costs a doctor nothing to run, so a student can be wrong as often as it takes.",
           },
         ]}
         meta={[

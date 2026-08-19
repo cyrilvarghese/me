@@ -37,16 +37,11 @@
 /* a rule per column rather than a box: the summary is prose, not cards —
    the boxed treatment belongs to the diagrams below */
 .col {
-	border-top: 1px solid var(--hairline);
+	border-top: 1px solid var(--hairline-red);
 	padding-top: 1rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.6rem;
-}
-
-.col[data-role="solution"],
-.col[data-role="impact"] {
-	border-top-color: var(--hairline-red);
 }
 
 .label {
@@ -61,7 +56,11 @@
 .value {
 	font-size: var(--text-h3);
 	color: var(--accent);
-	line-height: 1;
+	/* 1 was safe while every value was one word; a value that is a whole
+	   sentence needs the leading, and balanced wrapping so it breaks into
+	   even lines rather than a long line and an orphan */
+	line-height: 1.1;
+	text-wrap: balance;
 }
 
 /* The unit that belongs to a number. Mono, muted and small-caps — the
