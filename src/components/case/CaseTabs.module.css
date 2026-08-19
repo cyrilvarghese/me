@@ -7,7 +7,11 @@
 	position: sticky;
 	top: 0;
 	z-index: 100;
-	background: var(--bg);
+	/* lifted off the page ground, the same step CaseImpact uses: the bar
+	   is a change of gear, and a band the reader can see is a band the
+	   reader does not scroll past. Opaque, because it travels over the
+	   content below it. */
+	background: var(--surface);
 	border-top: 1px solid var(--hairline);
 	border-bottom: 1px solid var(--hairline);
 	/* no bottom padding: the list's lower edge meets the bar's rule, so
@@ -20,6 +24,9 @@
 	   making the bar a flex container hands the tab list to that
 	   centring instead of leaving it in the gutter */
 	padding-top: 2.25rem;
+	/* the bar is the page's one navigational moment: give it room before
+	   it, so a reader scrolling past has to notice the change of gear */
+	margin-top: clamp(3rem, 8vh, 6rem);
 }
 
 /* shadcn's "line" variant: the list hugs its content and carries no box
@@ -42,7 +49,17 @@
 	}
 }
 
+.icon {
+	width: 1rem;
+	height: 1rem;
+	flex: none;
+	opacity: 0.75;
+}
+
 .tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
 	appearance: none;
 	background: none;
 	border: 0;

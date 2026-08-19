@@ -3,7 +3,42 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./CaseTabs.module.css";
 
-export type Section = { id: string; label: string; body: React.ReactNode };
+export type TabIcon = "flow" | "frames" | "note";
+
+export type Section = {
+  id: string;
+  label: string;
+  /** Drawn in the same stroke language as the diagrams, so the bar reads
+      as part of the case rather than as chrome borrowed from elsewhere. */
+  icon?: TabIcon;
+  body: React.ReactNode;
+};
+
+const ICONS: Record<TabIcon, React.ReactNode> = {
+  /* three nodes on a run — a journey, or the points along one */
+  flow: (
+    <>
+      <path d="M3 8h10" />
+      <circle cx="3" cy="8" r="1.6" />
+      <circle cx="8" cy="8" r="1.6" />
+      <circle cx="13" cy="8" r="1.6" />
+    </>
+  ),
+  /* two frames, one behind the other — screens */
+  frames: (
+    <>
+      <rect x="2" y="4.5" width="9" height="7" rx="1" />
+      <path d="M13.5 6v5.5a1 1 0 0 1-1 1H5.5" />
+    </>
+  ),
+  /* a page with a turned corner — what was written down */
+  note: (
+    <>
+      <path d="M4 2.5h5l3 3v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1z" />
+      <path d="M9 2.5v3h3" />
+    </>
+  ),
+};
 
 /** Section nav for a case study. Not tabs: both sections are always on the
     page, and the bar scrolls to them rather than swapping what exists.
@@ -97,6 +132,20 @@ export default function CaseNav({ sections, label }: { sections: Section[]; labe
                 className={`mono-label ${styles.tab}`}
                 onClick={() => goTo(i)}
               >
+                {s.icon && (
+                  <svg
+                    className={styles.icon}
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    {ICONS[s.icon]}
+                  </svg>
+                )}
                 {s.label}
               </button>
             ))}

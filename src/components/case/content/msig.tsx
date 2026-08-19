@@ -58,6 +58,7 @@ export default function MsigContent() {
         sections={[
           {
             id: "user-journeys",
+            icon: "flow",
             label: "User journeys",
             body: (
               <>
@@ -143,6 +144,7 @@ export default function MsigContent() {
           },
           {
             id: "visual-assets",
+            icon: "frames",
             label: "Visual assets",
             body: (
               <CaseShowcase

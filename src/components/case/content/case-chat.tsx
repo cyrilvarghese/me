@@ -84,6 +84,7 @@ export default function CaseChatContent() {
         sections={[
           {
             id: "pain-points",
+            icon: "flow",
             label: "Pain points",
             body: (
               <>
@@ -131,6 +132,7 @@ export default function CaseChatContent() {
           },
           {
             id: "visual-assets",
+            icon: "frames",
             label: "Visual assets & Demo",
             body: (
               <CaseShowcase
@@ -159,6 +161,7 @@ export default function CaseChatContent() {
           },
           {
             id: "learnings",
+            icon: "note",
             label: "Learnings",
             body: (
               <>

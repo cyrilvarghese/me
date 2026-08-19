@@ -50,6 +50,7 @@ export default function CreativeOsContent() {
         sections={[
           {
             id: "pain-points",
+            icon: "flow",
             label: "Pain points",
             body: (
               <>
@@ -112,6 +113,7 @@ export default function CreativeOsContent() {
           },
           {
             id: "visual-assets",
+            icon: "frames",
             label: "Visual assets & Demo",
             body: (
               <CaseShowcase
