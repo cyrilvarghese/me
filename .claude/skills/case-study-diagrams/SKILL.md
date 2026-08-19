@@ -69,15 +69,17 @@ New diagrams use an 8s cycle; the remainder is the hold.
 work reaches it, a marker runs it, and a second copy of the path
 (`pathLength="100"`, `stroke-dasharray="100 100"`) fills in behind.
 
-**The marker** is a round-capped near-zero dash — a dot riding the line:
+**The traveller** is a short round-capped dash riding the line — a
+comet, not a circle (measured from the 02-canvas runner):
 
 ```xml
 <path class="run" d="…" fill="none" stroke="#ea0000" stroke-linecap="round"
-      stroke-width="11" stroke-dasharray="0.01 967.99" />
+      stroke-width="3.4" stroke-dasharray="9.6 958.4" />
 ```
 
-Keep its painted size constant across files:
-`stroke-width = 11 × (viewBox width / 548)`.
+Painted ≈ 13 long × 3.4 thick at a 548-unit viewBox — scale both by
+`(viewBox width / 548)` to keep the painted size constant. In HTML, a
+13×3.5px rounded div is the same mark.
 
 **Finished states hold.** Once a row fills, a box lights or a tick lands,
 it stays until the cycle restarts. Never dim a completed step while later
@@ -100,6 +102,7 @@ other widths, and use them as raw px when a React component (e.g.
 | Node | r 5.5, ring stroke 2, `--surface` (`#1e1818`) fill until lit |
 | Node, lit | the **fill** takes the ring's colour and holds it; arrival pops `scale(1.5)` and settles ~240ms (attack 0.2% of the 12s cycle, decay ~1.7%); `transform-box: fill-box; transform-origin: center` |
 | Arrival ping | a second stroke-only copy of the node behind it: `scale(0.8 → 2.6)`, `opacity 0.9 → 0`, ~240ms (2% of cycle), once per activation |
+| Traveller | red dash 9.6 long, width 3.4, round caps — a ~13×3.4 comet-pill, never a circle |
 | Cycle | 12s, linear, infinite |
 | Sequential rows | one `linearGradient` in `userSpaceOnUse` with stops on the ramp (`#b39a9a → #c98080 → #d95a5a → #ea0000`) rather than per-segment colours |
 
@@ -139,7 +142,7 @@ layer derives from, never four hand-matched offsets.
 
 1. One point, told the same way on both sides?
 2. Red only on the moment that matters — markup **and** keyframes?
-3. Marker at 246 units/second, constant painted size?
+3. Traveller at 246 units/second — the comet-pill, constant painted size?
 4. Finished state holds long enough to read?
 5. Reduced motion lands on the finished state?
 6. No inner frame, mono text, neutrals from tokens?

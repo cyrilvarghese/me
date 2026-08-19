@@ -208,7 +208,7 @@ export default function CaseJourney({
               type="button"
               className={styles.stop}
               style={{ left: `${(i / last) * 100}%` }}
-              data-active={(i === shown && !!s.quote) || undefined}
+              data-active={(i === shown && shown === target && !!s.quote) || undefined}
               data-passed={
                 i < shown || (i === shown && !s.quote) || undefined
               }
