@@ -28,7 +28,7 @@ export default function CreativeOsContent() {
           },
           {
             label: "Impact",
-            value: "40% less",
+            value: "40% time saved",
             body:
               "2.5 hrs → 1.5 hrs per asset, with errors caught while they are still cheap to fix.",
           },
@@ -104,7 +104,7 @@ export default function CreativeOsContent() {
 
                 <CaseImpact
                   eyebrow="Impact"
-                  value="40% less"
+                  value="40% time saved"
                   detail="2.5 hrs → 1.5 hrs per asset"
                   note="Context set once, one canvas end to end, and a review checkpoint before the expensive step."
                 />
