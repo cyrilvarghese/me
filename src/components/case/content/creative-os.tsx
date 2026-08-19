@@ -124,12 +124,16 @@ export default function CreativeOsContent() {
             label: "Visual assets & Demo",
             body: <CaseShowcase
                     eyebrow="Inside the system"
-                shots={[
-                  { src: "/assets/CreativeOS/gallery.png", caption: "Canvas — shots in progress" },
-                  { src: "/assets/CreativeOS/img-gen.png", caption: "Generation with context attached" },
-                  { src: "/assets/CreativeOS/img-prompt.png", caption: "Prompt composed from references" },
-                  { src: "/assets/CreativeOS/video-gen.webp", caption: "Video generated from the approved shot" },
-                  { src: "/assets/CreativeOS/video-prompt.webp", caption: "Video prompt carried from the image" },
+                rows={[
+                  [
+                    { src: "/assets/CreativeOS/gallery.png", caption: "Canvas — shots in progress" },
+                    { src: "/assets/CreativeOS/img-gen.png", caption: "Generation with context attached" },
+                    { src: "/assets/CreativeOS/img-prompt.png", caption: "Prompt composed from references" },
+                  ],
+                  [
+                    { src: "/assets/CreativeOS/video-gen.webp", caption: "Video generated from the approved shot" },
+                    { src: "/assets/CreativeOS/video-prompt.webp", caption: "Motion prompt carried from the image" },
+                  ],
                 ]}
                 videoCaption="Walkthrough — brief to finished reel"
               />,

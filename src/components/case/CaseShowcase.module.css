@@ -10,7 +10,8 @@
 
 .grid {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	/* each row sizes to its own count, so no row ever strands a cell */
+	grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
 	gap: clamp(1rem, 2.5vw, 2rem);
 	margin-bottom: clamp(1rem, 2.5vw, 2rem);
 }
@@ -41,11 +42,16 @@
 	aspect-ratio: 16 / 9;
 }
 
-/* waiting frame — same footprint as the player, so the page does not
-   reflow when the file lands */
+/* Waiting frame. It keeps the player's ratio so the shape is honest, but
+   caps its height: at full width a 16/9 placeholder is a ~770px slab of
+   empty ground, which reads as a broken image rather than a pending one.
+   The trade is a small reflow when the file lands — cheaper than the
+   hole. */
 .waiting {
 	position: relative;
 	aspect-ratio: 16 / 9;
+	max-height: clamp(15rem, 34vh, 24rem);
+	margin-inline: auto;
 	border: 1px solid var(--hairline);
 	background: var(--surface);
 	display: flex;
