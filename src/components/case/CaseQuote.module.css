@@ -1,0 +1,49 @@
+/* Mirrors CaseSection's row: same hairline rule, same eyebrow column,
+   so the quote sits in the page rhythm instead of interrupting it. */
+.section {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3.5rem, 8vh, 6rem);
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: 14rem minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vw, 4rem);
+	align-items: start;
+	margin: 0;
+}
+
+.eyebrow {
+	color: var(--muted);
+}
+
+.quote {
+	font-size: var(--text-h3);
+	color: var(--fg);
+	max-width: 34ch;
+	margin: 0;
+	/* the accent rule carries the quotation instead of glyphs — red is
+	   decorative here, never load-bearing for meaning */
+	border-left: 2px solid var(--accent);
+	padding-left: clamp(1rem, 2vw, 1.75rem);
+}
+
+.attribution {
+	color: var(--fg-soft);
+	margin-top: 1.5rem;
+	padding-left: clamp(1rem, 2vw, 1.75rem);
+}
+
+.role {
+	color: var(--muted);
+}
+
+.role::before {
+	content: "— ";
+}
+
+@media (max-width: 768px) {
+	.grid {
+		grid-template-columns: 1fr;
+	}
+}

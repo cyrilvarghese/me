@@ -36,17 +36,15 @@ export const cases: CaseStudy[] = [
     slug: "msig",
     cover: "/assets/MSIG/cover.png",
     num: "03",
-    category: "Product Designer",
-    headline: "Making complex operations move faster through software.",
+    category: "Product Design + Design Systems",
+    headline: "Keeping twenty years of insurance complexity out of the agent's way.",
     startedWith:
-      "A growing operation where quoting, dispatch and scheduling lived in spreadsheets, phone calls and institutional memory.",
+      "Agents ran their day inside a legacy portal — cluttered forms, statuses that explained nothing, renewals tracked from memory, and nothing that worked on a phone.",
     built:
-      "A suite of internal products covering quoting, dispatch, scheduling and reporting — the unglamorous software that makes a business move.",
+      "A responsive design system for multi-step data entry — grouped forms, autosaving wizards, and tracking that surfaces renewals, payments and targets on its own.",
     results: [
-      { value: "20+", label: "Internal products" },
-      { value: "1 hr", label: "Faster dispatch" },
-      { value: "8 min", label: "Faster quote issuance" },
-      { value: "25%", label: "Fewer no-shows" },
+      { value: "20+ min", label: "To fill one quote, before" },
+      { value: "~8 min", label: "Cut from quote issuance" },
     ],
   },
 ];

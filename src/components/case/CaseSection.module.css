@@ -10,6 +10,18 @@
 	align-items: start;
 }
 
+/* imagery rows: eyebrow becomes a header above full-width content.
+   The 60ch measure below exists for prose; imagery must escape it or
+   the grid stays capped at ~620px inside a full-width section. */
+.wide {
+	grid-template-columns: minmax(0, 1fr);
+	gap: clamp(1.25rem, 3vh, 2rem);
+}
+
+.wide .body {
+	max-width: none;
+}
+
 .eyebrow {
 	color: var(--muted);
 	display: flex;

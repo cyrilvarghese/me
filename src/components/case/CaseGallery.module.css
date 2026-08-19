@@ -11,8 +11,21 @@
 	margin: 0;
 }
 
+.cols2 .wideItem {
+	grid-column: 1 / -1;
+}
+
+/* a full-width frame at 4/3 would be over 1000px tall; these diagrams
+   are ~1.45, so give the spanned row a ratio close to the artwork */
+.wideFrame {
+	aspect-ratio: 3 / 2;
+}
+
+/* 4/3 rather than 16/10: the journey diagrams and UI captures sit
+   around 1.4, and the Risk Info form is near square — a wider frame
+   would letterbox every one of them harder */
 .frame {
-	aspect-ratio: 16 / 10;
+	aspect-ratio: 4 / 3;
 	width: 100%;
 }
 

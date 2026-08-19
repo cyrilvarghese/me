@@ -56,9 +56,13 @@ describe("cases", () => {
     expect(cases).toHaveLength(3);
   });
 
-  it("operational case carries big-number results", () => {
-    const ops = cases[2];
-    expect(ops.results?.length).toBe(4);
+  it("msig carries the before/after quote-time results", () => {
+    const msig = cases.find((c) => c.slug === "msig")!;
+    expect(msig.results?.length).toBe(2);
+    for (const r of msig.results ?? []) {
+      expect(r.value.trim().length).toBeGreaterThan(0);
+      expect(r.label.trim().length).toBeGreaterThan(0);
+    }
   });
 
   it("every case has a unique url-safe slug", () => {
