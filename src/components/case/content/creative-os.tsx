@@ -125,6 +125,7 @@ export default function CreativeOsContent() {
             body: (
               <CaseShowcase
                 eyebrow="Inside the system"
+                stack
                 /* Source order is grid position: the top strip is the image
                    pipeline, the left column the video one — sitting beside
                    the demo it produces. */

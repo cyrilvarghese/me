@@ -135,6 +135,7 @@ export default function CaseChatContent() {
             body: (
               <CaseShowcase
                 eyebrow="Inside the clinic"
+                stack
                 /* Source order is grid position: the two entry screens sit
                    in the top strip, the decision and feedback screens run
                    down the left, beside the demo they add up to. Each

@@ -117,26 +117,6 @@ export default function CaseShowcase({
     window.setTimeout(() => dialogRef.current?.close(), EXIT_MS);
   }, []);
 
-  /* after the hooks, not before them — a component must call the same
-     hooks every render, whichever branch it renders */
-  if (stack) {
-    return (
-      <section className={`section-shell ${styles.section}`}>
-        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
-        <div className={styles.stack}>
-          {shots.map((sh) => (
-            <figure key={sh.src} className={styles.stackFigure}>
-              <img src={sh.src} alt="" className={styles.stackImg} />
-              <figcaption className={`mono-label ${styles.caption}`}>
-                {sh.caption}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-    );
-  }
-
   const start = () => {
     setPlaying(true);
     videoRef.current?.play().catch(() => {
@@ -145,35 +125,12 @@ export default function CaseShowcase({
     });
   };
 
-  return (
-    <section className={`section-shell ${styles.section}`}>
-      <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
-
-      {/* the count picks the area map: the stylesheet describes a five-tile
-          bento and an eight-tile one, and auto-places anything else */}
-      <div className={styles.bento} data-shots={shots.length} data-demo={hasDemo}>
-        {shots.map((s, i) => (
-          <figure key={s.src} className={styles.cell}>
-            {/* the button wraps only the frame; the caption stays outside
-                it so the accessible name is not read out twice */}
-            {zoomable ? (
-              <button
-                type="button"
-                className={styles.trigger}
-                onClick={() => setAt(i)}
-                aria-label={`${s.caption} — view larger`}
-              >
-                <CaseVisual cover={s.src} className={styles.frame} />
-              </button>
-            ) : (
-              <CaseVisual cover={s.src} className={styles.frame} />
-            )}
-            <figcaption className={`mono-label ${styles.caption}`}>{s.caption}</figcaption>
-          </figure>
-        ))}
-
-        {hasDemo && (
-        <figure className={`${styles.cell} ${styles.demo}`}>
+  /* the demo tile, built once and placed by either layout — the bento
+     gives it a grid area, the stack gives it a row. className is the
+     only thing that differs, so it is the only thing passed in. */
+  const demoFigure = (className: string) =>
+    hasDemo ? (
+        <figure className={className}>
           {video ? (
             <div className={styles.playerWrap}>
               <video
@@ -230,7 +187,57 @@ export default function CaseShowcase({
           )}
           <figcaption className={`mono-label ${styles.caption}`}>{videoCaption}</figcaption>
         </figure>
-        )}
+    ) : null;
+
+  /* after the hooks, not before them — a component must call the same
+     hooks every render, whichever branch it renders */
+  if (stack) {
+    return (
+      <section className={`section-shell ${styles.section}`}>
+        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
+        <div className={styles.stack}>
+          {shots.map((sh) => (
+            <figure key={sh.src} className={styles.stackFigure}>
+              <img src={sh.src} alt="" className={styles.stackImg} />
+              <figcaption className={`mono-label ${styles.caption}`}>
+                {sh.caption}
+              </figcaption>
+            </figure>
+          ))}
+          {demoFigure(styles.stackFigure)}
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className={`section-shell ${styles.section}`}>
+      <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
+
+      {/* the count picks the area map: the stylesheet describes a five-tile
+          bento and an eight-tile one, and auto-places anything else */}
+      <div className={styles.bento} data-shots={shots.length} data-demo={hasDemo}>
+        {shots.map((s, i) => (
+          <figure key={s.src} className={styles.cell}>
+            {/* the button wraps only the frame; the caption stays outside
+                it so the accessible name is not read out twice */}
+            {zoomable ? (
+              <button
+                type="button"
+                className={styles.trigger}
+                onClick={() => setAt(i)}
+                aria-label={`${s.caption} — view larger`}
+              >
+                <CaseVisual cover={s.src} className={styles.frame} />
+              </button>
+            ) : (
+              <CaseVisual cover={s.src} className={styles.frame} />
+            )}
+            <figcaption className={`mono-label ${styles.caption}`}>{s.caption}</figcaption>
+          </figure>
+        ))}
+
+        {demoFigure(`${styles.cell} ${styles.demo}`)}
 
         {/* Native dialog: the top layer, the backdrop, Esc, and focus
             containment are the browser's job here rather than ours. It is

@@ -470,3 +470,15 @@
 	height: auto;
 	border: 1px solid var(--hairline);
 }
+
+/* the demo, stacked: same full width as a screen, its own aspect */
+.stackFigure .playerWrap {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	border: 1px solid var(--hairline);
+}
+
+.stackFigure .waiting {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+}
