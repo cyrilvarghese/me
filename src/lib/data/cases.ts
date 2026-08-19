@@ -26,7 +26,7 @@ export const cases: CaseStudy[] = [
     cover: "/assets/CaseChat/cover-desk.webp",
     num: "02",
     category: "Founder + Design Engineering",
-    headline: "A safe place for medical students to be wrong.",
+    headline: "A safe space for medical students to be wrong.",
     startedWith:
       "Medical students need repeated opportunities to make clinical decisions and receive useful feedback.",
     built:

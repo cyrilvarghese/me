@@ -18,7 +18,7 @@ export default function CaseChatContent() {
     <>
       <CaseSummary
         eyebrow="Context"
-        heading="Teaching clinical reasoning without a clinic."
+        heading="Teaching clinical reasoning with simulated clinics."
         lede={
           <>
             Medical school teaches the facts well and the judgement badly — not
