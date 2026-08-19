@@ -1,6 +1,6 @@
 import styles from "./CaseSummary.module.css";
 
-type Item = { label: string; value?: string; body: string };
+type Item = { label: string; value?: string; body: React.ReactNode };
 type Meta = { label: string; body: string };
 
 /** The whole case in one row, before the argument starts: what hurts, what

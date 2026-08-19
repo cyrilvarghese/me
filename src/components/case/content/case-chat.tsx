@@ -39,8 +39,13 @@ export default function CaseChatContent() {
           },
           {
             label: "Solution",
-            body:
-              "AI generates the patients. The student talks, examines, tests, treats — then sees where the reasoning broke, and goes again.",
+            body: (
+              <>
+                <em>AI generates the patients.</em> The student talks, examines,
+                tests, treats — then sees where the reasoning broke, and goes
+                again.
+              </>
+            ),
           },
           {
             label: "Impact",
