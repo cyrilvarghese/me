@@ -231,7 +231,9 @@ export default function CaseJourney({
             <p className={styles.quote}>&#8220;{stage.quote}&#8221;</p>
             {stage.consequence && (
               <p className={styles.consequence}>
-                <span className={styles.mark} aria-hidden="true" />
+                <span className={`mono-label ${styles.consequenceTag}`}>
+                  Pain
+                </span>
                 {stage.consequence}
               </p>
             )}
