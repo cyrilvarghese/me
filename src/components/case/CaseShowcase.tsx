@@ -37,6 +37,7 @@ const ZOOMABLE = "(min-width: 901px)";
 export default function CaseShowcase({
   eyebrow,
   shots,
+  stack,
   video,
   youtube,
   poster,
@@ -44,6 +45,10 @@ export default function CaseShowcase({
 }: {
   eyebrow: string;
   shots: Shot[];
+  /** Full-width shots in reading order instead of the bento — for a set
+      of real screens that deserve their whole width. No lightbox: every
+      shot is already as large as the page can show it. */
+  stack?: boolean;
   video?: string;
   /** YouTube id, for a demo that lives there rather than in the bucket.
       Rendered as a facade: the poster and the same red play mark, with
@@ -58,6 +63,24 @@ export default function CaseShowcase({
   videoCaption?: string;
 }) {
   const hasDemo = Boolean(video || youtube || videoCaption);
+
+  if (stack) {
+    return (
+      <section className={`section-shell ${styles.section}`}>
+        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
+        <div className={styles.stack}>
+          {shots.map((sh) => (
+            <figure key={sh.src} className={styles.stackFigure}>
+              <img src={sh.src} alt="" className={styles.stackImg} />
+              <figcaption className={`mono-label ${styles.caption}`}>
+                {sh.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    );
+  }
   const [playing, setPlaying] = useState(false);
   /* an index, not the shot itself: the lightbox is a position in the list
      now, and prev/next/dots all just move that position */

@@ -147,6 +147,7 @@ export default function MsigContent() {
             body: (
               <CaseShowcase
                 eyebrow="Inside the system"
+                stack
                 /* Source order is grid position: the day's overview first,
                    then the queue it drives, the drill-down that answers a
                    row, the form the whole thing exists to make bearable,
@@ -171,14 +172,6 @@ export default function MsigContent() {
                   {
                     src: "/assets/MSIG/a5rRn65DtRvHwOYL9MfA5fQT7I.webp",
                     caption: "Quotation details — fields grouped by context",
-                  },
-                  {
-                    src: "/assets/MSIG/3zVXGHubwsDkSoRejI1kNsYWI.webp",
-                    caption: "Core UI blocks defining stepper, form and sidebar",
-                  },
-                  {
-                    src: "/assets/MSIG/FZH5qRxSvJSwBEKVMgkv5TzbYU.webp",
-                    caption: "Responsive layout adapting the blocks for mobile",
                   },
                 ]}
               />

@@ -443,3 +443,21 @@
 	border-color: var(--accent);
 	background: var(--accent);
 }
+
+/* ---- stack mode: the real screens, full width, in reading order ---- */
+
+.stack {
+	display: grid;
+	gap: clamp(2.5rem, 6vh, 4rem);
+}
+
+.stackFigure {
+	margin: 0;
+}
+
+.stackImg {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--hairline);
+}
