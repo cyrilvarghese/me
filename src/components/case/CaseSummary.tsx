@@ -16,7 +16,9 @@ export default function CaseSummary({
 }: {
   eyebrow: string;
   heading: string;
-  lede?: string;
+  /* a node, not a string: the lede is the one place on a case page where
+     a clause carries the argument, and `.mark` needs an element to sit on */
+  lede?: React.ReactNode;
   items: [Item, Item, Item];
   meta?: Meta[];
 }) {

@@ -19,7 +19,17 @@ export default function CaseChatContent() {
       <CaseSummary
         eyebrow="Context"
         heading="Teaching clinical reasoning without a clinic."
-        lede="Medical school teaches the facts well and the judgement badly — not by choice, but because judgement needs patients, and patients are the one thing a curriculum cannot hand out."
+        lede={
+          <>
+            Medical school teaches the facts well and the judgement badly — not
+            by choice, but because{" "}
+            <em className="mark">
+              judgement needs patients, and patients are the one thing a
+              curriculum cannot hand out
+            </em>
+            .
+          </>
+        }
         items={[
           {
             label: "Pain",
