@@ -73,6 +73,12 @@
 	transition: transform 900ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* the restart swap: the cycle begins again in place, never rewinds */
+.rail[data-instant] .trail,
+.rail[data-instant] .marker {
+	transition: none;
+}
+
 .marker {
 	position: absolute;
 	top: var(--rail-y);

@@ -9,16 +9,23 @@ export type JourneyStage = {
   consequence?: string;
 };
 
+const TRAVEL = 900; // ms — must match the trail/marker transition in the module
+const DWELL = 4200; // reading time at a quoted stage
+const END_HOLD = 1600; // the completed rail, held before the cycle restarts
+
 /** A journey told one stage at a time: a straight rail of stages with a
     red marker sliding along it, and a card giving the active stage's
     quote in real HTML type — legible at any width, which is the reason
     this is a component and not a 1200-unit SVG whose 12px labels shrink
     with the panel.
 
-    Stages without a quote are pass-through: the marker crosses them but
-    the card never stops there. Auto-advance walks the quoted stages and
-    stops the moment the reader takes the wheel (arrows, or a stage dot);
-    reduced motion never auto-advances and skips the slide. */
+    Two-phase motion: `target` is where the marker is heading (it drives
+    the trail and the slide), `shown` is where it has arrived — nodes pop
+    and the card swaps only on arrival, never while the dot is still
+    travelling. The auto walk visits every quoted stage, runs the final
+    leg to the journey's end, holds the completed rail, then restarts in
+    place — a cycle never plays in reverse. Reader input stops the walk;
+    reduced motion never starts it and skips every slide. */
 export default function CaseJourney({
   eyebrow,
   heading,
@@ -36,13 +43,18 @@ export default function CaseJourney({
     () => stages.flatMap((s, i) => (s.quote ? [i] : [])),
     [stages]
   );
-  const [active, setActive] = useState(quoted[0] ?? 0);
+  const last = stages.length - 1;
+  const [target, setTarget] = useState(quoted[0] ?? 0);
+  const [shown, setShown] = useState(quoted[0] ?? 0);
+  const [instant, setInstant] = useState(false); // kills the slide for one swap
   const [driven, setDriven] = useState(false); // reader took over
   const [inView, setInView] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
 
-  /* run the walk only while the band is on screen, and never for a
-     reduced-motion reader — for them the card is a paged list */
+  const reduced = () =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* run the walk only while the band is on screen */
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
@@ -54,27 +66,66 @@ export default function CaseJourney({
     return () => io.disconnect();
   }, []);
 
+  /* arrival: the card and the pop wait for the dot */
   useEffect(() => {
-    if (driven || !inView) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setTimeout(() => {
-      const at = quoted.indexOf(active);
-      setActive(quoted[(at + 1) % quoted.length]);
-    }, 4200);
+    if (target === shown) return;
+    const t = setTimeout(
+      () => setShown(target),
+      instant || reduced() ? 0 : TRAVEL
+    );
     return () => clearTimeout(t);
-  }, [active, driven, inView, quoted]);
+  }, [target, shown, instant]);
+
+  /* the walk. From a quoted stage: dwell, then head for the next one —
+     or for the journey's end after the last quote. From the end: hold
+     the finished rail, then restart in place rather than rewinding. */
+  useEffect(() => {
+    if (driven || !inView || target !== shown) return;
+    if (reduced()) return;
+    const at = quoted.indexOf(shown);
+    const t = setTimeout(
+      () => {
+        if (at === -1 || shown === last) {
+          // finished rail held — restart without a reverse slide
+          setInstant(true);
+          setTarget(quoted[0]);
+          setShown(quoted[0]);
+        } else if (at === quoted.length - 1 && last !== shown) {
+          setInstant(false);
+          setTarget(last); // the final leg, so the journey visibly completes
+        } else {
+          setInstant(false);
+          setTarget(quoted[(at + 1) % quoted.length]);
+        }
+      },
+      at === -1 || shown === last ? END_HOLD : DWELL
+    );
+    return () => clearTimeout(t);
+  }, [shown, target, driven, inView, quoted, last]);
+
+  /* the instant flag lives for exactly one swap */
+  useEffect(() => {
+    if (!instant) return;
+    const t = setTimeout(() => setInstant(false), 50);
+    return () => clearTimeout(t);
+  }, [instant]);
 
   const go = (i: number) => {
     setDriven(true);
-    setActive(i);
+    setInstant(false);
+    setTarget(i);
   };
   const step = (dir: 1 | -1) => {
-    const at = quoted.indexOf(active);
+    const at = quoted.indexOf(quoted.includes(shown) ? shown : cardIndex);
     go(quoted[(at + dir + quoted.length) % quoted.length]);
   };
 
-  const stage = stages[active];
-  const fraction = active / (stages.length - 1);
+  /* the card voices the last quoted stage the dot has reached */
+  const cardIndex = quoted.includes(shown)
+    ? shown
+    : quoted.filter((q) => q <= shown).pop() ?? quoted[0];
+  const stage = stages[cardIndex];
+  const fraction = target / last;
 
   return (
     <section ref={rootRef} className={`section-shell ${styles.block}`}>
@@ -85,7 +136,7 @@ export default function CaseJourney({
 
       <div className={styles.panel}>
         {/* the rail. Dots are buttons — the timeline is the nav */}
-        <div className={styles.rail}>
+        <div className={styles.rail} data-instant={instant || undefined}>
           <span className={styles.track} aria-hidden="true" />
           <span
             className={styles.trail}
@@ -102,9 +153,11 @@ export default function CaseJourney({
               key={s.label}
               type="button"
               className={styles.stop}
-              style={{ left: `${(i / (stages.length - 1)) * 100}%` }}
-              data-active={i === active || undefined}
-              data-passed={i < active || undefined}
+              style={{ left: `${(i / last) * 100}%` }}
+              data-active={(i === shown && !!s.quote) || undefined}
+              data-passed={
+                i < shown || (i === shown && !s.quote) || undefined
+              }
               data-quiet={!s.quote || undefined}
               disabled={!s.quote}
               onClick={() => go(i)}
@@ -118,7 +171,7 @@ export default function CaseJourney({
 
         {/* the card: one stage speaking. Keyed so the swap re-runs the
             entrance; min-height in the module keeps the rail still */}
-        <div key={active} className={styles.card}>
+        <div key={cardIndex} className={styles.card}>
           <img src={icon} alt={iconLabel} className={styles.avatar} />
           <div className={styles.words}>
             <p className={styles.quote}>&#8220;{stage.quote}&#8221;</p>
@@ -149,7 +202,7 @@ export default function CaseJourney({
             &#8594;
           </button>
           <span className={`mono-label ${styles.count}`}>
-            {String(quoted.indexOf(active) + 1).padStart(2, "0")} /{" "}
+            {String(quoted.indexOf(cardIndex) + 1).padStart(2, "0")} /{" "}
             {String(quoted.length).padStart(2, "0")}
           </span>
         </div>
