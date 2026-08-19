@@ -448,11 +448,14 @@
 
 .stack {
 	display: grid;
-	gap: clamp(2.5rem, 6vh, 4rem);
+	gap: clamp(4rem, 10vh, 7rem);
 }
 
 .stackFigure {
 	margin: 0;
+	display: grid;
+	gap: 1.1rem;
+	justify-items: center;
 }
 
 .stackImg {
@@ -460,4 +463,9 @@
 	width: 100%;
 	height: auto;
 	border: 1px solid var(--hairline);
+}
+
+.stackFigure .caption {
+	text-align: center;
+	margin-top: 0;
 }

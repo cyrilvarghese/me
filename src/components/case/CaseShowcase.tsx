@@ -64,23 +64,6 @@ export default function CaseShowcase({
 }) {
   const hasDemo = Boolean(video || youtube || videoCaption);
 
-  if (stack) {
-    return (
-      <section className={`section-shell ${styles.section}`}>
-        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
-        <div className={styles.stack}>
-          {shots.map((sh) => (
-            <figure key={sh.src} className={styles.stackFigure}>
-              <img src={sh.src} alt="" className={styles.stackImg} />
-              <figcaption className={`mono-label ${styles.caption}`}>
-                {sh.caption}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-    );
-  }
   const [playing, setPlaying] = useState(false);
   /* an index, not the shot itself: the lightbox is a position in the list
      now, and prev/next/dots all just move that position */
@@ -133,6 +116,26 @@ export default function CaseShowcase({
     setShown(false);
     window.setTimeout(() => dialogRef.current?.close(), EXIT_MS);
   }, []);
+
+  /* after the hooks, not before them — a component must call the same
+     hooks every render, whichever branch it renders */
+  if (stack) {
+    return (
+      <section className={`section-shell ${styles.section}`}>
+        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
+        <div className={styles.stack}>
+          {shots.map((sh) => (
+            <figure key={sh.src} className={styles.stackFigure}>
+              <img src={sh.src} alt="" className={styles.stackImg} />
+              <figcaption className={`mono-label ${styles.caption}`}>
+                {sh.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   const start = () => {
     setPlaying(true);
