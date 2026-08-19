@@ -11,16 +11,12 @@
   <!-- The agent. A disc and two strokes, in the site's element language —
        an illustrated portrait would be the only rendered thing on the page
        and would read as clip art next to the knife and the compass. -->
-  <circle cx="130" cy="95" r="68" fill="#1e1818"
-          stroke="currentColor" stroke-opacity=".28" stroke-width="2"/>
-  <circle cx="130" cy="74" r="19" fill="none"
-          stroke="currentColor" stroke-opacity=".85" stroke-width="2.5"/>
-  <path d="M98,139 C98,112 162,112 162,139" fill="none"
-        stroke="currentColor" stroke-opacity=".85" stroke-width="2.5"/>
+  <image href="/assets/MSIG/icons/agent.png" x="78" y="50" width="64" height="64"/>
+  <text x="152" y="87" font-size="13" fill="currentColor" opacity=".62">Jane, insurance agent</text>
 
   <!-- avatar → pie: the leader from the person to how her day divides -->
-  <circle cx="178" cy="143" r="3" fill="currentColor" opacity=".5"/>
-  <path d="M178,143 L226,276 H400 L435,295" fill="none"
+  <circle cx="133" cy="105" r="3" fill="currentColor" opacity=".5"/>
+  <path d="M133,105 L226,276 H400 L435,295" fill="none"
         stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"
         stroke-dasharray="2 6" marker-end="url(#msA-01)"/>
 

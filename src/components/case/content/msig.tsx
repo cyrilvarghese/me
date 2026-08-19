@@ -65,6 +65,12 @@ export default function MsigContent() {
                   diagram="/assets/MSIG/diagrams/01-agent-day.svg"
                 />
 
+                <CaseFigure
+                  eyebrow="Journey 01"
+                  heading="Selling a new policy."
+                  diagram="/assets/MSIG/diagrams/02-new-policy.svg"
+                />
+
                 <CaseImpact
                   eyebrow="Impact"
                   value="~8 min"

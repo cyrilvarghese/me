@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img"
+     aria-label="The new-policy journey — lead, quote, review, submit, payment, confirm — with the agent's own words at each stage: mobile breaks in the field, a quote takes twenty minutes, statuses need a phone call, upsells go unprompted, and payments are chased by hand.">
+  <defs>
+    <!-- red arrowhead: the leader from a quote to the cost it carries -->
+    <marker id="msR-02" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#ea0000"/>
+    </marker>
+  </defs>
+
+  <!-- the journey. One quiet line; the drawing's noise is the day, not the rail -->
+  <path d="M150,560 C230,505 270,485 330,468 C400,448 440,420 505,415
+           C570,411 630,420 700,432 C760,442 820,455 890,478
+           C950,498 1020,535 1085,580"
+        fill="none" stroke="rgba(248,244,242,0.35)" stroke-width="2"/>
+
+  <!-- the six stages -->
+  <g fill="#1e1818" stroke="#eee8e6" stroke-width="2">
+    <circle cx="150" cy="560" r="5"/>
+    <circle cx="330" cy="468" r="5"/>
+    <circle cx="505" cy="415" r="5"/>
+    <circle cx="700" cy="432" r="5"/>
+    <circle cx="890" cy="478" r="5"/>
+    <circle cx="1085" cy="580" r="5"/>
+  </g>
+  <g font-size="13" fill="currentColor" opacity=".55" text-anchor="middle">
+    <text x="150" y="590">Lead</text>
+    <text x="330" y="498">Quote</text>
+    <text x="505" y="445">Review</text>
+    <text x="700" y="462">Submit</text>
+    <text x="890" y="508">Payment</text>
+    <text x="1085" y="610">Confirm</text>
+  </g>
+
+  <!-- 1 · mobile breaks in the field -->
+  <image href="/assets/MSIG/icons/agent.png" x="262" y="498" width="36" height="36"/>
+  <text x="60" y="478" font-size="12" fill="currentColor" opacity=".8">&#8220;I can&#8217;t work while traveling;</text>
+  <text x="60" y="498" font-size="12" fill="currentColor" opacity=".8">everything breaks on mobile&#8221;</text>
+  <circle cx="170" cy="450" r="3" fill="#ea0000"/>
+  <path d="M170,450 V352" fill="none" stroke="#ea0000" stroke-opacity=".8"
+        stroke-width="1.5" stroke-dasharray="2 6" marker-end="url(#msR-02)"/>
+  <text x="60" y="336" font-size="13" font-weight="600" fill="currentColor">Hard to close a sale on the go</text>
+
+  <!-- 2 · the twenty-minute quote -->
+  <image href="/assets/MSIG/icons/agent.png" x="422" y="350" width="36" height="36"/>
+  <text x="440" y="320" font-size="12" fill="currentColor" opacity=".8" text-anchor="middle">&#8220;It takes 20+ minutes</text>
+  <text x="440" y="340" font-size="12" fill="currentColor" opacity=".8" text-anchor="middle">just to fill a quote&#8221;</text>
+  <circle cx="440" cy="296" r="3" fill="#ea0000"/>
+  <path d="M440,296 V192" fill="none" stroke="#ea0000" stroke-opacity=".8"
+        stroke-width="1.5" stroke-dasharray="2 6" marker-end="url(#msR-02)"/>
+  <text x="440" y="178" font-size="13" font-weight="600" fill="currentColor" text-anchor="middle">Unorganized forms slow policy creation</text>
+
+  <!-- 3 · the status phone call -->
+  <image href="/assets/MSIG/icons/agent.png" x="642" y="330" width="36" height="36"/>
+  <text x="690" y="300" font-size="12" fill="currentColor" opacity=".8" text-anchor="middle">&#8220;I keep calling underwriting</text>
+  <text x="690" y="320" font-size="12" fill="currentColor" opacity=".8" text-anchor="middle">to check if it went through.&#8221;</text>
+  <circle cx="720" cy="275" r="3" fill="#ea0000"/>
+  <path d="M720,275 V174" fill="none" stroke="#ea0000" stroke-opacity=".8"
+        stroke-width="1.5" stroke-dasharray="2 6" marker-end="url(#msR-02)"/>
+  <text x="720" y="160" font-size="13" font-weight="600" fill="currentColor" text-anchor="middle">Unclear statuses cause delay</text>
+
+  <!-- 4 · the upsell nobody prompts -->
+  <image href="/assets/MSIG/icons/agent.png" x="382" y="553" width="36" height="36"/>
+  <text x="430" y="585" font-size="12" fill="currentColor" opacity=".8">&#8220;I never know if this customer</text>
+  <text x="430" y="605" font-size="12" fill="currentColor" opacity=".8">could take a higher cover.&#8221;</text>
+  <circle cx="640" cy="612" r="3" fill="#ea0000"/>
+  <path d="M640,612 V652" fill="none" stroke="#ea0000" stroke-opacity=".8"
+        stroke-width="1.5" stroke-dasharray="2 6" marker-end="url(#msR-02)"/>
+  <text x="640" y="678" font-size="13" font-weight="600" fill="currentColor" text-anchor="middle">No guidance, missed upsells</text>
+
+  <!-- 5 · payments chased by hand -->
+  <image href="/assets/MSIG/icons/agent.png" x="877" y="376" width="36" height="36"/>
+  <text x="925" y="390" font-size="12" fill="currentColor" opacity=".8">&#8220;Chasing payments takes</text>
+  <text x="925" y="410" font-size="12" fill="currentColor" opacity=".8">longer than selling the policy.&#8221;</text>
+  <circle cx="1000" cy="368" r="3" fill="#ea0000"/>
+  <path d="M1000,368 V258" fill="none" stroke="#ea0000" stroke-opacity=".8"
+        stroke-width="1.5" stroke-dasharray="2 6" marker-end="url(#msR-02)"/>
+  <text x="880" y="246" font-size="13" font-weight="600" fill="currentColor">Manual follow-ups delay closure</text>
+
+  <!-- legend -->
+  <image href="/assets/MSIG/icons/agent.png" x="52" y="633" width="36" height="36"/>
+  <text x="95" y="660" font-size="12" fill="currentColor" opacity=".6">Insurance agent</text>
+</svg>
