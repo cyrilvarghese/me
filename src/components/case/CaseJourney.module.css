@@ -262,16 +262,18 @@
 	margin-left: 0.5rem;
 }
 
-/* the card swap: eases in from above and settles */
+/* the card swap: only the words move — the card's hairline and the
+   avatar hold still while the text eases in from above, half-present
+   to fully present */
 @media (prefers-reduced-motion: no-preference) {
-	.card {
+	.words {
 		animation: msjEnter var(--msj-fade, 1100ms) cubic-bezier(0.22, 1, 0.36, 1);
 	}
 }
 
 @keyframes msjEnter {
 	from {
-		opacity: 0;
+		opacity: 0.4;
 		transform: translateY(-14px);
 	}
 	to {
