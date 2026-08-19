@@ -86,6 +86,27 @@ steps still run — the accumulation is usually the argument.
 **Reduced motion** parks every animation in its *finished* state, never
 mid-travel.
 
+## House geometry (measured from the CreativeOS set)
+
+Values are viewBox units at ~600-unit panel width — scale by ratio for
+other widths, and use them as raw px when a React component (e.g.
+`CaseJourney`) speaks the same language in HTML/CSS.
+
+| Element | Spec |
+|---|---|
+| Base rail | width 3, `stroke-dasharray "2 14"`, round caps, `rgba(248,244,242,0.28)`; secondary ground `0.14` |
+| Fill trail | width 3.5, second copy of the path (`pathLength="100"`, `stroke-dasharray "100 100"`), drawn behind the traveller |
+| Quiet/return path | width 2.5, `#9e9493` |
+| Node | r 5.5, ring stroke 2, `--surface` (`#1e1818`) fill until lit |
+| Node, lit | the **fill** takes the ring's colour and holds it; arrival pops `scale(1.5)` and settles ~240ms (attack 0.2% of the 12s cycle, decay ~1.7%); `transform-box: fill-box; transform-origin: center` |
+| Arrival ping | a second stroke-only copy of the node behind it: `scale(0.8 → 2.6)`, `opacity 0.9 → 0`, ~240ms (2% of cycle), once per activation |
+| Cycle | 12s, linear, infinite |
+| Sequential rows | one `linearGradient` in `userSpaceOnUse` with stops on the ramp (`#b39a9a → #c98080 → #d95a5a → #ea0000`) rather than per-segment colours |
+
+The centreline is sacred: rails, trails, markers and nodes all register
+on one shared y — in CSS, one custom property (`--rail-y`) that every
+layer derives from, never four hand-matched offsets.
+
 ## Composition
 
 - **No inner frames.** The panel title already names the side ("Today —
