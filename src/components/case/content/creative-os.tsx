@@ -123,7 +123,11 @@ export default function CreativeOsContent() {
                    pipeline, the left column the video one — sitting beside
                    the demo it produces. */
                 shots={[
-                  { src: "/assets/CreativeOS/gallery.png", caption: "Canvas — shots in progress" },
+                  {
+                    src: "/assets/CreativeOS/canvas.webp",
+                    caption: "The production canvas — every shot, prompt and render in one graph",
+                  },
+                  { src: "/assets/CreativeOS/gallery.png", caption: "Brand references added without leaving the canvas" },
                   { src: "/assets/CreativeOS/img-gen.png", caption: "Generation with context attached" },
                   { src: "/assets/CreativeOS/img-prompt.png", caption: "Prompt composed from references" },
                   { src: "/assets/CreativeOS/video-gen.webp", caption: "Video generated from the approved shot" },
