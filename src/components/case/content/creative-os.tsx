@@ -122,22 +122,23 @@ export default function CreativeOsContent() {
           {
             id: "visual-assets",
             label: "Visual assets & Demo",
-            body: <CaseShowcase
-                    eyebrow="Inside the system"
-                rows={[
-                  [
-                    { src: "/assets/CreativeOS/gallery.png", caption: "Canvas — shots in progress" },
-                    { src: "/assets/CreativeOS/img-gen.png", caption: "Generation with context attached" },
-                    { src: "/assets/CreativeOS/img-prompt.png", caption: "Prompt composed from references" },
-                  ],
-                  [
-                    { src: "/assets/CreativeOS/video-gen.webp", caption: "Video generated from the approved shot" },
-                    { src: "/assets/CreativeOS/video-prompt.webp", caption: "Motion prompt carried from the image" },
-                  ],
+            body: (
+              <CaseShowcase
+                eyebrow="Inside the system"
+                /* Source order is grid position: the top strip is the image
+                   pipeline, the left column the video one — sitting beside
+                   the demo it produces. */
+                shots={[
+                  { src: "/assets/CreativeOS/gallery.png", caption: "Canvas — shots in progress" },
+                  { src: "/assets/CreativeOS/img-gen.png", caption: "Generation with context attached" },
+                  { src: "/assets/CreativeOS/img-prompt.png", caption: "Prompt composed from references" },
+                  { src: "/assets/CreativeOS/video-gen.webp", caption: "Video generated from the approved shot" },
+                  { src: "/assets/CreativeOS/video-prompt.webp", caption: "Motion prompt carried from the image" },
                 ]}
                 video="https://storage.googleapis.com/creativeos-assets/demo-assets/Demo(comp).mp4"
                 videoCaption="Walkthrough — brief to finished reel"
-              />,
+              />
+            ),
           },
         ]}
       />

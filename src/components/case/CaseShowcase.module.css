@@ -8,30 +8,70 @@
 	margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
 }
 
-.grid {
+/* One bento rather than a stack of rows. The five shots take areas a…e in
+   source order and the demo takes the block they wrap around, so the
+   arrangement is described once, here, and the caller stays a flat list.
+
+   Only the demo is given a ratio. Because it spans both 1fr rows, grid
+   distributes its height across them — tiles d and e size themselves off
+   the demo, so the left column can't drift out of alignment with it. */
+.bento {
 	display: grid;
-	/* each row sizes to its own count, so no row ever strands a cell */
-	grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
-	gap: clamp(1rem, 2.5vw, 2rem);
-	margin-bottom: clamp(1rem, 2.5vw, 2rem);
+	grid-template-columns: 0.95fr 1.25fr 0.8fr;
+	grid-template-rows: clamp(8rem, 15vw, 13rem) 1fr 1fr;
+	grid-template-areas:
+		"a b    c"
+		"d demo demo"
+		"e demo demo";
+	gap: clamp(0.75rem, 1.8vw, 1.5rem);
 }
 
-.shot {
+.cell {
+	display: grid;
+	/* frame takes the flexible row, caption the auto one, so cells stay
+	   flush at the bottom however long a caption runs */
+	grid-template-rows: minmax(0, 1fr) auto;
 	margin: 0;
+	min-height: 0;
+}
+
+/* :not(.demo) keeps these off the demo figure — otherwise its nth-child
+   position would out-specify the .demo rule below. */
+.cell:not(.demo):nth-child(1) {
+	grid-area: a;
+}
+
+.cell:not(.demo):nth-child(2) {
+	grid-area: b;
+}
+
+.cell:not(.demo):nth-child(3) {
+	grid-area: c;
+}
+
+.cell:not(.demo):nth-child(4) {
+	grid-area: d;
+}
+
+.cell:not(.demo):nth-child(5) {
+	grid-area: e;
+}
+
+/* the player already states its own height, so no flexible row to solve */
+.demo {
+	grid-area: demo;
+	grid-template-rows: auto auto;
 }
 
 .frame {
-	aspect-ratio: 16 / 10;
 	width: 100%;
+	height: 100%;
+	min-height: 0;
 }
 
 .caption {
 	color: var(--muted);
 	margin-top: 0.6rem;
-}
-
-.demo {
-	margin: 0;
 }
 
 .player {
@@ -43,10 +83,9 @@
 }
 
 /* Waiting frame. It keeps the player's ratio so the shape is honest, but
-   caps its height: at full width a 16/9 placeholder is a ~770px slab of
-   empty ground, which reads as a broken image rather than a pending one.
-   The trade is a small reflow when the file lands — cheaper than the
-   hole. */
+   caps its height: at full width a 16/9 placeholder is a slab of empty
+   ground, which reads as a broken image rather than a pending one. The
+   trade is a small reflow when the file lands — cheaper than the hole. */
 .waiting {
 	position: relative;
 	aspect-ratio: 16 / 9;
@@ -73,8 +112,26 @@
 	color: var(--muted);
 }
 
+/* Narrow: the bento unfolds into one column. Frames go back to stating
+   their own ratio, since there are no shared rows left to fill. */
 @media (max-width: 900px) {
-	.grid {
-		grid-template-columns: 1fr;
+	.bento {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: none;
+		grid-template-areas: none;
+	}
+
+	.cell:not(.demo):nth-child(n) {
+		grid-area: auto;
+		grid-template-rows: auto auto;
+	}
+
+	.demo {
+		grid-area: auto;
+	}
+
+	.frame {
+		aspect-ratio: 16 / 10;
+		height: auto;
 	}
 }
