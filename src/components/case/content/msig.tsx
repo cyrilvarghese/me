@@ -1,11 +1,13 @@
 import CaseSummary from "@/components/case/CaseSummary";
 import CaseFigure from "@/components/case/CaseFigure";
+import CaseJourney from "@/components/case/CaseJourney";
 import CaseImpact from "@/components/case/CaseImpact";
 import CaseQuote from "@/components/case/CaseQuote";
 import CaseShowcase from "@/components/case/CaseShowcase";
 import CaseNav from "@/components/case/CaseTabs";
 
-/** Spine: context → the PM in his own words → the impact → the screens.
+/** Spine: context → the PM in his own words → the agent's day → her two
+    journeys, one pain at a time → the impact → the screens.
 
     Every claim here traces to cyrilvarghese.framer.website/projects/msig. */
 export default function MsigContent() {
@@ -65,16 +67,69 @@ export default function MsigContent() {
                   diagram="/assets/MSIG/diagrams/01-agent-day.svg"
                 />
 
-                <CaseFigure
+                <CaseJourney
                   eyebrow="Journey 01"
                   heading="Selling a new policy."
-                  diagram="/assets/MSIG/diagrams/02-new-policy.svg"
+                  icon="/assets/MSIG/icons/agent.png"
+                  iconLabel="Jane, insurance agent"
+                  stages={[
+                    {
+                      label: "Lead",
+                      quote: "I can’t work while traveling; everything breaks on mobile",
+                      consequence: "Hard to close a sale on the go",
+                    },
+                    {
+                      label: "Quote",
+                      quote: "It takes 20+ minutes just to fill a quote",
+                      consequence: "Unorganized forms slow policy creation",
+                    },
+                    {
+                      label: "Review",
+                      quote: "I never know if this customer could take a higher cover.",
+                      consequence: "No guidance, missed upsells",
+                    },
+                    {
+                      label: "Submit",
+                      quote: "I keep calling underwriting to check if it went through.",
+                      consequence: "Unclear statuses cause delay",
+                    },
+                    {
+                      label: "Payment",
+                      quote: "Chasing payments takes longer than selling the policy.",
+                      consequence: "Manual follow-ups delay closure",
+                    },
+                    { label: "Confirm" },
+                  ]}
                 />
 
-                <CaseFigure
+                <CaseJourney
                   eyebrow="Journey 02"
                   heading="Renewing a policy."
-                  diagram="/assets/MSIG/diagrams/03-renewal.svg"
+                  icon="/assets/MSIG/icons/agent.png"
+                  iconLabel="Jane, insurance agent"
+                  stages={[
+                    {
+                      label: "Track",
+                      quote: "If I forget to check, the policy just lapses.",
+                      consequence: "Missed alerts, lost renewals",
+                    },
+                    {
+                      label: "Initiate",
+                      quote: "I just renew what they had last year — I don’t know what else to offer.",
+                      consequence: "No cues, lost upgrades",
+                    },
+                    {
+                      label: "Review",
+                      quote: "I can’t move ahead until the customer sends their documents.",
+                      consequence: "Pending docs, delayed progress",
+                    },
+                    {
+                      label: "Payment",
+                      quote: "I still have to remind customers to make the payment.",
+                      consequence: "Manual payments, delayed revenue",
+                    },
+                    { label: "Confirm" },
+                  ]}
                 />
 
                 <CaseImpact
