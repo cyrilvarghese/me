@@ -21,8 +21,8 @@ export default function CaseChatContent() {
         heading="Teaching clinical reasoning with simulated clinics."
         lede={
           <>
-            Medical school teaches the facts well and the judgement badly — not
-            by choice, but because{" "}
+            Medical school teaches the facts well and the judgement badly
+            because{" "}
             <em>
               judgement needs patients, and patients are the one thing a
               curriculum cannot hand out
@@ -34,40 +34,43 @@ export default function CaseChatContent() {
           {
             label: "Pain",
             /* the units sit in the number rather than under it, so the ratio
-               is legible without reading the body at all. The wait takes the
-               line under it: it is the second half of the same measurement,
-               not commentary on it */
+               is legible without reading the body at all */
             value: (
               <>
                 20<small>students</small> : 1<small>patient</small>
-                <br />
-                Fifteen minutes each.
               </>
             ),
-            body: "Live patients teach best, and logistics ration them.",
+            /* the wait leads the body on its own line: it is the second half
+               of the measurement, and the reason for it follows */
+            body: (
+              <>
+                Fifteen minutes each.
+                <br />
+                Live patients teach best, and logistics ration them.
+              </>
+            ),
           },
           {
             label: "Solution",
-            /* the answer is a single sentence, so it takes the value slot: it
-               reads at the size of the ratio it replaces and the outcome it
-               buys, and the detail underneath starts on its own line */
-            value: "AI generates the patients.",
+            /* short enough to hold one line, which is what keeps it level with
+               the ratio it answers and the outcome it buys */
+            value: "AI plays the patient.",
             body:
               "The student talks, examines, tests, treats — then sees where the reasoning broke, and goes again.",
           },
           {
             label: "Impact",
-            /* the break is set rather than left to the wrapper: "Unlimited
-               patients" is the claim, "on demand" is the condition on it */
-            value: (
+            value: "Unlimited patients",
+            /* "on demand" is the tail of the line above, so it stays lowercase
+               and leads the body rather than starting a sentence */
+            body: (
               <>
-                Unlimited patients
-                <br />
                 on demand
+                <br />
+                A case costs a doctor nothing to run, so a student can be wrong
+                as often as it takes.
               </>
             ),
-            body:
-              "A case costs a doctor nothing to run, so a student can be wrong as often as it takes.",
           },
         ]}
         meta={[
