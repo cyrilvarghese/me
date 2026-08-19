@@ -71,6 +71,12 @@ export default function MsigContent() {
                   diagram="/assets/MSIG/diagrams/02-new-policy.svg"
                 />
 
+                <CaseFigure
+                  eyebrow="Journey 02"
+                  heading="Renewing a policy."
+                  diagram="/assets/MSIG/diagrams/03-renewal.svg"
+                />
+
                 <CaseImpact
                   eyebrow="Impact"
                   value="~8 min"
