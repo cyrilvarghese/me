@@ -62,14 +62,11 @@ export default function CreativeOsContent() {
                     title: "Every reel needs its context set again",
                     diagram: `${D}/01-today.svg`,
                     stat: { value: "3×", label: "context setup, for 3 reels" },
-                    caption: "Context needs to be set every time for a new asset.",
                   }}
                   after={{
                     title: "One setup, all reels run in parallel",
                     diagram: `${D}/01-creativeos.svg`,
                     stat: { value: "1×", label: "context setup, for 3 reels" },
-                    caption:
-                      "Inputs set once — all three reels generate in parallel, a fraction of the time.",
                   }}
                 />
 
@@ -81,14 +78,10 @@ export default function CreativeOsContent() {
                   today={{
                     title: "Generation needs 5 separate tools",
                     diagram: `${D}/02-today.svg`,
-                    caption:
-                      "Every fix bounces back across every platform — re-brief, re-upload, regenerate.",
                   }}
                   after={{
                     title: "One canvas for all kinds of assets",
                     diagram: `${D}/02-canvas.svg`,
-                    caption:
-                      "One canvas: script, images, reels and posts are nodes on the same run — a fix never leaves it.",
                   }}
                 />
 
@@ -101,12 +94,10 @@ export default function CreativeOsContent() {
                     title: "Errors surface after the video is made",
                     diagram: `${D}/03-today.svg`,
                     stat: { value: "4×", label: "cost of a late catch" },
-                    caption: "A flawed image slips through — errors caught later are 4x more expensive.",
                   }}
                   after={{
                     title: "A review checkpoint before video",
                     diagram: `${D}/03-creativeos.svg`,
-                    caption: "Review sits before video — the error is fixed once, at the image.",
                   }}
                 />
 

@@ -5,7 +5,7 @@ type Panel = {
   title: string;
   diagram: string;
   stat?: { value: string; label: string };
-  caption: string;
+  caption?: string;
 };
 
 /** One pain point, full width: the claim, then the same story told twice —
@@ -62,6 +62,9 @@ export default function CaseCompare({
                 </>
               )}
             </p>
+            {/* like the stat slot above: always rendered, because the two
+                panels share subgrid rows and a missing element on one side
+                would misalign the other */}
             <p className={styles.caption}>{p.caption}</p>
           </figure>
         ))}
