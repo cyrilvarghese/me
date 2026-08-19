@@ -14,16 +14,16 @@
 	background: var(--surface);
 	border-top: 1px solid var(--hairline);
 	border-bottom: 1px solid var(--hairline);
-	/* no bottom padding: the list's lower edge meets the bar's rule, so
-	   the active indicator lands ON that rule rather than floating above
-	   it with a band of ground in between */
-	padding-block: clamp(1.1rem, 2.6vh, 1.75rem) 0;
-	/* tall enough to enclose the fixed CaseClose, which ends at 4.25rem
-	   (top 1.5rem + a 2.75rem control). Added as top padding rather than
-	   a min-height with flex: .section-shell centres its own box, and
-	   making the bar a flex container hands the tab list to that
-	   centring instead of leaving it in the gutter */
-	padding-top: 2.25rem;
+	/* All the height goes above: the tabs sit on the band's lower edge so
+	   the active indicator lands ON the rule rather than floating over a
+	   strip of ground. The room above is what makes the band read as a
+	   change of gear, and it clears the fixed CaseClose, which ends at
+	   4.25rem (top 1.5rem + a 2.75rem control), once the bar is stuck.
+
+	   Padding rather than a min-height with flex — .section-shell centres
+	   its own box, so making the bar a flex container would pull the tabs
+	   out of the gutter. */
+	padding-block: clamp(3rem, 6vh, 4.5rem) 0;
 	/* the bar is the page's one navigational moment: give it room before
 	   it, so a reader scrolling past has to notice the change of gear */
 	margin-top: clamp(3rem, 8vh, 6rem);
@@ -37,7 +37,7 @@
 	display: inline-flex;
 	width: fit-content;
 	align-items: center;
-	gap: clamp(0.5rem, 1.5vw, 1.25rem);
+	gap: clamp(1.25rem, 3vw, 2.75rem);
 }
 
 /* CaseClose is fixed at the right gutter and paints an opaque ground, so
