@@ -35,8 +35,12 @@ export default function CreativeOsContent() {
         ]}
         meta={[
           {
+            label: "For",
+            body: "Agencies handling large volumes of social-media content.",
+          },
+          {
             label: "Role",
-            body: "Design engineer & Product manager.",
+            body: "Owned product, UX and frontend engineering.",
           },
           {
             label: "Team",
@@ -119,19 +123,21 @@ export default function CreativeOsContent() {
               <CaseShowcase
                 eyebrow="Inside the system"
                 stack
-                /* Source order is grid position: the top strip is the image
-                   pipeline, the left column the video one — sitting beside
-                   the demo it produces. */
+                /* Source order is the pipeline: the canvas everything lives
+                   on, then one asset travelling through it — prompt,
+                   references, image, motion prompt, video. A reader who
+                   only scrolls the pictures still sees the sequence the
+                   case study argues for. */
                 shots={[
                   {
                     src: "/assets/CreativeOS/canvas.webp",
                     caption: "The production canvas — every shot, prompt and render in one graph",
                   },
+                  { src: "/assets/CreativeOS/img-prompt.png", caption: "The image prompt, composed from the brief" },
                   { src: "/assets/CreativeOS/gallery.png", caption: "Brand references added without leaving the canvas" },
-                  { src: "/assets/CreativeOS/img-gen.png", caption: "Generation with context attached" },
-                  { src: "/assets/CreativeOS/img-prompt.png", caption: "Prompt composed from references" },
-                  { src: "/assets/CreativeOS/video-gen.webp", caption: "Video generated from the approved shot" },
-                  { src: "/assets/CreativeOS/video-prompt.webp", caption: "Motion prompt carried from the image" },
+                  { src: "/assets/CreativeOS/img-gen.png", caption: "The image, generated with that context attached" },
+                  { src: "/assets/CreativeOS/video-prompt.webp", caption: "The motion prompt, carried from the image" },
+                  { src: "/assets/CreativeOS/video-gen.webp", caption: "The video, generated from the approved shot" },
                 ]}
                 video="https://storage.googleapis.com/creativeos-assets/demo-assets/Demo(comp).mp4"
                 videoCaption="Walkthrough — brief to finished reel"
