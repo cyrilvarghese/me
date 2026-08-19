@@ -5,7 +5,7 @@
 
 .eyebrow {
 	color: var(--muted);
-	margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+	margin-bottom: clamp(3.25rem, 8vh, 5.5rem);
 }
 
 /* One bento rather than a stack of rows. The five shots take areas a…e in
