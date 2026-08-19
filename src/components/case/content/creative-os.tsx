@@ -89,7 +89,7 @@ export default function CreativeOsContent() {
                   index="03"
                   eyebrow="Catch errors while they are cheap"
                   heading="Catch mistakes early, before they get expensive."
-                  lede="The same mistake costs a few credits in an image — and a full batch in video. CreativeOS adds a senior review checkpoint before any video is generated."
+                  lede="The same mistake costs a few credits in an image, and a minimum of 4x that once it is video. CreativeOS adds a senior review checkpoint before any video is generated."
                   today={{
                     title: "Errors surface after the video is made",
                     diagram: `${D}/03-today.svg`,
