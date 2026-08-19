@@ -23,7 +23,7 @@ export const cases: CaseStudy[] = [
   },
   {
     slug: "case-chat",
-    cover: "/assets/CaseChat/thumbnail.png",
+    cover: "/assets/CaseChat/cover-desk.webp",
     num: "02",
     category: "Founder + Design Engineering",
     headline: "Turning clinical reasoning into an interactive AI simulation.",
