@@ -1,48 +1,25 @@
-<svg viewBox="0 0 900 320" role="img"
-     aria-label="One canvas: context set once at the left, a review checkpoint before video, and three reels generated in parallel from the same setup.">
-  <!-- the answer to all three at once, said by one boundary: the context
-       is inside it, the review is inside it, the reels come out of it -->
-  <rect x="30" y="30" width="600" height="260" rx="8"
-        fill="none" stroke="rgba(248,244,242,0.28)" stroke-width="2.5"/>
-  <text x="54" y="66" font-size="15" fill="currentColor" opacity=".55">One canvas</text>
+<svg viewBox="0 0 1080 300" role="img"
+     aria-label="One canvas: a single setup and a review inside one boundary, feeding three reels in parallel.">
+  <!-- the same nodes and lines as the problems, gathered inside one
+       boundary — which is the whole answer, drawn -->
+  <rect x="40" y="40" width="700" height="220" rx="10"
+        fill="none" stroke="#ea0000" stroke-width="2.5" stroke-opacity=".45"/>
 
-  <!-- context, set once -->
-  <g fill="none" stroke="rgba(248,244,242,0.28)" stroke-width="3"
-     stroke-linecap="round" stroke-dasharray="2 14">
-    <line x1="90" y1="140" x2="300" y2="140"/>
+  <g stroke="#ea0000" stroke-width="2.5" stroke-linecap="round">
+    <line x1="110" y1="150" x2="640" y2="150"/>
+    <path d="M640,150 C760,150 800,70 900,70" fill="none"/>
+    <line x1="640" y1="150" x2="900" y2="150"/>
+    <path d="M640,150 C760,150 800,230 900,230" fill="none"/>
   </g>
+
   <g fill="#ea0000">
-    <circle cx="90" cy="140" r="6"/>
-    <circle cx="160" cy="140" r="6"/>
-    <circle cx="230" cy="140" r="6"/>
-    <circle cx="300" cy="140" r="6"/>
+    <circle cx="110" cy="150" r="6"/>
+    <circle cx="240" cy="150" r="6"/>
+    <circle cx="370" cy="150" r="6"/>
+    <circle cx="500" cy="150" r="6"/>
+    <circle cx="900" cy="70" r="6"/>
+    <circle cx="900" cy="150" r="6"/>
+    <circle cx="900" cy="230" r="6"/>
   </g>
-  <text x="90" y="180" font-size="15" fill="currentColor" opacity=".55">context, set once</text>
-
-  <!-- the review that sits before the expensive step -->
-  <g fill="none" stroke="rgba(248,244,242,0.28)" stroke-width="3"
-     stroke-linecap="round" stroke-dasharray="2 14">
-    <line x1="330" y1="140" x2="450" y2="140"/>
-  </g>
-  <circle cx="480" cy="140" r="26" fill="#1e1818" stroke="#eee8e6" stroke-width="3"/>
-  <path d="M470,140 L477,147 L492,130" fill="none"
-        stroke="#eee8e6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="480" y="196" text-anchor="middle" font-size="15" fill="currentColor" opacity=".55">review</text>
-
-  <!-- three reels, in parallel, out of the one setup -->
-  <g fill="none" stroke="#ea0000" stroke-width="3" stroke-linecap="round">
-    <path d="M510,140 C570,140 590,70 660,70"/>
-    <path d="M510,140 H660"/>
-    <path d="M510,140 C570,140 590,210 660,210"/>
-  </g>
-  <g fill="#1e1818" stroke="#eee8e6" stroke-width="2.5">
-    <rect x="690" y="48" width="120" height="44" rx="6"/>
-    <rect x="690" y="118" width="120" height="44" rx="6"/>
-    <rect x="690" y="188" width="120" height="44" rx="6"/>
-  </g>
-  <g font-size="15" fill="currentColor" opacity=".7" text-anchor="middle">
-    <text x="750" y="76">Reel 1</text>
-    <text x="750" y="146">Reel 2</text>
-    <text x="750" y="216">Reel 3</text>
-  </g>
+  <circle cx="640" cy="150" r="14" fill="none" stroke="#ea0000" stroke-width="2.5"/>
 </svg>

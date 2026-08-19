@@ -1,4 +1,4 @@
-import CaseSummary from "@/components/case/CaseSummary";
+import CaseBrief from "@/components/case/CaseBrief";
 import CaseProblems from "@/components/case/CaseProblems";
 import CaseFigure from "@/components/case/CaseFigure";
 import CaseShowcase from "@/components/case/CaseShowcase";
@@ -14,28 +14,15 @@ const D = "/assets/CreativeOS/diagrams";
 export default function CreativeOsV2Content() {
   return (
     <>
-      <CaseSummary
+      <CaseBrief
         eyebrow="Context"
         heading="Producing AI creative at agency volume."
         lede="A D2C agency producing dozens of reels and stills a month, with AI generation running through the whole job — script, references, stills, then video."
-        items={[
-          {
-            label: "Pain",
-            body:
-              "Context is rebuilt from scratch for every asset, the work is spread across five disconnected tools, and nothing catches a mistake until it has already become video.",
-          },
-          {
-            label: "Solution",
-            body:
-              "One platform where brand context, script through reels, and approvals all live in the same space — faster iterations, lower cost.",
-          },
-          {
-            label: "Impact",
-            value: "40% less",
-            body:
-              "2.5 hrs → 1.5 hrs per asset, with errors caught while they are still cheap to fix.",
-          },
-        ]}
+        impact={{
+          label: "Impact",
+          value: "40% less",
+          body: "2.5 hrs → 1.5 hrs per asset, with errors caught while they are still cheap to fix.",
+        }}
         meta={[
           { label: "Role", body: "Design engineer & Product manager." },
           { label: "Team", body: "Two AI engineers and one product designer." },
