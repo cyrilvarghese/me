@@ -238,7 +238,7 @@ export default function CaseShowcase({
             onClick={() => go(-1)}
             aria-label="Previous image"
           >
-            <span aria-hidden="true">‹</span>
+            <span aria-hidden="true" className={styles.navMark}>‹</span>
           </button>
           <button
             type="button"
@@ -247,7 +247,7 @@ export default function CaseShowcase({
             onClick={() => go(1)}
             aria-label="Next image"
           >
-            <span aria-hidden="true">›</span>
+            <span aria-hidden="true" className={styles.navMark}>›</span>
           </button>
         </dialog>
         )}
