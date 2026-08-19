@@ -135,6 +135,7 @@ export default function CreativeOsContent() {
                     { src: "/assets/CreativeOS/video-prompt.webp", caption: "Motion prompt carried from the image" },
                   ],
                 ]}
+                video="https://storage.googleapis.com/creativeos-assets/demo-assets/Demo(comp).mp4"
                 videoCaption="Walkthrough — brief to finished reel"
               />,
           },
