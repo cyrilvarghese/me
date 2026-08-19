@@ -48,7 +48,9 @@ export default function CaseShowcase({
   videoCaption: string;
 }) {
   const [playing, setPlaying] = useState(false);
-  const [open, setOpen] = useState<Shot | null>(null);
+  /* an index, not the shot itself: the lightbox is a position in the list
+     now, and prev/next/dots all just move that position */
+  const [at, setAt] = useState<number | null>(null);
   /* separate from `open` so the fade has a state to travel from: a dialog
      goes display:none → block, and you cannot transition out of that */
   const [shown, setShown] = useState(false);
@@ -58,6 +60,16 @@ export default function CaseShowcase({
   const [zoomable, setZoomable] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const shot = at === null ? null : shots[at];
+
+  /* wraps rather than stopping at the ends: with the dots showing position
+     there is no need for a control that sometimes does nothing */
+  const go = useCallback(
+    (step: number) =>
+      setAt((i) => (i === null ? i : (i + step + shots.length) % shots.length)),
+    [shots.length]
+  );
 
   useEffect(() => {
     const mq = window.matchMedia(ZOOMABLE);
@@ -74,11 +86,12 @@ export default function CaseShowcase({
 
   useEffect(() => {
     const el = dialogRef.current;
-    if (!open || !el) return;
+    if (at === null || !el) return;
     if (!el.open) el.showModal();
     const id = requestAnimationFrame(() => setShown(true));
     return () => cancelAnimationFrame(id);
-  }, [open]);
+    /* only the first opening animates; stepping through swaps outright */
+  }, [at === null]);
 
   /* fade first, close after — the dialog's own close event is what clears
      React's state, so Esc and the buttons all land in the same place */
@@ -100,7 +113,7 @@ export default function CaseShowcase({
       <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
 
       <div className={styles.bento}>
-        {shots.map((s) => (
+        {shots.map((s, i) => (
           <figure key={s.src} className={styles.cell}>
             {/* the button wraps only the frame; the caption stays outside
                 it so the accessible name is not read out twice */}
@@ -108,7 +121,7 @@ export default function CaseShowcase({
               <button
                 type="button"
                 className={styles.trigger}
-                onClick={() => setOpen(s)}
+                onClick={() => setAt(i)}
                 aria-label={`${s.caption} — view larger`}
               >
                 <CaseVisual cover={s.src} className={styles.frame} />
@@ -160,7 +173,11 @@ export default function CaseShowcase({
           ref={dialogRef}
           className={styles.dialog}
           data-open={shown ? "true" : "false"}
-          aria-label={open?.caption}
+          aria-label={shot?.caption}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") go(-1);
+            else if (e.key === "ArrowRight") go(1);
+          }}
           onCancel={(e) => {
             /* Esc closes instantly by default — take it over so the panel
                leaves the same way it arrived */
@@ -168,7 +185,7 @@ export default function CaseShowcase({
             requestClose();
           }}
           onClose={() => {
-            setOpen(null);
+            setAt(null);
             setShown(false);
           }}
           onClick={(e) => {
@@ -186,15 +203,52 @@ export default function CaseShowcase({
               <span aria-hidden="true">×</span>
             </button>
 
-            {open && (
+            {shot && (
               <figure className={styles.lightbox}>
-                <img src={open.src} alt="" className={styles.lightboxImg} />
+                <img src={shot.src} alt="" className={styles.lightboxImg} />
                 <figcaption className={`mono-label ${styles.lightboxCaption}`}>
-                  {open.caption}
+                  {shot.caption}
                 </figcaption>
+
+                {/* one dot per shot, so the reader can see how many there
+                    are and jump rather than step */}
+                <div className={styles.dots} role="group" aria-label="Choose an image">
+                  {shots.map((s2, i) => (
+                    <button
+                      key={s2.src}
+                      type="button"
+                      className={styles.dot}
+                      aria-current={i === at ? "true" : undefined}
+                      aria-label={s2.caption}
+                      onClick={() => setAt(i)}
+                    />
+                  ))}
+                </div>
               </figure>
             )}
           </div>
+
+          {/* outside the panel, on the backdrop: the arrows never cover the
+              screenshot the reader opened them to look at. The dialog's
+              side padding is what makes room for them. */}
+          <button
+            type="button"
+            className={styles.nav}
+            data-dir="prev"
+            onClick={() => go(-1)}
+            aria-label="Previous image"
+          >
+            <span aria-hidden="true">‹</span>
+          </button>
+          <button
+            type="button"
+            className={styles.nav}
+            data-dir="next"
+            onClick={() => go(1)}
+            aria-label="Next image"
+          >
+            <span aria-hidden="true">›</span>
+          </button>
         </dialog>
         )}
       </div>
