@@ -74,7 +74,7 @@ export default function CreativeOsContent() {
                   index="02"
                   eyebrow="Any edit means jumping between platforms"
                   heading="One canvas, not five tools."
-                  lede="Script in one tool, images in another, video in a third. Every fix means re-briefing the brand from zero — on CreativeOS the whole pipeline lives on one canvas."
+                  lede="Every kind of asset means another tool, and every tool needs the context set again."
                   today={{
                     title: "Generation needs 5 separate tools",
                     diagram: `${D}/02-today.svg`,
