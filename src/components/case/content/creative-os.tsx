@@ -24,7 +24,7 @@ export default function CreativeOsContent() {
           {
             label: "Solution",
             body:
-              "One canvas. Context is set once and travels with every run, script through reels lives in a single place, and a senior review sits before the expensive step.",
+              "One platform where brand context, script through reels, and approvals all live in the same space — faster iterations, lower cost.",
           },
           {
             label: "Impact",

@@ -296,12 +296,12 @@
 @keyframes cosflashP {
   0.00%,
   36.50% {
-    fill: rgba(88, 41, 199, 0.04);
+    fill: rgba(234, 0, 0, 0.04);
     stroke: rgba(248,244,242,0.28);
   }
   39.00%,
   100% {
-    fill: rgba(88, 41, 199, 0.16);
+    fill: rgba(234, 0, 0, 0.16);
     stroke: #eee8e6;
   }
 }
