@@ -19,7 +19,7 @@ export default function CreativeOsContent() {
           {
             label: "Pain",
             body:
-              "Context is rebuilt from scratch for every asset, the work is spread across five disconnected tools, and nothing catches a mistake until it has already become video.",
+              "Context is rebuilt from scratch for every asset. The work is spread across disconnected tools, so a mistake surfaces late — once it is already video.",
           },
           {
             label: "Solution",
