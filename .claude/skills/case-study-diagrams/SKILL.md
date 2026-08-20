@@ -47,10 +47,26 @@ Text is the mono voice already (`CaseDiagram.module.css` sets
 `var(--font-mono)` and `0.02em` tracking on every `.diagram text`), and
 labels keep their own case — `ChatGPT`, not `CHATGPT`.
 
-**Sizes are ratios of the viewBox width, not absolute pixels.** Every file
-is scaled to the same panel width, so the same `font-size` renders bigger
-in a narrower viewBox. Labels and captions: `0.025 × viewBox width` —
-20px at 800, 15px at 600, 13.7px at 548. Text inside a box: `0.030`.
+**What must hold is the size on screen, not the ratio in the file.**
+A diagram's text lands on the site's own scale: labels at `--text-small`
+(14px), captions at `--text-label` (12px), a callout a step above.
+
+So work backwards from where the drawing renders:
+
+```
+font-size = target px × (viewBox width / rendered width)
+```
+
+Half-panel diagrams in `CaseCompare` (viewBox 560, rendering ~560) and
+full-width ones in `CaseFigure` (viewBox 1100, rendering ~1100) both sit
+near 1:1, which is why every existing file uses **15 for labels and 12 for
+captions** — pick a viewBox close to the width the figure will occupy and
+those numbers just work.
+
+A ratio rule does not survive this. `0.025 × viewBox` matches the 560-wide
+files by coincidence; applied to a full-width 900-unit diagram it renders
+at 27px, nearly double every other label on the page. If the viewBox and
+the render width diverge, use the formula.
 
 ## Motion
 
@@ -201,6 +217,9 @@ catches a divergence. Change them in the same commit, every time.
 | Posed a figure to show what it is doing | A pose is a puzzle at this size. Use the plain person-mark and let the props carry the meaning. |
 | Positioned each element against its neighbours | Overlaps between separately-placed shapes are invisible in markup and obvious on screen. Declare band boundaries as numbers. |
 | Edited the scene file and shipped | Every composed diagram carries its own copy of that markup. Edit both in one commit. |
+| Sized diagram text as a ratio of the viewBox | The ratio only matches when viewBox ≈ rendered width. Solve for the target px instead, and check it against the type it sits beside. |
+| Sized an HTML figure by eye | `--text-small` and `--text-label` are the same sizes a diagram's text renders at. Use the tokens and the two voices match for free. |
+| An `svg` in HTML came out smaller than its CSS width | `globals.css` caps every svg at `max-width:100%`. Anything wider than its container needs `max-width: none`. |
 
 ## Checklist
 

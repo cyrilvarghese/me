@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CaseDiagram from "@/components/case/CaseDiagram";
+import CaseVoices from "@/components/case/CaseVoices";
 import styles from "./labs.module.css";
 
 export const metadata: Metadata = {
@@ -52,6 +53,53 @@ export default function LabsPage() {
       <div className={styles.wide}>
         <CaseDiagram src="/assets/CaseChat/diagrams/01-today.svg" />
       </div>
+
+      <p className={`mono-label ${styles.sectionLabel}`}>Research — supplied icons, house text and rails</p>
+      <p className={styles.rule}>
+        Where a drawing would be slower than a mark the reader already knows, the persona is a
+        supplied icon on a light disc. Everything around it is the house: mono quotes, the dotted
+        rail, and the accent on the clause each quote turns on.
+      </p>
+      <CaseVoices
+        eyebrow="What we heard"
+        heading="Both sides name the same gap."
+        lede="Students describe theory they cannot apply and exams they do not feel ready for. Their teachers agree that cases are the answer, and cannot find the hours to build them."
+        groups={[
+          {
+            icon: "/assets/CaseChat/icons/students.png",
+            label: "Student",
+            quotes: [
+              {
+                text: "I am not confident in my clinical exams and they are very stressful",
+                mark: "not confident in my clinical exams",
+              },
+              { text: "Lectures are lengthy and boring", mark: "boring" },
+              {
+                text: "We often have to refer 4000 page textbooks to make sense of the concepts",
+                mark: "have to refer 4000 page textbooks",
+              },
+              {
+                text: "I don't know how this applies to the real world",
+                mark: "don't know how this applies",
+              },
+            ],
+          },
+          {
+            icon: "/assets/CaseChat/icons/doctor-teachers.png",
+            label: "Doctor",
+            quotes: [
+              {
+                text: "Cases are the most important method of teaching I can think of but students don't get enough practice",
+                mark: "but students don't get enough practice",
+              },
+              {
+                text: "I don't have the time needed to prepare cases for my classroom teaching",
+                mark: "don't have the time needed",
+              },
+            ],
+          },
+        ]}
+      />
     </main>
   );
 }
