@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { MarkText } from "./CaseMark";
 import styles from "./CaseAnnotatedShot.module.css";
 
@@ -16,108 +17,166 @@ import styles from "./CaseAnnotatedShot.module.css";
     the round-capped pill.
 
     The screens are transparent PNGs, so the app sits directly on the
-    section's ground rather than inside a white plate of its own. */
+    panel's surface rather than inside a white plate of its own. */
 
-/** Percent of the figure's width taken by the screen, the gap, and the
-    column of callouts. They are named here because the rails are drawn in
-    the same percentage space and have to agree with the grid. */
+/** Percent of the figure's width between the screen and its callouts, when
+    they sit side by side. The rails are drawn in the same percentage
+    space, so the grid is handed these numbers rather than keeping a copy. */
+const GAP = 8;
 const SCREEN = 52;
-const COLUMN = 40;
-/** Where a rail stops: short of the text, so the ray points at the callout
-    rather than touching it. */
-const RAIL_END = SCREEN + (100 - SCREEN - COLUMN) - 2;
 
 export type Point = {
-  /** Where the callout is pointing, as a fraction of the screenshot —
-      0,0 is its top-left corner. Measured against the image itself, so a
-      screen is measured once and never re-measured for the layout. */
-  x: number;
-  y: number;
+  /** Where the callout points, as fractions of the screen — 0,0 is its
+      top-left corner. More than one when a single claim is true of two
+      places at once, which is what the source decks drew as one label with
+      two rails. */
+  at: { x: number; y: number }[];
   text: string;
   /** The clause the callout turns on. Red fails AA at body size on this
       ground, so the emphasis is a value step with the accent in the rule
       beneath it. */
   mark?: string;
-  /** The one finding the shot is really about. Marks this node in the
-      accent and nothing else — a figure with two has not decided. */
+  /** The one finding the shot is really about. Marks this point's nodes in
+      the accent and nothing else — a figure with two has not decided. */
   accent?: boolean;
+};
+
+/** One screenshot inside a composite, placed as percentages of the
+    composite box. Two cards overlapping on the diagonal is how the source
+    decks showed a step that spans two screens, and stacking them apart
+    loses the "these are one moment" the overlap is doing. */
+export type Layer = {
+  src: string;
+  alt: string;
+  left: number;
+  top: number;
+  width: number;
 };
 
 export default function CaseAnnotatedShot({
   image,
   alt,
+  layers,
+  aspect,
   points,
+  screen = SCREEN,
 }: {
-  image: string;
-  alt: string;
+  /** A single screen, sizing the figure from its own height. */
+  image?: string;
+  alt?: string;
+  /** Or several, overlapping. Needs `aspect` (width / height of the
+      composite box), because absolutely placed layers cannot give the box
+      a height of its own. */
+  layers?: Layer[];
+  aspect?: number;
   points: Point[];
+  /** Percent of the figure's width the screen takes. A portrait screen is
+      happy at half; a landscape one needs closer to two thirds, or its own
+      UI type falls under the legibility floor. The callouts still sit
+      beside it either way — a reader has to see the screen and the note
+      about it at the same time, which is the one thing running the notes
+      underneath cannot do. */
+  screen?: number;
 }) {
+  /** Where a rail stops: short of the text, so the ray points at the
+      callout rather than touching it. */
+  const railEnd = screen + GAP - 2;
+
   return (
-    <div className={styles.plot}>
-      {/* Rails, in the figure's own percentage space. preserveAspectRatio
-          "none" lets the box stretch to whatever the grid is, and
-          non-scaling-stroke keeps the width and the dash period in screen
-          pixels so the stretch cannot squash the pill.
-
-          #9e9493 rather than the usual light rail: these rays cross a white
-          screenshot on their way to a dark column, and it is the one house
-          neutral legible on both grounds. */}
-      <svg
-        className={styles.rails}
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
+    <div className={styles.panel}>
+      <div
+        className={styles.plot}
+        style={
+          {
+            "--screen": `${screen}%`,
+            "--column": `${100 - screen - GAP}%`,
+            "--gap": `${GAP}%`,
+          } as CSSProperties
+        }
       >
-        {points.map((p, i) => (
-          <line
-            key={p.text}
-            x1={p.x * SCREEN}
-            y1={p.y * 100}
-            x2={RAIL_END}
-            y2={rowCentre(i, points.length)}
-            stroke="#9e9493"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeDasharray="1 5.5"
-            vectorEffect="non-scaling-stroke"
-          />
-        ))}
-      </svg>
+        {/* Rails, in the figure's own percentage space. preserveAspect-
+            Ratio "none" lets the box stretch to whatever the grid is, and
+            non-scaling-stroke keeps the width and the dash period in screen
+            pixels so the stretch cannot squash the pill.
 
-      <div className={styles.screenCell}>
-        <div className={styles.screen}>
-          <img src={image} alt={alt} className={styles.shot} />
-          {points.map((p, i) => (
-            <span
-              key={p.text}
-              className={styles.node}
-              data-accent={p.accent ? "true" : undefined}
-              style={{ left: `${p.x * 100}%`, top: `${p.y * 100}%` }}
-              aria-hidden="true"
-            >
-              {i + 1}
-            </span>
-          ))}
+            #9e9493 rather than the usual light rail: these rays cross a
+            white screenshot on their way to a dark column, and it is the
+            one house neutral legible on both grounds. */}
+        <svg
+          className={styles.rails}
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          {points.flatMap((p, i) =>
+            p.at.map((a) => (
+              <line
+                key={`${p.text}-${a.x}-${a.y}`}
+                x1={a.x * screen}
+                y1={a.y * 100}
+                x2={railEnd}
+                y2={rowCentre(i, points.length)}
+                stroke="#9e9493"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeDasharray="1 5.5"
+                vectorEffect="non-scaling-stroke"
+              />
+            ))
+          )}
+        </svg>
+
+        <div className={styles.screenCell}>
+          <div
+            className={styles.screen}
+            style={aspect ? ({ aspectRatio: String(aspect) } as CSSProperties) : undefined}
+          >
+            {layers
+              ? layers.map((l) => (
+                  <img
+                    key={l.src}
+                    src={l.src}
+                    alt={l.alt}
+                    className={styles.layer}
+                    style={{ left: `${l.left}%`, top: `${l.top}%`, width: `${l.width}%` }}
+                  />
+                ))
+              : image && <img src={image} alt={alt ?? ""} className={styles.shot} />}
+
+            {points.flatMap((p, i) =>
+              p.at.map((a) => (
+                <span
+                  key={`${p.text}-${a.x}-${a.y}`}
+                  className={styles.node}
+                  data-accent={p.accent ? "true" : undefined}
+                  style={{ left: `${a.x * 100}%`, top: `${a.y * 100}%` }}
+                  aria-hidden="true"
+                >
+                  {i + 1}
+                </span>
+              ))
+            )}
+          </div>
         </div>
-      </div>
 
-      <ol className={styles.notes}>
-        {points.map((p, i) => (
-          <li key={p.text} className={styles.note}>
-            <span className={`mono-label ${styles.index}`} aria-hidden="true">
-              {i + 1}
-            </span>
-            <MarkText text={p.text} mark={p.mark} className={styles.noteText} />
-          </li>
-        ))}
-      </ol>
+        <ol className={styles.notes}>
+          {points.map((p, i) => (
+            <li key={p.text} className={styles.note}>
+              <span className={`mono-label ${styles.index}`} aria-hidden="true">
+                {i + 1}
+              </span>
+              <MarkText text={p.text} mark={p.mark} className={styles.noteText} />
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   );
 }
 
 /** The vertical middle of a callout's row, as a percent of the figure.
     Rows are equal and their contents centred, so this is fixed by the count
-    alone — a rail aimed here lands on the callout whatever the text
+    alone — a rail aimed here lands on its callout whatever the text
     wrapping does, which hand-measured endpoints would not survive. */
 function rowCentre(i: number, count: number) {
   return ((i + 0.5) / count) * 100;

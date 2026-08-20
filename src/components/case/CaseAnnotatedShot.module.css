@@ -1,12 +1,27 @@
-/* Screen and callouts in one percentage grid. The three numbers are the
-   same three the rails are drawn with (SCREEN / gap / COLUMN in
-   CaseAnnotatedShot.tsx) — change one and the rays stop landing. */
+/* The ground the screen sits on. A transparent PNG dropped straight onto
+   the page reads as floating on plain black; the surface panel gives it
+   something to sit on, and matches the plate every other figure on the
+   page (CaseFigure, CaseCompare) already uses.
+
+   The padding lives here rather than on .plot because the rails cover
+   their container's padding box while the grid columns measure its content
+   box — pad both and every ray lands short. */
+.panel {
+	background: var(--surface);
+	border: 1px solid var(--hairline);
+	padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+/* Screen and callouts in one percentage grid. The columns come from the
+   component, which draws the rails in the same percentage space — one set
+   of numbers, so the grid and the rays cannot disagree. */
 .plot {
 	position: relative;
 	display: grid;
-	grid-template-columns: 52% 40%;
-	column-gap: 8%;
+	grid-template-columns: var(--screen) var(--column);
+	column-gap: var(--gap);
 }
+
 
 /* Rails are aimed in the figure's coordinate space, which holds only while
    the screenshot is the tallest thing in the grid — otherwise the callout
@@ -28,6 +43,17 @@
 .shot {
 	display: block;
 	width: 100%;
+	height: auto;
+}
+
+/* One screen of a composite. Placed as percentages of the box, so the
+   overlap holds at every width and the anchors stay measured against the
+   same space the rails are drawn in. Source order is stacking order: the
+   card drawn second sits on top, which is the diagonal the source decks
+   used to say "one step, two screens". */
+.layer {
+	position: absolute;
+	display: block;
 	height: auto;
 }
 

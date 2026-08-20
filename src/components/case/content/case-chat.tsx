@@ -10,6 +10,9 @@ import CaseNav from "@/components/case/CaseTabs";
 const A = "/assets/CaseChat";
 const D = `${A}/diagrams`;
 const I = `${A}/icons`;
+/** The screens as exported, before anyone drew on them — transparent PNGs
+    that the annotation layer is added to here rather than in the export. */
+const S = `${A}/screens`;
 
 /** Spine: context → the two things that keep students out of a clinic,
     each argued by a paired diagram → the screens and the demo → the
@@ -218,15 +221,19 @@ export default function CaseChatContent() {
               <CaseShowcase
                 eyebrow="Inside the clinic"
                 stack
-                /* Source order is reading order. A screen that explains
-                   itself stays a plain shot; the history screen carries
-                   callouts because the reasoning behind its details is not
-                   visible in the pixels. The rest still carry annotations
-                   baked into the export, and are the next ones to redraw. */
+                /* Source order is reading order, and it walks the same six
+                   stages a consultation does: library, history, examination
+                   and tests, diagnosis, feedback, then what is read around
+                   the case.
+
+                   Every screen here is the clean export with its callouts
+                   drawn by the site. The one exception is the case library,
+                   which explains itself — annotating everything is how
+                   annotation stops meaning anything. */
                 shots={[
                   { src: `${A}/case-library.webp`, caption: "Case library, grouped by specialty" },
                   {
-                    src: `${A}/screens/patient-history.png`,
+                    src: `${S}/patient-history.png`,
                     caption: "Taking a history from the patient",
                     alt: "The consultation screen: a chat with the simulated patient, suggested openings beneath it, and a panel tracking which parts of the history are complete.",
                     /* Fractions of the screenshot, measured off the file
@@ -234,30 +241,193 @@ export default function CaseChatContent() {
                        cross each other. */
                     points: [
                       {
-                        x: 0.54,
-                        y: 0.313,
+                        at: [{ x: 0.54, y: 0.313 }],
                         text: "The patient answers in plain words and never names the diagnosis. Both are constraints in the prompt.",
                       },
                       {
-                        x: 0.42,
-                        y: 0.635,
+                        at: [{ x: 0.42, y: 0.635 }],
                         text: "Students said they often did not know how to begin, so the screen offers openings to pick from.",
                         mark: "did not know how to begin",
                         accent: true,
                       },
                       {
-                        x: 0.7,
-                        y: 0.826,
+                        at: [{ x: 0.7, y: 0.826 }],
                         text: "The progress panel shows which parts of the history are covered and what is still missing.",
                       },
                     ],
                   },
-                  { src: `${A}/examination.webp`, caption: "Examination and lab tests, as in clinic" },
-                  { src: `${A}/diagnosis.webp`, caption: "Committing to a diagnosis and a differential" },
-                  { src: `${A}/feedback.webp`, caption: "Feedback on how the case was reasoned" },
-                  { src: `${A}/timeline.webp`, caption: "A suggested diagnostic timeline" },
-                  { src: `${A}/drug-info.webp`, caption: "Drug concepts, read while treating" },
-                  { src: `${A}/assessments.webp`, caption: "Assessments shaped like the real exam" },
+                  {
+                    src: `${S}/Physical-exam.png`,
+                    caption: "Examination and lab tests, as in clinic",
+                    /* Two cards overlapping on the diagonal, which is the
+                       arrangement the source deck used: one step of the
+                       consultation that spans two screens. Percentages of
+                       a 3:2 box, so the overlap holds at every width. */
+                    aspect: 1.5,
+                    screen: 64,
+                    layers: [
+                      {
+                        src: `${S}/Physical-exam.png`,
+                        alt: "A skin examination in the consultation: the findings written out above a clinical photograph of the patient's lower leg.",
+                        left: 0,
+                        top: 0,
+                        width: 64.7,
+                      },
+                      {
+                        src: `${S}/test-biopsy.png`,
+                        alt: "A completed skin biopsy: the result written out above four stained slides labelled A to D.",
+                        left: 37.6,
+                        top: 25.1,
+                        width: 62.4,
+                      },
+                    ],
+                    points: [
+                      {
+                        at: [{ x: 0.3, y: 0.39 }],
+                        text: "A physical exam comes back as a real clinical photograph with the findings written out.",
+                      },
+                      {
+                        at: [{ x: 0.736, y: 0.494 }],
+                        text: "A lab test comes back as stained slides, so the reading is still the student's work.",
+                        mark: "stained slides",
+                        accent: true,
+                      },
+                    ],
+                  },
+                  {
+                    src: `${S}/diagnosis.png`,
+                    caption: "Committing to a diagnosis and a differential",
+                    alt: "The submit-diagnosis dialog: each candidate condition carries a dropdown marking it primary, differential or ruled out, and the primary one asks for a written justification.",
+                    screen: 62,
+                    points: [
+                      {
+                        at: [{ x: 0.3, y: 0.296 }],
+                        text: "A diagnosis is not accepted until the student writes the reasoning behind it.",
+                      },
+                      {
+                        at: [{ x: 0.82, y: 0.56 }],
+                        text: "The list carries distractors, so every candidate has to be marked primary, differential, or ruled out.",
+                        mark: "carries distractors",
+                        accent: true,
+                      },
+                    ],
+                  },
+                  {
+                    src: `${S}/Feedback.png`,
+                    caption: "Feedback on how the case was reasoned",
+                    alt: "Three feedback cards: a starred evidence-gathering score, an accuracy card confirming the diagnosis, and a panel listing strengths beside areas for improvement.",
+                    screen: 64,
+                    points: [
+                      {
+                        /* the empty stars, which is the score the callout
+                           is actually about */
+                        at: [{ x: 0.115, y: 0.405 }],
+                        text: "The evidence score rates how thoroughly the tests and exams were chosen.",
+                      },
+                      {
+                        at: [{ x: 0.44, y: 0.375 }],
+                        text: "Accuracy is scored against the correct diagnosis, with the reasoning that got there named back.",
+                      },
+                      {
+                        /* the first missed item itself rather than the
+                           heading over it, which the node would sit on */
+                        at: [{ x: 0.699, y: 0.479 }],
+                        text: "Alongside the strengths, the exams and tests the student should have ordered.",
+                        mark: "should have ordered",
+                        accent: true,
+                      },
+                    ],
+                  },
+                  {
+                    src: `${S}/ideal-path-diagnosis.png`,
+                    caption: "A suggested diagnostic timeline",
+                    alt: "A numbered diagnostic timeline: ten steps, each tagged by task type — history taking, physical exam, lab test — with a one-line instruction beneath.",
+                    screen: 58,
+                    points: [
+                      {
+                        at: [{ x: 0.093, y: 0.455 }],
+                        text: "The steps are numbered in the order a clinician would work through them.",
+                        mark: "the order a clinician would work through them",
+                        accent: true,
+                      },
+                      {
+                        at: [{ x: 0.236, y: 0.606 }],
+                        text: "Each step carries an icon and a label, so the kind of task is readable without reading the step.",
+                      },
+                      {
+                        at: [{ x: 0.57, y: 0.711 }],
+                        text: "A bold heading with the detail under it, so the path can be scanned rather than read.",
+                      },
+                    ],
+                  },
+                  {
+                    src: `${S}/drugs-info.png`,
+                    caption: "Drug concepts, read while treating",
+                    alt: "A drug reference panel for clofazimine: why it suits this case, its indication and mechanism, dosing, a memory tip, alternatives, adverse effects and contraindications.",
+                    screen: 62,
+                    points: [
+                      {
+                        /* the clear corner of each panel rather than the
+                           middle of its copy — a node dropped on a word
+                           reads as a defect in the screenshot */
+                        at: [{ x: 0.46, y: 0.1 }],
+                        text: "The case comes first: why this drug, for this patient, before any of the facts about it.",
+                      },
+                      {
+                        at: [{ x: 0.86, y: 0.11 }],
+                        text: "A memory tip sits at the top, because what an exam rewards is recall.",
+                      },
+                      {
+                        at: [
+                          { x: 0.9, y: 0.374 },
+                          { x: 0.9, y: 0.504 },
+                        ],
+                        text: "Adverse effects and contraindications earned their place in user testing.",
+                        mark: "earned their place in user testing",
+                        accent: true,
+                      },
+                    ],
+                  },
+                  {
+                    src: `${S}/osce-layer2.png`,
+                    caption: "Assessments shaped like the real exam",
+                    /* The question card with the concept modal over its top
+                       right, as the source deck arranged them: answering and
+                       the explanation that follows are one moment. */
+                    aspect: 1.359,
+                    screen: 66,
+                    layers: [
+                      {
+                        src: `${S}/osce-layer2.png`,
+                        alt: "An OSCE question with four stain options, the chosen answer marked wrong and the correct one expanded with an explanation.",
+                        left: 0,
+                        top: 12.3,
+                        width: 74.7,
+                      },
+                      {
+                        src: `${S}/osce-layer1.png`,
+                        alt: "The concept panel: an explanation of why AFB staining identifies leprosy, and three key concepts — specific, general and lateral.",
+                        left: 47.4,
+                        top: 0,
+                        width: 52.6,
+                      },
+                    ],
+                    /* The modal leads, as it does in the source deck: it is
+                       the upper of the two cards, so taking the lower one
+                       first would cross the rails over each other. */
+                    points: [
+                      {
+                        at: [{ x: 0.711, y: 0.181 }],
+                        text: "Opening one teaches the concept underneath, not just which answer was correct.",
+                        mark: "the concept underneath",
+                        accent: true,
+                      },
+                      {
+                        at: [{ x: 0.469, y: 0.696 }],
+                        text: "The questions are shaped like the real exam, and every choice carries its own explanation.",
+                      },
+                    ],
+                  },
                 ]}
                 youtube="eZ2wjnFp2gs"
                 poster={`${A}/demo-poster.webp`}

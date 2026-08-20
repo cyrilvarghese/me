@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import CaseVisual from "./CaseVisual";
-import CaseAnnotatedShot, { type Point } from "./CaseAnnotatedShot";
+import CaseAnnotatedShot, { type Layer, type Point } from "./CaseAnnotatedShot";
 import styles from "./CaseShowcase.module.css";
 
 type Shot = {
@@ -19,6 +19,13 @@ type Shot = {
   /** Only an annotated shot needs one: it is the whole screen described in
       a sentence, where the plain tiles are already carrying a caption. */
   alt?: string;
+  /** A step that spans two screens, overlapped rather than stacked. With
+      layers, `src` is only the key — the pictures come from here. */
+  layers?: Layer[];
+  aspect?: number;
+  /** Percent of the figure's width the screen takes; a landscape screen
+      needs more of it than a portrait one. */
+  screen?: number;
 };
 
 /** How long the panel takes to leave. The dialog is closed on a timer
@@ -217,6 +224,9 @@ export default function CaseShowcase({
                 <CaseAnnotatedShot
                   image={sh.src}
                   alt={sh.alt ?? sh.caption}
+                  layers={sh.layers}
+                  aspect={sh.aspect}
+                  screen={sh.screen}
                   points={sh.points}
                 />
               ) : (
