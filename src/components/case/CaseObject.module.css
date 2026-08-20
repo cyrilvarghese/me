@@ -1,0 +1,251 @@
+.block {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3.5rem, 9vh, 6.5rem);
+}
+
+/* the same head as CaseFigure and CaseCompare, so every band on the page
+   reads as one template rather than three */
+.head {
+	display: grid;
+	grid-template-columns: 14rem minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vw, 4rem);
+	align-items: start;
+	margin-bottom: clamp(3.25rem, 8vh, 5.5rem);
+}
+
+.eyebrow {
+	color: var(--muted);
+}
+
+.heading {
+	font-size: var(--text-h3);
+	max-width: 24ch;
+	margin-bottom: 1rem;
+}
+
+.lede {
+	color: var(--fg-soft);
+	max-width: 62ch;
+}
+
+.figure {
+	margin: 0;
+	border: 1px solid var(--hairline);
+	background: var(--surface);
+	padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ---- the object and what it carries ---- */
+
+.cluster {
+	--disc: clamp(3.25rem, 5vw, 4.25rem);
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	gap: clamp(1.5rem, 4vw, 3rem);
+	align-items: center;
+}
+
+.attrs {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: clamp(1.25rem, 3vh, 2rem);
+}
+
+.attr {
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+}
+
+.left .attr {
+	justify-content: flex-end;
+}
+
+.right .attr {
+	justify-content: flex-start;
+}
+
+.attrLabel {
+	color: var(--muted);
+}
+
+/* the object is the centre, so it carries the larger disc — size is the
+   only thing saying "everything else hangs off this" */
+.object {
+	--disc: clamp(5rem, 8vw, 7rem);
+	display: grid;
+	justify-items: center;
+	gap: 0.9rem;
+}
+
+.objectLabel {
+	color: var(--fg);
+}
+
+/* sized to match its viewBox exactly, so the dash paints the house rail
+   at its own numbers rather than a scaled approximation of them */
+.railWide {
+	display: block;
+	width: 6rem;
+	height: 3.25rem;
+	margin: 0 auto;
+	max-width: none;
+}
+
+.railNarrow {
+	display: none;
+	width: 1.5rem;
+	height: 3.75rem;
+	margin: 0 auto;
+	max-width: none;
+}
+
+/* ---- the two who use it ---- */
+
+.users {
+	--disc: clamp(4rem, 6.5vw, 5.5rem);
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: clamp(1.5rem, 5vw, 4rem);
+	align-items: start;
+	margin-top: clamp(1rem, 3vh, 2rem);
+}
+
+.user {
+	display: grid;
+	justify-items: center;
+	gap: 1.25rem;
+}
+
+.persona {
+	display: grid;
+	justify-items: center;
+	gap: 0.75rem;
+}
+
+.userLabel {
+	color: var(--muted);
+}
+
+.userQuote {
+	text-align: center;
+	max-width: 32ch;
+}
+
+.caption {
+	color: var(--muted);
+	font-size: var(--text-small);
+	max-width: 62ch;
+	margin-top: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+/* ---- the phone telling ----
+
+   Not the wide figure with its columns dropped. Stacked in source order,
+   the teacher and the student become two items in a list and "used from
+   both sides" — the whole point — disappears.
+
+   So the axis rotates. The object moves to the middle of the column, the
+   teacher sits above it and the student below, and the rails turn vertical
+   so each still reaches the same thing from an opposite end. Two sides
+   becomes above and below; the argument survives the width. */
+@media (max-width: 760px) {
+	.head {
+		grid-template-columns: 1fr;
+	}
+
+	.figure {
+		display: grid;
+	}
+
+	/* the users' wrapper dissolves so its two children can be ordered
+	   around the object between them */
+	.users {
+		display: contents;
+	}
+
+	.user[data-side="left"] {
+		order: 1;
+	}
+
+	.cluster {
+		order: 2;
+	}
+
+	.user[data-side="right"] {
+		order: 3;
+	}
+
+	.caption {
+		order: 4;
+	}
+
+	.user {
+		width: 100%;
+		gap: 0.75rem;
+	}
+
+	/* the teacher's rail hangs below their quote, pointing down into the
+	   object; the student's already sits above theirs, pointing up */
+	.user[data-side="left"] .railNarrow {
+		order: 3;
+	}
+
+	.railWide {
+		display: none;
+	}
+
+	.railNarrow {
+		display: block;
+	}
+
+	/* what the case carries, as a block under it rather than a column
+	   either side — four things it holds, read as a set */
+	.cluster {
+		--disc: 3rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem 1.25rem;
+		justify-items: start;
+		margin-block: 0.5rem;
+	}
+
+	.object {
+		--disc: 5.5rem;
+		order: -1;
+		grid-column: 1 / -1;
+		justify-self: center;
+		margin-bottom: 0.75rem;
+	}
+
+	.attrs {
+		display: contents;
+	}
+
+	/* the wide figure mirrors these so each side reads outward from the
+	   object; in one column they all have to read the same way, so the
+	   left pair reverses to put its icon first like the right pair */
+	.right .attr {
+		flex-direction: row;
+		justify-content: flex-start;
+		gap: 0.7rem;
+	}
+
+	.left .attr {
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+		gap: 0.7rem;
+	}
+
+	.userQuote {
+		text-align: left;
+		max-width: none;
+	}
+
+	.users,
+	.user {
+		margin-top: 0;
+	}
+}

@@ -1,0 +1,43 @@
+/* Shared by every figure built from supplied artwork — CaseVoices and
+   CaseObject both mount their icons here, so the disc and the quote voice
+   stay one thing rather than two copies drifting apart. */
+
+.disc {
+	width: var(--disc, 6rem);
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background: var(--fg);
+	border: 1px solid rgba(248, 244, 242, 0.28);
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	flex: none;
+}
+
+/* the disc is a mount, not a crop — the mark wants clear ground around it
+   or the disc reads as a tight frame rather than something it sits on */
+.icon {
+	width: 62%;
+	height: 62%;
+	object-fit: contain;
+	display: block;
+}
+
+.quote {
+	font-family: var(--font-mono);
+	letter-spacing: 0.02em;
+	font-size: 1.25rem;
+	line-height: 1.6;
+	color: var(--muted);
+	max-width: 34ch;
+	margin: 0;
+}
+
+.em {
+	color: var(--fg);
+	font-style: normal;
+	text-decoration: underline;
+	text-decoration-color: var(--accent);
+	text-decoration-thickness: 1.5px;
+	text-underline-offset: 4px;
+}

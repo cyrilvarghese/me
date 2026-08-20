@@ -4,6 +4,7 @@ import CaseCompare from "@/components/case/CaseCompare";
 import CaseShowcase from "@/components/case/CaseShowcase";
 import CaseFigure from "@/components/case/CaseFigure";
 import CaseVoices from "@/components/case/CaseVoices";
+import CaseObject from "@/components/case/CaseObject";
 import CaseNav from "@/components/case/CaseTabs";
 
 const A = "/assets/CaseChat";
@@ -156,6 +157,35 @@ export default function CaseChatContent() {
                   diagram={`${D}/01-today-scenes.svg`}
                   diagramMobile={`${D}/01-today-scenes-mobile.svg`}
                   caption="Lectures and textbooks take four fifths of the week between them. The bedside — the only room where a student touches a patient — takes the rest."
+                />
+
+                <CaseObject
+                  eyebrow="What a case carries"
+                  heading="One object, used from both sides."
+                  lede="A patient case holds the whole episode — the history, the tests, the diagnosis, the treatment. The teacher explains through it; the student decides inside it. Neither is handed their own separate material."
+                  object={{ icon: `${I}/Patient.png`, label: "Patient case" }}
+                  attrs={[
+                    { icon: `${I}/patient-history.png`, label: "History" },
+                    { icon: `${I}/diagnosis.png`, label: "Diagnosis" },
+                    { icon: `${I}/test.png`, label: "Tests" },
+                    { icon: `${I}/treatment.png`, label: "Treatment" },
+                  ]}
+                  users={[
+                    {
+                      icon: `${I}/doctor-teachers.png`,
+                      label: "Teacher",
+                      quote:
+                        "Teaching using a patient case allows me to teach and explain concepts through the lens of patient care",
+                      mark: "explain concepts through the lens of patient care",
+                    },
+                    {
+                      icon: `${I}/students.png`,
+                      label: "Student",
+                      quote: "Applying what I learn helps me understand and retain the subject better",
+                      mark: "understand and retain the subject better",
+                    },
+                  ]}
+                  caption="One case answers both complaints at once: the teacher gets something to explain through, and the student gets something to decide inside."
                 />
 
                 <CaseCompare

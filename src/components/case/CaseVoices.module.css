@@ -53,34 +53,9 @@
 	text-align: left;
 }
 
-.quote {
-	font-family: var(--font-mono);
-	letter-spacing: 0.02em;
-	/* 20px, set in rem so it still answers to browser font scaling. Above
-	   the house --text-small, to sit closer to the scenes figure's own
-	   enlarged type rather than to the site's diagram scale. */
-	font-size: 1.25rem;
-	line-height: 1.6;
-	color: var(--muted);
-	max-width: 34ch;
-}
-
+/* size and voice come from CaseMark; only the alignment is local */
 .left .quote {
 	margin-left: auto;
-}
-
-/* The clause the quote turns on. Red is decorative and large-type only on
-   this ground — as body text at this size it fails AA — so the emphasis is
-   a value step, brightest against a muted quote, and the accent goes into
-   the rule beneath it. That is also what the source deck does: it
-   underlines, and underlining is not a voice this site owns. */
-.mark {
-	color: var(--fg);
-	font-style: normal;
-	text-decoration: underline;
-	text-decoration-color: var(--accent);
-	text-decoration-thickness: 1.5px;
-	text-underline-offset: 4px;
 }
 
 .persona {
@@ -89,29 +64,6 @@
 	display: grid;
 	justify-items: center;
 	gap: 0.9rem;
-}
-
-/* Supplied clip-art keeps its own colours and sits on a light disc, the
-   treatment the diagram skill reserves for artwork it did not draw. A
-   filter over black outlines on this ground reads as a smudge. */
-.disc {
-	width: var(--disc);
-	aspect-ratio: 1;
-	border-radius: 50%;
-	background: var(--fg);
-	border: 1px solid rgba(248, 244, 242, 0.28);
-	display: grid;
-	place-items: center;
-	overflow: hidden;
-}
-
-/* The disc is a mount, not a crop — the mark wants clear ground around it
-   or the disc reads as a tight frame rather than something it sits on. */
-.icon {
-	width: 62%;
-	height: 62%;
-	object-fit: contain;
-	display: block;
 }
 
 .discWrap {

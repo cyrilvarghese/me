@@ -1,3 +1,4 @@
+import { Mark, MarkQuote } from "./CaseMark";
 import styles from "./CaseVoices.module.css";
 
 type Quote = { text: string; mark?: string };
@@ -49,9 +50,7 @@ export default function CaseVoices({
                   the label below would otherwise pull its centre down */}
               <div className={styles.discWrap}>
                 <Halo left={split} right={g.quotes.length - split} />
-                <div className={styles.disc}>
-                  <img src={g.icon} alt="" className={styles.icon} />
-                </div>
+                <Mark icon={g.icon} />
               </div>
               <p className={`mono-label ${styles.label}`}>{g.label}</p>
             </div>
@@ -68,25 +67,12 @@ export default function CaseVoices({
   );
 }
 
-/** The accent lands on the clause the quote turns on — the source deck
-    underlines it, and underlining is not a voice this site has. */
+/** One remark, as a list item so the side reads as a set. The quote voice
+    itself is shared with every other figure built from supplied marks. */
 function Bubble({ quote }: { quote: Quote }) {
-  const { text, mark } = quote;
-  const at = mark ? text.indexOf(mark) : -1;
-
   return (
-    <li className={styles.quote}>
-      <span aria-hidden="true">&ldquo;</span>
-      {at < 0 ? (
-        text
-      ) : (
-        <>
-          {text.slice(0, at)}
-          <em className={styles.mark}>{mark}</em>
-          {text.slice(at + (mark?.length ?? 0))}
-        </>
-      )}
-      <span aria-hidden="true">&rdquo;</span>
+    <li>
+      <MarkQuote text={quote.text} mark={quote.mark} className={styles.quote} />
     </li>
   );
 }
