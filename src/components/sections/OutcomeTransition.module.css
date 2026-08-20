@@ -18,7 +18,7 @@
 	overflow: hidden;
 	display: grid;
 	place-items: center;
-	/* pointer-transparent: while riding over the story during the overlap,
+	/* pointer-transparent: while riding over the hero during the overlap,
 	   this stage must not swallow hover; painted tool shapes and caption
 	   blocks re-enable their own pointer-events */
 	pointer-events: none;

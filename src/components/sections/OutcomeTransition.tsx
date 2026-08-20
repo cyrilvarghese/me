@@ -142,12 +142,12 @@ export default function OutcomeTransition() {
 
           tl.to({}, { duration: DUR }, 0);
 
-          // NOTE: the story timeline performs the in-place knife swap at its
-          // own scrubbed completion (KnifeStory.tsx) — swapping from here
-          // fired before the centering had rendered (scrub lag = two knives).
+          // The hero drives this same element by its [data-knife-intro]
+          // handle and leaves it at identity — there is one knife on the page
+          // and no swap left to get wrong (Hero.tsx).
 
-          // starts where the story knife lands: shifted right so the
-          // left-biased art reads centered (KnifeStory.tsx). Slides back to
+          // sits shifted right so the left-biased art reads centered. Slides
+          // back to
           // neutral while the tools drift apart — the motion masks it and
           // every later beat (lineup, circles, compass) keeps plain math.
           tl.fromTo(
@@ -164,7 +164,7 @@ export default function OutcomeTransition() {
           gsap.set("[data-statement]", { y: 16 });
 
           // the body dissolves out from under the tools (labels already
-          // retired during the story's centering)
+          // retired at the end of the hero's timeline)
           tl.to("[data-body]", { autoAlpha: 0, duration: 0.08, ease: "power2.in" }, 0.12);
 
           // the tools come apart, drifting free (user reference)
@@ -334,7 +334,7 @@ export default function OutcomeTransition() {
           );
           tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.92);
 
-          // the runway: the story is told by 0.97 — from there the stage
+          // the runway: the telling is done by 0.97 — from there the stage
           // stays pinned while the compass and its backlight drift gently
           // down with the scroll, at rest but alive, giving the needle hunt
           // room to play before the pin releases (user direction, 2026-08-16)

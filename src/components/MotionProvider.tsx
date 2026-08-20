@@ -10,7 +10,7 @@ import { LazyMotion, domAnimation, MotionConfig } from "motion/react";
  * (spec §34: "transitions use simple opacity").
  *
  * Scope: Framer Motion owns the time-based once-reveals. The three
- * scrubbed pinned sections (KnifeStory, OutcomeTransition, FinalCTA)
+ * scrubbed pinned sections (Hero, OutcomeTransition, FinalCTA)
  * stay on GSAP ScrollTrigger.
  */
 export default function MotionProvider({ children }: { children: React.ReactNode }) {
