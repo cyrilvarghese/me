@@ -138,7 +138,7 @@ describe("experience", () => {
     }
   });
 
-  it("gives every role a year label, a one-line body and tools", () => {
+  it("gives every role a year label, tools, and a one-line body if any", () => {
     expect(experience.length).toBeGreaterThan(0);
     for (const role of experience) {
       expect(role.years).toMatch(String(role.from));
@@ -146,7 +146,7 @@ describe("experience", () => {
       expect(role.org.length).toBeGreaterThan(0);
       expect(role.tools.length).toBeGreaterThan(0);
       // one line, not a paragraph — the timeline is a scan
-      expect(role.body).not.toMatch(/\.\s+\S/);
+      if (role.body) expect(role.body).not.toMatch(/\.\s+\S/);
     }
   });
 });

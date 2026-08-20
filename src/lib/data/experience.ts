@@ -6,10 +6,26 @@ export type Role = {
   title: string;
   /** where the work happened — one employer, or the run of them */
   org: string;
-  /** one line. The timeline is a scan, not a CV. */
-  body: string;
+  /** one line. The timeline is a scan, not a CV. Optional only because
+      a role can land here before its line is written — the rung renders
+      without it rather than carrying a placeholder. */
+  body?: string;
   tools: string[];
 };
+
+/** Shared rather than repeated: the Yuvabe and CaseChat work runs on the
+    same stack, and two copies of a list drift the moment one is edited. */
+const AI_PRODUCT_TOOLS = [
+  "Figma",
+  "User interviews",
+  "Usability testing",
+  "GTM strategy",
+  "Svelte-TS",
+  "FastAPI",
+  "RAG",
+  "LangChain",
+  "LLM APIs",
+];
 
 /** Reverse chronological, newest first — the order the timeline draws.
     Locked by data.test.ts: a timeline that silently falls out of order
@@ -17,22 +33,20 @@ export type Role = {
     comment. */
 export const experience: Role[] = [
   {
-    years: "2024 —",
+    years: "2026 —",
+    from: 2026,
+    title: "Design Engineer",
+    org: "Yuvabe",
+    body: "Leading UX, product and front-end engineering on CreativeOS, Yuvabe's flagship AI content generation platform.",
+    tools: AI_PRODUCT_TOOLS,
+  },
+  {
+    years: "2024 — 2026",
     from: 2024,
     title: "Founding Product Designer / Design Engineer",
     org: "CaseChat",
     body: "Built and shipped an AI simulator where medical students practise diagnosis, from first research through launch.",
-    tools: [
-      "Figma",
-      "User interviews",
-      "Usability testing",
-      "GTM strategy",
-      "Svelte-TS",
-      "FastAPI",
-      "RAG",
-      "LangChain",
-      "LLM APIs",
-    ],
+    tools: AI_PRODUCT_TOOLS,
   },
   {
     years: "2022 — 2024",

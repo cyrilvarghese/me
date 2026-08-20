@@ -45,7 +45,7 @@ export default function About() {
             <div className={styles.detail}>
               <h3 className={styles.role}>{role.title}</h3>
               <p className={`mono-label ${styles.org}`}>{role.org}</p>
-              <p className={styles.body}>{role.body}</p>
+              {role.body && <p className={styles.body}>{role.body}</p>}
               <p className={`mono-label ${styles.tools}`}>{role.tools.join(" · ")}</p>
             </div>
           </m.li>
