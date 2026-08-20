@@ -61,6 +61,13 @@ export default function OutcomeTransition() {
           const stage = stageRef.current;
           if (!inner || !stage) return;
 
+          // Mobile stops before any of this. The hero opens the knife, the
+          // stage scrolls away with it whole, and ToolCarousel takes over
+          // below. Coming apart is a beat that only earns its place because
+          // the lineup follows it — without one, it just orphans the parts
+          // from the body (user, 2026-08-20).
+          if (compact) return;
+
           const S = () => inner.offsetWidth;
           const frac = (pct: number) => () => (pct / 100) * S();
           /** x of lineup column k's center, relative to the stage. */
@@ -109,20 +116,18 @@ export default function OutcomeTransition() {
               // snapping only from the individual-tools lineup through to the
               // compass landing — the scrub before is free (user direction),
               // and so is the runway after: leaving is never tugged back
-              snap: compact
-                ? undefined
-                : {
+              snap: {
                 snapTo(value: number) {
                   const t = value * DUR;
-                  if (t < (compact ? 0.5 : 0.45)) return value;
+                  if (t < 0.45) return value;
                   if (t > 1.02) return value;
-                  const beats = compact ? [0.55, 0.78, 0.97] : [0.5, 0.66, 0.78, 0.97];
+                  const beats = [0.5, 0.66, 0.78, 0.97];
                   return beats.reduce((a, b) => (Math.abs(b - t) < Math.abs(a - t) ? b : a)) / DUR;
                 },
                 duration: { min: 0.25, max: 0.9 },
                 delay: 0.08,
                 ease: "power1.inOut",
-                  },
+              },
               onUpdate(self) {
                 // beats live in timeline time (the spacer's units), not progress
                 const t = self.progress * DUR;
@@ -184,22 +189,12 @@ export default function OutcomeTransition() {
                 x: frac((dir.x / len) * 12),
                 y: frac((dir.y / len) * 12),
                 rotation: cap.openAngle + 12 * Math.sign(cap.openAngle),
-                // mobile has no lineup to hurry towards, so the drift is the
-                // whole beat rather than a hand-off into the next one
-                duration: compact ? 0.7 : 0.12,
+                duration: 0.12,
                 ease: "power2.out",
               },
               0.1
             );
           });
-
-          if (compact) {
-            // Mobile ends here. The kit comes apart and drifts off; the six
-            // tools and the compass close are ToolCarousel's job below, as a
-            // swipe surface rather than another viewport of pinned scrub.
-            tl.to("[data-knife-el]", { autoAlpha: 0, duration: 0.3, ease: "power2.in" }, 0.9);
-            return;
-          }
 
           if (!compact) {
             // THE LINEUP (user sketch): each part travels to its column and
@@ -307,7 +302,7 @@ export default function OutcomeTransition() {
           tl.to(
             "[data-statement='different']",
             { autoAlpha: 0, duration: 0.035, ease: "power2.in" },
-            compact ? 0.46 : 0.63
+            0.63
           );
 
           // converge into the overlapping cluster, then merge into one ring

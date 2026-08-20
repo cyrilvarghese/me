@@ -215,9 +215,16 @@
 
 @media (max-width: 768px) {
 	.section {
-		/* 200vh of hero overlay plus one viewport for the kit to come apart.
-		   Everything after that is ToolCarousel's, in normal flow. */
-		height: 300vh;
+		/* Exactly the hero's 200vh. The stage stays pinned for the viewport
+		   the hero scrubs across, then scrolls away carrying the open knife
+		   with it — no trailing height, so no black gap before the carousel. */
+		height: 200vh;
+	}
+
+	/* No timeline runs here, so nothing slides this back to zero. The art is
+	   left-biased in its box; the shift is what makes it read centred. */
+	.knifeEl {
+		transform: translateX(13.5%);
 	}
 
 	/* the lineup, the merge and the compass close all live in ToolCarousel
