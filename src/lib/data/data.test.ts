@@ -2,7 +2,19 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it, expect } from "vitest";
 import { capabilities } from "./capabilities";
-import { windowFor, INTRO_END, COMPLETE_START } from "./scroll";
+import {
+  COPY_OUT_END,
+  TRAVEL_START,
+  TRAVEL_END,
+  OPEN_AT,
+  REARM_AT,
+  LABELS_OUT,
+  STAGGER,
+  BLADE_DUR,
+  LABEL_DELAY,
+  PEEK_SCALE,
+  bladeDelay,
+} from "./scroll";
 import { cases } from "./cases";
 
 describe("capabilities", () => {
@@ -40,17 +52,6 @@ describe("capabilities", () => {
   });
 });
 
-describe("scroll windows", () => {
-  it("are contiguous 0.13 slices from intro end to complete start", () => {
-    expect(windowFor(0).start).toBeCloseTo(INTRO_END);
-    for (let i = 0; i < 6; i++) {
-      expect(windowFor(i).end - windowFor(i).start).toBeCloseTo(0.13);
-      if (i > 0) expect(windowFor(i).start).toBeCloseTo(windowFor(i - 1).end);
-    }
-    expect(windowFor(5).end).toBeCloseTo(COMPLETE_START);
-  });
-});
-
 describe("cases", () => {
   it("has three cases", () => {
     expect(cases).toHaveLength(3);
@@ -77,5 +78,42 @@ describe("cases", () => {
       expect(c.cover).toMatch(/^\/assets\//);
       expect(existsSync(join("public", c.cover))).toBe(true);
     }
+  });
+});
+
+describe("opening beats", () => {
+  it("clears the copy, travels, lands, then frees the knife, in order", () => {
+    expect(TRAVEL_START).toBeGreaterThan(0);
+    expect(TRAVEL_START).toBeLessThan(COPY_OUT_END);
+    expect(TRAVEL_END).toBeGreaterThan(COPY_OUT_END);
+    expect(OPEN_AT).toBeGreaterThanOrEqual(TRAVEL_END);
+    expect(LABELS_OUT).toBeGreaterThan(OPEN_AT);
+    expect(LABELS_OUT).toBeLessThan(1);
+  });
+
+  it("peeks smaller than it lands, so the travel is a zoom in", () => {
+    expect(PEEK_SCALE).toBeGreaterThan(0);
+    expect(PEEK_SCALE).toBeLessThan(1);
+  });
+
+  it("re-arms the fan below the trigger, with hysteresis", () => {
+    expect(REARM_AT).toBeLessThan(OPEN_AT);
+    expect(REARM_AT).toBeGreaterThan(TRAVEL_START);
+  });
+
+  it("staggers one blade per capability, in order, with growing delay", () => {
+    const delays = capabilities.map((_, i) => bladeDelay(i));
+    expect(delays).toHaveLength(6);
+    expect(delays[0]).toBe(0);
+    for (let i = 1; i < delays.length; i++) {
+      expect(delays[i]).toBeGreaterThan(delays[i - 1]);
+    }
+    expect(delays[delays.length - 1]).toBeCloseTo(5 * STAGGER);
+  });
+
+  it("overlaps the blades so the fan reads as one gesture", () => {
+    expect(STAGGER).toBeLessThan(BLADE_DUR);
+    expect(LABEL_DELAY).toBeGreaterThan(0);
+    expect(LABEL_DELAY).toBeLessThan(BLADE_DUR);
   });
 });

@@ -1,12 +1,13 @@
 .section {
 	position: relative;
-	/* 100vh viewport + 420vh of story + ~105vh of compass runway — locked
-	   to DUR in OutcomeTransition.tsx (height = 100vh + 420vh × DUR) */
-	height: 625vh;
-	/* starts one viewport early: the pin engages exactly as the story knife
-	   finishes centering, so the handoff is an in-place swap */
-	margin-top: -100vh;
-	/* the overlapping viewport must not swallow the story's hover */
+	/* 200vh viewport + 420vh of story + ~105vh of compass runway — locked to
+	   DUR in OutcomeTransition.tsx (height = 200vh + 420vh × DUR) */
+	height: 725vh;
+	/* pulled up over the whole hero so the stage is pinned from the first
+	   pixel: the one knife on the page is already on screen, and never has to
+	   rise into frame. The trigger's own start is offset to compensate. */
+	margin-top: -200vh;
+	/* the overlapping viewport must not swallow the hero's hover */
 	pointer-events: none;
 }
 
@@ -17,7 +18,7 @@
 	overflow: hidden;
 	display: grid;
 	place-items: center;
-	/* pointer-transparent: while riding over the story during the overlap,
+	/* pointer-transparent: while riding over the hero during the overlap,
 	   this stage must not swallow hover; painted tool shapes and caption
 	   blocks re-enable their own pointer-events */
 	pointer-events: none;
@@ -30,6 +31,12 @@
 }
 
 .knifeEl {
+	position: absolute;
+	inset: 0;
+}
+
+/* the handle the hero's timeline drives; identity once that timeline ends */
+.knifeIntro {
 	position: absolute;
 	inset: 0;
 }
@@ -199,9 +206,28 @@
 	.compassWrap,
 	.statement,
 	.interLine,
-	.col,
-	.knifeEl {
+	.col {
 		opacity: 0;
+	}
+}
+
+/* ---- mobile: the stage only has to carry the knife ---- */
+
+@media (max-width: 768px) {
+	.section {
+		/* 200vh of hero overlay plus one viewport for the kit to come apart.
+		   Everything after that is ToolCarousel's, in normal flow. */
+		height: 300vh;
+	}
+
+	/* the lineup, the merge and the compass close all live in ToolCarousel
+	   on small screens — swiped, not scrubbed */
+	.circles,
+	.lineup,
+	.copy,
+	.compassWrap,
+	.bloom {
+		display: none;
 	}
 }
 
@@ -223,9 +249,22 @@
 
 	.inner {
 		width: min(60vw, 420px);
+		/* the square is for the overlaid animation; stacked, it must grow */
+		aspect-ratio: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
 	}
 
-	.knifeEl,
+	/* the knife takes its own row rather than lying on top of the compass */
+	.knifeEl {
+		position: static;
+	}
+
+	.knifeIntro {
+		position: relative;
+	}
+
 	.circles,
 	.bloom,
 	.lineup,

@@ -1,8 +1,8 @@
 import Header from "@/components/sections/Header";
 import ScrollRuler from "@/components/ScrollRuler";
 import Hero from "@/components/sections/Hero";
-import KnifeStory from "@/components/knife/KnifeStory";
 import OutcomeTransition from "@/components/sections/OutcomeTransition";
+import ToolCarousel from "@/components/sections/ToolCarousel";
 import OperatingModel from "@/components/sections/OperatingModel";
 import CaseStudies from "@/components/sections/CaseStudies";
 import Career from "@/components/sections/Career";
@@ -17,8 +17,10 @@ export default function Home() {
       <ScrollRuler />
       <main>
         <Hero />
-        <KnifeStory />
         <OutcomeTransition />
+        {/* mobile only: the six tools as a swipe carousel, plus the compass
+            close. The pinned desktop stage carries both above 768px. */}
+        <ToolCarousel />
         <CaseStudies />
         <Career />
         <UnknownProblem />

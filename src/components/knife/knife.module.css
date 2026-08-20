@@ -101,3 +101,43 @@
 		transform: rotate(0deg) !important;
 	}
 }
+
+/* ---- orbit labels around an opened knife ---- */
+
+.labels {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.label {
+	position: absolute;
+	color: var(--fg-soft);
+	opacity: 0;
+	visibility: hidden;
+	white-space: nowrap;
+	/* labels catch their own pointer so hovering label text never
+	   triggers the blade hover underneath */
+	pointer-events: auto;
+}
+
+.labelVisible {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* the knife is shown open and annotated when motion is off — no timeline
+   ever runs to reveal these */
+@media (prefers-reduced-motion: reduce) {
+	.label {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+/* §33: no labels orbiting the object on mobile — there is not room */
+@media (max-width: 768px) {
+	.labels {
+		display: none;
+	}
+}

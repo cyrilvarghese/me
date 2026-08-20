@@ -1,9 +1,16 @@
 .hero {
 	position: relative;
-	min-height: 100vh;
+	/* one viewport of stage, one of scroll to play the opening across */
+	height: 200vh;
+}
+
+.stage {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	overflow: hidden;
 	display: flex;
 	align-items: center;
-	overflow: hidden;
 }
 
 .inner {
@@ -85,27 +92,23 @@
 	}
 }
 
-.knifePeek {
-	position: absolute;
-	z-index: 1;
-	top: 50%;
-	right: 3vw;
-	width: min(44vw, 640px);
-	transform: translateY(-50%) rotate(-14deg);
-	pointer-events: none;
+/* the hero stops being two viewports of nothing when motion is off */
+@media (prefers-reduced-motion: reduce) {
+	.hero {
+		height: auto;
+	}
+
+	.stage {
+		position: static;
+		height: auto;
+		min-height: 100vh;
+		overflow: visible;
+	}
 }
 
 @media (max-width: 768px) {
-	.knifePeek {
-		width: 72vw;
-		top: auto;
-		right: 4vw;
-		bottom: 3%;
-		transform: rotate(-14deg);
-	}
-
-	.hero {
-		align-items: flex-end;
-		padding-block: 6rem;
+	.stage {
+		align-items: flex-start;
+		padding-block: 8rem 0;
 	}
 }

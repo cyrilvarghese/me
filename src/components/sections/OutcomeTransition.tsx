@@ -4,11 +4,10 @@ import { useRef } from "react";
 import { capabilities, type CapabilityId } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
+import ToolLabels from "@/components/knife/ToolLabels";
 import CompassRose from "@/components/compass/CompassRose";
 import knifeStyles from "@/components/knife/knife.module.css";
 import styles from "./OutcomeTransition.module.css";
-
-const OPEN_ANGLES = Object.fromEntries(capabilities.map((c) => [c.id, c.openAngle]));
 
 /** Where each discipline circle is born: its blade-tip position (% of the box). */
 const START: Record<CapabilityId, { x: number; y: number }> = {
@@ -31,7 +30,8 @@ const LIFT = 5;
     same vh-per-beat as always; 0.97 → DUR is pure runway — ~118vh of pinned
     scroll where the time-based needle hunt plays out with the wheel never
     blocked (replaces the old hard scroll lock). The module CSS height must
-    stay 100vh + 420vh × DUR. */
+    stay 200vh + 420vh × DUR — 200 because the section is pulled up over the
+    whole hero and the trigger's start is offset a viewport to match. */
 const DUR = 1.25;
 
 /**
@@ -97,14 +97,21 @@ export default function OutcomeTransition() {
             defaults: { ease: "none" },
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top top",
-              end: "bottom bottom",
+              // The section is pulled up to document 0 so its stage is pinned
+              // from the first pixel and the knife never rises into frame; the
+              // timeline itself still begins where the hero's ends. Both ends
+              // are absolute — a numeric start with a trigger-relative end
+              // resolves to a range neither of them meant.
+              start: () => window.innerHeight,
+              end: () => (sectionRef.current?.offsetHeight ?? 0) - window.innerHeight,
               scrub: 0.4,
               invalidateOnRefresh: true,
               // snapping only from the individual-tools lineup through to the
               // compass landing — the scrub before is free (user direction),
               // and so is the runway after: leaving is never tugged back
-              snap: {
+              snap: compact
+                ? undefined
+                : {
                 snapTo(value: number) {
                   const t = value * DUR;
                   if (t < (compact ? 0.5 : 0.45)) return value;
@@ -115,7 +122,7 @@ export default function OutcomeTransition() {
                 duration: { min: 0.25, max: 0.9 },
                 delay: 0.08,
                 ease: "power1.inOut",
-              },
+                  },
               onUpdate(self) {
                 // beats live in timeline time (the spacer's units), not progress
                 const t = self.progress * DUR;
@@ -138,14 +145,13 @@ export default function OutcomeTransition() {
 
           tl.to({}, { duration: DUR }, 0);
 
-          // NOTE: the story timeline performs the in-place knife swap at its
-          // own scrubbed completion (KnifeStory.tsx) — swapping from here
-          // fired before the centering had rendered (scrub lag = two knives).
+          // The hero drives this same element by its [data-knife-intro]
+          // handle and leaves it at identity — there is one knife on the page
+          // and no swap left to get wrong (Hero.tsx).
 
-          // starts where the story knife lands: shifted right so the
-          // left-biased art reads centered (KnifeStory.tsx). Slides back to
-          // neutral while the tools drift apart — the motion masks it and
-          // every later beat (lineup, circles, compass) keeps plain math.
+          // Sits shifted right so the left-biased art reads centered, then
+          // slides back to neutral while the tools drift apart — the motion
+          // masks it and every later beat keeps plain math.
           tl.fromTo(
             "[data-knife-el]",
             { x: () => 0.135 * S() },
@@ -160,7 +166,7 @@ export default function OutcomeTransition() {
           gsap.set("[data-statement]", { y: 16 });
 
           // the body dissolves out from under the tools (labels already
-          // retired during the story's centering)
+          // retired at the end of the hero's timeline)
           tl.to("[data-body]", { autoAlpha: 0, duration: 0.08, ease: "power2.in" }, 0.12);
 
           // the tools come apart, drifting free (user reference)
@@ -178,12 +184,22 @@ export default function OutcomeTransition() {
                 x: frac((dir.x / len) * 12),
                 y: frac((dir.y / len) * 12),
                 rotation: cap.openAngle + 12 * Math.sign(cap.openAngle),
-                duration: 0.12,
+                // mobile has no lineup to hurry towards, so the drift is the
+                // whole beat rather than a hand-off into the next one
+                duration: compact ? 0.7 : 0.12,
                 ease: "power2.out",
               },
               0.1
             );
           });
+
+          if (compact) {
+            // Mobile ends here. The kit comes apart and drifts off; the six
+            // tools and the compass close are ToolCarousel's job below, as a
+            // swipe surface rather than another viewport of pinned scrub.
+            tl.to("[data-knife-el]", { autoAlpha: 0, duration: 0.3, ease: "power2.in" }, 0.9);
+            return;
+          }
 
           if (!compact) {
             // THE LINEUP (user sketch): each part travels to its column and
@@ -330,7 +346,7 @@ export default function OutcomeTransition() {
           );
           tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.92);
 
-          // the runway: the story is told by 0.97 — from there the stage
+          // the runway: the telling is done by 0.97 — from there the stage
           // stays pinned while the compass and its backlight drift gently
           // down with the scroll, at rest but alive, giving the needle hunt
           // room to play before the pin releases (user direction, 2026-08-16)
@@ -363,7 +379,14 @@ export default function OutcomeTransition() {
 
         <div className={styles.inner} ref={innerRef}>
           <div className={styles.knifeEl} data-knife-el="">
-            <KnifeCanvas angles={OPEN_ANGLES} />
+            {/* The Hero's timeline drives this wrapper — peek, travel, zoom,
+                fan — and leaves it at identity exactly as that timeline ends.
+                Everything below therefore sees the same geometry it always
+                did, and there is only ever one knife on the page. */}
+            <div className={styles.knifeIntro} data-knife-intro="">
+              <KnifeCanvas />
+              <ToolLabels />
+            </div>
           </div>
 
           <div className={styles.circles} aria-hidden="true">

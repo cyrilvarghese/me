@@ -1,5 +1,5 @@
 import { capabilities, type CapabilityId } from "@/lib/data/capabilities";
-import styles from "./knife-story.module.css";
+import styles from "./knife.module.css";
 
 /**
  * Positions sit just past each tool's open tip, derived from

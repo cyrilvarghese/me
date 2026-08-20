@@ -1,164 +1,125 @@
-# Hero knife opening — design
+# Knife opening — design
 
 Date: 2026-08-20
 Status: approved for planning
 
 ## Problem
 
-The knife story section is too long. `KnifeStory` runs 600vh of pinned scrub to
-do one thing the visitor understands in a few seconds: the knife opens. Six
-scroll windows exist because six narrative panels each needed a reading beat,
-not because the unfold needs that much travel.
+The knife story section is 600vh. That length exists because six narrative
+panels each needed a reading beat, not because the unfold needs the travel.
 
 ## Intent
 
-The knife in the hero comes down, takes the stage, opens one blade at a time
-with natural motion and labels, then hands to the existing lineup. Every one of
-those beats already exists on the page — they are spread across three sections.
-Remove the middle section and stitch the rest.
+Replace the story with a plain transition: the knife arrives from the hero,
+comes to the middle, zooms up so it has the stage, then fans open one blade at
+a time with labels — and hands to the lineup exactly as it does today.
 
 ## Scope
 
-Removed: `KnifeStory` and everything that served only it.
-
-Unchanged: `OutcomeTransition` — the lineup, circles, compass, needle hunt, snap
-beats and `DUR` all stay exactly as they are (user direction, 2026-08-20).
+**Hero is untouched.** **`OutcomeTransition` is untouched.** The only thing
+that changes is the section between them, which stops being a story and becomes
+a transition (user direction, 2026-08-20).
 
 Deferred: the six `statement` / `tags` blocks, the intro line and the closing
-"One person. Multiple points of leverage." lose their only consumer when
-`KnifeStory` goes. Cyril is reworking the narrative separately. This change
-leaves the `capabilities` data fields intact and writes no replacement copy.
+"One person. Multiple points of leverage." lose their only consumer. Cyril is
+reworking the narrative separately. This change leaves the `capabilities` data
+fields intact and writes no replacement copy.
 
-## The opening sequence
+## The section
 
-The Hero becomes a 200vh section over a `position: sticky` 100vh stage — the
-same construction `KnifeStory` used, not a GSAP `pin`. One timeline,
-`scrub: 0.4`, `trigger: .hero`, `start: "top top"`, `end: "bottom bottom"`, with
-a `duration: 1` spacer tween so tween positions read as scroll fractions.
+`KnifeStory` becomes `KnifeOpening`: 200vh instead of 600vh, a `position: sticky`
+100vh stage, no narrative column, no closing statement — just the knife.
+
+One scrubbed timeline with a `duration: 1` spacer, so tween positions are the
+scroll fractions:
 
 | Position | Driver | Beat |
 | --- | --- | --- |
-| 0.00 – 0.18 | scrub | Hero copy rises and fades out. The stage clears. |
-| 0.06 – 0.40 | scrub | Knife travels from its peek spot to the landing pose: centred, upright, scaled to the stage box. |
-| 0.40 | **time** | Six blades open in `capabilities` order, staggered. Each label fades in behind its blade tip. |
-| 0.40 – ~0.90 | scrub | Hold. This is the slot the reworked narrative will occupy. |
-| ~0.90 – 1.00 | scrub | Crossfade into `OutcomeTransition`'s knife. |
+| 0.05 – 0.42 | scrub | Knife travels to centre, straightens, grows to the stage box |
+| 0.42 | **time** | Six blades fan open, staggered, labels behind each tip |
+| 0.42 – 0.90 | scrub | Hold — the slot the reworked narrative will occupy |
+| 0.90 – 1.00 | scrub | Crossfade into `OutcomeTransition`'s knife |
 
-### Travel and landing
+### Starting position
 
-The landing pose is a verbatim lift of `KnifeStory.tsx:145-166`:
+The knife starts where the hero's knife sits — `right: 3vw`, vertically
+centred, `min(44vw, 640px)`, tilted `-14deg` — so the arrival reads as the same
+object rather than a new one. This is the in-place swap the story section
+already relied on, tightened to match the hero's peek exactly.
+
+**Known characteristic, unchanged from today:** the hero and the opening are
+adjacent 100vh boxes, so their knives are always 100vh apart. One exits the top
+of the viewport as the other enters from the bottom; they never overlap. If
+that reads as two knives on screen, the fix is to overlap the sections with a
+negative margin and fade the incoming knife in — but that is a change to make
+after seeing it, not before.
+
+### Measurement
+
+Position maths uses `offsetLeft` / `offsetTop` / `offsetWidth`, not
+`getBoundingClientRect()`. The knife starts tilted, and a rotated element's
+bounding rect is its axis-aligned box — wider than the element. Offset values
+are layout values, immune to transforms, so the arithmetic stays correct at
+every angle and needs none of the "subtract the current transform back out"
+correction the story section carried.
+
+### Landing
 
 ```
 targetW = min(0.58 * innerHeight, 0.54 * innerWidth, 660)
-x       = stageCentreX - knifeBox().x + 0.135 * targetW
-y       = stageHeight / 2 - knifeBox().yInStage
-scale   = targetW / knifeBox().w
+x       = stage.clientWidth / 2  - box().cx + 0.135 * targetW
+y       = stage.clientHeight / 2 - box().cy
+scale   = targetW / box().w
+rotation = 0
 ```
 
-The `0.135 * targetW` right-shift is **kept**. The knife art is left-biased in
-its box, so this lands the art's visual centre on stage centre — and
-`OutcomeTransition` already opens with
-`fromTo("[data-knife-el]", { x: 0.135 * S() }, { x: 0 })` to match it. Holding
-the offset is what lets `OutcomeTransition` stay untouched.
+`targetW` is the same expression as `OutcomeTransition`'s `.inner` width,
+`min(58vh, 54vw, 660px)`, so the two knives land congruent. The
+`0.135 * targetW` right-shift is kept: the art is left-biased in its box, and
+`OutcomeTransition` already opens by sliding that same offset back to zero.
+Holding it is what lets that section stay untouched.
 
-`targetW` is the same expression as `.inner`'s `width: min(58vh, 54vw, 660px)`,
-so the two knives land congruent by construction.
+### The fan
 
-All position values stay lazy functions evaluated against
-`getBoundingClientRect()`, so resize and mid-page reload stay correct. Rotation
-goes -14° → 0°; the peek tilt moves out of the CSS `transform` and onto GSAP so
-the two do not fight.
-
-### The staggered open
-
-Time-based, not scrubbed — natural motion is the point, and a scrub makes easing
-read as the user's hand rather than the object's mass.
-
-A `paused` timeline is `restart()`ed from `onUpdate` when progress crosses the
-landing threshold, and re-armed when progress falls back below it. This is the
-pattern already used twice in this codebase: `KnifeStory`'s `wobble` and
-`OutcomeTransition`'s needle `swing`.
-
-- stagger step ≈ 0.10s, `capabilities` order
-- per blade `fromTo(0 → openAngle * factor)`, ≈0.75s, overshoot-and-settle easing
-- `immediateRender: false` on every `fromTo` — otherwise the "from" pose renders
-  at build time and the knife starts open (learned at `KnifeStory.tsx:76-78`)
-- label fades in ≈0.22s after its own blade starts
-- `factor = 0.8` on compact, per the existing mobile rule
+Time-based, not scrubbed. A `paused` timeline is `restart()`ed from `onUpdate`
+when progress crosses the landing threshold, and re-armed below a lower
+threshold — the same pattern as the story's `wobble` and the compass's needle
+`swing`. Stagger ≈0.10s, blade ≈0.75s with an overshoot-and-settle ease, each
+label ≈0.22s behind its own blade. `immediateRender: false` on every `fromTo`,
+or the "from" pose renders at build time and the knife starts open.
 
 ### Handoff
 
-Unchanged in mechanism from `KnifeStory.tsx:179-195`, retargeted to the Hero's
-scroll range. Over a crossfade window `W` at the end of the timeline:
-
-- `[data-knife-el]` fades in, the hero knife fades out
-- the morph stage has not pinned yet during `W`, so its knife rises by
-  `W * range()` where `range() = hero.offsetHeight - innerHeight`; a
-  `fromTo(y: -W * range() → 0)` cancels that rise exactly, both being linear in
-  scroll
-
-`OutcomeTransition`'s `margin-top: -100vh` needs no edit — a negative top margin
-pulls against whatever precedes it in flow. A 200vh hero replaces a 600vh story
-and the overlap behaves identically.
-
-`.knifeEl` is already `opacity: 0` under `prefers-reduced-motion: no-preference`,
-so the morph knife stays hidden until the crossfade lights it.
+Kept verbatim from the story section, only `range()` changes because the
+section is shorter — and `range()` is already a lazy function. Over the last
+0.10 of the timeline the incoming knife fades in, the outgoing one fades out,
+and a `fromTo(y: -0.10 * range() → 0)` cancels the not-yet-pinned stage's rise.
 
 ## Files
 
 | File | Change |
 | --- | --- |
-| `src/components/sections/Hero.tsx` | Rewritten as the pinned opening stage; owns the timeline |
-| `src/components/sections/Hero.module.css` | 200vh section + sticky stage; reduced-motion and compact rules |
-| `src/components/knife/KnifeStory.tsx` | Deleted |
-| `src/components/knife/knife-story.module.css` | Deleted |
-| `src/components/knife/ToolLabels.tsx` | Imports relocated label styles |
-| `src/components/knife/knife.module.css` | Gains the `labels` / `label` / `labelVisible` rules |
-| `src/app/page.tsx` | Drops the `KnifeStory` import and element |
-| `src/lib/data/scroll.ts` | Six scroll windows replaced by the opener's beats and stagger |
-| `src/lib/data/data.test.ts` | `scroll windows` block replaced by the new invariants |
-| `src/components/sections/OutcomeTransition.tsx` | Two stale comments naming `KnifeStory.tsx` retargeted. No code change. |
+| `src/components/knife/KnifeStory.tsx` → `KnifeOpening.tsx` | Narrative stripped, timeline rewritten, 600vh → 200vh |
+| `src/components/knife/knife-story.module.css` → `knife-opening.module.css` | Panel and grid rules dropped |
+| `src/lib/data/scroll.ts` | Six windows → the opening's beats |
+| `src/lib/data/data.test.ts` | `scroll windows` block replaced |
+| `src/app/page.tsx` | The renamed import |
+| `Hero.tsx`, `Hero.module.css` | **Nothing** |
+| `OutcomeTransition.tsx`, `.module.css` | **Nothing** — stale comment text only |
 
-## Carried over from KnifeStory
-
-- **Hover-dim (§39).** Desktop only, armed once the open completes: hovering a
-  blade dims the others to 0.55 and lifts that label to full white. Moves into
-  the Hero.
-- **Reduced motion.** `KnifeStory` was where reduced-motion users saw an open
-  knife. The Hero takes that over: `reducedPose="open"`, no timeline, labels
-  shown, static layout.
-- **Compact.** Angles ×0.8, labels hidden at ≤768px.
-
-## Scroll math module
-
-`scroll.ts`'s six contiguous 0.13 windows described `KnifeStory` and nothing
-else. It becomes the opener's numbers — copy-out end, travel window, landing
-threshold, stagger step, crossfade window — so the choreography still reads from
-data rather than from magic numbers inside the component, matching how
-`capabilities.ts` drives the rest.
-
-`data.test.ts`'s `scroll windows` block is replaced with tests that lock the new
-invariants: beats are ordered and within 0..1, the landing threshold sits after
-the travel window, and the stagger produces six monotonically increasing delays
-in `capabilities` order.
+Carried over unchanged: the orbit labels, the §39 hover-dim, the reduced-motion
+static-and-open pose, and the compact rules (angles ×0.8, labels hidden).
 
 ## Verification
 
-- `npm run check` and `npm test` clean
-- `node scripts/scroll-shots.mjs` across the hero's range: copy out, mid-travel,
-  landed-and-closed, fully open with labels, and the crossfade frame
-- The seam is checked by screenshotting either side of the crossfade and
-  confirming the knife does not jump
-- Reduced-motion and ≤768px checked separately
+`npm run check`, `npm test`, `npm run build`, then `scroll-shots.mjs` across the
+opening — arrival, mid-travel, landed, fanned, and both sides of the crossfade —
+plus a full-page walk to confirm the lineup is untouched and the page is ~400vh
+shorter.
 
 ## Risks
 
-- **Pin-on-pin overlap.** Two sticky stages whose ranges intersect by 100vh.
-  This works today between story and transition, so it is a retarget rather than
-  a new problem — but it is where debugging time is most likely to go.
-- **A dead hold.** With the narrative copy deferred, the 0.40–0.90 hold is ~50vh
-  where nothing changes. Keep the hold short until the narrative lands; the beat
-  positions are tunable in `scroll.ts`.
-- **First-paint pose.** The hero knife must render closed and untilted-by-GSAP
-  on the server. Any mismatch between the CSS peek transform and GSAP's initial
-  `set` shows as a flash on load.
+- **Two knives crossing.** Described above. Existing behaviour, but tightening
+  the start position to match the hero makes it more noticeable, not less.
+- **A dead hold.** With the narrative deferred, 0.42–0.90 is ~50vh where nothing
+  changes. Shortening it is a one-line change in `scroll.ts`.
