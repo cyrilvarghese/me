@@ -57,10 +57,6 @@ export default function ScrollRuler() {
       if (max <= 0) return;
       const H = rail.clientHeight;
       const majors = new Set<number>();
-      /* the tick each named mark stands in for. The mark brings its own
-         dash at the exact offset, so leaving the tick drawn a few pixels
-         away puts two lines beside one word. */
-      const replaced = new Set<number>();
       const found: { id: string; name: string; y: number }[] = [];
       const index = (f: number) =>
         Math.round(Math.min(1, Math.max(0, f)) * (TICKS - 1));
@@ -74,7 +70,6 @@ export default function ScrollRuler() {
           // mark and the line cannot disagree
           const f = Math.min(1, Math.max(0, top / max));
           found.push({ id: s.id, name, y: f * (H - 2) });
-          replaced.add(index(top / max));
         }
         const range = s.offsetHeight - window.innerHeight;
         if (s.dataset.rulerBeats && range > 0) {
@@ -84,9 +79,20 @@ export default function ScrollRuler() {
           }
         }
       });
+      /* Ticks near a named mark step aside by DISTANCE, not by rounded
+         index. The mark sits at the exact section fraction; the ticks sit
+         in 48 even slots. A section that lands midway between two slots is
+         half a pitch from BOTH — hiding only the rounded one left its
+         neighbour drawn 4px from the mark's dash, a doubled line beside
+         the word. ¾ of a pitch clears whichever ticks crowd the dash and
+         never reaches past the mark's immediate neighbours. */
+      const pitch = (H - 1) / (TICKS - 1);
       ticks.forEach((el, i) => {
         el.classList.toggle(styles.major, majors.has(i));
-        el.classList.toggle(styles.replaced, replaced.has(i));
+        el.classList.toggle(
+          styles.replaced,
+          found.some((m) => Math.abs(i * pitch - m.y) < pitch * 0.75)
+        );
       });
       setMarks((prev) =>
         JSON.stringify(prev) === JSON.stringify(found) ? prev : found
