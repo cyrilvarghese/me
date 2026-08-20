@@ -2,21 +2,50 @@
    CaseObject both mount their icons here, so the disc and the quote voice
    stay one thing rather than two copies drifting apart. */
 
+/* A backlight, not a disc.
+
+   Supplied clip-art is drawn with dark outlines that vanish on this ground
+   and needs something behind it, but a solid plate cuts a hole in the page
+   for every mark — a row of them reads as a row of holes rather than a row
+   of marks. A glow that falls off to nothing lifts the artwork without
+   drawing an edge anywhere (Cyril's call, 2026-08-21).
+
+   The glow overflows the box rather than enlarging it, so nothing in the
+   layouts that mount these marks has to move. */
 .disc {
 	width: var(--disc, 6rem);
 	aspect-ratio: 1;
-	border-radius: 50%;
-	background: var(--fg);
-	border: 1px solid rgba(248, 244, 242, 0.28);
 	display: grid;
 	place-items: center;
-	overflow: hidden;
 	flex: none;
+	position: relative;
 }
 
-/* the disc is a mount, not a crop — the mark wants clear ground around it
-   or the disc reads as a tight frame rather than something it sits on */
+/* Five stops with a long tail. A straight ramp to zero changes opacity at
+   a constant rate and the eye reads that rate as a boundary — which is the
+   hard edge the plate was supposed to have lost. */
+.disc::before {
+	content: "";
+	position: absolute;
+	inset: -50%;
+	z-index: 0;
+	border-radius: 50%;
+	background: radial-gradient(
+		closest-side,
+		rgba(248, 244, 242, 0.075) 0%,
+		rgba(248, 244, 242, 0.052) 25%,
+		rgba(248, 244, 242, 0.03) 45%,
+		rgba(248, 244, 242, 0.014) 65%,
+		rgba(248, 244, 242, 0.005) 82%,
+		rgba(248, 244, 242, 0) 100%
+	);
+}
+
+/* above the glow: a positioned pseudo-element would otherwise paint over
+   the mark it is meant to sit behind */
 .icon {
+	position: relative;
+	z-index: 1;
 	width: 62%;
 	height: 62%;
 	object-fit: contain;

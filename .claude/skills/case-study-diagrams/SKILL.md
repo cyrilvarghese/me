@@ -40,11 +40,10 @@ every animation reference silently dies.
 - **Sequential inputs climb in saturation** toward the accent, identically
   on both sides: `#b39a9a` → `#c98080` → `#d95a5a` → `#ea0000`.
 - **Third-party marks are the one exception** and keep their brand colour —
-  they are identity, not decoration. Give them a light disc to sit on
-  (`--fg` fill, `rgba(248,244,242,0.28)` hairline) rather than filtering
-  them; a filtered logo on the dark ground reads as a smudge. When one
-  diagram in a section uses light discs, its partner matches — light disc,
-  `--bg` icons — so the pair stays one language.
+  they are identity, not decoration. Back them with the glow below rather
+  than filtering them; a filtered logo on the dark ground reads as a
+  smudge. When one diagram in a section backlights its marks, its partner
+  does too, so the pair stays one language.
 
 ## Type
 
@@ -284,11 +283,30 @@ Sometimes the reader recognises a mark faster than any drawing earns —
 a persona beside what they said, a product logo beside the step it owns.
 `CaseVoices` is the worked example: quotes fanned around a persona icon.
 
-**Supplied artwork keeps its own colours and sits on a light disc** —
-`--fg` fill, `rgba(248,244,242,0.28)` hairline, the icon unfiltered on
-top. This is the same exception the third-party marks take, for the same
-reason: flat clip-art is drawn with black outlines that vanish on this
-ground, and a filter over them reads as a smudge rather than a mark.
+**Supplied artwork keeps its own colours and sits on a backlight** — the
+icon unfiltered, over a glow that falls off to nothing. This is the same
+exception the third-party marks take, for the same reason: flat clip-art
+is drawn with black outlines that vanish on this ground, and a filter over
+them reads as a smudge rather than a mark.
+
+It used to be a solid `--fg` disc. A plate does lift the artwork, but it
+cuts a hole in the page for every mark, and a row of them reads as a row
+of holes rather than a row of marks (Cyril's call, 2026-08-21). The glow
+does the lifting without drawing an edge anywhere:
+
+```
+radial-gradient(closest-side,
+  rgba(248,244,242,.075) 0%,  rgba(248,244,242,.052) 25%,
+  rgba(248,244,242,.030) 45%, rgba(248,244,242,.014) 65%,
+  rgba(248,244,242,.005) 82%, rgba(248,244,242,0)   100%)
+```
+
+**Five stops, not two.** A straight ramp to zero changes opacity at a
+constant rate and the eye reads that constant rate as a boundary — the
+hard edge the plate was supposed to have lost. The tail is what removes
+it. Spread it to about twice the mark's box; in HTML let it overflow the
+box (`inset: -50%` on a pseudo-element) so no layout has to move for it,
+and keep the mark above it or the glow paints over what it is behind.
 
 **Build the figure in HTML when its text has to wrap.** Two- and
 three-line quotes cannot be hand-broken in `<text>` without eventually
@@ -335,7 +353,8 @@ underlining source deck meant anyway.
 | Drew a short rail and it vanished | The house dash period is ~16px. A rail under ~60px paints one pill and reads as a speck. Lengthen it, or draw it solid with an arrowhead — not every connector has to be the dotted rail. |
 | Curved a connector to make it feel drawn | An arc curls away from what it points at. A connector is a straight ray; curvature is for haloes, not pointers. |
 | Emphasised a clause in red inside body text | Red is large-type only here. Brighten the clause and put the accent in the underline. |
-| Filtered a supplied icon to fit the palette | Black outlines on this ground become a smudge. Light disc, colours untouched — the third-party exception. |
+| Filtered a supplied icon to fit the palette | Black outlines on this ground become a smudge. Backlight it, colours untouched — the third-party exception. |
+| Backed a mark with a two-stop gradient | A straight ramp to zero changes opacity at a constant rate and the eye reads that rate as an edge — the thing the plate was dropped for. Five stops with a long tail. |
 | Shipped a wide diagram with no phone telling | The reader swipes to see half the argument. Lay it out again at 420px; it is part of the job, not a follow-up. |
 | Made the mobile version by shrinking the wide one | Three panels side by side give ~126px each on a phone. Rebuild the arrangement. |
 | Made it by dropping the columns into a stack | Whatever the geometry argued dies in the stack. Ask what it was saying, then rotate the axis, rank by size, or substitute the drawing. |
@@ -355,8 +374,8 @@ underlining source deck meant anyway.
 8. Scenes: flat fills, the tinge only on the object that needs attention,
    and the accent still the largest and most saturated mark?
 9. Scenes: edited in the standalone file **and** every composed copy?
-10. Supplied marks: on a light disc, unfiltered, with rails that point at
-    something and a gap they can actually cross?
+10. Supplied marks: on a backlight rather than a plate, unfiltered, with
+    rails that point at something and a gap they can actually cross?
 11. Drawn twice — laid out again for the width, not the wide one shrunk or
     its columns dropped, and screenshotted at 420px? Does the narrow
     version still argue what the wide one argued?
