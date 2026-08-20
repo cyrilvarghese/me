@@ -40,12 +40,41 @@
 	gap: clamp(1.25rem, 3vw, 2.75rem);
 }
 
-/* CaseClose is fixed at the right gutter and paints an opaque ground, so
-   on a narrow screen the last tab disappears underneath it. Give the row
-   back the width the control takes rather than let a tab hide behind it. */
+/* On a narrow screen the three labels do not fit. Left to shrink they wrap
+   inside themselves — "VISUAL / ASSETS / & DEMO" over three lines — and the
+   last one still falls off the edge.
+
+   So the row scrolls rather than wraps or stacks. Wrapping would break the
+   travelling bar, which is one element spanning the whole list and can only
+   describe a single line; stacking would turn the page's one navigational
+   moment into a menu. Scrolling keeps the line intact, and the bar keeps
+   working because it is positioned inside the scrolling content and
+   travels with it.
+
+   CaseClose is fixed at the right gutter over an opaque ground, so the
+   padding gives the row back the width that control takes — with a scroll
+   container that is what lets the last tab clear it instead of stopping
+   underneath it. */
 @media (max-width: 700px) {
 	.list {
+		display: flex;
+		width: auto;
+		max-width: 100%;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		scrollbar-width: none;
 		padding-right: calc(var(--control-size) + 0.75rem);
+	}
+
+	.list::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* the labels stay on their own line; shrinking is what produced the
+	   three-line tab in the first place */
+	.tab {
+		flex: none;
+		white-space: nowrap;
 	}
 }
 

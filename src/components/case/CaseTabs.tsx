@@ -74,6 +74,33 @@ export default function CaseNav({ sections, label }: { sections: Section[]; labe
   /* before paint, so the bar is never seen at the wrong place */
   useLayoutEffect(measure, [measure]);
 
+  /* Narrow screens scroll the row rather than wrap it, so the current tab
+     can sit outside the visible part of it — and with it the bar that says
+     where the reader is. Bring it back into view when it changes.
+
+     The list's own scrollLeft rather than scrollIntoView: that would walk
+     up the ancestors and move the page vertically as well, which is the
+     last thing a reader who is already scrolling wants. */
+  useEffect(() => {
+    const el = refs.current[active];
+    const list = listRef.current;
+    if (!el || !list || list.scrollWidth <= list.clientWidth) return;
+
+    const gap = 24;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto"
+      : "smooth";
+
+    if (el.offsetLeft - gap < list.scrollLeft) {
+      list.scrollTo({ left: Math.max(0, el.offsetLeft - gap), behavior });
+    } else if (el.offsetLeft + el.offsetWidth + gap > list.scrollLeft + list.clientWidth) {
+      list.scrollTo({
+        left: el.offsetLeft + el.offsetWidth + gap - list.clientWidth,
+        behavior,
+      });
+    }
+  }, [active]);
+
   useEffect(() => {
     const list = listRef.current;
     if (!list || typeof ResizeObserver === "undefined") return;
