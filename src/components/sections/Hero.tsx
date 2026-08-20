@@ -256,7 +256,7 @@ export default function Hero() {
         <div className={`section-shell ${styles.inner}`} data-hero-copy="">
           <p className={`mono-label ${styles.eyebrow}`}>Product Builder · Designer · Engineer</p>
           <h1 className={`serif-display ${styles.headline}`}>
-            Owning the outcome, not a slice of the work.
+            Owning the outcome, end to end.
           </h1>
           <p className={styles.desc}>
             I work across product, design, engineering and AI to turn ambiguous problems into
