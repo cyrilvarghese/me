@@ -1,226 +1,75 @@
-# Knife Opening Implementation Plan
+# One Knife Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace the 600vh knife story with a 200vh transition that brings the hero's knife to the middle, zooms it up and fans it open with labels, then hands to the lineup.
+**Goal:** One knife DOM object for the whole opening. It sits in the hero as a small tilted peek, travels to centre, zooms up, fans open with labels, and is blown apart by the lineup — no second knife, no crossfade, no dead scroll.
 
-**Architecture:** One section changes. `KnifeStory` becomes `KnifeOpening` — same sticky-stage construction, narrative column removed, six scrubbed blade windows replaced by one time-based fan. The knife's start position is tightened to match the hero's peek exactly; its landing pose is unchanged, so `OutcomeTransition` needs no edit.
+**Architecture:** The knife lives where the lineup already expects it: inside `OutcomeTransition`'s `.inner`. That section's pinned stage is pulled up to start at document `0`, so the knife is on screen from the first pixel of the hero — the hero renders no knife of its own. A new wrapper inside `[data-knife-el]` is the handle the Hero's timeline drives; it returns to identity exactly as the hero ends, so every coordinate the lineup uses is unchanged. `KnifeOpening` is deleted outright.
 
 **Tech Stack:** Next.js App Router (static export), React, GSAP + ScrollTrigger via `useGSAP`, CSS Modules, Vitest.
 
 **Spec:** `docs/superpowers/specs/2026-08-20-hero-knife-opening-design.md`
 
-**Branch:** `no-knife-story`
+**Branch:** `no-knife-story` (builds on `fcf3e23`)
+
+## Why this shape
+
+Three symptoms in the current build, all from the same cause — two knives:
+
+1. ~200vh of black scroll where a knife drifts alone on an empty stage
+2. The second knife rising into frame from the bottom (a sticky stage sliding up before it sticks)
+3. A crossfade between them, which forced the landing size to match and turned the requested zoom-in into a 1.21× → 1.0× shrink
+
+One DOM object removes all three. It also makes the zoom real: the peek becomes the same knife at `scale: 0.75`, so travel is 0.75× → 1.0×.
+
+## Scroll arithmetic
+
+| | Before | After |
+| --- | --- | --- |
+| Hero | 100vh | **200vh** (100vh stage + 100vh of scrub) |
+| KnifeOpening | 200vh | **deleted** |
+| `OutcomeTransition` height | 625vh | **725vh** |
+| `OutcomeTransition` margin-top | −100vh | **−200vh** |
+| `OutcomeTransition` trigger start | `"top top"` | **`() => window.innerHeight`** |
+
+`OutcomeTransition`'s section now spans document `0 → 725vh`, so its sticky stage is pinned from the very first pixel and never rises into frame. Its trigger runs `100vh → 625vh` — a **525vh range, identical to today**, so every beat, snap position and `DUR` keeps its exact scroll length. Net page height drops ~100vh more.
 
 ## Global Constraints
 
-- `Hero.tsx` and `Hero.module.css`: **do not touch.**
-- `OutcomeTransition.tsx` and `OutcomeTransition.module.css`: **no code change.** Comment text only.
+- `OutcomeTransition`'s **choreography** does not change — only the three numbers above, two CSS rules, and two wrapper divs.
 - Animate only `transform` and `opacity`.
-- Every timeline inside `gsap.matchMedia`. Reduced motion builds **no** timeline — CSS renders the static open pose.
-- Compact (`max-width: 768px`): blade angles ×0.8, labels hidden.
-- `immediateRender: false` on every `fromTo`, or the "from" pose renders at build time and the knife starts open.
+- Every timeline inside `gsap.matchMedia`. Reduced motion builds **no** timeline.
+- Compact (`max-width: 768px`): blade angles ×0.8, labels hidden, peek sits low-right.
+- `immediateRender: false` on every `fromTo`.
 - `capabilities.ts` stays the single source of truth for blades.
-- No new user-facing copy — the narrative rework is deferred and separate.
-- Neutrals carry ~2% accent tinge. No plain black, no plain white.
+- No new user-facing copy.
 - `output: "export"` must keep working.
 
-## Verification commands
+## Verification
 
-- `npm run check`, `npm test`, `npm run build`
-- `node scripts/shot.mjs <url> <out.png> [w h] [reduce] [full]`
-- `node scripts/scroll-shots.mjs <url> <selector> "0.2,0.5" <prefix> [w h]`
-
-Cyril usually has a dev server on port 3000 — check before starting one, and read the PID before killing anything. **Do not create new probe scripts**; ask first if one seems needed.
+`npm run check`, `npm test`, `npm run build`, then `scroll-shots.mjs`. Dev server is already up on port 3000 — reuse it. **No new probe scripts.**
 
 ---
 
-### Task 1: Add the opening's beats to the scroll module
+### Task 1: Give the lineup's knife a handle, and put it on screen
 
-Additive on purpose. `KnifeStory` still imports the old window exports, so adding beside them keeps the tree compiling; Task 3 removes the dead ones once nothing reads them.
-
-**Files:**
-- Modify: `src/lib/data/scroll.ts` (append)
-- Modify: `src/lib/data/data.test.ts:5` (imports), append one `describe`
-
-**Interfaces:**
-- Produces, from `@/lib/data/scroll`: `TRAVEL_START`, `TRAVEL_END`, `OPEN_AT`, `REARM_AT`, `STAGGER`, `BLADE_DUR`, `LABEL_DELAY`, `HANDOFF_START`, `HANDOFF_DUR` — all `number` — and `bladeDelay(i: number): number`.
-
-- [ ] **Step 1: Write the failing tests**
-
-In `src/lib/data/data.test.ts`, extend the import on line 5:
-
-```ts
-import {
-  windowFor,
-  INTRO_END,
-  COMPLETE_START,
-  TRAVEL_START,
-  TRAVEL_END,
-  OPEN_AT,
-  REARM_AT,
-  STAGGER,
-  BLADE_DUR,
-  LABEL_DELAY,
-  HANDOFF_START,
-  HANDOFF_DUR,
-  bladeDelay,
-} from "./scroll";
-```
-
-Then append at the end of the file:
-
-```ts
-describe("opening beats", () => {
-  it("travels, lands, then hands off, all inside one scroll pass", () => {
-    expect(TRAVEL_START).toBeGreaterThan(0);
-    expect(TRAVEL_END).toBeGreaterThan(TRAVEL_START);
-    expect(OPEN_AT).toBeGreaterThanOrEqual(TRAVEL_END);
-    expect(HANDOFF_START).toBeGreaterThan(OPEN_AT);
-    expect(HANDOFF_START + HANDOFF_DUR).toBeCloseTo(1);
-  });
-
-  it("re-arms the fan below the trigger, with hysteresis", () => {
-    expect(REARM_AT).toBeLessThan(OPEN_AT);
-    expect(REARM_AT).toBeGreaterThan(TRAVEL_START);
-  });
-
-  it("staggers one blade per capability, in order, with growing delay", () => {
-    const delays = capabilities.map((_, i) => bladeDelay(i));
-    expect(delays).toHaveLength(6);
-    expect(delays[0]).toBe(0);
-    for (let i = 1; i < delays.length; i++) {
-      expect(delays[i]).toBeGreaterThan(delays[i - 1]);
-    }
-    expect(delays[delays.length - 1]).toBeCloseTo(5 * STAGGER);
-  });
-
-  it("overlaps the blades so the fan reads as one gesture", () => {
-    expect(STAGGER).toBeLessThan(BLADE_DUR);
-    expect(LABEL_DELAY).toBeGreaterThan(0);
-    expect(LABEL_DELAY).toBeLessThan(BLADE_DUR);
-  });
-});
-```
-
-- [ ] **Step 2: Run the tests to verify they fail**
-
-Run: `npx vitest run src/lib/data/data.test.ts`
-Expected: FAIL — the import errors, since `scroll.ts` exports none of these names.
-
-- [ ] **Step 3: Append the beats to `scroll.ts`**
-
-Add at the end of `src/lib/data/scroll.ts`:
-
-```ts
-/**
- * Beats for the knife opening. Progress is 0..1 across the section's 200vh:
- * the knife arrives from the hero and grows into the stage, the blades fan
- * open on their own clock, then it dissolves into the morph section's knife.
- *
- * The fan is deliberately NOT on this scale — it runs in seconds, fired once
- * when the knife lands. Scrubbed easing reads as the reader's hand; time-based
- * easing reads as the object's own weight.
- */
-
-/** The knife's scrubbed travel from the hero's peek to centre stage. */
-export const TRAVEL_START = 0.05;
-export const TRAVEL_END = 0.42;
-
-/** Landing fires the fan. Scrolling back below REARM_AT re-arms it; the gap
-    between the two is hysteresis, so jitter at the threshold cannot retrigger. */
-export const OPEN_AT = TRAVEL_END;
-export const REARM_AT = 0.34;
-
-/** Seconds between blade starts. */
-export const STAGGER = 0.1;
-/** Seconds for one blade to swing out and settle. */
-export const BLADE_DUR = 0.75;
-/** Seconds after a blade starts before its label arrives. */
-export const LABEL_DELAY = 0.22;
-
-/** The crossfade into OutcomeTransition's knife, ending exactly as this
-    section unpins and that one pins. */
-export const HANDOFF_DUR = 0.1;
-export const HANDOFF_START = 1 - HANDOFF_DUR;
-
-/** Start offset, in seconds, for blade `i` of the fan. */
-export function bladeDelay(i: number): number {
-  return i * STAGGER;
-}
-```
-
-- [ ] **Step 4: Run the tests to verify they pass**
-
-Run: `npx vitest run src/lib/data/data.test.ts`
-Expected: PASS — the four new assertions plus every existing block.
-
-- [ ] **Step 5: Verify the type-check**
-
-Run: `npm run check`
-Expected: clean. `KnifeStory` still compiles against the old exports.
-
-- [ ] **Step 6: Commit**
-
-```bash
-git add src/lib/data/scroll.ts src/lib/data/data.test.ts
-git commit -m "feat: the scroll module gains the opening's beats"
-```
-
----
-
-### Task 2: The story becomes the opening
-
-The whole change lives here. Rename, strip the narrative, tighten the start position to the hero's peek, swap the six scrubbed windows for one time-based fan.
+`OutcomeTransition` gains two wrapper divs and loses its open-by-default pose. Nothing in its timeline moves.
 
 **Files:**
-- Rename + rewrite: `src/components/knife/KnifeStory.tsx` → `src/components/knife/KnifeOpening.tsx`
-- Rename + rewrite: `src/components/knife/knife-story.module.css` → `src/components/knife/knife-opening.module.css`
-- Modify: `src/components/knife/ToolLabels.tsx:2` (the module it imports)
-- Modify: `src/app/page.tsx:4,20`
+- Modify: `src/components/sections/OutcomeTransition.tsx` — imports, JSX, trigger `start`
+- Modify: `src/components/sections/OutcomeTransition.module.css` — `.section` height/margin, `.knifeEl` visibility, reduced motion
+- Modify: `src/components/knife/knife.module.css` — gains the label rules
 
 **Interfaces:**
-- Consumes: Task 1's beats; `KnifeCanvas`; `ToolLabels`; `capabilities`; `[data-knife-el]` rendered by `OutcomeTransition`.
-- Produces: a default-exported `KnifeOpening` component, and `.labels` / `.label` / `.labelVisible` classes in `knife-opening.module.css` for `ToolLabels`.
+- Produces: `[data-knife-intro]` — an `position: absolute; inset: 0` wrapper inside `[data-knife-el]`, at identity transform whenever `OutcomeTransition`'s timeline is running. The Hero drives `x`, `y`, `scale`, `rotation` on it, and `[data-tool]` / `[data-label]` live inside it.
+- Consumes: nothing.
 
-- [ ] **Step 1: Rename both files**
+- [ ] **Step 1: Move the label styles into `knife.module.css`**
 
-```bash
-git mv src/components/knife/KnifeStory.tsx src/components/knife/KnifeOpening.tsx
-git mv src/components/knife/knife-story.module.css src/components/knife/knife-opening.module.css
-```
-
-- [ ] **Step 2: Write the new CSS**
-
-Replace the entire contents of `src/components/knife/knife-opening.module.css` with:
+Append to `src/components/knife/knife.module.css` (same rules `knife-opening.module.css` holds today, plus the reduced-motion and compact cases):
 
 ```css
-.opening {
-	position: relative;
-	/* one viewport of stage, one of scroll to play the opening across */
-	height: 200vh;
-}
-
-.stage {
-	position: sticky;
-	top: 0;
-	height: 100vh;
-	overflow: hidden;
-}
-
-/* Starts exactly on the hero's knife peek — same width, same right offset,
-   same tilt — so the knife reads as the same object arriving, not a new one.
-   The vertical centring is `top`, not a translate: GSAP owns the transform
-   from the first tick and a percentage translate would fight it. */
-.knifeWrap {
-	position: absolute;
-	right: 3vw;
-	width: min(44vw, 640px);
-	top: calc(50% - 0.5 * min(44vw, 640px));
-	transform: rotate(-14deg);
-}
-
-/* ---- orbit labels ---- */
+/* ---- orbit labels around an opened knife ---- */
 
 .labels {
 	position: absolute;
@@ -244,71 +93,277 @@ Replace the entire contents of `src/components/knife/knife-opening.module.css` w
 	visibility: visible;
 }
 
-/* ---- reduced motion: no stage, no travel, the knife simply stands open ---- */
-
+/* the knife is shown open and annotated when motion is off — no timeline
+   ever runs to reveal these */
 @media (prefers-reduced-motion: reduce) {
-	.opening {
-		height: auto;
-	}
-
-	.stage {
-		position: static;
-		height: auto;
-		overflow: visible;
-		padding-block: var(--space-section);
-	}
-
-	/* the open blades sweep well outside the closed silhouette, so the knife
-	   gets the middle of the page rather than a corner */
-	.knifeWrap {
-		position: relative;
-		top: auto;
-		right: auto;
-		width: min(70vw, 520px);
-		margin-inline: auto;
-		transform: none;
-	}
-
 	.label {
 		opacity: 1;
 		visibility: visible;
 	}
 }
 
-/* ---- narrow screens: match the hero's mobile peek ---- */
-
+/* §33: no labels orbiting the object on mobile — there is not room */
 @media (max-width: 768px) {
-	.knifeWrap {
-		width: 72vw;
-		top: auto;
-		right: 4vw;
-		bottom: 3%;
-	}
-
-	/* §33: no labels orbiting the object on mobile — there is not room */
 	.labels {
 		display: none;
 	}
 }
 ```
 
-- [ ] **Step 3: Point `ToolLabels` at the renamed module**
-
-In `src/components/knife/ToolLabels.tsx`, change line 2 from:
+Then point `src/components/knife/ToolLabels.tsx:2` at it:
 
 ```tsx
-import styles from "./knife-story.module.css";
+import styles from "./knife.module.css";
 ```
 
-to:
+- [ ] **Step 2: Wrap the knife and close its blades**
+
+In `src/components/sections/OutcomeTransition.tsx`, add the `ToolLabels` import beside `KnifeCanvas`:
 
 ```tsx
-import styles from "./knife-opening.module.css";
+import KnifeCanvas from "@/components/knife/KnifeCanvas";
+import ToolLabels from "@/components/knife/ToolLabels";
 ```
 
-- [ ] **Step 4: Write the new component**
+Delete the now-unused `OPEN_ANGLES` const (line 11):
 
-Replace the entire contents of `src/components/knife/KnifeOpening.tsx` with:
+```tsx
+const OPEN_ANGLES = Object.fromEntries(capabilities.map((c) => [c.id, c.openAngle]));
+```
+
+Replace the `.knifeEl` block in the JSX:
+
+```tsx
+          <div className={styles.knifeEl} data-knife-el="">
+            <KnifeCanvas angles={OPEN_ANGLES} />
+          </div>
+```
+
+with:
+
+```tsx
+          <div className={styles.knifeEl} data-knife-el="">
+            {/* The Hero's timeline drives this wrapper — peek, travel, zoom,
+                fan — and leaves it at identity exactly as that timeline ends.
+                Everything below therefore sees the same geometry it always
+                did, and there is only ever one knife on the page. */}
+            <div className={styles.knifeIntro} data-knife-intro="">
+              <KnifeCanvas />
+              <ToolLabels />
+            </div>
+          </div>
+```
+
+`KnifeCanvas` without `angles` renders closed, which is what the fan opens from. Its default `reducedPose="open"` still opens the blades via CSS under `prefers-reduced-motion: reduce`.
+
+- [ ] **Step 3: Start the trigger a viewport late**
+
+In the same file's `ScrollTrigger` config, replace:
+
+```tsx
+              start: "top top",
+```
+
+with:
+
+```tsx
+              // the section is pulled up to document 0 so its stage is pinned
+              // from the first pixel and the knife never rises into frame.
+              // The timeline itself still begins where the hero's ends.
+              start: () => window.innerHeight,
+```
+
+- [ ] **Step 4: Reposition the section and reveal the knife**
+
+In `src/components/sections/OutcomeTransition.module.css`:
+
+Replace the `.section` height and margin (lines 2-8):
+
+```css
+	/* 100vh viewport + 420vh of story + ~105vh of compass runway — locked
+	   to DUR in OutcomeTransition.tsx (height = 100vh + 420vh × DUR) */
+	height: 625vh;
+	/* starts one viewport early: the pin engages exactly as the story knife
+	   finishes centering, so the handoff is an in-place swap */
+	margin-top: -100vh;
+```
+
+with:
+
+```css
+	/* 200vh viewport + 420vh of story + ~105vh of compass runway — locked to
+	   DUR in OutcomeTransition.tsx (height = 200vh + 420vh × DUR) */
+	height: 725vh;
+	/* pulled up over the whole hero so the stage is pinned from the first
+	   pixel: the one knife on the page is already on screen, and never has to
+	   rise into frame. The trigger's own start is offset to compensate. */
+	margin-top: -200vh;
+```
+
+Add the intro wrapper beside `.knifeEl` (after line 35):
+
+```css
+.knifeIntro {
+	position: absolute;
+	inset: 0;
+}
+```
+
+Remove `.knifeEl` from the `opacity: 0` list in the `no-preference` block (around line 202) — the knife is visible from the start now. The list becomes:
+
+```css
+	.circle,
+	.compassWrap,
+	.statement,
+	.interLine,
+	.col {
+		opacity: 0;
+	}
+```
+
+Remove `.knifeEl` from the reduced-motion `display: none` list (around line 228), so it becomes:
+
+```css
+	.circles,
+	.bloom,
+	.lineup,
+	.interLine {
+		display: none;
+	}
+```
+
+- [ ] **Step 5: Verify nothing regressed yet**
+
+Run: `npm run check && npm test && npm run build`
+Expected: clean. The page still has two knives at this point (the opening section is still there) — Task 2 removes it. Do not screenshot for correctness yet.
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add -A
+git commit -m "refactor: the lineup's knife gets a handle and comes on screen early"
+```
+
+---
+
+### Task 2: The hero drives the one knife
+
+Delete `KnifeOpening`. The Hero becomes 200vh, drops its own knife, and takes over the peek, travel, zoom and fan.
+
+**Files:**
+- Delete: `src/components/knife/KnifeOpening.tsx`, `src/components/knife/knife-opening.module.css`
+- Modify: `src/app/page.tsx`
+- Modify: `src/lib/data/scroll.ts`, `src/lib/data/data.test.ts`
+- Modify: `src/components/sections/Hero.tsx`, `src/components/sections/Hero.module.css`
+
+**Interfaces:**
+- Consumes: `[data-knife-intro]` from Task 1.
+- Produces, from `@/lib/data/scroll`: `COPY_OUT_END`, `TRAVEL_START`, `TRAVEL_END`, `OPEN_AT`, `REARM_AT`, `LABELS_OUT`, `STAGGER`, `BLADE_DUR`, `LABEL_DELAY`, `PEEK_SCALE` (all `number`) and `bladeDelay(i: number): number`.
+
+- [ ] **Step 1: Rewrite the beats**
+
+Replace the whole of `src/lib/data/scroll.ts` — the six story windows go with the section they described:
+
+```ts
+/**
+ * Beats for the knife's opening. Progress is 0..1 across the hero's 200vh:
+ * the copy leaves, the one knife on the page travels from its peek to centre
+ * stage and grows, the blades fan open on their own clock, then the lineup's
+ * timeline takes the same element over.
+ *
+ * The fan is deliberately NOT on this scale — it runs in seconds, fired once
+ * when the knife lands. Scrubbed easing reads as the reader's hand; time-based
+ * easing reads as the object's own weight.
+ */
+
+/** The hero copy has fully cleared the stage by here. */
+export const COPY_OUT_END = 0.2;
+
+/** The knife's scrubbed travel from its peek to centre stage. */
+export const TRAVEL_START = 0.08;
+export const TRAVEL_END = 0.55;
+
+/** Landing fires the fan. Scrolling back below REARM_AT re-arms it; the gap
+    between the two is hysteresis, so jitter at the threshold cannot retrigger. */
+export const OPEN_AT = TRAVEL_END;
+export const REARM_AT = 0.45;
+
+/** Labels retire before the lineup starts pulling the knife apart. */
+export const LABELS_OUT = 0.92;
+
+/** Seconds between blade starts. */
+export const STAGGER = 0.1;
+/** Seconds for one blade to swing out and settle. */
+export const BLADE_DUR = 0.75;
+/** Seconds after a blade starts before its label arrives. */
+export const LABEL_DELAY = 0.22;
+
+/** The peek is the same knife, smaller — so the travel is a genuine zoom in
+    rather than the shrink two separate knives forced. */
+export const PEEK_SCALE = 0.75;
+
+/** Start offset, in seconds, for blade `i` of the fan. */
+export function bladeDelay(i: number): number {
+  return i * STAGGER;
+}
+```
+
+- [ ] **Step 2: Update the tests**
+
+In `src/lib/data/data.test.ts`, replace the `./scroll` import with:
+
+```ts
+import {
+  COPY_OUT_END,
+  TRAVEL_START,
+  TRAVEL_END,
+  OPEN_AT,
+  REARM_AT,
+  LABELS_OUT,
+  STAGGER,
+  BLADE_DUR,
+  LABEL_DELAY,
+  PEEK_SCALE,
+  bladeDelay,
+} from "./scroll";
+```
+
+Delete the `describe("scroll windows", ...)` block entirely, and replace the `describe("opening beats", ...)` block's first two tests with:
+
+```ts
+  it("clears the copy, travels, lands, then frees the knife, in order", () => {
+    expect(TRAVEL_START).toBeGreaterThan(0);
+    expect(TRAVEL_START).toBeLessThan(COPY_OUT_END);
+    expect(TRAVEL_END).toBeGreaterThan(COPY_OUT_END);
+    expect(OPEN_AT).toBeGreaterThanOrEqual(TRAVEL_END);
+    expect(LABELS_OUT).toBeGreaterThan(OPEN_AT);
+    expect(LABELS_OUT).toBeLessThan(1);
+  });
+
+  it("re-arms the fan below the trigger, with hysteresis", () => {
+    expect(REARM_AT).toBeLessThan(OPEN_AT);
+    expect(REARM_AT).toBeGreaterThan(TRAVEL_START);
+  });
+
+  it("peeks smaller than it lands, so the travel is a zoom in", () => {
+    expect(PEEK_SCALE).toBeGreaterThan(0);
+    expect(PEEK_SCALE).toBeLessThan(1);
+  });
+```
+
+Keep the two stagger tests unchanged.
+
+- [ ] **Step 3: Delete the opening section**
+
+```bash
+git rm src/components/knife/KnifeOpening.tsx src/components/knife/knife-opening.module.css
+```
+
+In `src/app/page.tsx`, delete the `KnifeOpening` import (line 4) and the `<KnifeOpening />` element (line 20).
+
+- [ ] **Step 4: Rewrite the Hero**
+
+Replace `src/components/sections/Hero.tsx` with:
 
 ```tsx
 "use client";
@@ -316,31 +371,32 @@ Replace the entire contents of `src/components/knife/KnifeOpening.tsx` with:
 import { useRef } from "react";
 import { capabilities } from "@/lib/data/capabilities";
 import {
+  COPY_OUT_END,
   TRAVEL_START,
   TRAVEL_END,
   OPEN_AT,
   REARM_AT,
+  LABELS_OUT,
   BLADE_DUR,
   LABEL_DELAY,
-  HANDOFF_START,
-  HANDOFF_DUR,
+  PEEK_SCALE,
   bladeDelay,
 } from "@/lib/data/scroll";
 import { gsap, useGSAP } from "@/lib/gsap";
-import KnifeCanvas from "./KnifeCanvas";
-import ToolLabels from "./ToolLabels";
-import styles from "./knife-opening.module.css";
+import styles from "./Hero.module.css";
 
 /**
- * The transition between the hero and the lineup. The knife arrives from the
- * hero's peek, travels to the middle and grows until it has the stage, then
- * fans open a blade at a time before dissolving into the morph section's
- * knife. No narrative — the copy that used to live here is being reworked.
+ * The opening. Two viewports over a sticky stage: the copy leaves, the knife
+ * travels in from its peek and grows, its blades fan open a at a time, and the
+ * lineup's timeline picks the same element up where this one lets go.
+ *
+ * The knife itself belongs to OutcomeTransition — that section's stage is
+ * pinned from the first pixel of the page, so its knife is already on screen
+ * here. There is exactly one knife in the DOM and this drives it by the
+ * [data-knife-intro] handle, leaving it at identity when the hero ends.
  */
-export default function KnifeOpening() {
+export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const wrapRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -361,30 +417,38 @@ export default function KnifeOpening() {
           if (!motionOk) return;
 
           const section = sectionRef.current;
-          const stage = stageRef.current;
-          const wrap = wrapRef.current;
-          if (!section || !stage || !wrap) return;
+          const knifeEl = document.querySelector<HTMLElement>("[data-knife-el]");
+          const intro = document.querySelector<HTMLElement>("[data-knife-intro]");
+          if (!section || !knifeEl || !intro) return;
 
           // §32: compress blade angles on small screens
           const factor = compact ? 0.8 : 1;
 
-          const blades = Array.from(wrap.querySelectorAll<HTMLElement>("[data-tool]"));
-          const labels = Array.from(wrap.querySelectorAll<HTMLElement>("[data-label]"));
+          const blades = Array.from(intro.querySelectorAll<HTMLElement>("[data-tool]"));
+          const labels = Array.from(intro.querySelectorAll<HTMLElement>("[data-label]"));
 
-          // Layout values, not getBoundingClientRect: the knife starts tilted,
-          // and a rotated element's rect is its axis-aligned box — wider than
-          // the element. offset* is immune to transforms, so this stays correct
-          // at every angle, scale and scroll position.
-          const box = () => ({
-            w: wrap.offsetWidth,
-            cx: wrap.offsetLeft + wrap.offsetWidth / 2,
-            cy: wrap.offsetTop + wrap.offsetHeight / 2,
+          // The knife box, centred in the viewport by OutcomeTransition's grid
+          // and shifted right by 0.135 * S so the left-biased art reads centred.
+          const S = () => knifeEl.offsetWidth;
+          const artCentre = () => window.innerWidth / 2 + 0.135 * S();
+
+          // Where the peek sits, as an offset from the knife's resting place.
+          // Desktop: tucked to the right of the copy. Compact: low-right, clear
+          // of the headline, matching where the hero's knife always sat.
+          const peekX = () =>
+            window.innerWidth -
+            0.03 * window.innerWidth -
+            (PEEK_SCALE * S()) / 2 -
+            artCentre();
+          const peekY = () =>
+            compact ? 0.3 * window.innerHeight : -0.08 * window.innerHeight;
+
+          gsap.set(intro, {
+            x: peekX,
+            y: peekY,
+            scale: PEEK_SCALE,
+            rotation: -14,
           });
-
-          // The same expression as OutcomeTransition's .inner width, so the two
-          // knives are congruent when the crossfade happens.
-          const targetW = () =>
-            Math.min(0.58 * window.innerHeight, 0.54 * window.innerWidth, 660);
 
           // The fan runs on its own clock, fired once when the knife lands and
           // re-armed if the reader scrolls back up past REARM_AT.
@@ -438,18 +502,21 @@ export default function KnifeOpening() {
           // spacer: every position below is literally a scroll fraction
           tl.to({}, { duration: 1 }, 0);
 
-          // the knife travels to the middle, straightens and grows into the
-          // stage. Lazy functions, so resize and mid-page reload both land.
+          // the copy leaves so the knife has the stage to itself
           tl.to(
-            wrap,
+            "[data-hero-copy]",
+            { autoAlpha: 0, y: -48, duration: COPY_OUT_END, ease: "power2.in" },
+            0
+          );
+
+          // the knife travels to centre, straightens and grows. Identity at the
+          // end — which is exactly the pose the lineup's timeline assumes.
+          tl.to(
+            intro,
             {
-              x: () =>
-                // the art sits left of centre in its box, so the box lands
-                // shifted right for the ART to read centred. OutcomeTransition
-                // opens by sliding this same offset back to zero.
-                stage.clientWidth / 2 - box().cx + 0.135 * targetW(),
-              y: () => stage.clientHeight / 2 - box().cy,
-              scale: () => targetW() / box().w,
+              x: 0,
+              y: 0,
+              scale: 1,
               rotation: 0,
               duration: TRAVEL_END - TRAVEL_START,
               ease: "power2.inOut",
@@ -457,31 +524,8 @@ export default function KnifeOpening() {
             TRAVEL_START
           );
 
-          // labels retire before the handoff, so no label-sized ghost survives
-          // into a knife that has none
-          tl.to(labels, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, HANDOFF_START - 0.05);
-
-          // Crossfade rather than a hard swap: two near-identical frames
-          // dissolving absorbs whatever lag the scrub is carrying, so there is
-          // never a visible jump and never two knives.
-          const morphKnife = document.querySelector("[data-knife-el]");
-          if (morphKnife) {
-            tl.to(morphKnife, { autoAlpha: 1, duration: HANDOFF_DUR, ease: "none" }, HANDOFF_START);
-            tl.to(wrap, { autoAlpha: 0, duration: HANDOFF_DUR, ease: "none" }, HANDOFF_START);
-
-            // The morph stage has not pinned yet during the crossfade — it is
-            // still rising toward the top of the viewport and its knife rides
-            // up with it. Both the rise and the timeline are linear in scroll,
-            // so an equal counter-translation cancels it exactly and the
-            // incoming knife holds dead centre while it dissolves in.
-            const range = () => section.offsetHeight - window.innerHeight;
-            tl.fromTo(
-              morphKnife,
-              { y: () => -HANDOFF_DUR * range() },
-              { y: 0, duration: HANDOFF_DUR, ease: "none", immediateRender: false },
-              HANDOFF_START
-            );
-          }
+          // labels retire before the lineup starts pulling the blades apart
+          tl.to(labels, { autoAlpha: 0, duration: 0.05, ease: "power2.in" }, LABELS_OUT);
 
           // §39: once the fan has finished, hovering a blade dims the others
           // and lifts its own label. Desktop only.
@@ -490,7 +534,7 @@ export default function KnifeOpening() {
 
             const onOver = (e: MouseEvent) => {
               const hit = (e.target as Element | null)?.closest?.("[data-tool]");
-              if (!hit || !st || st.progress < OPEN_AT) return;
+              if (!hit || !st || st.progress < OPEN_AT || st.progress > LABELS_OUT) return;
               const id = hit.getAttribute("data-tool");
               blades.forEach((t) =>
                 gsap.to(t, { opacity: t === hit ? 1 : 0.55, duration: 0.2, overwrite: "auto" })
@@ -511,11 +555,11 @@ export default function KnifeOpening() {
               );
             };
 
-            wrap.addEventListener("mouseover", onOver);
-            wrap.addEventListener("mouseleave", onLeave);
+            intro.addEventListener("mouseover", onOver);
+            intro.addEventListener("mouseleave", onLeave);
             return () => {
-              wrap.removeEventListener("mouseover", onOver);
-              wrap.removeEventListener("mouseleave", onLeave);
+              intro.removeEventListener("mouseover", onOver);
+              intro.removeEventListener("mouseleave", onLeave);
             };
           }
         }
@@ -527,17 +571,27 @@ export default function KnifeOpening() {
   );
 
   return (
-    <section
-      ref={sectionRef}
-      className={styles.opening}
-      aria-label="Capabilities"
-      /* chapter marks: the knife lands, then the handoff */
-      data-ruler-beats={`${TRAVEL_END},${HANDOFF_START}`}
-    >
-      <div className={styles.stage} ref={stageRef}>
-        <div className={styles.knifeWrap} ref={wrapRef}>
-          <KnifeCanvas />
-          <ToolLabels />
+    <section ref={sectionRef} className={styles.hero} id="top">
+      <div className={styles.stage}>
+        <div className={`section-shell ${styles.inner}`} data-hero-copy="">
+          <p className={`mono-label ${styles.eyebrow}`}>
+            Product Builder · Designer · Engineer
+          </p>
+          <h1 className={`serif-display ${styles.headline}`}>
+            Give me the outcome.
+            <br />
+            I&apos;ll figure out the rest.
+          </h1>
+          <p className={styles.desc}>
+            I work across product, design, engineering and AI to turn ambiguous problems into
+            shipped systems.
+          </p>
+          <a href="#work" className={`mono-label ${styles.cue}`}>
+            See how{" "}
+            <span className={styles.arrow} aria-hidden="true">
+              ↓
+            </span>
+          </a>
         </div>
       </div>
     </section>
@@ -545,165 +599,137 @@ export default function KnifeOpening() {
 }
 ```
 
-`KnifeCanvas` takes no `reducedPose` prop: its default is `"open"`, which applies `rotate(var(--open))` **only** inside a `prefers-reduced-motion: reduce` media query. Motion-enabled visitors get closed blades from the inline `rotate(0deg)`, which is what the fan starts from.
+- [ ] **Step 5: Rewrite the Hero's CSS**
 
-- [ ] **Step 5: Update the page**
+In `src/components/sections/Hero.module.css`, replace the `.hero` rule and delete `.knifePeek` and the mobile `.knifePeek` block. The head of the file becomes:
 
-In `src/app/page.tsx`, change line 4:
+```css
+.hero {
+	position: relative;
+	/* one viewport of stage, one of scroll to play the opening across */
+	height: 200vh;
+}
 
-```tsx
-import KnifeStory from "@/components/knife/KnifeStory";
+.stage {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+}
 ```
 
-to:
+Keep `.inner`, `.eyebrow`, `.headline`, `.desc`, `.cue`, `.arrow`, the `nudge` keyframes and the hover block exactly as they are. Replace the trailing `@media (max-width: 768px)` block with:
 
-```tsx
-import KnifeOpening from "@/components/knife/KnifeOpening";
+```css
+@media (max-width: 768px) {
+	.stage {
+		align-items: flex-start;
+		padding-block: 8rem 0;
+	}
+}
 ```
 
-and line 20:
+and add a reduced-motion rule so the hero stops being two viewports of nothing:
 
-```tsx
-        <KnifeStory />
-```
+```css
+@media (prefers-reduced-motion: reduce) {
+	.hero {
+		height: auto;
+	}
 
-to:
-
-```tsx
-        <KnifeOpening />
+	.stage {
+		position: static;
+		height: auto;
+		min-height: 100vh;
+		overflow: visible;
+	}
+}
 ```
 
 - [ ] **Step 6: Verify**
 
 Run: `npm run check && npm test && npm run build`
-Expected: all three clean.
+Expected: all clean.
 
 - [ ] **Step 7: Screenshot the opening**
 
-Run: `node scripts/scroll-shots.mjs http://localhost:3000 "section[aria-label='Capabilities']" "0,0.2,0.42,0.6,0.95" shots-open 1440 900`
+```bash
+node scripts/scroll-shots.mjs http://localhost:3000 "#top" "0,0.25,0.55,0.8,1" shots-one 1440 900
+```
 
-Expected, frame by frame:
-- `0` — closed knife at the right, tilted, matching the hero's peek
-- `0.2` — mid-travel, moving left and down, straightening, growing
-- `0.42` — landed centre, blades starting to fan
-- `0.6` — fully open with labels
-- `0.95` — mid-crossfade, knife holding dead still
+Expected: peek small and tilted at the right with the copy present; copy leaving and the knife on the move; landed centre, larger than it started, fanning; open with labels; still open, labels gone. **One knife in every frame.**
 
-The fan is fired from `onUpdate`, so a jump past `OPEN_AT` still triggers it. If `0.6` shows a closed knife, the threshold never fired — check that before changing any numbers.
-
-- [ ] **Step 8: Check reduced motion and compact**
+- [ ] **Step 8: Screenshot the join into the lineup**
 
 ```bash
-node scripts/shot.mjs http://localhost:3000 shots-open-reduce.png 1440 900 reduce full
-node scripts/scroll-shots.mjs http://localhost:3000 "section[aria-label='Capabilities']" "0,0.6" shots-open-mob 390 844
+node scripts/scroll-shots.mjs http://localhost:3000 "body" "0,0.04,0.09,0.14,0.22,0.3,0.4" shots-join 1440 900
 ```
 
-Expected: the `reduce` shot shows a centred, fully open, labelled knife in normal page flow with no 200vh of empty scroll. The mobile `0.6` frame shows an open knife with **compressed** angles and **no** labels.
+Expected: no black gap, no second knife, and the tools coming apart straight from the knife the hero left open.
 
-- [ ] **Step 9: Commit**
+- [ ] **Step 9: Reduced motion and compact**
 
 ```bash
-git add -A
-git commit -m "feat: the story section becomes a knife that simply opens"
+node scripts/shot.mjs http://localhost:3000 shots-one-reduce.png 1440 900 reduce full
+node scripts/scroll-shots.mjs http://localhost:3000 "#top" "0,0.8" shots-one-mob 390 844
 ```
 
----
+Expected: reduced motion shows the copy and a static open labelled knife with no empty scroll. Mobile shows the peek low-right, then an open knife with compressed angles and no labels.
 
-### Task 3: Retire the story's leftovers
-
-The six scroll windows and their test now describe nothing. Remove them and retarget the comments that still name the old section.
-
-**Files:**
-- Modify: `src/lib/data/scroll.ts:1-14` (delete the window exports)
-- Modify: `src/lib/data/data.test.ts` (delete the `scroll windows` block and its imports)
-- Modify: `src/components/MotionProvider.tsx:13` (comment)
-- Modify: `src/components/sections/OutcomeTransition.tsx:141-147` (comments)
-- Modify: `src/components/sections/OutcomeTransition.module.css:7,10` (comments)
-
-**Interfaces:**
-- Consumes: nothing. Produces: nothing.
-
-- [ ] **Step 1: Confirm nothing reads the window exports**
-
-Run: `grep -rn "windowFor\|INTRO_END\|COMPLETE_START\|WINDOW\b" src/`
-Expected: matches only in `src/lib/data/scroll.ts` and `src/lib/data/data.test.ts`. Anything else means Task 2 missed a call site — stop and report.
-
-- [ ] **Step 2: Delete the window exports**
-
-In `src/lib/data/scroll.ts`, delete lines 1-14 — the file-top docstring through the closing brace of `windowFor`. The file now begins with the opening-beats docstring added in Task 1.
-
-- [ ] **Step 3: Delete the old test block and imports**
-
-In `src/lib/data/data.test.ts`, remove `windowFor`, `INTRO_END` and `COMPLETE_START` from the `./scroll` import list, and delete the whole `describe("scroll windows", ...)` block.
-
-- [ ] **Step 4: Retarget the stale comments**
-
-`src/components/MotionProvider.tsx:13` — change `KnifeStory` to `KnifeOpening`:
-
-```
- * scrubbed pinned sections (KnifeOpening, OutcomeTransition, FinalCTA)
-```
-
-`src/components/sections/OutcomeTransition.tsx:141-147` — replace:
-
-```tsx
-          // NOTE: the story timeline performs the in-place knife swap at its
-          // own scrubbed completion (KnifeStory.tsx) — swapping from here
-          // fired before the centering had rendered (scrub lag = two knives).
-
-          // starts where the story knife lands: shifted right so the
-          // left-biased art reads centered (KnifeStory.tsx). Slides back to
-```
-
-with:
-
-```tsx
-          // NOTE: the opening timeline performs the in-place knife swap at its
-          // own scrubbed completion (KnifeOpening.tsx) — swapping from here
-          // fired before the centering had rendered (scrub lag = two knives).
-
-          // starts where the opening knife lands: shifted right so the
-          // left-biased art reads centered (KnifeOpening.tsx). Slides back to
-```
-
-`src/components/sections/OutcomeTransition.module.css` — in the comments on lines 7 and 10, replace "the story knife" with "the opening knife" and "the story's hover" with "the opening's hover". No property values change.
-
-- [ ] **Step 5: Verify**
-
-Run: `npm run check && npm test && npm run build`
-Expected: all clean.
-
-- [ ] **Step 6: Walk the whole page**
-
-Run: `node scripts/scroll-shots.mjs http://localhost:3000 "body" "0,0.06,0.12,0.22,0.38,0.55,0.7,0.85,0.97" shots-page 1440 900`
-
-Expected: hero → knife arriving → open knife with labels → tools coming apart → lineup → circles → compass → cases → career → operating model → CTA. No gap where the story was, no double knife at the handoff, and the page roughly 400vh shorter than before the branch.
-
-- [ ] **Step 7: Confirm the lineup is byte-for-byte unchanged**
-
-Run: `git diff main --stat -- src/components/sections/OutcomeTransition.tsx`
-Expected: comment lines only. If any statement changed, revert that hunk — the lineup was explicitly out of scope.
-
-- [ ] **Step 8: Clean up and commit**
+- [ ] **Step 10: Commit**
 
 ```bash
 rm -f shots-*.png
 git add -A
-git commit -m "chore: the story's scroll windows and stale names retire"
+git commit -m "feat: one knife from the hero to the lineup"
+```
+
+---
+
+### Task 3: Sweep the stale names
+
+**Files:**
+- Modify: `src/components/MotionProvider.tsx:13`
+- Modify: `src/components/sections/OutcomeTransition.tsx` (comments around 141-147)
+- Modify: `src/components/sections/OutcomeTransition.module.css` (comment on the `pointer-events` rule)
+
+- [ ] **Step 1: Find them**
+
+Run: `grep -rn "KnifeStory\|KnifeOpening\|story knife\|the story" src/`
+Expected: comments only.
+
+- [ ] **Step 2: Retarget**
+
+`MotionProvider.tsx:13` — `(KnifeStory, OutcomeTransition, FinalCTA)` becomes `(Hero, OutcomeTransition, FinalCTA)`.
+
+`OutcomeTransition.tsx` — the note about the story timeline performing an in-place swap is now wrong in substance, not just in name. Replace the two comment paragraphs before the `[data-knife-el]` tween with:
+
+```tsx
+          // The hero drives this same element by its [data-knife-intro] handle
+          // and leaves it at identity — there is one knife on the page and no
+          // swap to get wrong.
+
+          // sits shifted right so the left-biased art reads centred. Slides
+          // back to neutral while the tools drift apart — the motion masks it
+          // and every later beat keeps plain math.
+```
+
+`OutcomeTransition.module.css` — the `pointer-events: none` comment saying "must not swallow the story's hover" becomes "must not swallow the hero's hover".
+
+- [ ] **Step 3: Verify and commit**
+
+```bash
+npm run check && npm test && npm run build
+git add -A
+git commit -m "chore: the story's name retires with it"
 ```
 
 ---
 
 ## Deferred, not forgotten
 
-`c.statement`, `c.tags` and `c.hover` in `src/lib/data/capabilities.ts` now have **no consumer**. The fields stay — `data.test.ts` still asserts them and Cyril is reworking the narrative separately. Three pieces of copy lost their home:
+`c.statement`, `c.tags` and `c.hover` have no consumer. The fields stay — `data.test.ts` still asserts them and Cyril is reworking the narrative separately. Homeless copy: the six per-capability statements and tag lists, "Sometimes the problem isn't a design problem.", and "One person. Multiple points of leverage."
 
-- the six per-capability statements and tag lists
-- the intro line, "Sometimes the problem isn't a design problem."
-- the closing line, "One person. Multiple points of leverage."
-
-The `OPEN_AT` → `HANDOFF_START` stretch (0.42 → 0.90, about 50vh) is where that copy would land. Until it does, that stretch is a hold with nothing in it; shortening it is a one-line change in `scroll.ts`.
-
-`c.hover` was already dead before this branch — the hover handler dims blades and recolours labels but never renders the string.
-
-Two knives are on screen together between the hero and the opening: they sit 100vh apart, so one leaves the top as the other enters the bottom. That is existing behaviour, but matching the start position to the hero's peek makes it more noticeable. If it reads badly, the fix is a negative top margin on `.opening` plus a fade-in on the incoming knife — worth deciding after seeing it.
+The `OPEN_AT` → `LABELS_OUT` stretch (0.55 → 0.92, about 37vh) is where that copy would land.
