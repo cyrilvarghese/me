@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 770" role="img"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 860" role="img"
      aria-label="Six stages of care — pick a patient, take history, order tests, diagnose, treat, read the feedback — running down a column and returning from the last to the first, with a new patient every time round.">
   <!-- The phone telling of the ring.
 
@@ -9,92 +9,102 @@
        dropping it would leave a list of six stages, which is what the ring
        existed to not be.
 
-       The route is one closed path, same as the ring: 1412 units, and the
-       house dash travels 246 a second, so the lap takes 5.74s.
+       Same parts as the ring, laid out again: a node on the route, the
+       icon beside it, the label under the icon.
 
-       Type returns to the ladder at this width: 15 for a stage, 20 for the
-       name of the thing they belong to. -->
+       The route is one closed path — 1456 units, and the house dash travels
+       246 a second, so the lap takes 5.92s.
+
+       Strokes are 02-canvas's numbers multiplied by 1.24, because this box
+       renders at about 0.81px per unit where the reference renders at 0.95.
+       The number in the file differs so the mark on screen does not. -->
   <defs>
     <!-- its own id: this file and the wide one are both inlined into the
          same document, and a shared id would leave one of them pointing at
          the other's definition -->
     <radialGradient id="ccGlowCol">
-      <stop offset="0%" stop-color="#f8f4f2" stop-opacity=".22"/>
-      <stop offset="55%" stop-color="#f8f4f2" stop-opacity=".10"/>
+      <stop offset="0%" stop-color="#f8f4f2" stop-opacity=".20"/>
+      <stop offset="55%" stop-color="#f8f4f2" stop-opacity=".09"/>
       <stop offset="100%" stop-color="#f8f4f2" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
   <g fill="none">
-    <path d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
+    <path d="M36 70 L36 744 Q36 758 22 758 Q8 758 8 744 L8 60 Q8 46 22 46 Q36 46 36 60 L36 70"
           stroke="rgba(248,244,242,0.24)" stroke-width="2.6"
           stroke-linecap="round" stroke-dasharray="2.5 17.5"/>
 
     <path class="cc-trail" pathLength="100"
-          d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
+          d="M36 70 L36 744 Q36 758 22 758 Q8 758 8 744 L8 60 Q8 46 22 46 Q36 46 36 60 L36 70"
           stroke="#eee8e6" stroke-width="3" stroke-linecap="round"
-          style="--dur:5.74s"/>
+          style="--dur:5.92s"/>
 
     <path class="cc-run"
-          d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
+          d="M36 70 L36 744 Q36 758 22 758 Q8 758 8 744 L8 60 Q8 46 22 46 Q36 46 36 60 L36 70"
           stroke="#ea0000" stroke-width="4.25" stroke-linecap="round"
-          style="--len:1412; --dash:12; --dur:5.74s"/>
+          style="--len:1456; --dash:12; --dur:5.92s"/>
+  </g>
+
+  <!-- the closing edge is named where it arrives rather than where it
+       leaves, which is the only place in a column with room for the words -->
+  <text class="cc-in" style="--d:1s" x="77" y="26" font-size="15" fill="#ea0000">and again — a new patient</text>
+
+  <!-- The six stops. Each --d is that stop's distance along the route as a
+       share of the lap, so it fires as the runner reaches it — the stops
+       are evenly spaced, the return is not, so these are not a sixth apart
+       the way the ring's are. -->
+  <g font-size="15" fill="currentColor">
+    <g class="cc-in" style="--d:.15s">
+      <circle class="cc-ping" cx="36" cy="70" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:0s"/>
+      <circle class="cc-pop" cx="36" cy="70" r="7" fill="#ea0000" style="--dur:5.92s; --d:0s"/>
+      <circle cx="100" cy="70" r="42" fill="url(#ccGlowCol)"/>
+      <image href="/assets/CaseChat/icons/Patient.png" x="77" y="47" width="46" height="46"/>
+      <text x="77" y="110" opacity=".8">1 · PICK A PATIENT</text>
+    </g>
+
+    <g class="cc-in" style="--d:.25s">
+      <circle class="cc-ping" cx="36" cy="200" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:.529s"/>
+      <circle class="cc-pop" cx="36" cy="200" r="7" fill="#ea0000" style="--dur:5.92s; --d:.529s"/>
+      <circle cx="100" cy="200" r="42" fill="url(#ccGlowCol)"/>
+      <image href="/assets/CaseChat/icons/patient-history.png" x="77" y="177" width="46" height="46"/>
+      <text x="77" y="240" opacity=".8">2 · TAKE HISTORY</text>
+    </g>
+
+    <g class="cc-in" style="--d:.35s">
+      <circle class="cc-ping" cx="36" cy="330" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:1.057s"/>
+      <circle class="cc-pop" cx="36" cy="330" r="7" fill="#ea0000" style="--dur:5.92s; --d:1.057s"/>
+      <circle cx="100" cy="330" r="42" fill="url(#ccGlowCol)"/>
+      <image href="/assets/CaseChat/icons/test.png" x="77" y="307" width="46" height="46"/>
+      <text x="77" y="370" opacity=".8">3 · ORDER TESTS</text>
+    </g>
+
+    <g class="cc-in" style="--d:.45s">
+      <circle class="cc-ping" cx="36" cy="460" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:1.586s"/>
+      <circle class="cc-pop" cx="36" cy="460" r="7" fill="#ea0000" style="--dur:5.92s; --d:1.586s"/>
+      <circle cx="100" cy="460" r="42" fill="url(#ccGlowCol)"/>
+      <image href="/assets/CaseChat/icons/diagnosis.png" x="77" y="437" width="46" height="46"/>
+      <text x="77" y="500" opacity=".8">4 · DIAGNOSE</text>
+    </g>
+
+    <g class="cc-in" style="--d:.55s">
+      <circle class="cc-ping" cx="36" cy="590" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:2.114s"/>
+      <circle class="cc-pop" cx="36" cy="590" r="7" fill="#ea0000" style="--dur:5.92s; --d:2.114s"/>
+      <circle cx="100" cy="590" r="42" fill="url(#ccGlowCol)"/>
+      <image href="/assets/CaseChat/icons/treatment.png" x="77" y="567" width="46" height="46"/>
+      <text x="77" y="630" opacity=".8">5 · TREAT</text>
+    </g>
+
+    <g class="cc-in" style="--d:.65s">
+      <circle class="cc-ping" cx="36" cy="720" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:2.643s"/>
+      <circle class="cc-pop" cx="36" cy="720" r="7" fill="#ea0000" style="--dur:5.92s; --d:2.643s"/>
+      <circle cx="100" cy="720" r="42" fill="url(#ccGlowCol)"/>
+      <image href="/assets/CaseChat/icons/Feedback.png" x="77" y="697" width="46" height="46"/>
+      <text x="77" y="760" opacity=".8">6 · FEEDBACK</text>
+    </g>
   </g>
 
   <!-- The clinic the loop runs inside, named at the foot of the column
        rather than in a middle it no longer has. -->
-  <text class="cc-in" style="--d:.05s" x="110" y="712" font-size="20" fill="#ea0000">VIRTUAL CLINIC</text>
-  <text class="cc-in" style="--d:.05s" x="110" y="736" font-size="15" fill="currentColor" opacity=".5">unlimited patients</text>
-
-  <!-- the closing edge is named where it arrives rather than where it
-       leaves, which is the only place in a column with room for the words -->
-  <text class="cc-in" style="--d:1s" x="110" y="22" font-size="15" fill="#ea0000">and again — a new patient</text>
-
-  <!-- The six stops. Each ping's --d is that stop's distance along the
-       route as a share of the lap, so it fires as the runner reaches it —
-       the stops are evenly spaced, the return is not, so these are not a
-       sixth apart the way the ring's are. -->
-  <g font-size="15" fill="currentColor">
-    <g class="cc-in" style="--d:.15s">
-      <circle class="cc-ping" cx="64" cy="66" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:0s"/>
-      <circle cx="64" cy="66" r="35" fill="url(#ccGlowCol)"/>
-      <image href="/assets/CaseChat/icons/Patient.png" x="45.5" y="47.5" width="37" height="37"/>
-      <text x="110" y="71" opacity=".8">1 · PICK A PATIENT</text>
-    </g>
-
-    <g class="cc-in" style="--d:.25s">
-      <circle class="cc-ping" cx="64" cy="186" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:.488s"/>
-      <circle cx="64" cy="186" r="35" fill="url(#ccGlowCol)"/>
-      <image href="/assets/CaseChat/icons/patient-history.png" x="45.5" y="167.5" width="37" height="37"/>
-      <text x="110" y="191" opacity=".8">2 · TAKE HISTORY</text>
-    </g>
-
-    <g class="cc-in" style="--d:.35s">
-      <circle class="cc-ping" cx="64" cy="306" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:.976s"/>
-      <circle cx="64" cy="306" r="35" fill="url(#ccGlowCol)"/>
-      <image href="/assets/CaseChat/icons/test.png" x="45.5" y="287.5" width="37" height="37"/>
-      <text x="110" y="311" opacity=".8">3 · ORDER TESTS</text>
-    </g>
-
-    <g class="cc-in" style="--d:.45s">
-      <circle class="cc-ping" cx="64" cy="426" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:1.463s"/>
-      <circle cx="64" cy="426" r="35" fill="url(#ccGlowCol)"/>
-      <image href="/assets/CaseChat/icons/diagnosis.png" x="45.5" y="407.5" width="37" height="37"/>
-      <text x="110" y="431" opacity=".8">4 · DIAGNOSE</text>
-    </g>
-
-    <g class="cc-in" style="--d:.55s">
-      <circle class="cc-ping" cx="64" cy="546" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:1.951s"/>
-      <circle cx="64" cy="546" r="35" fill="url(#ccGlowCol)"/>
-      <image href="/assets/CaseChat/icons/treatment.png" x="45.5" y="527.5" width="37" height="37"/>
-      <text x="110" y="551" opacity=".8">5 · TREAT</text>
-    </g>
-
-    <g class="cc-in" style="--d:.65s">
-      <circle class="cc-ping" cx="64" cy="666" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:2.439s"/>
-      <circle cx="64" cy="666" r="35" fill="url(#ccGlowCol)"/>
-      <image href="/assets/CaseChat/icons/Feedback.png" x="45.5" y="647.5" width="37" height="37"/>
-      <text x="110" y="671" opacity=".8">6 · FEEDBACK</text>
-    </g>
-  </g>
+  <text class="cc-in" style="--d:.05s" x="77" y="812" font-size="20" fill="#ea0000">VIRTUAL CLINIC</text>
+  <text class="cc-in" style="--d:.05s" x="77" y="836" font-size="15" fill="currentColor" opacity=".5">unlimited patients</text>
 </svg>

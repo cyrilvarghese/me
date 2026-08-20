@@ -35,6 +35,21 @@
 	}
 }
 
+/* the node itself taking the hit: a fast pop and a slower settle, so the
+   dot reads as struck rather than as breathing */
+@keyframes ccpop {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	0.6% {
+		transform: scale(1.7);
+	}
+	5% {
+		transform: scale(1);
+	}
+}
+
 /* ~250ms of a 6-second lap, so the ring opens and is gone before the
    traveller has left the stop. It sits at nothing for the rest of it. */
 @keyframes ccping {
@@ -113,6 +128,13 @@
 	animation: ccping var(--dur, 8s) linear var(--d, 0s) infinite;
 }
 
+/* the stop's own dot, struck on the same beat as its ping */
+.cc-pop {
+	transform-box: fill-box;
+	transform-origin: center;
+	animation: ccpop var(--dur, 8s) linear var(--d, 0s) infinite;
+}
+
 .cc-in {
 	opacity: 0;
 	animation: ccfade 0.5s ease-out var(--d, 0s) forwards;
@@ -148,5 +170,11 @@
 	.cc-ping {
 		animation: none;
 		opacity: 0;
+	}
+
+	/* the stops stay struck rather than mid-pop */
+	.cc-pop {
+		animation: none;
+		transform: none;
 	}
 }
