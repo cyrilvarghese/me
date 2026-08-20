@@ -66,7 +66,23 @@ export default function OutcomeTransition() {
           // below. Coming apart is a beat that only earns its place because
           // the lineup follows it — without one, it just orphans the parts
           // from the body (user, 2026-08-20).
-          if (compact) return;
+          if (compact) {
+            // The stage releases and carries the open knife up out of frame.
+            // It dissolves on the way so the carousel rising behind it never
+            // has an edge to cut across (user, 2026-08-20).
+            gsap.to("[data-knife-el]", {
+              autoAlpha: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: () => 1.05 * window.innerHeight,
+                end: () => 1.5 * window.innerHeight,
+                scrub: 0.3,
+                invalidateOnRefresh: true,
+              },
+            });
+            return;
+          }
 
           const S = () => inner.offsetWidth;
           const frac = (pct: number) => () => (pct / 100) * S();

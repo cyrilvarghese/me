@@ -9,12 +9,10 @@
 		display: block;
 		/* Rides up into the tail of the transition so the heading arrives
 		   while the knife is still leaving, instead of after a screen of
-		   black. Its own ground covers what is leaving — same colour, so the
-		   knife reads as sliding under rather than being cropped. */
-		position: relative;
-		z-index: 1;
-		background: var(--bg);
-		margin-top: -42vh;
+		   black. Deliberately NO ground of its own: an opaque panel slides a
+		   hard edge across the knife and cuts it in half. The knife dissolves
+		   on its way out instead (OutcomeTransition.tsx). */
+		margin-top: -22vh;
 		padding-block: 2rem var(--space-section);
 		overflow: hidden;
 	}
