@@ -73,10 +73,10 @@ export default function Hero() {
           // Stood on end, the closed knife sits near the middle of its square
           // box rather than filling it, so aligning the BOX to the right edge
           // leaves the art stranded well inside. Place the art directly.
-          const peekX = () => (compact ? 0.7 : 0.67) * window.innerWidth - artCentre();
+          const peekX = () => (compact ? 0.66 : 0.75) * window.innerWidth - artCentre();
           // desktop peeks above centre and travels down; on a phone the copy
           // owns the top two thirds, so it waits below and rises into place
-          const peekY = () => (compact ? 0.26 : -0.02) * window.innerHeight;
+          const peekY = () => (compact ? 0.3 : 0.108) * window.innerHeight;
 
           gsap.set(intro, {
             x: peekX,

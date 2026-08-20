@@ -41,9 +41,9 @@ export const PEEK_SCALE = 1.5;
     jammed against the bottom edge with nowhere to sit. */
 export const PEEK_SCALE_COMPACT = 1;
 
-/** The peek stands the closed knife on end. Travel rotates it back to flat
-    as it comes to centre, so the object rights itself on the way in. */
-export const PEEK_ROTATION = -90;
+/** The peek lays the closed knife on a diagonal. Travel rotates it back to
+    flat as it comes to centre, so the object rights itself on the way in. */
+export const PEEK_ROTATION = -36;
 
 /** Start offset, in seconds, for blade `i` of the fan. */
 export function bladeDelay(i: number): number {
