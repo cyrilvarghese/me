@@ -89,16 +89,31 @@ Two people either side of one object say "used from both sides"; the same
 two stacked say "here is a list of two people".
 
 Ask what the geometry is arguing, then find the arrangement that still
-argues it at this width. Often the axis simply rotates — put the object
-between its two users instead of between two columns, and left-and-right
-becomes above-and-below with the point intact.
+argues it at this width. Three moves cover most of it:
+
+- **Rotate the axis.** Two users either side of an object become one above
+  it and one below, and the rails turn vertical. Left-and-right becomes
+  above-and-below with the point intact.
+- **Rank by size.** Where the wide figure used *position* to say which
+  element matters, a column cannot — so let scale say it instead. The two
+  rooms being counted go small and keep only their names; the room the
+  case study is about runs at twice their width and keeps its full
+  caption. Equal panels in a column claim the elements are equal, which is
+  usually the opposite of the argument.
+- **Substitute the drawing.** Sometimes the wide figure needs width to
+  mean anything — a ring of marks, two columns of quotes — and a different
+  drawing makes the same claim in a fraction of the height. Swap the whole
+  thing rather than rearranging it: `CaseObject` hands over to a block
+  diagram below its breakpoint.
 
 Two things usually change with the arrangement:
 
 - **Rails follow the new geometry, or go.** If the relayout keeps
   something to point at, re-aim them — a diagonal rail becomes a vertical
   one. If it does not, drop them: a rail arriving nowhere is debris, and
-  stacking order carries the sequence instead.
+  stacking order carries the sequence instead. Adjacency often does the
+  job a rail was doing anyway — a red callout beside a red wedge needs no
+  line between them, and one that short paints a single pill.
 - **Type returns to the site's mobile scale** — labels ~16px, captions
   ~13px rendered. A wide file may run larger because its drawings are
   large; that reasoning does not survive the change of arrangement.
@@ -301,7 +316,8 @@ underlining source deck meant anyway.
 | Filtered a supplied icon to fit the palette | Black outlines on this ground become a smudge. Light disc, colours untouched — the third-party exception. |
 | Shipped a wide diagram with no phone telling | The reader swipes to see half the argument. Lay it out again at 420px; it is part of the job, not a follow-up. |
 | Made the mobile version by shrinking the wide one | Three panels side by side give ~126px each on a phone. Rebuild the arrangement. |
-| Made it by dropping the columns into a stack | Whatever the geometry argued dies in the stack. Ask what it was saying and find the arrangement that still says it — often the axis just rotates. |
+| Made it by dropping the columns into a stack | Whatever the geometry argued dies in the stack. Ask what it was saying, then rotate the axis, rank by size, or substitute the drawing. |
+| Stacked the panels at equal size | Equal panels claim the elements matter equally. Small for what is being counted, large for what the study is about. |
 | An `svg` came out letterboxed at a fraction of its width | `preserveAspectRatio` defaults to `meet`. Either size the box to match the viewBox, or give each part its own box. |
 
 ## Checklist
