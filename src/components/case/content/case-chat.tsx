@@ -186,7 +186,6 @@ export default function CaseChatContent() {
                     },
                   ]}
                   diagramMobile={`${D}/01-cases-mobile.svg`}
-                  caption="One case answers both complaints at once: the teacher gets something to explain through, and the student gets something to decide inside."
                 />
 
                 <CaseCompare
