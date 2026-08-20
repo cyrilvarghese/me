@@ -72,7 +72,7 @@ and open via the `--open` custom property (`rmOpen`/`rmClosed` in
 three scrubbed pinned sections and the hover-dim; Framer Motion (`motion`
 package via `LazyMotion`/`m` in `MotionProvider.tsx`, strict mode — always
 import `m`, never `motion.*`) owns the time-based `whileInView` once-reveals
-(CaseStudies, UnknownProblem). Reveal starting states
+(CaseStudies). Reveal starting states
 live in the `.fx-hidden` class in `globals.css`, gated behind
 `@media (prefers-reduced-motion: no-preference)` with the per-element offset in
 `--fx-from` — components use `initial={false}` so reduced-motion users get
