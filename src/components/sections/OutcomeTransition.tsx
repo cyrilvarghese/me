@@ -109,7 +109,9 @@ export default function OutcomeTransition() {
               // snapping only from the individual-tools lineup through to the
               // compass landing — the scrub before is free (user direction),
               // and so is the runway after: leaving is never tugged back
-              snap: {
+              snap: compact
+                ? undefined
+                : {
                 snapTo(value: number) {
                   const t = value * DUR;
                   if (t < (compact ? 0.5 : 0.45)) return value;
@@ -120,7 +122,7 @@ export default function OutcomeTransition() {
                 duration: { min: 0.25, max: 0.9 },
                 delay: 0.08,
                 ease: "power1.inOut",
-              },
+                  },
               onUpdate(self) {
                 // beats live in timeline time (the spacer's units), not progress
                 const t = self.progress * DUR;
@@ -182,12 +184,22 @@ export default function OutcomeTransition() {
                 x: frac((dir.x / len) * 12),
                 y: frac((dir.y / len) * 12),
                 rotation: cap.openAngle + 12 * Math.sign(cap.openAngle),
-                duration: 0.12,
+                // mobile has no lineup to hurry towards, so the drift is the
+                // whole beat rather than a hand-off into the next one
+                duration: compact ? 0.7 : 0.12,
                 ease: "power2.out",
               },
               0.1
             );
           });
+
+          if (compact) {
+            // Mobile ends here. The kit comes apart and drifts off; the six
+            // tools and the compass close are ToolCarousel's job below, as a
+            // swipe surface rather than another viewport of pinned scrub.
+            tl.to("[data-knife-el]", { autoAlpha: 0, duration: 0.3, ease: "power2.in" }, 0.9);
+            return;
+          }
 
           if (!compact) {
             // THE LINEUP (user sketch): each part travels to its column and

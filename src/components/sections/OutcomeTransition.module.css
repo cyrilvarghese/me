@@ -211,6 +211,26 @@
 	}
 }
 
+/* ---- mobile: the stage only has to carry the knife ---- */
+
+@media (max-width: 768px) {
+	.section {
+		/* 200vh of hero overlay plus one viewport for the kit to come apart.
+		   Everything after that is ToolCarousel's, in normal flow. */
+		height: 300vh;
+	}
+
+	/* the lineup, the merge and the compass close all live in ToolCarousel
+	   on small screens — swiped, not scrubbed */
+	.circles,
+	.lineup,
+	.copy,
+	.compassWrap,
+	.bloom {
+		display: none;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.section {
 		height: auto;
