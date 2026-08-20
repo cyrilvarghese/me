@@ -227,6 +227,13 @@
 		transform: translateX(13.5%);
 	}
 
+	/* 54vw was the binding term of the shared min() and left the open knife
+	   small on a phone. Nothing measures this on mobile — no timeline runs —
+	   so it is free to fill the screen. */
+	.inner {
+		width: min(76vh, 88vw);
+	}
+
 	/* the lineup, the merge and the compass close all live in ToolCarousel
 	   on small screens — swiped, not scrubbed */
 	.circles,

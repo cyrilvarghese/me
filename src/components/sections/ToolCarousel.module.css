@@ -7,7 +7,15 @@
 @media (max-width: 768px) {
 	.section {
 		display: block;
-		padding-block: var(--space-section);
+		/* Rides up into the tail of the transition so the heading arrives
+		   while the knife is still leaving, instead of after a screen of
+		   black. Its own ground covers what is leaving — same colour, so the
+		   knife reads as sliding under rather than being cropped. */
+		position: relative;
+		z-index: 1;
+		background: var(--bg);
+		margin-top: -42vh;
+		padding-block: 2rem var(--space-section);
 		overflow: hidden;
 	}
 }
@@ -28,11 +36,18 @@
 	display: flex;
 	gap: 1rem;
 	overflow-x: auto;
+	/* A transformed box contributes its SCALED border box to scrollable
+	   overflow, so blowing the art up made the canvas's empty top and bottom
+	   scrollable vertically. The tool itself fits the card; only dead space
+	   is clipped here. */
+	overflow-y: hidden;
 	overscroll-behavior-x: contain;
 	scroll-snap-type: x mandatory;
 	/* half a viewport of padding either side so the first and last card can
 	   both reach dead centre */
 	padding-inline: calc(50% - 0.5 * var(--card-w));
+	/* room for the focus backlight to bleed past the card */
+	padding-block: 1.5rem;
 	scrollbar-width: none;
 }
 
@@ -41,16 +56,43 @@
 }
 
 .card {
+	position: relative;
 	flex: 0 0 var(--card-w);
+	/* deliberate height: the art box is square, this leaves head and foot
+	   room so the enlarged tool is never clipped by the track */
+	height: calc(var(--card-w) * 1.2);
+	display: grid;
+	place-items: center;
 	scroll-snap-align: center;
 	transform-origin: 50% 50%;
 	will-change: transform, opacity;
 }
 
+/* backlight behind whichever tool is in focus — the shaping script sets
+   --focus to 1 at dead centre and 0 a card away. rgba literals, not
+   color-mix: gradients built with color-mix silently no-op in Edge here. */
+.card::before {
+	content: "";
+	position: absolute;
+	inset: -12%;
+	border-radius: 50%;
+	background: radial-gradient(
+		circle closest-side at 50% 46%,
+		rgba(248, 244, 242, 0.11),
+		rgba(248, 244, 242, 0.035) 52%,
+		transparent 78%
+	);
+	opacity: var(--focus, 0);
+	transform: translateZ(0);
+	pointer-events: none;
+}
+
 /* The strip the rotated tool occupies is centred near 50.5% / 43% of the
    canvas. Scaling about that point fills the card without re-cropping. */
 .artScale {
-	transform: scale(2.1);
+	position: relative;
+	width: 100%;
+	transform: scale(2.6);
 	transform-origin: 50.5% 43%;
 }
 

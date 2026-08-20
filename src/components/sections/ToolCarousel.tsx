@@ -49,6 +49,9 @@ export default function ToolCarousel() {
 
       cards.forEach((card, i) => {
         const d = (card.offsetLeft + card.offsetWidth / 2 - mid) / card.offsetWidth;
+        // the backlight follows focus even under reduced motion — it is a
+        // static highlight there, not movement
+        card.style.setProperty("--focus", String(Math.max(0, 1 - Math.abs(d))));
         if (!flat) {
           const p = pose(d);
           card.style.transform = `perspective(760px) translateX(${p.translate}%) rotateY(${p.rotateY}deg) scale(${p.scale})`;
