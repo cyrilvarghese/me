@@ -32,10 +32,7 @@ export const cases: CaseStudy[] = [
       "Medical students need repeated opportunities to make clinical decisions and receive useful feedback.",
     built:
       "An interactive system where students work through AI-generated clinical cases, make diagnostic decisions and receive structured feedback.",
-    results: [
-      { value: "1", label: "Patient for 20 students" },
-      { value: "∞", label: "Patients for 1 student" },
-    ],
+    results: [{ value: "Access to unlimited patients", label: "Through a virtual AI clinic" }],
   },
   {
     slug: "msig",
@@ -47,9 +44,6 @@ export const cases: CaseStudy[] = [
       "A legacy agent portal with inefficient workflows, poor usability and no mobile support — tedious data entry, unclear interactions, and deals that were hard to close in the field.",
     built:
       "A scalable, responsive design system for multi-step data entry — logically grouped form fields, wizards with autosave, and renewals, payments and GWP tracked automatically.",
-    results: [
-      { value: "20+ min", label: "Agent estimate to fill a quote" },
-      { value: "~8 min", label: "Cut from quote issuance" },
-    ],
+    results: [{ value: "~8 min", label: "40% reduction in quote issuance" }],
   },
 ];

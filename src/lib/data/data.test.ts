@@ -58,12 +58,15 @@ describe("cases", () => {
     expect(cases).toHaveLength(3);
   });
 
-  it("msig carries the before/after quote-time results", () => {
-    const msig = cases.find((c) => c.slug === "msig")!;
-    expect(msig.results?.length).toBe(2);
-    for (const r of msig.results ?? []) {
-      expect(r.value.trim().length).toBeGreaterThan(0);
-      expect(r.label.trim().length).toBeGreaterThan(0);
+  // the shape is the case's own call — one figure or a before-and-after —
+  // so this checks every result is filled in rather than counting them
+  it("every result carries both a value and a label", () => {
+    expect(cases.some((c) => c.results?.length)).toBe(true);
+    for (const c of cases) {
+      for (const r of c.results ?? []) {
+        expect(r.value.trim().length).toBeGreaterThan(0);
+        expect(r.label.trim().length).toBeGreaterThan(0);
+      }
     }
   });
 
