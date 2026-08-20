@@ -8,8 +8,14 @@ export type CaseStudy = {
   cover?: string;
   /** Market and subject, under the cover — what kind of product this was,
       before the reader commits to the headline. Written in natural case;
-      .mono-label uppercases them. */
-  tags?: string[];
+      .mono-label uppercases them.
+
+      `accent` marks the one that carries the case, which is the subject
+      rather than the market: B2B/B2C are how a scanner sorts, but the
+      domain is what they are deciding about. Flagged per tag rather than
+      taken from the order, so the accent can sit wherever the phrase falls
+      and red stays on the thing that matters. One per case. */
+  tags?: { label: string; accent?: boolean }[];
   results?: { value: string; label: string }[];
 };
 
@@ -17,7 +23,11 @@ export const cases: CaseStudy[] = [
   {
     slug: "creative-os",
     cover: "/assets/CreativeOS/cover-desk.webp",
-    tags: ["B2C", "B2B", "GenAI asset generation"],
+    tags: [
+      { label: "B2C" },
+      { label: "B2B" },
+      { label: "GenAI asset generation", accent: true },
+    ],
     num: "01",
     category: "Design Engineer and Product Manager",
     headline: "Bringing a fragmented AI production process into one creative workspace.",
@@ -30,7 +40,11 @@ export const cases: CaseStudy[] = [
   {
     slug: "case-chat",
     cover: "/assets/CaseChat/cover-desk.webp",
-    tags: ["B2C", "Medical education", "AI-powered simulation"],
+    tags: [
+      { label: "B2C" },
+      { label: "Medical education", accent: true },
+      { label: "AI-powered simulation" },
+    ],
     num: "02",
     category: "Design Engineer and Founder",
     headline: "A safe space for medical students to learn from their mistakes.",
@@ -43,7 +57,7 @@ export const cases: CaseStudy[] = [
   {
     slug: "msig",
     cover: "/assets/MSIG/cover-desk.webp",
-    tags: ["B2B", "Agent insurance portal"],
+    tags: [{ label: "B2B" }, { label: "Agent insurance portal", accent: true }],
     num: "03",
     category: "Lead Product Designer",
     headline: "Turning a legacy insurance portal into a consumer-grade one.",

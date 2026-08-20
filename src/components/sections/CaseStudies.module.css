@@ -93,11 +93,20 @@
 
 /* Market and subject, sitting under the cover. Muted and dot-separated so
    they read as a caption on the image rather than a row of buttons — the
-   same voice the timeline gives a role's tools. */
+   same voice the timeline gives a role's tools. (Chips were tried here and
+   taken back out on 2026-08-21: bordered on every tag, they turned a
+   caption into a control strip under something already clickable.) */
 .tags {
 	margin-top: 0.85rem;
 	color: var(--muted);
 	line-height: 1.6;
+}
+
+/* The one tag that carries the case — the domain, not the market. Red at
+   label size, so --accent-lift rather than --accent: the signal red
+   measures 4.02:1 on this ground and misses AA, the lifted rung clears it. */
+.tagAccent {
+	color: var(--accent-lift);
 }
 
 /* Hover answers on the artwork itself: a slight scrim so the card reads as

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ViewTransition } from "react";
+import { Fragment, ViewTransition } from "react";
 import { m } from "motion/react";
 import { cases } from "@/lib/data/cases";
 import { markCaseOrigin } from "@/lib/nav/case-origin";
@@ -83,9 +83,20 @@ export default function CaseStudies() {
             </Link>
             {/* outside the link: these say what the work was, they are not a
                 second thing to press. Same voice as the timeline's tools —
-                mono, dot-separated (About.tsx). */}
+                mono, dot-separated (About.tsx) — with the one tag that
+                carries the case in red. Which one is named in the data
+                rather than taken from the order. */}
             {c.tags && (
-              <p className={`mono-label ${styles.tags}`}>{c.tags.join(" · ")}</p>
+              <p className={`mono-label ${styles.tags}`}>
+                {c.tags.map((t, i) => (
+                  <Fragment key={t.label}>
+                    {i > 0 && " · "}
+                    <span className={t.accent ? styles.tagAccent : undefined}>
+                      {t.label}
+                    </span>
+                  </Fragment>
+                ))}
+              </p>
             )}
           </aside>
         </article>
