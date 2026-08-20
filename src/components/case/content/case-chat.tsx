@@ -151,8 +151,8 @@ export default function CaseChatContent() {
                 />
 
                 <CaseFigure
-                  eyebrow="Where the hours actually go"
-                  heading="Only the smallest share is hands on."
+                  eyebrow="Medical learning today"
+                  heading="Only 20% is hands-on learning."
                   lede="Lectures and textbooks build recall, and recall is what gets examined. The competence the job needs is built at the bedside — which is the smallest slice of the week, and mostly spent watching someone else decide."
                   diagram={`${D}/01-today-scenes.svg`}
                   diagramMobile={`${D}/01-today-scenes-mobile.svg`}
