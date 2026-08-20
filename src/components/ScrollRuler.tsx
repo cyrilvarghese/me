@@ -5,9 +5,16 @@ import styles from "./ScrollRuler.module.css";
 
 const TICKS = 48;
 
-/** The nav's three destinations, named on the rail where they fall. The
-    ruler already knew where every section starts; this says which. */
-const NAMED = new Set(["work", "about", "contact"]);
+/** The stops named on the rail where they fall, id -> the word shown.
+    The ruler already knew where every section starts; this says which.
+    Kept as a map rather than the bare ids because the hero's anchor is
+    "top" and the reader is being offered a beginning, not a coordinate. */
+const NAMED = new Map([
+  ["top", "Start"],
+  ["work", "Work"],
+  ["about", "About"],
+  ["contact", "Contact"],
+]);
 
 /**
  * Line minimap: a fixed tick ruler on the left with a red playhead that
@@ -25,7 +32,7 @@ export default function ScrollRuler() {
      section actually starts, and rounding one to the other leaves the
      mark half a tick from the line that is supposed to meet it. Their own
      positions make the dash, the word and the playhead agree. */
-  const [marks, setMarks] = useState<{ id: string; y: number }[]>([]);
+  const [marks, setMarks] = useState<{ id: string; name: string; y: number }[]>([]);
 
   useEffect(() => {
     const rail = railRef.current;
@@ -54,18 +61,19 @@ export default function ScrollRuler() {
          dash at the exact offset, so leaving the tick drawn a few pixels
          away puts two lines beside one word. */
       const replaced = new Set<number>();
-      const found: { id: string; y: number }[] = [];
+      const found: { id: string; name: string; y: number }[] = [];
       const index = (f: number) =>
         Math.round(Math.min(1, Math.max(0, f)) * (TICKS - 1));
       const add = (f: number) => majors.add(index(f));
       document.querySelectorAll<HTMLElement>("main > section").forEach((s) => {
         const top = s.getBoundingClientRect().top + window.scrollY;
         add(top / max);
-        if (NAMED.has(s.id)) {
+        const name = NAMED.get(s.id);
+        if (name) {
           // the same expression update() uses for the playhead, so the
           // mark and the line cannot disagree
           const f = Math.min(1, Math.max(0, top / max));
-          found.push({ id: s.id, y: f * (H - 2) });
+          found.push({ id: s.id, name, y: f * (H - 2) });
           replaced.add(index(top / max));
         }
         const range = s.offsetHeight - window.innerHeight;
@@ -156,7 +164,7 @@ export default function ScrollRuler() {
           tabIndex={-1}
         >
           <i className={styles.markDash} />
-          <span className={styles.markName}>{m.id}</span>
+          <span className={styles.markName}>{m.name}</span>
         </a>
       ))}
       <div ref={markerRef} className={styles.marker}>

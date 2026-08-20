@@ -3,7 +3,7 @@
 .rail {
 	position: fixed;
 	--rail-head: 26px;
-	left: clamp(14px, 2vw, 30px);
+	left: clamp(12px, 1.6vw, 24px);
 	/* The rail runs to the right edge so the playhead can cross the page
 	   on a plain 100%, with no 100vw — vw includes the scrollbar on
 	   Windows, and a fixed child overhanging by that much is how you get
@@ -75,7 +75,7 @@
 .markDash {
 	flex: none;
 	display: block;
-	width: 20px;
+	width: 12px;
 	height: 1px;
 	background: rgba(248, 244, 242, 0.45);
 }
@@ -84,13 +84,25 @@
    position it crosses every mark — the line stops at the word and picks
    up after it */
 .markName {
+	/* Only where the words provably fit. The rail is fixed and the content
+	   column is not: below this width the gutter walks left until an
+	   opaque chip would sit on the first letter of the copy, which is what
+	   it did at 1440 before the mark was tightened. Under it the dashes
+	   still mark the sections, they just stop naming them. */
+	display: none;
 	background: var(--bg);
-	padding: 3px 6px;
+	padding: 3px 5px;
 	font-family: var(--font-mono);
 	font-size: var(--text-fine);
-	letter-spacing: 0.12em;
+	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	line-height: 1;
+}
+
+@media (min-width: 1400px) {
+	.markName {
+		display: block;
+	}
 }
 
 @media (hover: hover) and (pointer: fine) {
