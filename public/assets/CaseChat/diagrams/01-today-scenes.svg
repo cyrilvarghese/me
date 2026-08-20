@@ -67,7 +67,7 @@
     <path d="M114 178a44 46 0 0 1 88 0z" fill="#e7e3e1"/>
     <rect x="-2" y="172" width="324" height="9" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".22" stroke-width="1.5"/>
     <rect x="-2" y="181" width="324" height="7" fill="#f8f4f2" fill-opacity=".05"/>
-    <g fill="#c98080" fill-opacity=".48">
+    <g fill="#c98080" fill-opacity=".38">
       <rect x="5" y="163" width="86" height="11"/>
       <rect x="8" y="150" width="80" height="11"/>
       <rect x="4" y="137" width="88" height="11"/>
@@ -75,7 +75,7 @@
       <rect x="10" y="111" width="76" height="11"/>
       <rect x="6" y="98" width="84" height="11"/>
     </g>
-    <g fill="#c98080" fill-opacity=".66">
+    <g fill="#c98080" fill-opacity=".52">
       <rect x="218" y="163" width="92" height="11"/>
       <rect x="221" y="150" width="86" height="11"/>
       <rect x="217" y="137" width="94" height="11"/>
