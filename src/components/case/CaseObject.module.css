@@ -74,7 +74,7 @@
    reading as the centre. */
 .attrLabel {
 	color: var(--muted);
-	font-size: 0.8125rem;
+	font-size: var(--text-caption);
 }
 
 /* the object is the centre, so it carries the larger disc — size is the
@@ -86,6 +86,10 @@
 	gap: 0.9rem;
 }
 
+/* off the ladder on purpose: 17px, between --text-quote and
+   --text-sublabel. The three labels in this figure have to rank
+   object > people > attributes by size alone, and --text-quote at 20px
+   makes the centre shout over the drawing it sits in. */
 .objectLabel {
 	color: var(--fg);
 	font-size: 1.0625rem;
@@ -139,7 +143,7 @@
 
 .userLabel {
 	color: var(--fg-soft);
-	font-size: 0.9375rem;
+	font-size: var(--text-sublabel);
 }
 
 .userQuote {

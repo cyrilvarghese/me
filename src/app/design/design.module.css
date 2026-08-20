@@ -84,15 +84,56 @@
 
 .name {
 	color: var(--fg);
-	font-size: 0.7rem;
+	font-size: var(--text-label);
 }
 
 .value {
 	color: var(--muted);
-	font-size: 0.65rem;
+	font-size: var(--text-fine);
 }
 
 .note {
 	color: var(--muted);
-	font-size: 0.75rem;
+	font-size: var(--text-label);
+}
+
+/* ---- type ladder ---- */
+
+.typeList {
+	display: grid;
+	gap: 1rem;
+	margin-bottom: 3rem;
+}
+
+.typeRow {
+	border: 1px solid var(--hairline);
+}
+
+/* the specimen is set at the rung's true size, so a display row is 104px
+   tall on its own — clip rather than wrap, the point is the size */
+.specimenBox {
+	padding: 1.1rem 1.2rem;
+	overflow: hidden;
+}
+
+.specimen {
+	display: block;
+	color: var(--fg);
+	line-height: 1.1;
+	white-space: nowrap;
+}
+
+.typeMeta {
+	display: grid;
+	grid-template-columns: minmax(0, 11rem) minmax(0, 7.5rem) minmax(0, 1fr);
+	align-items: baseline;
+	gap: 0.2rem 1rem;
+	padding: 0.6rem 1.2rem;
+	border-top: 1px solid var(--hairline);
+}
+
+@media (max-width: 640px) {
+	.typeMeta {
+		grid-template-columns: 1fr;
+	}
 }

@@ -52,26 +52,43 @@ Text is the mono voice already (`CaseDiagram.module.css` sets
 `var(--font-mono)` and `0.02em` tracking on every `.diagram text`), and
 labels keep their own case — `ChatGPT`, not `CHATGPT`.
 
-**What must hold is the size on screen, not the ratio in the file.**
-A diagram's text lands on the site's own scale: labels at `--text-small`
-(14px), captions at `--text-label` (12px), a callout a step above.
+**A diagram's text lands on the site's own type ladder** — the ten rungs in
+`tokens.css`, shown at true size on `/design`. A standalone SVG cannot read
+those custom properties, so the five rungs a diagram uses are restated here
+in viewBox units, at 1:1 render:
 
-So work backwards from where the drawing renders:
+| Rung | Units at 1:1 | What it sets in a diagram |
+|---|---|---|
+| `--text-quote` | 20 | a callout the drawing is built around |
+| `--text-sublabel` | 15 | the default label — a node, a stage, a person |
+| `--text-small` | 14 | a label giving way to a longer neighbour |
+| `--text-caption` | 13 | captions under a narrow drawing, phone labels |
+| `--text-label` | 12 | captions in a wide drawing, units and ticks — the floor |
+
+**What must hold is the size on screen, not the number in the file.** So
+work backwards from where the drawing renders:
 
 ```
-font-size = target px × (viewBox width / rendered width)
+font-size = rung × (viewBox width / rendered width)
 ```
 
 Half-panel diagrams in `CaseCompare` (viewBox 560, rendering ~560) and
 full-width ones in `CaseFigure` (viewBox 1100, rendering ~1100) both sit
-near 1:1, which is why every existing file uses **15 for labels and 12 for
-captions** — pick a viewBox close to the width the figure will occupy and
-those numbers just work.
+near 1:1, which is why **15 for labels and 12 for captions** goes into most
+existing files unchanged — pick a viewBox close to the width the figure
+will occupy and the rungs work as written.
 
 A ratio rule does not survive this. `0.025 × viewBox` matches the 560-wide
 files by coincidence; applied to a full-width 900-unit diagram it renders
 at 27px, nearly double every other label on the page. If the viewBox and
 the render width diverge, use the formula.
+
+**A size off the ladder carries its reasoning in the file.**
+`01-today-scenes.svg` runs 22 and 20 against a 900-unit viewBox because its
+drawings are large and site-sized labels read undersized beneath them
+(Cyril's call, 2026-08-20) — the note is at the top of that file. Do not
+correct it, and do not read it as precedent: the next diagram starts on
+the rungs.
 
 ## Every diagram is drawn twice
 
@@ -116,9 +133,11 @@ Two things usually change with the arrangement:
   does the same job at any length, which is what the stage arrows inside
   `01-cases` are. Drop rails only when there is genuinely nothing left to
   point at — then stacking order carries the sequence instead.
-- **Type returns to the site's mobile scale** — labels ~16px, captions
-  ~13px rendered. A wide file may run larger because its drawings are
-  large; that reasoning does not survive the change of arrangement.
+- **Type returns to the rungs** — `--text-sublabel` (15) for labels,
+  `--text-caption` (13) for captions, measured at the width the phone
+  telling actually renders. A wide file may run larger because its
+  drawings are large; that reasoning does not survive the change of
+  arrangement.
 
 The cost is real: a scene now lives in the standalone file, the wide
 composition and the narrow one. Edit all three in the same commit.
@@ -310,7 +329,8 @@ underlining source deck meant anyway.
 | Positioned each element against its neighbours | Overlaps between separately-placed shapes are invisible in markup and obvious on screen. Declare band boundaries as numbers. |
 | Edited the scene file and shipped | Every composed diagram carries its own copy of that markup. Edit both in one commit. |
 | Sized diagram text as a ratio of the viewBox | The ratio only matches when viewBox ≈ rendered width. Solve for the target px instead, and check it against the type it sits beside. |
-| Sized an HTML figure by eye | `--text-small` and `--text-label` are the same sizes a diagram's text renders at. Use the tokens and the two voices match for free. |
+| Sized an HTML figure by eye | The ladder in `tokens.css` is the same set of sizes a diagram's text renders at. Use the tokens and the two voices match for free. |
+| Invented a size between two rungs | Ten rungs cover the page. If the drawing really needs a size off them, write why at the top of the file — an unexplained number becomes the next file's precedent. |
 | An `svg` in HTML came out smaller than its CSS width | `globals.css` caps every svg at `max-width:100%`. Anything wider than its container needs `max-width: none`. |
 | Drew a short rail and it vanished | The house dash period is ~16px. A rail under ~60px paints one pill and reads as a speck. Lengthen it, or draw it solid with an arrowhead — not every connector has to be the dotted rail. |
 | Curved a connector to make it feel drawn | An arc curls away from what it points at. A connector is a straight ray; curvature is for haloes, not pointers. |
@@ -329,7 +349,8 @@ underlining source deck meant anyway.
 3. Traveller at 246 units/second — the flat dash, constant painted size?
 4. Finished state holds long enough to read?
 5. Reduced motion lands on the finished state?
-6. No inner frame, mono text, neutrals from tokens?
+6. No inner frame, mono text, neutrals from tokens, every `font-size` on a
+   rung — or a note in the file saying why not?
 7. Screenshotted, not assumed?
 8. Scenes: flat fills, the tinge only on the object that needs attention,
    and the accent still the largest and most saturated mark?

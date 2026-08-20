@@ -26,7 +26,7 @@
 .quote {
 	font-family: var(--font-mono);
 	letter-spacing: 0.02em;
-	font-size: 1.25rem;
+	font-size: var(--text-quote);
 	line-height: 1.6;
 	color: var(--muted);
 	max-width: 34ch;
@@ -44,7 +44,9 @@
 
 /* On a phone the quote is the tallest thing in any of these figures. At
    20px it runs six or seven lines and pushes the rest of the drawing off
-   the screen, which costs more than the extra point of size buys. */
+   the screen, which costs more than the extra point of size buys. So the
+   phone gets 17px — one step off the ladder, below --text-quote and above
+   --text-sublabel, kept local because only this breakpoint wants it. */
 @media (max-width: 760px) {
 	.quote {
 		font-size: 1.0625rem;

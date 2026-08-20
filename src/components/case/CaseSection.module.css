@@ -19,7 +19,7 @@
 
 /* scaffold marker — muted on purpose; disappears with the real copy */
 .mockTag {
-	font-size: 0.6rem;
+	font-size: var(--text-fine);
 	border: 1px solid var(--hairline);
 	padding: 0.1rem 0.4rem;
 }

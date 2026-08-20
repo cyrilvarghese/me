@@ -49,6 +49,27 @@ const STEELS = [
   { name: "SCREW", value: SCREW, note: "pivot screws" },
 ];
 
+/** The type ladder, mirrored from src/app/tokens.css — update both together.
+    `px` is what the rung renders at; a clamp shows its two ends. */
+const TYPE = [
+  { name: "--text-display", px: "44 → 104", voice: "serif", usage: "hero line, one per page" },
+  { name: "--text-statement", px: "32 → 68", voice: "serif", usage: "section statement, case headline" },
+  { name: "--text-h3", px: "21.6 → 32", voice: "serif", usage: "band heading" },
+  { name: "--text-quote", px: "20", voice: "mono", usage: "a quote pulled into a figure" },
+  { name: "--text-body", px: "16 → 18", voice: "sans", usage: "running text, 45–75ch" },
+  { name: "--text-sublabel", px: "15", voice: "sans", usage: "a name or value under a mark" },
+  { name: "--text-small", px: "14", voice: "sans", usage: "captions, running detail" },
+  { name: "--text-caption", px: "13", voice: "sans", usage: "labels inside a figure" },
+  { name: "--text-label", px: "12", voice: "mono", usage: "eyebrows, control labels" },
+  { name: "--text-fine", px: "11", voice: "mono", usage: "smallest mark on the page — the floor" },
+];
+
+const VOICE_CLASS: Record<string, string> = {
+  serif: "serif-display",
+  mono: "mono-label",
+  sans: "",
+};
+
 function Swatches({ items }: { items: { name: string; value: string; note: string }[] }) {
   return (
     <div className={styles.grid}>
@@ -61,6 +82,30 @@ function Swatches({ items }: { items: { name: string; value: string; note: strin
             <p className={`mono-label ${styles.name}`}>{c.name}</p>
             <p className={`mono-label ${styles.value}`}>{c.value}</p>
             <p className={styles.note}>{c.note}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TypeScale() {
+  return (
+    <div className={styles.typeList}>
+      {TYPE.map((t) => (
+        <div key={t.name} className={styles.typeRow}>
+          <div className={styles.specimenBox}>
+            <span
+              className={`${VOICE_CLASS[t.voice]} ${styles.specimen}`}
+              style={{ fontSize: `var(${t.name})` }}
+            >
+              {t.name.replace("--text-", "")}
+            </span>
+          </div>
+          <div className={styles.typeMeta}>
+            <p className={`mono-label ${styles.name}`}>{t.name}</p>
+            <p className={`mono-label ${styles.value}`}>{t.px}&nbsp;px</p>
+            <p className={styles.note}>{t.usage}</p>
           </div>
         </div>
       ))}
@@ -85,7 +130,23 @@ export default function DesignSystemPage() {
       <p className={`mono-label ${styles.sectionLabel}`}>Knife art — placeholders/common.ts</p>
       <Swatches items={STEELS} />
 
+      <p className={`mono-label ${styles.sectionLabel}`}>Type — tokens.css</p>
+      <p className={styles.rule}>
+        Ten rungs, top to bottom. Every size on a case-study page comes from one of them; a size
+        between rungs carries a comment saying why. The scale is set for reading rather than for
+        interface density — body runs 16–18&nbsp;px on a 45–75&nbsp;ch measure, and 11&nbsp;px is
+        the floor for the short labels below it.
+      </p>
+      <TypeScale />
+      <p className={styles.rule}>
+        Diagrams are standalone SVG files and cannot read these variables, so they carry the same
+        rungs in viewBox units: 20 quote, 15 sublabel, 14 small, 13 caption, 12 label, at 1:1
+        render. Multiply by viewBox width ÷ rendered width when the two differ. The table lives in
+        the <code>case-study-diagrams</code> skill.
+      </p>
+
       <p className={`mono-label ${styles.sectionLabel}`}>Geometry — tokens.css</p>
+
       <p className={styles.rule}>
         Square-cornered by system. The only rounding is the 2&nbsp;px hairline on knife plates and
         etched panels — nothing on this site is pill-shaped.

@@ -92,6 +92,11 @@ contrast for small text on this background. Type
 is Fraunces + Work Sans + JetBrains Mono via `next/font`; the display face has
 hand-tuned baked axes (`'opsz' 56, 'SOFT' 30, 'WONK' 0.9`, weight 380 in
 `.serif-display`) — Cyril chose these deliberately, don't normalize them.
+Sizes come from a **ten-rung ladder** in `tokens.css` (`--text-display` →
+`--text-fine`, 11 px floor), set for reading rather than UI density; a size
+between rungs carries a comment saying why. The SVG diagrams can't read the
+vars, so the same rungs are restated in viewBox units in the
+`case-study-diagrams` skill. All ten are shown at true size on `/design`.
 
 ## Conventions
 
