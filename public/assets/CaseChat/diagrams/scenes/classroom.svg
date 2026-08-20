@@ -2,65 +2,69 @@
      aria-label="A lecture hall: one speaker at a screen, rows of seated students receding into the room.">
   <!-- Flat silhouettes, no outlines. Depth is carried by value alone — the
        rows dim as they recede — so the drawing never puts perspective lines
-       on the page to compete with the diagram's own rails. -->
+       on the page to compete with the diagram's own rails.
 
-  <!-- back wall: the screen everyone is pointed at. Learning material
-       carries a tinge of the accent — #c98080 is the second step of the
-       ramp in the diagram skill, so the tint stays inside the one-hue
-       rule instead of introducing a colour of its own. The first step
-       (#b39a9a) was too quiet to read as a category on this ground. -->
-  <rect x="186" y="22" width="112" height="66" fill="#1e1818"/>
-  <rect x="186" y="22" width="112" height="66" fill="#c98080" fill-opacity=".20" stroke="#c98080" stroke-opacity=".70" stroke-width="2"/>
-  <rect x="200" y="40" width="60" height="4" fill="#c98080" fill-opacity=".62"/>
-  <rect x="200" y="52" width="84" height="4" fill="#c98080" fill-opacity=".62"/>
-  <rect x="200" y="64" width="44" height="4" fill="#c98080" fill-opacity=".62"/>
+       The room is built in two bands that must not share vertical space:
+       the stage (screen, lectern, speaker) ends at the floor line, and the
+       nearest student's head starts below it. Let them overlap and the
+       lectern legs come out of somebody's skull.
 
-  <!-- lectern -->
-  <rect x="88" y="100" width="64" height="5" fill="#9e9493" fill-opacity=".55"/>
-  <rect x="93" y="105" width="3" height="27" fill="#9e9493" fill-opacity=".35"/>
-  <rect x="144" y="105" width="3" height="27" fill="#9e9493" fill-opacity=".35"/>
+       Learning material carries a tinge of the accent — #c98080 is the
+       second step of the ramp in the diagram skill, so the tint stays
+       inside the one-hue rule instead of introducing a colour of its own. -->
 
-  <!-- the one who talks: the brightest thing in the room -->
-  <circle cx="168" cy="82" r="6" fill="#e7e3e1"/>
-  <path d="M161 87 L175 87 L178 132 L158 132 Z" fill="#e7e3e1"/>
-  <path d="M175 96 L196 88 L198 93 L176 102 Z" fill="#e7e3e1"/>
+  <!-- ── stage band: everything above the floor line at y=116 ── -->
+  <rect x="186" y="16" width="112" height="60" fill="#1e1818"/>
+  <rect x="186" y="16" width="112" height="60" fill="#c98080" fill-opacity=".20" stroke="#c98080" stroke-opacity=".70" stroke-width="2"/>
+  <rect x="200" y="32" width="60" height="4" fill="#c98080" fill-opacity=".62"/>
+  <rect x="200" y="44" width="84" height="4" fill="#c98080" fill-opacity=".62"/>
+  <rect x="200" y="56" width="44" height="4" fill="#c98080" fill-opacity=".62"/>
+
+  <!-- lectern, clear of the speaker to its right -->
+  <rect x="92" y="92" width="58" height="5" fill="#9e9493" fill-opacity=".55"/>
+  <rect x="97" y="97" width="3" height="19" fill="#9e9493" fill-opacity=".35"/>
+  <rect x="141" y="97" width="3" height="19" fill="#9e9493" fill-opacity=".35"/>
+
+  <!-- the one who talks: brightest thing in the room, arm on the board -->
+  <circle cx="168" cy="66" r="6.5" fill="#e7e3e1"/>
+  <path d="M161 71 L175 71 L178 116 L158 116 Z" fill="#e7e3e1"/>
+  <path d="M175 76 L196 68 L198 73 L176 82 Z" fill="#e7e3e1"/>
 
   <!-- floor -->
-  <rect x="0" y="132" width="320" height="1.5" fill="#f8f4f2" fill-opacity=".12"/>
+  <rect x="0" y="116" width="320" height="1.5" fill="#f8f4f2" fill-opacity=".12"/>
 
-  <!-- row A — farthest, dimmest -->
+  <!-- ── seating band: every head sits below the floor line ── -->
   <g fill="#f8f4f2" fill-opacity=".22">
-    <circle cx="20" cy="118" r="5.5"/><path d="M9 136a11 11 0 0 1 22 0z"/>
-    <circle cx="60" cy="118" r="5.5"/><path d="M49 136a11 11 0 0 1 22 0z"/>
-    <circle cx="100" cy="118" r="5.5"/><path d="M89 136a11 11 0 0 1 22 0z"/>
-    <circle cx="140" cy="118" r="5.5"/><path d="M129 136a11 11 0 0 1 22 0z"/>
-    <circle cx="180" cy="118" r="5.5"/><path d="M169 136a11 11 0 0 1 22 0z"/>
-    <circle cx="220" cy="118" r="5.5"/><path d="M209 136a11 11 0 0 1 22 0z"/>
-    <circle cx="260" cy="118" r="5.5"/><path d="M249 136a11 11 0 0 1 22 0z"/>
-    <circle cx="300" cy="118" r="5.5"/><path d="M289 136a11 11 0 0 1 22 0z"/>
+    <circle cx="20" cy="128" r="5.5"/><path d="M9 146a11 11 0 0 1 22 0z"/>
+    <circle cx="60" cy="128" r="5.5"/><path d="M49 146a11 11 0 0 1 22 0z"/>
+    <circle cx="100" cy="128" r="5.5"/><path d="M89 146a11 11 0 0 1 22 0z"/>
+    <circle cx="140" cy="128" r="5.5"/><path d="M129 146a11 11 0 0 1 22 0z"/>
+    <circle cx="180" cy="128" r="5.5"/><path d="M169 146a11 11 0 0 1 22 0z"/>
+    <circle cx="220" cy="128" r="5.5"/><path d="M209 146a11 11 0 0 1 22 0z"/>
+    <circle cx="260" cy="128" r="5.5"/><path d="M249 146a11 11 0 0 1 22 0z"/>
+    <circle cx="300" cy="128" r="5.5"/><path d="M289 146a11 11 0 0 1 22 0z"/>
   </g>
-  <rect x="-2" y="136" width="324" height="9" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
+  <rect x="-2" y="146" width="324" height="9" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
 
-  <!-- row B -->
   <g fill="#f8f4f2" fill-opacity=".34">
-    <circle cx="24" cy="143" r="6.5"/><path d="M11 164a13 13 0 0 1 26 0z"/>
-    <circle cx="70" cy="143" r="6.5"/><path d="M57 164a13 13 0 0 1 26 0z"/>
-    <circle cx="116" cy="143" r="6.5"/><path d="M103 164a13 13 0 0 1 26 0z"/>
-    <circle cx="162" cy="143" r="6.5"/><path d="M149 164a13 13 0 0 1 26 0z"/>
-    <circle cx="208" cy="143" r="6.5"/><path d="M195 164a13 13 0 0 1 26 0z"/>
-    <circle cx="254" cy="143" r="6.5"/><path d="M241 164a13 13 0 0 1 26 0z"/>
-    <circle cx="300" cy="143" r="6.5"/><path d="M287 164a13 13 0 0 1 26 0z"/>
+    <circle cx="24" cy="150" r="6.5"/><path d="M11 171a13 13 0 0 1 26 0z"/>
+    <circle cx="70" cy="150" r="6.5"/><path d="M57 171a13 13 0 0 1 26 0z"/>
+    <circle cx="116" cy="150" r="6.5"/><path d="M103 171a13 13 0 0 1 26 0z"/>
+    <circle cx="162" cy="150" r="6.5"/><path d="M149 171a13 13 0 0 1 26 0z"/>
+    <circle cx="208" cy="150" r="6.5"/><path d="M195 171a13 13 0 0 1 26 0z"/>
+    <circle cx="254" cy="150" r="6.5"/><path d="M241 171a13 13 0 0 1 26 0z"/>
+    <circle cx="300" cy="150" r="6.5"/><path d="M287 171a13 13 0 0 1 26 0z"/>
   </g>
-  <rect x="-2" y="164" width="324" height="10" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
+  <rect x="-2" y="171" width="324" height="10" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
 
-  <!-- row C — nearest, cropped by the frame so the room keeps going -->
+  <!-- nearest row, cropped by the frame so the room keeps going -->
   <g fill="#9e9493">
-    <circle cx="16" cy="168" r="7.5"/><path d="M0 192a16 15 0 0 1 32 0z"/>
-    <circle cx="72" cy="168" r="7.5"/><path d="M56 192a16 15 0 0 1 32 0z"/>
-    <circle cx="128" cy="168" r="7.5"/><path d="M112 192a16 15 0 0 1 32 0z"/>
-    <circle cx="184" cy="168" r="7.5"/><path d="M168 192a16 15 0 0 1 32 0z"/>
-    <circle cx="240" cy="168" r="7.5"/><path d="M224 192a16 15 0 0 1 32 0z"/>
-    <circle cx="296" cy="168" r="7.5"/><path d="M280 192a16 15 0 0 1 32 0z"/>
+    <circle cx="16" cy="172" r="7.5"/><path d="M0 196a16 15 0 0 1 32 0z"/>
+    <circle cx="72" cy="172" r="7.5"/><path d="M56 196a16 15 0 0 1 32 0z"/>
+    <circle cx="128" cy="172" r="7.5"/><path d="M112 196a16 15 0 0 1 32 0z"/>
+    <circle cx="184" cy="172" r="7.5"/><path d="M168 196a16 15 0 0 1 32 0z"/>
+    <circle cx="240" cy="172" r="7.5"/><path d="M224 196a16 15 0 0 1 32 0z"/>
+    <circle cx="296" cy="172" r="7.5"/><path d="M280 196a16 15 0 0 1 32 0z"/>
   </g>
-  <rect x="-2" y="192" width="324" height="12" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
+  <rect x="-2" y="196" width="324" height="10" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
 </svg>
