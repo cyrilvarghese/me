@@ -80,15 +80,12 @@
 	margin-top: 0.5rem;
 }
 
+/* the control voice is the global .btn — accent outline, square corners,
+   accent fill on hover. This only places it. A muted text link was not
+   reading as something to press (user, 2026-08-20). */
 .explore {
-	color: var(--muted);
-	margin-top: 0.5rem;
+	margin-top: 0.75rem;
 	width: fit-content;
-	transition: color 0.2s ease;
-}
-
-.explore:hover {
-	color: var(--fg);
 }
 
 .visualLink {

@@ -53,7 +53,7 @@ export default function CaseStudies() {
               </div>
             )}
 
-            <Link href={`/work/${c.slug}`} className={`mono-label ${styles.explore}`}>
+            <Link href={`/work/${c.slug}`} className={`mono-label btn ${styles.explore}`}>
               Explore →
             </Link>
           </m.div>
