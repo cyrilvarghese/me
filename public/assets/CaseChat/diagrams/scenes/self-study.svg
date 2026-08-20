@@ -1,19 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img"
-     aria-label="One student at a desk, hunched over an open book between two tall stacks of textbooks.">
+     aria-label="One student at a desk between two tall stacks of textbooks, one hand up to their head, working something out alone.">
   <!-- The argument is the ratio: one person, two stacks taller than they
        are. Slabs rather than drawn books — at panel width a spine line
        reads as noise, a value step reads as a book.
 
-       The posture does the rest of the work. An upright figure reads as a
-       pawn, so the back curves and the head carries forward and down over
-       the page: the silhouette has to say "reading" without a face. -->
+       The posture is the whole point of the drawing. Hunched over a page
+       reads as "reading"; hand to the head with the elbow swung out reads
+       as "working it out", which is what self study actually costs. The
+       arm is one explicit filled path rather than two thick strokes so
+       the notch between forearm and head is drawn, not left to chance —
+       stroked segments at this scale close the gap and the pose dies. -->
 
-  <!-- the reader, hunched over the page. A round head reads as a head; a
-       tilted ellipse merging into the shoulder reads as a beak. The arm
-       has to clear the back's silhouette or the whole figure goes shapeless. -->
-  <path d="M110 176 C104 140 114 106 140 94 C154 88 166 94 172 106 C158 116 148 142 148 176 Z" fill="#e7e3e1"/>
-  <path d="M170 118 C182 132 184 152 176 168 L160 164 C170 150 168 134 156 122 Z" fill="#e7e3e1"/>
-  <circle cx="188" cy="112" r="15" fill="#e7e3e1"/>
+  <!-- the thinker -->
+  <path d="M134 176 L134 134 C134 120 144 112 158 112 L180 112 C194 112 202 120 202 134 L202 176 Z" fill="#e7e3e1"/>
+  <rect x="168" y="100" width="18" height="14" fill="#e7e3e1"/>
+  <circle cx="176" cy="86" r="18" fill="#e7e3e1"/>
+  <path d="M198 130 L208 162" stroke="#e7e3e1" stroke-width="13" stroke-linecap="round" fill="none"/>
+  <path d="M146 139 L109 158 L99 152 L99 145 L154 74 L166 84 L136 124 Z" fill="#e7e3e1"/>
 
   <!-- desk -->
   <rect x="-2" y="172" width="324" height="9" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".22" stroke-width="1.5"/>
@@ -41,8 +44,7 @@
     <rect x="225" y="72" width="78" height="11"/>
   </g>
 
-  <!-- the open page: the only thing actually being read, so it is the
-       brightest thing on the desk -->
-  <path d="M136 170 L178 152 L178 163 L136 175 Z" fill="#f8f4f2" fill-opacity=".62"/>
-  <path d="M214 170 L178 152 L178 163 L214 175 Z" fill="#f8f4f2" fill-opacity=".46"/>
+  <!-- the open page, the one thing actually being worked through -->
+  <path d="M100 171 L125 158 L125 167 L100 175 Z" fill="#f8f4f2" fill-opacity=".62"/>
+  <path d="M150 171 L125 158 L125 167 L150 175 Z" fill="#f8f4f2" fill-opacity=".46"/>
 </svg>
