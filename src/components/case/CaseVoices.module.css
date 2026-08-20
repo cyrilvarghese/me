@@ -49,11 +49,11 @@
 .quote {
 	font-family: var(--font-mono);
 	letter-spacing: 0.02em;
-	/* the house scale, not a size invented here — this lands on the same
-	   14px a diagram's labels render at, so a figure built from HTML and
-	   one built from SVG read as the same voice */
-	font-size: var(--text-small);
-	line-height: 1.65;
+	/* 20px, set in rem so it still answers to browser font scaling. Above
+	   the house --text-small, to sit closer to the scenes figure's own
+	   enlarged type rather than to the site's diagram scale. */
+	font-size: 1.25rem;
+	line-height: 1.6;
 	color: var(--muted);
 	max-width: 34ch;
 }
