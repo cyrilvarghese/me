@@ -25,10 +25,9 @@
 	margin-bottom: clamp(3rem, 8vh, 5rem);
 }
 
-/* The portrait is three stacked layers on one square box: a blurred
-   backlight behind, the photograph, and a ring above it. Separate
-   elements rather than pseudo-elements — an <img> has none, and the
-   stacking is easier to read written out. */
+/* The portrait is two stacked layers on one square box: a blurred
+   backlight behind and the photograph over it. A separate element
+   rather than a pseudo-element — an <img> has none. */
 .portraitFrame {
 	position: relative;
 	width: 100%;
@@ -70,24 +69,6 @@
 	animation: backlight 11s ease-in-out infinite alternate;
 }
 
-/* The shimmer is a second ring laid over the photograph's own hairline,
-   transparent except for a bright arc at the top, turning slowly. A
-   rotating border beats a conic-gradient masked into a ring: it is one
-   property, it needs no mask-composite, and it animates transform only.
-   The arc fades along the right edge so it reads as light moving across
-   a rim rather than a loading spinner. */
-.shimmer {
-	position: absolute;
-	inset: -1px;
-	z-index: 2;
-	border-radius: 50%;
-	border: 1px solid transparent;
-	border-top-color: rgba(248, 244, 242, 0.5);
-	border-right-color: rgba(248, 244, 242, 0.16);
-	pointer-events: none;
-	animation: shimmer 14s linear infinite;
-}
-
 @keyframes backlight {
 	from {
 		transform: translate3d(-3%, -2%, 0) scale(1);
@@ -97,18 +78,10 @@
 	}
 }
 
-@keyframes shimmer {
-	to {
-		transform: rotate(360deg);
-	}
-}
-
-/* Both loops run forever, so both stop when motion is not wanted. The
-   ring stays put as a lit edge and the backlight holds where it is —
-   the portrait keeps its depth, it just stops moving. */
+/* The backlight loops forever, so it holds still when motion is not
+   wanted — the portrait keeps its depth, it just stops drifting. */
 @media (prefers-reduced-motion: reduce) {
-	.glow,
-	.shimmer {
+	.glow {
 		animation: none;
 	}
 }

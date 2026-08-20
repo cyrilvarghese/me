@@ -49,7 +49,6 @@ export default function About() {
             alt='Cyril at a pottery wheel in a workshop, marked "me" in the photograph.'
             className={styles.portrait}
           />
-          <span className={styles.shimmer} aria-hidden="true" />
         </div>
       </div>
 
