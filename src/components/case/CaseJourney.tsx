@@ -11,10 +11,15 @@ export type JourneyStage = {
   consequence?: string;
 };
 
-const TRAVEL = 900; // ms — the trail/marker transition (--msj-travel)
-const DWELL = 4200; // reading time at a quoted stage
+const TRAVEL = 600; // ms — the trail/marker transition (--msj-travel)
+const DWELL = 3400; // reading time at a quoted stage
 const END_HOLD = 1600; // the completed rail, held before the cycle restarts
-const FADE = 1100; // ms — the card's entrance fade (--msj-fade)
+/* The card's entrance (--msj-fade). Held at half the travel on purpose:
+   the module delays this animation by travel/2, so travel/2 + FADE is
+   when the quote finishes arriving. Equal to TRAVEL, that is the exact
+   moment the dot lands — which is what makes the dwell below pure
+   reading time rather than reading time minus a fade still in progress. */
+const FADE = TRAVEL / 2;
 const CURVE = "ease-in-out"; // the fade's timing curve (--msj-curve)
 const CURVES = [
   "ease-in-out",
@@ -151,9 +156,9 @@ export default function CaseJourney({
     go(quoted[(at + dir + quoted.length) % quoted.length]);
   };
 
-  /* the card voices where the dot is headed — its fade starts at
-     departure and plays while the dot travels, so the dwell at the node
-     is pure reading time. The node pop still waits for arrival. */
+  /* the card voices where the dot is headed — its fade plays while the
+     dot travels and finishes as it lands (see FADE), so the dwell at the
+     node is pure reading time. The node pop still waits for arrival. */
   const cardIndex = quoted.includes(target)
     ? target
     : quoted.filter((q) => q <= target).pop() ?? quoted[0];
