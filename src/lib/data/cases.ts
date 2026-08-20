@@ -20,7 +20,7 @@ export const cases: CaseStudy[] = [
       "Creative teams moved between scripts, prompts, references and multiple generation tools to produce individual shots.",
     built:
       "A canvas-based production system where agents help compose shots, create prompts, manage references and generate image and video assets.",
-    results: [{ value: "40%", label: "Reduction to create one reel or post" }],
+    results: [{ value: "1.7×", label: "Faster to create one reel or post" }],
   },
   {
     slug: "case-chat",
