@@ -27,7 +27,7 @@ const fromY32 = { ["--fx-from" as string]: "translateY(32px)" };
 
 export default function UnknownProblem() {
   return (
-    <section className={styles.section} aria-label="Unknown problems">
+    <section className={styles.section} id="about" aria-label="Unknown problems">
       <div className={styles.block}>
         <m.h2
           className={`serif-display ${styles.question} fx-hidden`}

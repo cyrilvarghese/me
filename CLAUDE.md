@@ -57,11 +57,7 @@ north, then ~105vh of snap-free runway where the time-based needle hunt
 plays without blocking scroll; travel/navigation is the metaphor from there
 on), `FinalCTA` (300vh fold-back in reverse order). The compass (`src/components/compass/CompassRose`)
 shares the knife's element language, including the identical center pin.
-`Career` is a fourth knife scene without GSAP: a sticky knife reconfigures via
-CSS transitions (`animated` prop) as IntersectionObserver activates experience
-entries — each role opens only the blades in its `caps`
-(`src/lib/data/experience.ts`; entries are one-liners + one impact line by
-user rule). Each builds one GSAP timeline
+Each builds one GSAP timeline
 inside `useGSAP` with a `duration: 1` spacer tween so tween positions are
 literally the scroll fractions from `scroll.ts` (OutcomeTransition's spacer
 is `DUR = 1.25`: positions 0–0.97 are the story at unchanged pacing, the
@@ -76,7 +72,7 @@ and open via the `--open` custom property (`rmOpen`/`rmClosed` in
 three scrubbed pinned sections and the hover-dim; Framer Motion (`motion`
 package via `LazyMotion`/`m` in `MotionProvider.tsx`, strict mode — always
 import `m`, never `motion.*`) owns the time-based `whileInView` once-reveals
-(OperatingModel, CaseStudies, Career, UnknownProblem). Reveal starting states
+(CaseStudies, UnknownProblem). Reveal starting states
 live in the `.fx-hidden` class in `globals.css`, gated behind
 `@media (prefers-reduced-motion: no-preference)` with the per-element offset in
 `--fx-from` — components use `initial={false}` so reduced-motion users get
