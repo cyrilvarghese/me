@@ -35,7 +35,7 @@ export const experience: Role[] = [
   {
     years: "2026 —",
     from: 2026,
-    title: "Design Engineer",
+    title: "Design Engineer / Product Manager",
     org: "Yuvabe",
     body: "Leading UX, product and front-end engineering on CreativeOS, Yuvabe's flagship AI content generation platform.",
     tools: AI_PRODUCT_TOOLS,
@@ -43,7 +43,7 @@ export const experience: Role[] = [
   {
     years: "2024 — 2026",
     from: 2024,
-    title: "Founding Product Designer / Design Engineer",
+    title: "Founder / Design Engineer / CTPO",
     org: "CaseChat",
     body: "Built and shipped an AI simulator where medical students practise diagnosis, from first research through launch.",
     tools: AI_PRODUCT_TOOLS,
