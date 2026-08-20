@@ -21,8 +21,9 @@
 }
 
 /* The tick is a box; the line inside it is what you see and what the
-   proximity wave scales. They are separate so a named tick can carry a
-   label the wave does not stretch. */
+   proximity wave scales. They are separate so a tick can be hidden
+   without losing its place in the flex layout — the named marks draw
+   their own dashes and the ticks they stand in for step aside. */
 .tick {
 	position: relative;
 	width: 20px;
@@ -38,61 +39,76 @@
 	transform-origin: left center;
 }
 
+/* the named mark draws this tick's line itself, at the exact offset */
+.replaced .line {
+	visibility: hidden;
+}
+
 .major .line {
 	width: 20px;
 	background: rgba(248, 244, 242, 0.45);
 }
 
-/* Section name beside the tick it starts on, in the margin left of the
-   content column. Sits on the fine rung — it is a map legend, not
-   something to read on the way past — and it is a link: the rail is a
-   map of the page, so the map should take you there.
+/* A named stop on the rail: its own dash and word, positioned at the
+   exact offset the playhead reaches for that section rather than hung
+   off one of the 48 evenly spaced ticks. Same box height as the marker
+   and the same translateY, so the dash, the word and the line meet.
 
-   pointer-events come back on for the label alone. The rail spans the
-   viewport to let the playhead cross it, so switching the whole thing
-   back on would put an invisible sheet over the page. */
-.label {
+   pointer-events come back on here alone. The rail spans the viewport
+   so the playhead can cross it; switching the whole thing on would drop
+   an invisible sheet over the page. */
+.mark {
 	position: absolute;
-	/* 20 rather than 26: the chip's own padding puts the text back where
-	   it was, so the labels still line up off the ends of the ticks */
-	left: 20px;
-	top: 50%;
-	transform: translateY(-50%);
-	/* The playhead crosses the whole page, so at some scroll position it
-	   crosses every label. The chip is opaque --bg and sits above the
-	   marker (which is later in the DOM and would otherwise win), so the
-	   line stops at the word and picks up after it. */
+	left: 0;
+	top: 0;
 	z-index: 1;
-	background: var(--bg);
-	padding: 3px 6px;
+	height: 2px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
 	pointer-events: auto;
-	font-family: var(--font-mono);
-	font-size: var(--text-fine);
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	line-height: 1;
 	white-space: nowrap;
 	color: var(--muted);
 	transition: color 150ms ease;
 }
 
-/* the tick a label names lights with it, so the pointer is clearly on a
-   place in the ruler and not on a word floating in the margin */
+.markDash {
+	flex: none;
+	display: block;
+	width: 20px;
+	height: 1px;
+	background: rgba(248, 244, 242, 0.45);
+}
+
+/* opaque ground: the playhead crosses the whole page, so at some scroll
+   position it crosses every mark — the line stops at the word and picks
+   up after it */
+.markName {
+	background: var(--bg);
+	padding: 3px 6px;
+	font-family: var(--font-mono);
+	font-size: var(--text-fine);
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	line-height: 1;
+}
+
 @media (hover: hover) and (pointer: fine) {
-	.label:hover {
+	.mark:hover {
 		color: var(--accent);
 	}
 
-	.tick:has(.label:hover) .line {
+	.mark:hover .markDash {
 		background: var(--accent);
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.label {
+	.mark {
 		transition: none;
 	}
 }
+
 
 /* The playhead: a solid head at the ruler, then a hairline running the
    width of the page, slid by scroll progress. Two weights rather than
@@ -111,6 +127,32 @@
 		transparent var(--rail-head)
 	);
 	will-change: transform;
+}
+
+/* The bloom the head throws down the line: brightest where the solid
+   accent is, gone by the middle of the page. A blurred child rather
+   than a box-shadow or a filter on the marker itself — the marker takes
+   a new transform every frame, and a filter there would re-rasterise a
+   viewport-wide strip on each one. This is painted once and rides along.
+
+   rgba literals, since color-mix inside a stylesheet gradient silently
+   no-ops in Cyril's browser (the header veil and hero scrim notes). */
+.bloom {
+	position: absolute;
+	left: -12px;
+	right: 0;
+	top: 50%;
+	height: 18px;
+	transform: translateY(-50%);
+	background: linear-gradient(
+		to right,
+		rgba(234, 0, 0, 0.1),
+		rgba(234, 0, 0, 0.03) 10%,
+		rgba(234, 0, 0, 0.01) 42%,
+		rgba(234, 0, 0, 0)
+	);
+	filter: blur(6px);
+	pointer-events: none;
 }
 
 .marker::after {

@@ -19,17 +19,23 @@ const NAMED = new Set(["work", "about", "contact"]);
 export default function ScrollRuler() {
   const railRef = useRef<HTMLDivElement>(null);
   const markerRef = useRef<HTMLDivElement>(null);
-  /* tick index -> section id. State, not a data attribute, because the
-     labels are links now and links have to be real elements. It only
-     changes on load and resize — the scroll path never touches it. */
-  const [labels, setLabels] = useState<Record<number, string>>({});
+  /* The named marks, each with the exact pixel offset the playhead stops
+     at for that section. They are NOT hung off the 48 ticks: a tick is
+     one of 48 evenly spaced positions, the playhead stops wherever the
+     section actually starts, and rounding one to the other leaves the
+     mark half a tick from the line that is supposed to meet it. Their own
+     positions make the dash, the word and the playhead agree. */
+  const [marks, setMarks] = useState<{ id: string; y: number }[]>([]);
 
   useEffect(() => {
     const rail = railRef.current;
     const marker = markerRef.current;
     if (!rail || !marker) return;
 
-    const ticks = Array.from(rail.querySelectorAll<HTMLElement>("span"));
+    /* [data-tick], not "span": the marker carries a span of its own for
+       the bloom, and a loose tag selector swept it up as a 49th tick
+       whose missing inner line then threw on every scroll frame. */
+    const ticks = Array.from(rail.querySelectorAll<HTMLElement>("[data-tick]"));
     /* the wave scales the LINE inside each tick, never the tick itself —
        a scaleX on the tick would stretch the section label with it */
     const lines = ticks.map((t) => t.firstElementChild as HTMLElement);
@@ -42,15 +48,26 @@ export default function ScrollRuler() {
     const measure = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       if (max <= 0) return;
+      const H = rail.clientHeight;
       const majors = new Set<number>();
-      const found = new Map<number, string>();
+      /* the tick each named mark stands in for. The mark brings its own
+         dash at the exact offset, so leaving the tick drawn a few pixels
+         away puts two lines beside one word. */
+      const replaced = new Set<number>();
+      const found: { id: string; y: number }[] = [];
       const index = (f: number) =>
         Math.round(Math.min(1, Math.max(0, f)) * (TICKS - 1));
       const add = (f: number) => majors.add(index(f));
       document.querySelectorAll<HTMLElement>("main > section").forEach((s) => {
         const top = s.getBoundingClientRect().top + window.scrollY;
         add(top / max);
-        if (NAMED.has(s.id)) found.set(index(top / max), s.id);
+        if (NAMED.has(s.id)) {
+          // the same expression update() uses for the playhead, so the
+          // mark and the line cannot disagree
+          const f = Math.min(1, Math.max(0, top / max));
+          found.push({ id: s.id, y: f * (H - 2) });
+          replaced.add(index(top / max));
+        }
         const range = s.offsetHeight - window.innerHeight;
         if (s.dataset.rulerBeats && range > 0) {
           for (const b of s.dataset.rulerBeats.split(",")) {
@@ -59,10 +76,12 @@ export default function ScrollRuler() {
           }
         }
       });
-      ticks.forEach((el, i) => el.classList.toggle(styles.major, majors.has(i)));
-      const next = Object.fromEntries(found);
-      setLabels((prev) =>
-        JSON.stringify(prev) === JSON.stringify(next) ? prev : next
+      ticks.forEach((el, i) => {
+        el.classList.toggle(styles.major, majors.has(i));
+        el.classList.toggle(styles.replaced, replaced.has(i));
+      });
+      setMarks((prev) =>
+        JSON.stringify(prev) === JSON.stringify(found) ? prev : found
       );
     };
 
@@ -120,20 +139,29 @@ export default function ScrollRuler() {
   return (
     <div ref={railRef} className={styles.rail} aria-hidden="true">
       {Array.from({ length: TICKS }, (_, i) => (
-        <span key={i} className={styles.tick}>
+        <span key={i} className={styles.tick} data-tick="">
           <i className={styles.line} />
-          {labels[i] && (
-            /* tabIndex -1 on purpose: the rail is aria-hidden decoration,
-               and a focusable child inside it would be a keyboard trap
-               with no accessible name. The header carries the same three
-               links for anyone not using a pointer. */
-            <a href={`#${labels[i]}`} className={styles.label} tabIndex={-1}>
-              {labels[i]}
-            </a>
-          )}
         </span>
       ))}
-      <div ref={markerRef} className={styles.marker} />
+      {/* tabIndex -1 on purpose: the rail is aria-hidden decoration, and a
+          focusable child inside it would be a keyboard trap with no
+          accessible name. The header carries the same three links for
+          anyone not using a pointer. */}
+      {marks.map((m) => (
+        <a
+          key={m.id}
+          href={`#${m.id}`}
+          className={styles.mark}
+          style={{ transform: `translateY(${m.y}px)` }}
+          tabIndex={-1}
+        >
+          <i className={styles.markDash} />
+          <span className={styles.markName}>{m.id}</span>
+        </a>
+      ))}
+      <div ref={markerRef} className={styles.marker}>
+        <span className={styles.bloom} />
+      </div>
     </div>
   );
 }
