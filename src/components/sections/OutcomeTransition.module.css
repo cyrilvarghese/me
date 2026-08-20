@@ -210,6 +210,14 @@
 	.col {
 		opacity: 0;
 	}
+
+	/* The knife too, but for a different reason: server-rendered it sits flat
+	   and centred, and only Hero.tsx's gsap.set moves it out to the peek after
+	   hydration. Without this it paints in the wrong place for a frame. Hero
+	   turns it back on in the same set. */
+	.knifeEl {
+		opacity: 0;
+	}
 }
 
 /* ---- mobile: the stage only has to carry the knife ---- */

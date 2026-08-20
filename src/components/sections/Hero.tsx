@@ -84,6 +84,9 @@ export default function Hero() {
             scale: peekScale,
             rotation: PEEK_ROTATION,
           });
+          // the knife is held invisible by CSS until it is out at the peek, so
+          // the untransformed server-rendered pose never gets a painted frame
+          gsap.set(knifeEl, { autoAlpha: 1 });
 
           // The fan runs on its own clock, fired once when the knife lands and
           // re-armed if the reader scrolls back up past REARM_AT.
