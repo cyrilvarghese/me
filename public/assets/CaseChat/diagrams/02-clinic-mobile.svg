@@ -27,18 +27,18 @@
 
   <g fill="none">
     <path d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
-          stroke="#f8f4f2" stroke-opacity=".28" stroke-width="2.1"
-          stroke-linecap="round" stroke-dasharray="1.4 9.8"/>
+          stroke="rgba(248,244,242,0.24)" stroke-width="2.6"
+          stroke-linecap="round" stroke-dasharray="2.5 17.5"/>
 
     <path class="cc-trail" pathLength="100"
           d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
-          stroke="#eee8e6" stroke-width="1.84" stroke-linecap="round"
+          stroke="#eee8e6" stroke-width="3" stroke-linecap="round"
           style="--dur:5.74s"/>
 
     <path class="cc-run"
           d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
-          stroke="#ea0000" stroke-width="2.6" stroke-linecap="round"
-          style="--len:1412; --dash:7.35; --dur:5.74s"/>
+          stroke="#ea0000" stroke-width="4.25" stroke-linecap="round"
+          style="--len:1412; --dash:12; --dur:5.74s"/>
   </g>
 
   <!-- The clinic the loop runs inside, named at the foot of the column
@@ -56,42 +56,42 @@
        sixth apart the way the ring's are. -->
   <g font-size="15" fill="currentColor">
     <g class="cc-in" style="--d:.15s">
-      <circle class="cc-ping" cx="64" cy="66" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:0s"/>
+      <circle class="cc-ping" cx="64" cy="66" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:0s"/>
       <circle cx="64" cy="66" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/Patient.png" x="45.5" y="47.5" width="37" height="37"/>
       <text x="110" y="71" opacity=".8">1 · PICK A PATIENT</text>
     </g>
 
     <g class="cc-in" style="--d:.25s">
-      <circle class="cc-ping" cx="64" cy="186" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:.488s"/>
+      <circle class="cc-ping" cx="64" cy="186" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:.488s"/>
       <circle cx="64" cy="186" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/patient-history.png" x="45.5" y="167.5" width="37" height="37"/>
       <text x="110" y="191" opacity=".8">2 · TAKE HISTORY</text>
     </g>
 
     <g class="cc-in" style="--d:.35s">
-      <circle class="cc-ping" cx="64" cy="306" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:.976s"/>
+      <circle class="cc-ping" cx="64" cy="306" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:.976s"/>
       <circle cx="64" cy="306" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/test.png" x="45.5" y="287.5" width="37" height="37"/>
       <text x="110" y="311" opacity=".8">3 · ORDER TESTS</text>
     </g>
 
     <g class="cc-in" style="--d:.45s">
-      <circle class="cc-ping" cx="64" cy="426" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:1.463s"/>
+      <circle class="cc-ping" cx="64" cy="426" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:1.463s"/>
       <circle cx="64" cy="426" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/diagnosis.png" x="45.5" y="407.5" width="37" height="37"/>
       <text x="110" y="431" opacity=".8">4 · DIAGNOSE</text>
     </g>
 
     <g class="cc-in" style="--d:.55s">
-      <circle class="cc-ping" cx="64" cy="546" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:1.951s"/>
+      <circle class="cc-ping" cx="64" cy="546" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:1.951s"/>
       <circle cx="64" cy="546" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/treatment.png" x="45.5" y="527.5" width="37" height="37"/>
       <text x="110" y="551" opacity=".8">5 · TREAT</text>
     </g>
 
     <g class="cc-in" style="--d:.65s">
-      <circle class="cc-ping" cx="64" cy="666" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:2.439s"/>
+      <circle class="cc-ping" cx="64" cy="666" r="20" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.74s; --d:2.439s"/>
       <circle cx="64" cy="666" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/Feedback.png" x="45.5" y="647.5" width="37" height="37"/>
       <text x="110" y="671" opacity=".8">6 · FEEDBACK</text>

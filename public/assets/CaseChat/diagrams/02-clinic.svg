@@ -33,26 +33,33 @@
        Clockwise from the top: 2πr = 1571 units, and the house dash travels
        246 of them a second, so a lap takes 6.4s.
 
-       Numbers are CreativeOS 01-today and 02-canvas scaled to this box,
-       not invented: ground 3 wide on "2 14" at a 600-unit panel (×1.833
-       here), trail 2.4 and runner 3.4 on "9.6" at 02-canvas's 548 (×2.007).
-       The trail is the light one and the runner is the red one, which is
-       the way round 02-canvas has it — a trail in the accent would turn
-       the whole ring red and leave nothing for the moment that matters. -->
+       The stroke numbers are 02-canvas's, unscaled, and that is the point:
+       it renders at 0.95px per unit and this renders at 1.04, so both are
+       1:1 and a viewBox unit is a pixel in each. Scaling them by the ratio
+       of the two boxes (1100/548) painted the rail twice as thick and the
+       dash twice as far apart as the diagram it was copying. What has to
+       match is the mark on screen, not the number in the file.
+
+       Ground 2.06 on "2 14", trail 2.4, runner 3.4 on a 9.6 dash. The
+       runner is the heaviest of the three and the ground the lightest, so
+       the travelling mark reads as riding a thinner line. The trail is the
+       light one and the runner the red one, the way round 02-canvas has
+       it — a trail in the accent turns the whole ring red and leaves
+       nothing for the moment that matters. -->
   <g fill="none">
     <path d="M550 80 A250 250 0 1 1 550 580 A250 250 0 1 1 550 80"
-          stroke="#f8f4f2" stroke-opacity=".28" stroke-width="5.5"
-          stroke-linecap="round" stroke-dasharray="3.7 25.7"/>
+          stroke="rgba(248,244,242,0.24)" stroke-width="2.06"
+          stroke-linecap="round" stroke-dasharray="2 14"/>
 
     <path class="cc-trail" pathLength="100"
           d="M550 80 A250 250 0 1 1 550 580 A250 250 0 1 1 550 80"
-          stroke="#eee8e6" stroke-width="4.8" stroke-linecap="round"
+          stroke="#eee8e6" stroke-width="2.4" stroke-linecap="round"
           style="--dur:6.4s"/>
 
     <path class="cc-run"
           d="M550 80 A250 250 0 1 1 550 580 A250 250 0 1 1 550 80"
-          stroke="#ea0000" stroke-width="6.8" stroke-linecap="round"
-          style="--len:1571; --dash:19.3; --dur:6.4s"/>
+          stroke="#ea0000" stroke-width="3.4" stroke-linecap="round"
+          style="--len:1571; --dash:9.6; --dur:6.4s"/>
   </g>
 
   <!-- The clinic the loop runs inside. Larger than the stops, because it
@@ -74,42 +81,42 @@
        so it fires as the runner actually reaches it. -->
   <g font-size="15" fill="currentColor">
     <g class="cc-in" style="--d:.15s">
-      <circle class="cc-ping" cx="550" cy="80" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:0s"/>
+      <circle class="cc-ping" cx="550" cy="80" r="30" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:6.4s; --d:0s"/>
       <circle cx="550" cy="80" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/Patient.png" x="522.5" y="52.5" width="55" height="55"/>
       <text x="550" y="12" text-anchor="middle" opacity=".8">1 · PICK A PATIENT</text>
     </g>
 
     <g class="cc-in" style="--d:.25s">
-      <circle class="cc-ping" cx="766.5" cy="205" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:1.067s"/>
+      <circle class="cc-ping" cx="766.5" cy="205" r="30" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:6.4s; --d:1.067s"/>
       <circle cx="766.5" cy="205" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/patient-history.png" x="739" y="177.5" width="55" height="55"/>
       <text x="833" y="211" opacity=".8">2 · TAKE HISTORY</text>
     </g>
 
     <g class="cc-in" style="--d:.35s">
-      <circle class="cc-ping" cx="766.5" cy="455" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:2.133s"/>
+      <circle class="cc-ping" cx="766.5" cy="455" r="30" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:6.4s; --d:2.133s"/>
       <circle cx="766.5" cy="455" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/test.png" x="739" y="427.5" width="55" height="55"/>
       <text x="833" y="461" opacity=".8">3 · ORDER TESTS</text>
     </g>
 
     <g class="cc-in" style="--d:.45s">
-      <circle class="cc-ping" cx="550" cy="580" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:3.2s"/>
+      <circle class="cc-ping" cx="550" cy="580" r="30" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:6.4s; --d:3.2s"/>
       <circle cx="550" cy="580" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/diagnosis.png" x="522.5" y="552.5" width="55" height="55"/>
       <text x="550" y="652" text-anchor="middle" opacity=".8">4 · DIAGNOSE</text>
     </g>
 
     <g class="cc-in" style="--d:.55s">
-      <circle class="cc-ping" cx="333.5" cy="455" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:4.267s"/>
+      <circle class="cc-ping" cx="333.5" cy="455" r="30" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:6.4s; --d:4.267s"/>
       <circle cx="333.5" cy="455" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/treatment.png" x="306" y="427.5" width="55" height="55"/>
       <text x="267" y="461" text-anchor="end" opacity=".8">5 · TREAT</text>
     </g>
 
     <g class="cc-in" style="--d:.65s">
-      <circle class="cc-ping" cx="333.5" cy="205" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:5.333s"/>
+      <circle class="cc-ping" cx="333.5" cy="205" r="30" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:6.4s; --d:5.333s"/>
       <circle cx="333.5" cy="205" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/Feedback.png" x="306" y="177.5" width="55" height="55"/>
       <text x="267" y="211" text-anchor="end" opacity=".8">6 · FEEDBACK</text>
