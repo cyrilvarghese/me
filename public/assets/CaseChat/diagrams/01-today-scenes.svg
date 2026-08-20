@@ -65,8 +65,8 @@
     <rect x="-2" y="196" width="324" height="10" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
   </g>
 
-  <text class="cc-in" style="--d:.5s" x="30" y="238" font-size="22" fill="#e7e3e1">Lectures</text>
-  <text class="cc-in" style="--d:.55s" x="30" y="266" font-size="20" fill="#9e9493">150 students, one topic</text>
+  <text class="cc-in" style="--d:.5s;letter-spacing:0" x="30" y="238" font-size="22" fill="#e7e3e1">Lectures</text>
+  <text class="cc-in" style="--d:.55s;letter-spacing:0" x="30" y="266" font-size="20" fill="#9e9493">150 students, one topic</text>
 
   <!-- ══ the desk ══════════════════════════════════════════════════ -->
   <g class="cc-in" style="--d:.15s" transform="translate(30 372) scale(0.86)">
@@ -96,12 +96,12 @@
     <path d="M214 172 L158 152 L158 164 L214 176 Z" fill="#c98080" fill-opacity=".74"/>
   </g>
 
-  <text class="cc-in" style="--d:.6s" x="30" y="580" font-size="22" fill="#e7e3e1">Books and self study</text>
-  <text class="cc-in" style="--d:.65s" x="30" y="608" font-size="20" fill="#9e9493">Dense reference textbooks, read alone</text>
+  <text class="cc-in" style="--d:.6s;letter-spacing:0" x="30" y="580" font-size="22" fill="#e7e3e1">Books and self study</text>
+  <text class="cc-in" style="--d:.65s;letter-spacing:0" x="30" y="608" font-size="20" fill="#9e9493">Dense reference textbooks, read alone</text>
 
   <!-- ══ the bedside ═══════════════════════════════════════════════ -->
-  <text class="cc-in" style="--d:.9s" x="596" y="48" font-size="22" fill="#ea0000">Only 20% of the time</text>
-  <text class="cc-in" style="--d:.9s" x="596" y="76" font-size="22" fill="#ea0000">is spent hands on</text>
+  <text class="cc-in" style="--d:.9s;letter-spacing:0" x="596" y="48" font-size="22" fill="#ea0000">Only 20% of the time</text>
+  <text class="cc-in" style="--d:.9s;letter-spacing:0" x="596" y="76" font-size="22" fill="#ea0000">is spent hands on</text>
 
   <g class="cc-in" style="--d:.25s" transform="translate(596 100) scale(0.86)">
     <g fill="#f8f4f2" fill-opacity=".20">
@@ -124,9 +124,9 @@
     <circle cx="204" cy="126" r="9.5" fill="#ea0000"/>
   </g>
 
-  <text class="cc-in" style="--d:.7s" x="596" y="308" font-size="22" fill="#e7e3e1">Bedside teaching</text>
-  <text class="cc-in" style="--d:.75s" x="596" y="336" font-size="20" fill="#9e9493">Watching a doctor work</text>
-  <text class="cc-in" style="--d:.75s" x="596" y="360" font-size="20" fill="#9e9493">a real patient</text>
+  <text class="cc-in" style="--d:.7s;letter-spacing:0" x="596" y="308" font-size="22" fill="#e7e3e1">Bedside teaching</text>
+  <text class="cc-in" style="--d:.75s;letter-spacing:0" x="596" y="336" font-size="20" fill="#9e9493">Watching a doctor work</text>
+  <text class="cc-in" style="--d:.75s;letter-spacing:0" x="596" y="360" font-size="20" fill="#9e9493">a real patient</text>
 
   <!-- ══ the share of the week ═════════════════════════════════════ -->
   <!-- Wedges are placed so each one faces the room it measures: lectures
@@ -136,9 +136,9 @@
     <path d="M450 300 L372 325.3 A82 82 0 0 0 516.3 348.2 Z" fill="#f8f4f2" fill-opacity=".13" stroke="#f8f4f2" stroke-opacity=".28" stroke-width="2"/>
     <path transform="translate(10 0)" d="M450 300 L516.3 251.8 A82 82 0 0 1 516.3 348.2 Z" fill="#ea0000" fill-opacity=".85" stroke="#ea0000" stroke-width="2"/>
 
-    <text x="428" y="263" font-size="22" text-anchor="middle" fill="#f8f4f2" fill-opacity=".75">45%</text>
-    <text x="442" y="356" font-size="22" text-anchor="middle" fill="#f8f4f2" fill-opacity=".75">35%</text>
-    <text x="512" y="308" font-size="22" text-anchor="middle" fill="#f8f4f2">20%</text>
+    <text style="letter-spacing:0" x="428" y="263" font-size="22" text-anchor="middle" fill="#f8f4f2" fill-opacity=".75">45%</text>
+    <text style="letter-spacing:0" x="442" y="356" font-size="22" text-anchor="middle" fill="#f8f4f2" fill-opacity=".75">35%</text>
+    <text style="letter-spacing:0" x="512" y="308" font-size="22" text-anchor="middle" fill="#f8f4f2">20%</text>
   </g>
 
   <!-- ══ rails ═════════════════════════════════════════════════════ -->

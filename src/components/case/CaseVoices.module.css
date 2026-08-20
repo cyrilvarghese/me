@@ -105,9 +105,11 @@
 	overflow: hidden;
 }
 
+/* The disc is a mount, not a crop — the mark wants clear ground around it
+   or the disc reads as a tight frame rather than something it sits on. */
 .icon {
-	width: 78%;
-	height: 78%;
+	width: 62%;
+	height: 62%;
 	object-fit: contain;
 	display: block;
 }
