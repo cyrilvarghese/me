@@ -1,5 +1,6 @@
 import CaseDiagram from "./CaseDiagram";
 import { Mark, MarkQuote } from "./CaseMark";
+import { RevealSection } from "./Reveal";
 import styles from "./CaseObject.module.css";
 
 type Attr = { icon: string; label: string };
@@ -42,7 +43,7 @@ export default function CaseObject({
   const split = Math.ceil(attrs.length / 2);
 
   return (
-    <section className={`section-shell ${styles.block}`}>
+    <RevealSection className={`section-shell ${styles.block}`}>
       <div className={styles.head}>
         <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
         <div>
@@ -100,7 +101,7 @@ export default function CaseObject({
 
         {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
       </figure>
-    </section>
+    </RevealSection>
   );
 }
 

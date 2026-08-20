@@ -1,3 +1,4 @@
+import { RevealSection } from "./Reveal";
 import styles from "./CaseSection.module.css";
 
 /** Labeled prose row: mono eyebrow column, free content column.
@@ -14,7 +15,7 @@ export default function CaseSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className={`section-shell ${styles.section}`}>
+    <RevealSection className={`section-shell ${styles.section}`}>
       <div className={styles.grid}>
         <p className={`mono-label ${styles.eyebrow}`}>
           {eyebrow}
@@ -25,6 +26,6 @@ export default function CaseSection({
           <div className={styles.body}>{children}</div>
         </div>
       </div>
-    </section>
+    </RevealSection>
   );
 }

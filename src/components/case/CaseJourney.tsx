@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { m } from "motion/react";
+import { reveal } from "@/lib/motion";
 import styles from "./CaseJourney.module.css";
 
 export type JourneyStage = {
@@ -158,8 +160,10 @@ export default function CaseJourney({
   const stage = stages[cardIndex];
   const fraction = target / last;
 
+  /* already a client component and it needs the ref, so it takes the reveal
+     inline rather than through RevealSection */
   return (
-    <section ref={rootRef} className={`section-shell ${styles.block}`}>
+    <m.section ref={rootRef} {...reveal(`section-shell ${styles.block}`)}>
       <div className={styles.head}>
         <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
         <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>
@@ -311,6 +315,6 @@ export default function CaseJourney({
           </div>
         )}
       </div>
-    </section>
+    </m.section>
   );
 }

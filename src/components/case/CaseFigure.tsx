@@ -1,4 +1,5 @@
 import CaseDiagram from "./CaseDiagram";
+import { RevealDiv } from "./Reveal";
 import styles from "./CaseFigure.module.css";
 
 /** One diagram, full width, for a beat that has no counterpart to sit
@@ -25,13 +26,14 @@ export default function CaseFigure({
 }) {
   return (
     <section className={`section-shell ${styles.block}`}>
-      <div className={styles.head}>
+      {/* head only — the drawing below runs its own staged fade (.cc-in) */}
+      <RevealDiv className={styles.head}>
         <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
         <div>
           {heading && <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>}
           {lede && <p className={styles.lede}>{lede}</p>}
         </div>
-      </div>
+      </RevealDiv>
 
       <figure className={styles.figure}>
         <div className={`${styles.drawing} ${diagramMobile ? styles.wideOnly : ""}`}>

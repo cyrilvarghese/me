@@ -1,3 +1,4 @@
+import { RevealSection } from "./Reveal";
 import styles from "./CaseSummary.module.css";
 
 type Item = { label: string; value?: React.ReactNode; body: React.ReactNode };
@@ -23,7 +24,7 @@ export default function CaseSummary({
   meta?: Meta[];
 }) {
   return (
-    <section className={`section-shell ${styles.block}`}>
+    <RevealSection className={`section-shell ${styles.block}`}>
       <div className={styles.head}>
         <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
         <div>
@@ -61,6 +62,6 @@ export default function CaseSummary({
           ))}
         </dl>
       )}
-    </section>
+    </RevealSection>
   );
 }

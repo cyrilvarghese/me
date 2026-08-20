@@ -1,4 +1,5 @@
 import CaseDiagram from "./CaseDiagram";
+import { RevealDiv } from "./Reveal";
 import styles from "./CaseCompare.module.css";
 
 type Panel = {
@@ -29,14 +30,17 @@ export default function CaseCompare({
 }) {
   return (
     <section className={`section-shell ${styles.block}`}>
-      <div className={styles.head}>
+      {/* the head fades in on scroll; the panels below do not — their
+          diagrams carry their own staged fade (.cc-in), which starts on
+          page load rather than on arrival */}
+      <RevealDiv className={styles.head}>
         <p className={`mono-label ${styles.index}`}>{index}</p>
         <div>
           <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
           <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>
           <p className={styles.lede}>{lede}</p>
         </div>
-      </div>
+      </RevealDiv>
 
       <div className={styles.pair}>
         {/* the seam between the tellings: a hairline with the comparison

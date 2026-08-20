@@ -1,4 +1,5 @@
 import { Mark, MarkQuote } from "./CaseMark";
+import { RevealSection } from "./Reveal";
 import styles from "./CaseVoices.module.css";
 
 type Quote = { text: string; mark?: string };
@@ -28,7 +29,7 @@ export default function CaseVoices({
   groups: { icon: string; label: string; quotes: Quote[] }[];
 }) {
   return (
-    <section className={`section-shell ${styles.block}`}>
+    <RevealSection className={`section-shell ${styles.block}`}>
       {/* the same head as CaseFigure and CaseCompare — eyebrow in its own
           column beside the heading — so every band on the page reads as
           one template rather than as several */}
@@ -70,7 +71,7 @@ export default function CaseVoices({
           </div>
         );
       })}
-    </section>
+    </RevealSection>
   );
 }
 

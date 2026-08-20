@@ -1,3 +1,4 @@
+import { RevealSection } from "./Reveal";
 import styles from "./CaseQuote.module.css";
 
 /** A voice from inside the work, given its own band. Used where the
@@ -19,7 +20,7 @@ export default function CaseQuote({
   marks?: boolean;
 }) {
   return (
-    <section className={`section-shell ${styles.block}`}>
+    <RevealSection className={`section-shell ${styles.block}`}>
       <figure className={styles.figure} data-marks={marks ? "true" : "false"}>
         {/* the rule stands in for the quote mark: red, decorative, and
             large-type only — the same job the accent does everywhere */}
@@ -31,6 +32,6 @@ export default function CaseQuote({
           </figcaption>
         )}
       </figure>
-    </section>
+    </RevealSection>
   );
 }

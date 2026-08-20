@@ -78,6 +78,17 @@ live in the `.fx-hidden` class in `globals.css`, gated behind
 `--fx-from` — components use `initial={false}` so reduced-motion users get
 visible content straight from CSS. Don't move hidden states into `initial`
 props (breaks reduced motion) and don't add framer to the scrubbed sections.
+Case-study blocks share one reveal — `reveal()` in `src/lib/motion.ts`, a
+0.5s fade up 10px, spread onto the block's own root via `RevealSection` /
+`RevealDiv` (`case/Reveal.tsx`) so server components stay server components
+and no wrapper node lands inside a `section-shell` grid. `motion.test.ts`
+locks the contract. Figures are excluded on purpose: `CaseCompare` and
+`CaseFigure` reveal their `.head` only, because a diagram's own `.cc-in`
+fade starts on page load rather than on arrival. **Screenshot caveat:**
+`shot.mjs ... full` uses Playwright's capture-beyond-viewport, which never
+scrolls, so un-revealed blocks come out blank — that is the tool, not a bug.
+Verify reveals with `scroll-shots.mjs` (it really scrolls) or `shot.mjs`
+with `reduce`.
 
 **Visual system**: tokens in `src/app/tokens.css` — black/white/red Swiss
 palette (bg `#151111`, fg `#f8f4f2`, accent `#ea0000`). Every neutral —
