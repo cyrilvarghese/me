@@ -108,12 +108,14 @@ argues it at this width. Three moves cover most of it:
 
 Two things usually change with the arrangement:
 
-- **Rails follow the new geometry, or go.** If the relayout keeps
+- **Rails follow the new geometry, or change form.** If the relayout keeps
   something to point at, re-aim them — a diagonal rail becomes a vertical
-  one. If it does not, drop them: a rail arriving nowhere is debris, and
-  stacking order carries the sequence instead. Adjacency often does the
-  job a rail was doing anyway — a red callout beside a red wedge needs no
-  line between them, and one that short paints a single pill.
+  one. If the run is now too short for the dotted rail (under ~60px, where
+  the house dash period paints a single pill), **switch to a solid line
+  with an arrowhead** rather than dropping the connection: a drawn line
+  does the same job at any length, which is what the stage arrows inside
+  `01-cases` are. Drop rails only when there is genuinely nothing left to
+  point at — then stacking order carries the sequence instead.
 - **Type returns to the site's mobile scale** — labels ~16px, captions
   ~13px rendered. A wide file may run larger because its drawings are
   large; that reasoning does not survive the change of arrangement.
@@ -310,7 +312,7 @@ underlining source deck meant anyway.
 | Sized diagram text as a ratio of the viewBox | The ratio only matches when viewBox ≈ rendered width. Solve for the target px instead, and check it against the type it sits beside. |
 | Sized an HTML figure by eye | `--text-small` and `--text-label` are the same sizes a diagram's text renders at. Use the tokens and the two voices match for free. |
 | An `svg` in HTML came out smaller than its CSS width | `globals.css` caps every svg at `max-width:100%`. Anything wider than its container needs `max-width: none`. |
-| Drew a short rail and it vanished | The house dash period is ~16px. A rail under ~60px paints one pill and reads as a speck. Lengthen it or leave it out. |
+| Drew a short rail and it vanished | The house dash period is ~16px. A rail under ~60px paints one pill and reads as a speck. Lengthen it, or draw it solid with an arrowhead — not every connector has to be the dotted rail. |
 | Curved a connector to make it feel drawn | An arc curls away from what it points at. A connector is a straight ray; curvature is for haloes, not pointers. |
 | Emphasised a clause in red inside body text | Red is large-type only here. Brighten the clause and put the accent in the underline. |
 | Filtered a supplied icon to fit the palette | Black outlines on this ground become a smudge. Light disc, colours untouched — the third-party exception. |
