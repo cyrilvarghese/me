@@ -19,9 +19,12 @@
   <rect x="48" y="130" width="46" height="11" fill="#f8f4f2" fill-opacity=".22"/>
   <rect x="40" y="140" width="244" height="14" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".28" stroke-width="2"/>
 
-  <!-- the patient -->
-  <circle cx="74" cy="124" r="9" fill="#9e9493"/>
-  <path d="M86 140 C96 122 118 122 142 126 C162 130 176 133 190 133 C198 118 218 116 226 132 C242 136 256 138 268 140 Z" fill="#9e9493"/>
+  <!-- the patient, who is also the learning material here — same #b39a9a
+       tinge as the screen and the books. The red contact still reads over
+       it: a desaturated tint and a saturated accent are different signals,
+       not two strengths of one. -->
+  <circle cx="74" cy="124" r="9" fill="#b39a9a"/>
+  <path d="M86 140 C96 122 118 122 142 126 C162 130 176 133 190 133 C198 118 218 116 226 132 C242 136 256 138 268 140 Z" fill="#b39a9a"/>
 
   <!-- the doctor, leaning across -->
   <circle cx="280" cy="58" r="11" fill="#e7e3e1"/>

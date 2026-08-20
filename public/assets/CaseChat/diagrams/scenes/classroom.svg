@@ -4,11 +4,15 @@
        rows dim as they recede — so the drawing never puts perspective lines
        on the page to compete with the diagram's own rails. -->
 
-  <!-- back wall: the screen everyone is pointed at -->
-  <rect x="186" y="22" width="112" height="66" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".28" stroke-width="2"/>
-  <rect x="200" y="40" width="60" height="4" fill="#f8f4f2" fill-opacity=".18"/>
-  <rect x="200" y="52" width="84" height="4" fill="#f8f4f2" fill-opacity=".18"/>
-  <rect x="200" y="64" width="44" height="4" fill="#f8f4f2" fill-opacity=".18"/>
+  <!-- back wall: the screen everyone is pointed at. Learning material
+       carries a tinge of the accent — #b39a9a is the first step of the
+       ramp in the diagram skill, so the tint stays inside the one-hue
+       rule instead of introducing a colour of its own. -->
+  <rect x="186" y="22" width="112" height="66" fill="#1e1818"/>
+  <rect x="186" y="22" width="112" height="66" fill="#b39a9a" fill-opacity=".10" stroke="#b39a9a" stroke-opacity=".45" stroke-width="2"/>
+  <rect x="200" y="40" width="60" height="4" fill="#b39a9a" fill-opacity=".38"/>
+  <rect x="200" y="52" width="84" height="4" fill="#b39a9a" fill-opacity=".38"/>
+  <rect x="200" y="64" width="44" height="4" fill="#b39a9a" fill-opacity=".38"/>
 
   <!-- lectern -->
   <rect x="88" y="100" width="64" height="5" fill="#9e9493" fill-opacity=".55"/>
