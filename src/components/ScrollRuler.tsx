@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sectionArrival } from "@/lib/section-anchor";
 import styles from "./ScrollRuler.module.css";
 
 const TICKS = 48;
@@ -67,8 +68,9 @@ export default function ScrollRuler() {
         const name = NAMED.get(s.id);
         if (name) {
           // the same expression update() uses for the playhead, so the
-          // mark and the line cannot disagree
-          const f = Math.min(1, Math.max(0, top / max));
+          // mark and the line cannot disagree. The offset is the section's
+          // arrival, not its top — see sectionArrival.
+          const f = Math.min(1, Math.max(0, sectionArrival(s) / max));
           found.push({ id: s.id, name, y: f * (H - 2) });
         }
         const range = s.offsetHeight - window.innerHeight;

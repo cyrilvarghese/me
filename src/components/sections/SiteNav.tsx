@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { sectionArrival } from "@/lib/section-anchor";
 import styles from "./Header.module.css";
 
 const ITEMS = [
@@ -31,7 +32,9 @@ export default function SiteNav() {
       for (const { id } of ITEMS) {
         const el = document.getElementById(id);
         if (!el) continue;
-        if (el.getBoundingClientRect().top + window.scrollY <= probe) current = id;
+        // arrival, not top: a pinned section holds the reader for a screen
+        // or two before the copy it is named for is on the page
+        if (sectionArrival(el) <= probe) current = id;
       }
       // the last section is short and the page ends inside it, so its top
       // may never reach the probe — landing at the bottom means Contact

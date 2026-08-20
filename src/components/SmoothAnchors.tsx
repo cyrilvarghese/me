@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { gsap } from "@/lib/gsap";
+import { sectionArrival } from "@/lib/section-anchor";
 
 /**
  * Smooth in-page anchor travel. CSS scroll-behavior is off the table —
@@ -20,9 +21,11 @@ export default function SmoothAnchors() {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       const href = link.getAttribute("href")!;
-      const target = href.length > 1 ? document.querySelector(href) : null;
-      const y =
-        target ? target.getBoundingClientRect().top + window.scrollY : 0;
+      const target =
+        href.length > 1 ? document.querySelector<HTMLElement>(href) : null;
+      // a pinned section's top is not where its copy is — land on the
+      // arrival it declares, which is the offset the rail marks too
+      const y = target ? sectionArrival(target) : 0;
 
       e.preventDefault();
       const distance = Math.abs(y - window.scrollY);

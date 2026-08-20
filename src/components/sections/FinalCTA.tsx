@@ -54,7 +54,18 @@ export default function FinalCTA() {
   );
 
   return (
-    <section ref={sectionRef} className={styles.section} id="contact" aria-label="Contact">
+    /* The ask lands at 0.82 of this section's own scroll and has settled by
+       0.89; everything before that is the knife folding, with no contact
+       copy on the page. So this is where the section counts as reached —
+       the rail's CONTACT mark, the nav's current stop and the anchor jump
+       all read it (see sectionArrival) instead of pointing at the top. */
+    <section
+      ref={sectionRef}
+      className={styles.section}
+      id="contact"
+      aria-label="Contact"
+      data-ruler-arrive="0.86"
+    >
       <div className={styles.stage}>
         <div className={styles.knifeWrap} data-knife-final="">
           {/* the inner box carries the shift, not knifeWrap — GSAP writes
