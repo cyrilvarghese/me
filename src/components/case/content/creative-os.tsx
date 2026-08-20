@@ -136,7 +136,7 @@ export default function CreativeOsContent() {
                   { src: "/assets/CreativeOS/img-prompt.png", caption: "The image prompt, composed from the brief" },
                   { src: "/assets/CreativeOS/gallery.png", caption: "Brand references added without leaving the canvas" },
                   { src: "/assets/CreativeOS/img-gen.png", caption: "The image, generated with that context attached" },
-                  { src: "/assets/CreativeOS/video-prompt.webp", caption: "The motion prompt, carried from the image" },
+                  { src: "/assets/CreativeOS/video-prompt.png", caption: "The motion prompt, carried from the image" },
                   { src: "/assets/CreativeOS/video-gen.webp", caption: "The video, generated from the approved shot" },
                 ]}
                 video="https://storage.googleapis.com/creativeos-assets/demo-assets/Demo(comp).mp4"
