@@ -25,6 +25,7 @@ export default function CaseShell({
             <CaseVisual cover={caseStudy.cover} className={styles.fill} />
           </div>
         </ViewTransition>
+        <div className={styles.scrimTop} aria-hidden="true" />
         <div className={styles.scrim} aria-hidden="true" />
         <div className={styles.heroText}>
           <div className={`section-shell ${styles.heroInner}`}>

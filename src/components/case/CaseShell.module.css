@@ -43,6 +43,28 @@
 	transform: translateZ(0);
 }
 
+
+/* the same idea at the other end, much lighter: the covers are daylit
+   photographs and several of them are close to white along the top
+   edge, where the page has nothing to seat that brightness against.
+   A short ramp gives the image a lid — enough to settle the top of the
+   frame, not enough to read as a vignette. Same rgba literals and same
+   compositor promotion as the bottom scrim, for the same reasons. */
+.scrimTop {
+	position: absolute;
+	inset-inline: 0;
+	top: 0;
+	height: 28vh;
+	background: linear-gradient(
+		rgba(21, 17, 17, 0.62),
+		rgba(21, 17, 17, 0.34) 38%,
+		rgba(21, 17, 17, 0.12) 70%,
+		transparent
+	);
+	pointer-events: none;
+	transform: translateZ(0);
+}
+
 .heroText {
 	position: absolute;
 	inset-inline: 0;
