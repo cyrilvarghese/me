@@ -7,7 +7,7 @@ import CaseNav from "@/components/case/CaseTabs";
 const D = "/assets/CreativeOS/diagrams";
 
 /** Spine: context → three pain points, each argued by the same diagram
-    told twice → the impact they add up to → the screens and the demo. */
+    told twice → the impact they add up to → the screens. */
 export default function CreativeOsContent() {
   return (
     <>
@@ -118,7 +118,7 @@ export default function CreativeOsContent() {
           {
             id: "visual-assets",
             icon: "frames",
-            label: "Visual assets & Demo",
+            label: "Visual assets",
             body: (
               <CaseShowcase
                 eyebrow="Inside the system"
@@ -139,8 +139,16 @@ export default function CreativeOsContent() {
                   { src: "/assets/CreativeOS/video-prompt.png", caption: "The motion prompt, carried from the image" },
                   { src: "/assets/CreativeOS/video-gen.webp", caption: "The video, generated from the approved shot" },
                 ]}
-                video="https://storage.googleapis.com/creativeos-assets/demo-assets/Demo(comp).mp4"
-                videoCaption="Walkthrough — brief to finished reel"
+                /* Demo hidden 2026-08-21 (Cyril). videoCaption is the switch
+                   CaseShowcase reads, so with both props off `hasDemo` is
+                   false and the bento drops the tile entirely rather than
+                   standing an "in production" placeholder over it — the same
+                   path MSIG takes. The source is kept here, not deleted, so
+                   putting it back is uncommenting these two lines and
+                   restoring "& Demo" to the label above.
+
+                   video="https://storage.googleapis.com/creativeos-assets/demo-assets/Demo(comp).mp4"
+                   videoCaption="Walkthrough — brief to finished reel" */
               />
             ),
           },
