@@ -5,7 +5,7 @@
        the wedge that measures how rarely that happens.
 
        Type here is deliberately larger than the house diagram scale: 22
-       and 19 against a 900-unit viewBox render near 26px and 23px, where
+       and 20 against a 900-unit viewBox render near 27px and 25px, where
        every other diagram lands on --text-small and --text-label. Cyril's
        call, 2026-08-20 — the drawings are large, and labels sized for the
        site read undersized beneath them. Do not "correct" this to 12/10;
@@ -66,7 +66,7 @@
   </g>
 
   <text class="cc-in" style="--d:.5s" x="30" y="238" font-size="22" fill="#e7e3e1">Lectures</text>
-  <text class="cc-in" style="--d:.55s" x="30" y="266" font-size="19" fill="#9e9493">150 students, one topic</text>
+  <text class="cc-in" style="--d:.55s" x="30" y="266" font-size="20" fill="#9e9493">150 students, one topic</text>
 
   <!-- ══ the desk ══════════════════════════════════════════════════ -->
   <g class="cc-in" style="--d:.15s" transform="translate(30 372) scale(0.86)">
@@ -97,7 +97,7 @@
   </g>
 
   <text class="cc-in" style="--d:.6s" x="30" y="580" font-size="22" fill="#e7e3e1">Books and self study</text>
-  <text class="cc-in" style="--d:.65s" x="30" y="608" font-size="19" fill="#9e9493">Dense reference textbooks, read alone</text>
+  <text class="cc-in" style="--d:.65s" x="30" y="608" font-size="20" fill="#9e9493">Dense reference textbooks, read alone</text>
 
   <!-- ══ the bedside ═══════════════════════════════════════════════ -->
   <text class="cc-in" style="--d:.9s" x="596" y="48" font-size="22" fill="#ea0000">Only 20% of the time</text>
@@ -125,8 +125,8 @@
   </g>
 
   <text class="cc-in" style="--d:.7s" x="596" y="308" font-size="22" fill="#e7e3e1">Bedside teaching</text>
-  <text class="cc-in" style="--d:.75s" x="596" y="336" font-size="19" fill="#9e9493">Watching a doctor work</text>
-  <text class="cc-in" style="--d:.75s" x="596" y="360" font-size="19" fill="#9e9493">a real patient</text>
+  <text class="cc-in" style="--d:.75s" x="596" y="336" font-size="20" fill="#9e9493">Watching a doctor work</text>
+  <text class="cc-in" style="--d:.75s" x="596" y="360" font-size="20" fill="#9e9493">a real patient</text>
 
   <!-- ══ the share of the week ═════════════════════════════════════ -->
   <!-- Wedges are placed so each one faces the room it measures: lectures

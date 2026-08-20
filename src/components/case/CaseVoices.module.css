@@ -8,7 +8,9 @@
 }
 
 .heading {
-	font-size: var(--text-h3);
+	/* tops out at 32px rather than --text-h3's 29px at this width, so the
+	   heading holds its own against the figure's enlarged type */
+	font-size: clamp(1.5rem, 3vw, 2rem);
 	max-width: 22ch;
 	margin-bottom: 1rem;
 }
