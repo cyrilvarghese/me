@@ -23,8 +23,11 @@
          same document, and a shared id would leave one of them pointing at
          the other's definition -->
     <radialGradient id="ccGlowCol">
-      <stop offset="0%" stop-color="#f8f4f2" stop-opacity=".20"/>
-      <stop offset="55%" stop-color="#f8f4f2" stop-opacity=".09"/>
+      <stop offset="0%" stop-color="#f8f4f2" stop-opacity=".075"/>
+      <stop offset="25%" stop-color="#f8f4f2" stop-opacity=".052"/>
+      <stop offset="45%" stop-color="#f8f4f2" stop-opacity=".030"/>
+      <stop offset="65%" stop-color="#f8f4f2" stop-opacity=".014"/>
+      <stop offset="82%" stop-color="#f8f4f2" stop-opacity=".005"/>
       <stop offset="100%" stop-color="#f8f4f2" stop-opacity="0"/>
     </radialGradient>
   </defs>
@@ -39,10 +42,10 @@
           stroke="#eee8e6" stroke-width="3" stroke-linecap="round"
           style="--dur:5.92s"/>
 
-    <path class="cc-run"
+    <path class="cc-run" pathLength="100"
           d="M36 70 L36 744 Q36 758 22 758 Q8 758 8 744 L8 60 Q8 46 22 46 Q36 46 36 60 L36 70"
           stroke="#ea0000" stroke-width="4.25" stroke-linecap="round"
-          style="--len:1456; --dash:12; --dur:5.92s"/>
+          style="--dash:0.824; --dur:5.92s"/>
   </g>
 
   <!-- the closing edge is named where it arrives rather than where it
@@ -55,49 +58,49 @@
        the way the ring's are. -->
   <g font-size="15" fill="currentColor">
     <g class="cc-in" style="--d:.15s">
-      <circle class="cc-ping" cx="36" cy="70" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:0s"/>
-      <circle class="cc-pop" cx="36" cy="70" r="7" fill="#ea0000" style="--dur:5.92s; --d:0s"/>
-      <circle cx="100" cy="70" r="42" fill="url(#ccGlowCol)"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="36" cy="70" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:0s"/>
+      <circle class="cc-node" cx="36" cy="70" r="7" fill="#1e1818" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:0s"/>
+      <circle cx="100" cy="70" r="88" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/Patient.png" x="77" y="47" width="46" height="46"/>
       <text x="77" y="110" opacity=".8">1 · PICK A PATIENT</text>
     </g>
 
     <g class="cc-in" style="--d:.25s">
-      <circle class="cc-ping" cx="36" cy="200" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:.529s"/>
-      <circle class="cc-pop" cx="36" cy="200" r="7" fill="#ea0000" style="--dur:5.92s; --d:.529s"/>
-      <circle cx="100" cy="200" r="42" fill="url(#ccGlowCol)"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="36" cy="200" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:.529s"/>
+      <circle class="cc-node" cx="36" cy="200" r="7" fill="#1e1818" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:.529s"/>
+      <circle cx="100" cy="200" r="88" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/patient-history.png" x="77" y="177" width="46" height="46"/>
       <text x="77" y="240" opacity=".8">2 · TAKE HISTORY</text>
     </g>
 
     <g class="cc-in" style="--d:.35s">
-      <circle class="cc-ping" cx="36" cy="330" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:1.057s"/>
-      <circle class="cc-pop" cx="36" cy="330" r="7" fill="#ea0000" style="--dur:5.92s; --d:1.057s"/>
-      <circle cx="100" cy="330" r="42" fill="url(#ccGlowCol)"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="36" cy="330" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:1.057s"/>
+      <circle class="cc-node" cx="36" cy="330" r="7" fill="#1e1818" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:1.057s"/>
+      <circle cx="100" cy="330" r="88" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/test.png" x="77" y="307" width="46" height="46"/>
       <text x="77" y="370" opacity=".8">3 · ORDER TESTS</text>
     </g>
 
     <g class="cc-in" style="--d:.45s">
-      <circle class="cc-ping" cx="36" cy="460" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:1.586s"/>
-      <circle class="cc-pop" cx="36" cy="460" r="7" fill="#ea0000" style="--dur:5.92s; --d:1.586s"/>
-      <circle cx="100" cy="460" r="42" fill="url(#ccGlowCol)"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="36" cy="460" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:1.586s"/>
+      <circle class="cc-node" cx="36" cy="460" r="7" fill="#1e1818" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:1.586s"/>
+      <circle cx="100" cy="460" r="88" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/diagnosis.png" x="77" y="437" width="46" height="46"/>
       <text x="77" y="500" opacity=".8">4 · DIAGNOSE</text>
     </g>
 
     <g class="cc-in" style="--d:.55s">
-      <circle class="cc-ping" cx="36" cy="590" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:2.114s"/>
-      <circle class="cc-pop" cx="36" cy="590" r="7" fill="#ea0000" style="--dur:5.92s; --d:2.114s"/>
-      <circle cx="100" cy="590" r="42" fill="url(#ccGlowCol)"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="36" cy="590" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:2.114s"/>
+      <circle class="cc-node" cx="36" cy="590" r="7" fill="#1e1818" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:2.114s"/>
+      <circle cx="100" cy="590" r="88" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/treatment.png" x="77" y="567" width="46" height="46"/>
       <text x="77" y="630" opacity=".8">5 · TREAT</text>
     </g>
 
     <g class="cc-in" style="--d:.65s">
-      <circle class="cc-ping" cx="36" cy="720" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:2.643s"/>
-      <circle class="cc-pop" cx="36" cy="720" r="7" fill="#ea0000" style="--dur:5.92s; --d:2.643s"/>
-      <circle cx="100" cy="720" r="42" fill="url(#ccGlowCol)"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="36" cy="720" r="7" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:2.643s"/>
+      <circle class="cc-node" cx="36" cy="720" r="7" fill="#1e1818" stroke="#ea0000" stroke-width="2.5" style="--dur:5.92s; --d:2.643s"/>
+      <circle cx="100" cy="720" r="88" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/Feedback.png" x="77" y="697" width="46" height="46"/>
       <text x="77" y="760" opacity=".8">6 · FEEDBACK</text>
     </g>
