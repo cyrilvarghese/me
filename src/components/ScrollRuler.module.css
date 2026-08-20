@@ -2,13 +2,20 @@
    playhead — permanent evidence that the page scrolls, and where you are. */
 .rail {
 	position: fixed;
+	--rail-head: 26px;
 	left: clamp(14px, 2vw, 30px);
+	/* The rail runs to the right edge so the playhead can cross the page
+	   on a plain 100%, with no 100vw — vw includes the scrollbar on
+	   Windows, and a fixed child overhanging by that much is how you get
+	   a phantom horizontal scroll. The ticks keep their own widths. */
+	right: 0;
 	top: 50%;
 	transform: translateY(-50%);
 	height: min(56vh, 460px);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	align-items: flex-start;
 	z-index: 150;
 	pointer-events: none;
 }
@@ -26,15 +33,34 @@
 	background: rgba(248, 244, 242, 0.45);
 }
 
-/* the playhead: a red line with a small pointer, slid by scroll progress */
+/* The playhead: a solid head at the ruler, then a hairline running the
+   width of the page, slid by scroll progress. Two weights rather than
+   one — the 2px accent that reads at 26px would be a stripe across
+   1440, and the line is meant to mark the reader's level, not divide
+   the page in half. */
 .marker {
 	position: absolute;
 	left: 0;
 	top: 0;
-	width: 26px;
+	width: 100%;
 	height: 2px;
-	background: var(--accent);
+	background: linear-gradient(
+		to right,
+		var(--accent) 0 var(--rail-head),
+		transparent var(--rail-head)
+	);
 	will-change: transform;
+}
+
+.marker::after {
+	content: "";
+	position: absolute;
+	left: var(--rail-head);
+	right: 0;
+	top: 50%;
+	height: 1px;
+	transform: translateY(-50%);
+	background: var(--hairline-red);
 }
 
 .marker::before {
