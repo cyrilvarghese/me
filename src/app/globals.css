@@ -153,6 +153,9 @@ button {
 	color: var(--fg-soft);
 }
 
+/* off the ladder because it is not type: the size sets how large the ×
+   or chevron is drawn inside a --control-size square, so it answers to the
+   control's geometry rather than to the reading scale. */
 .btn-icon {
 	width: var(--control-size);
 	height: var(--control-size);

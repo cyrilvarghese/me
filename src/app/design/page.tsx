@@ -132,10 +132,11 @@ export default function DesignSystemPage() {
 
       <p className={`mono-label ${styles.sectionLabel}`}>Type — tokens.css</p>
       <p className={styles.rule}>
-        Ten rungs, top to bottom. Every size on a case-study page comes from one of them; a size
-        between rungs carries a comment saying why. The scale is set for reading rather than for
+        Ten rungs, top to bottom. Everything the reader reads comes from one of them; a size off
+        the ladder carries a comment saying why. The scale is set for reading rather than for
         interface density — body runs 16–18&nbsp;px on a 45–75&nbsp;ch measure, and 11&nbsp;px is
-        the floor for the short labels below it.
+        the floor for the short labels below it. Display lines composed against the viewport, and
+        glyphs sized as geometry rather than type, sit outside it.
       </p>
       <TypeScale />
       <p className={styles.rule}>

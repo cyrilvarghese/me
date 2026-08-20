@@ -2,6 +2,10 @@
    OutcomeTransition, and that section hides its own copy of it below 769px. */
 .section {
 	display: none;
+	/* Composition, not a rung: this section only exists under 769px, so its
+	   two display lines are sized against the phone's width rather than the
+	   reading scale. One property because they must stay the same size. */
+	--tool-display: clamp(1.5rem, 6.5vw, 2rem);
 }
 
 @media (max-width: 768px) {
@@ -17,7 +21,7 @@
 }
 
 .heading {
-	font-size: clamp(1.5rem, 6.5vw, 2rem);
+	font-size: var(--tool-display);
 	text-align: center;
 	text-wrap: balance;
 	padding-inline: var(--gutter);
@@ -94,21 +98,23 @@
 	color: var(--fg);
 }
 
+/* Same card as OutcomeTransition's desktop lineup column — the rungs are
+   shared so the two tellings cannot drift again; change both together. */
 .years {
 	color: var(--accent);
-	font-size: 1rem;
+	font-size: var(--text-sublabel);
 	white-space: nowrap;
 }
 
 .period {
 	color: var(--muted);
-	font-size: 0.65rem;
+	font-size: var(--text-fine);
 	margin-bottom: 0.5rem;
 }
 
 .line {
 	color: var(--muted);
-	font-size: 0.82rem;
+	font-size: var(--text-caption);
 	line-height: 1.5;
 }
 
@@ -142,7 +148,7 @@
 }
 
 .statement {
-	font-size: clamp(1.5rem, 6.5vw, 2rem);
+	font-size: var(--tool-display);
 }
 
 .statement em {

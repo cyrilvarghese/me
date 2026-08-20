@@ -125,21 +125,25 @@
 	margin-bottom: 0.35rem;
 }
 
+/* This column is the same card ToolList draws on a phone — label, years,
+   period, line. Both were hand-sized and the line had already drifted
+   apart (0.85 here, 0.82 there). Every rung below is shared with
+   ToolList.module.css; change the two together. */
 .colYears {
 	color: var(--accent);
-	font-size: 1rem;
+	font-size: var(--text-sublabel);
 	margin-bottom: 0.3rem;
 }
 
 .colPeriod {
 	color: var(--muted);
-	font-size: 0.65rem;
+	font-size: var(--text-fine);
 	margin-bottom: 0.6rem;
 }
 
 .colLine {
 	color: var(--muted);
-	font-size: 0.85rem;
+	font-size: var(--text-caption);
 	line-height: 1.45;
 	max-width: 20ch;
 	margin-inline: auto;
@@ -260,7 +264,7 @@
    headline away from it. */
 @media (max-height: 760px) {
 	.colLine {
-		font-size: 0.78rem;
+		font-size: var(--text-label);
 		line-height: 1.35;
 	}
 

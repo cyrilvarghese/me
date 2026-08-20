@@ -29,7 +29,7 @@
 
 .stepName {
 	color: var(--fg);
-	font-size: 0.85rem;
+	font-size: var(--text-small);
 }
 
 .stepCopy {
@@ -56,6 +56,9 @@
 	border-bottom: 1px solid var(--hairline-red);
 }
 
+/* off the ladder because it is not type: the glyph draws the arrowhead on
+   the return path, so its size is geometry — it scales with the rule it
+   caps, not with anything the reader is asked to read. */
 .returnPath::before {
 	content: "▲";
 	position: absolute;

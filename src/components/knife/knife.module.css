@@ -136,10 +136,13 @@
 }
 
 /* §33 hid these on mobile when the knife was 210px wide. It is 343px now,
-   so the six names fit around it — one type size down to clear the edges. */
+   so the six names fit around it — one rung down from the 12px they take
+   on desktop, with the tracking tightened to buy back the width. They were
+   9.6px until 2026-08-20, which is under the ladder's floor; these are read,
+   not decorative, so they come up to it. */
 @media (max-width: 768px) {
 	.label {
-		font-size: 0.6rem;
+		font-size: var(--text-fine);
 		letter-spacing: 0.06em;
 	}
 }

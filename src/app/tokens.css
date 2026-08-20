@@ -32,10 +32,13 @@
 	--control-touch: 3.5rem;
 
 	/* type scale — a ten-rung ladder, top to bottom. Every rung fixes one
-	   size; a size between rungs must carry a comment saying why it is off
-	   the ladder — there are two, both inside figures.
-	   Grounded in editorial-reading practice, not UI density: a case study
-	   is read, not operated. Body sits at 16–18px with a 1.6 line-height
+	   size, and anything the reader reads comes from one of them. A size
+	   off the ladder must carry a comment saying why: today that is two
+	   labels inside figures, two glyphs whose size is geometry rather than
+	   type (the ▲ on OperatingModel's return path, .btn-icon's mark), and
+	   the display clamps that are composed against the viewport.
+	   Grounded in editorial-reading practice, not UI density: these pages
+	   are read, not operated. Body sits at 16–18px with a 1.6 line-height
 	   and a 45–75ch measure; the steps below it are short labels, which is
 	   why they may go under it, and 11px is the floor for any of them.
 	   The values were already right — this block completes the ladder, it

@@ -29,7 +29,7 @@
 
 .caseNum {
 	color: var(--accent);
-	font-size: 0.9rem;
+	font-size: var(--text-sublabel);
 }
 
 .caseHeadline {
