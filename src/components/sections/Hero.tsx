@@ -73,10 +73,13 @@ export default function Hero() {
           // Stood on end, the closed knife sits near the middle of its square
           // box rather than filling it, so aligning the BOX to the right edge
           // leaves the art stranded well inside. Place the art directly.
-          const peekX = () => (compact ? 0.66 : 0.75) * window.innerWidth - artCentre();
+          const peekX = () => (compact ? 0.58 : 0.75) * window.innerWidth - artCentre();
           // desktop peeks above centre and travels down; on a phone the copy
-          // owns the top two thirds, so it waits below and rises into place
-          const peekY = () => (compact ? 0.3 : 0.108) * window.innerHeight;
+          // owns the top half, so it waits below and rises into place. The
+          // compact numbers sit the art in the middle of the band the copy
+          // leaves rather than crowding the bottom corner — the corner is
+          // where it landed while a scroll cue still took up that space.
+          const peekY = () => (compact ? 0.185 : 0.108) * window.innerHeight;
 
           gsap.set(intro, {
             x: peekX,
@@ -251,12 +254,6 @@ export default function Hero() {
             I work across product, design, engineering and AI to turn ambiguous problems into
             shipped systems that make real impact.
           </p>
-          <a href="#work" className={`mono-label ${styles.cue}`}>
-            See how{" "}
-            <span className={styles.arrow} aria-hidden="true">
-              ↓
-            </span>
-          </a>
         </div>
       </div>
     </section>
