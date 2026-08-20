@@ -224,53 +224,7 @@
 	}
 }
 
-/* ---- mobile: an open knife in the flow, and nothing else ----
-
-   This section used to be 200vh of pinned stage here too, pulled up over
-   the hero, with the knife opening across it and fading as it left. None of
-   that runs now (see OutcomeTransition.tsx): the phone gets the knife drawn
-   open under the hero copy and scrolls past it like any other block. */
-
-@media (max-width: 768px) {
-	.section {
-		height: auto;
-		/* it no longer rides over the hero, so it must not be pulled up */
-		margin-top: 0;
-		padding-block: 0 var(--space-section);
-	}
-
-	.stage {
-		position: static;
-		height: auto;
-		/* the six names orbit outside the knife's square — clipping them is
-		   what `hidden` would do once this box shrinks to the art */
-		overflow: visible;
-	}
-
-	.knifeEl {
-		/* Hero's gsap.set used to turn this back on after moving the knife to
-		   its peek; with no timeline here, the no-preference rule above would
-		   leave it invisible forever. */
-		opacity: 1;
-		/* the art is left-biased in its box; the shift reads it centred */
-		transform: translateX(13.5%);
-	}
-
-	/* narrower than the old 88vw: the knife no longer has the screen to
-	   itself, and the orbit labels need room to sit outside it */
-	.inner {
-		width: min(76vh, 72vw);
-	}
-
-	/* the lineup, the merge and the compass close have no phone telling */
-	.circles,
-	.lineup,
-	.copy,
-	.compassWrap,
-	.bloom {
-		display: none;
-	}
-}
+/* the mobile block lives at the END of this file — see the note there */
 
 /* Short laptops. Everything here scales with viewport height except the
    caption text, so on a 680px screen the six-line entries are proportionally
@@ -341,5 +295,77 @@
 
 	.copy {
 		position: static;
+	}
+}
+
+/* ---- mobile: an open knife in the flow, and nothing else ----
+
+   This was 200vh of pinned stage here too, pulled up over the hero, the
+   knife opening across it and fading as it left. None of that runs now
+   (see OutcomeTransition.tsx): the phone gets the knife drawn open under
+   the hero copy and scrolls past it like any other block.
+
+   LAST IN THE FILE ON PURPOSE, and self-contained. The reduced-motion
+   block above resets the same properties for a stacked DESKTOP layout —
+   `.inner { width: min(60vw, 420px) }` among them — and at equal
+   specificity the later block wins. Written earlier, this one lost on any
+   phone with Reduce Motion on, which is how the knife came out ~230px
+   wide instead of full-bleed. Declare everything here rather than
+   inheriting half of that layout. */
+
+@media (max-width: 768px) {
+	.section {
+		height: auto;
+		/* it no longer rides over the hero, so it must not be pulled up */
+		margin-top: 0;
+		/* tight to the copy above: the knife is what carries the eye from the
+		   headline into the six rows, so it is the next thing on the page,
+		   not a screen later */
+		padding-block: 1.5rem 3.5rem;
+	}
+
+	.stage {
+		position: static;
+		height: auto;
+		/* `hidden` crops the orbit labels once this box is only as tall as
+		   the art it holds */
+		overflow: visible;
+		display: grid;
+		place-items: center;
+	}
+
+	.inner {
+		/* Big. This is the only drawing of the object on a phone and the
+		   thing that leads into the six rows, so it takes the width. The
+		   orbit labels are placed inside the box (12–44% left, ToolLabels),
+		   so growing it does not push them off-screen. */
+		width: min(86vh, 96vw);
+		aspect-ratio: 1;
+		display: block;
+	}
+
+	.knifeEl {
+		position: absolute;
+		inset: 0;
+		/* Hero's gsap.set used to turn this back on after moving the knife
+		   out to its peek. With no timeline at this width, the
+		   no-preference rule far above would leave it invisible forever. */
+		opacity: 1;
+		/* the art is left-biased in its box; the shift reads it centred */
+		transform: translateX(13.5%);
+	}
+
+	.knifeIntro {
+		position: absolute;
+		inset: 0;
+	}
+
+	/* the lineup, the merge and the compass close have no phone telling */
+	.circles,
+	.lineup,
+	.copy,
+	.compassWrap,
+	.bloom {
+		display: none;
 	}
 }

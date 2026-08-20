@@ -75,9 +75,13 @@
 	.stage {
 		position: static;
 		height: auto;
-		min-height: 100vh;
+		/* Not a viewport tall. Nothing plays under the copy any more, so a
+		   full screen here was a screen of nothing between the headline and
+		   the knife that follows it (Cyril, 2026-08-21) — the hero is its
+		   copy, and the knife starts right after. */
+		min-height: 0;
 		overflow: visible;
 		align-items: flex-start;
-		padding-block: 8rem 0;
+		padding-block: 7rem 0;
 	}
 }
