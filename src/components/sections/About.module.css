@@ -15,8 +15,25 @@
 
 .lede {
 	color: var(--fg-soft);
-	max-width: 46ch;
+	max-width: 54ch;
+}
+
+.lede + .lede {
+	margin-top: 1.1rem;
+}
+
+/* the last paragraph carries the gap down to the timeline, so adding or
+   removing one does not change the spacing below */
+.lede:last-of-type {
 	margin-bottom: clamp(3rem, 8vh, 5rem);
+}
+
+/* Emphasis is weight and full-strength ink against the softened body —
+   not red. Red would be the site's usual mark, but this runs at body
+   size, where it fails AA on this ground. */
+.lede strong {
+	color: var(--fg);
+	font-weight: 500;
 }
 
 .timeline {

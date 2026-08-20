@@ -17,11 +17,20 @@ export default function About() {
     <section className={`section-shell ${styles.section}`} id="about" aria-label="About">
       <p className={`mono-label ${styles.eyebrow}`}>About</p>
       <h2 className={`serif-display ${styles.title}`}>
-        Sixteen years across engineering, design and product.
+        Where design meets code: creating products that scale from 0&rarr;1
       </h2>
       <p className={styles.lede}>
-        I work best in small teams with real ownership, on problems that are still being
-        defined.
+        From sketching stories as a kid to designing products as a designer, that same
+        sense of <strong>curiosity and wonder still drives my work</strong>.
+      </p>
+      <p className={styles.lede}>
+        With a background spanning product design, engineering and storytelling, I&apos;m
+        now a{" "}
+        <strong>
+          digital product design engineer exploring how AI can reshape the way we learn,
+          build and solve problems
+        </strong>
+        .
       </p>
 
       <ol className={styles.timeline}>
