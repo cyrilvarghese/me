@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { EMAIL } from "@/lib/data/contact";
 import styles from "./CopyEmail.module.css";
 
-const EMAIL = "hi@cyril.design";
 const IDLE = "Start a conversation";
 const DONE = "Email copied";
 /* long enough to read the confirmation, short enough that a visitor who

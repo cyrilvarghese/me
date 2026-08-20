@@ -1,3 +1,4 @@
+import { EMAIL } from "@/lib/data/contact";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
@@ -7,8 +8,8 @@ export default function Footer() {
         <p className={`mono-label ${styles.brand}`}>
           <em>CV</em> · Cyril Varghese · 2026
         </p>
-        <a href="mailto:cyrilpdev@gmail.com" className={`mono-label ${styles.mail}`}>
-          cyrilpdev@gmail.com
+        <a href={`mailto:${EMAIL}`} className={`mono-label ${styles.mail}`}>
+          {EMAIL}
         </a>
       </div>
     </footer>
