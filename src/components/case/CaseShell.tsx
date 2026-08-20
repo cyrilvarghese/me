@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ViewTransition } from "react";
 import type { CaseStudy } from "@/lib/data/cases";
+import CopyEmail from "@/components/CopyEmail";
 import CaseBack from "./CaseBack";
 import CaseVisual from "./CaseVisual";
 import styles from "./CaseShell.module.css";
@@ -41,11 +42,9 @@ export default function CaseShell({
 
       <section className={`section-shell ${styles.cta}`}>
         <p className={`serif-display ${styles.ctaLine}`}>
-          Have a problem that needs a varied perspective?
+          Have a problem that needs more than one perspective?
         </p>
-        <a href="mailto:cyrilpdev@gmail.com" className="mono-label btn">
-          Start a conversation
-        </a>
+        <CopyEmail />
         <Link href="/#work" className={`mono-label btn btn-ghost ${styles.backLink}`}>
           ← All work
         </Link>

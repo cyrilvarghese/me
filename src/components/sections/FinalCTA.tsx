@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { capabilities } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
+import CopyEmail from "@/components/CopyEmail";
 import styles from "./FinalCTA.module.css";
 
 const OPEN_ANGLES = Object.fromEntries(capabilities.map((c) => [c.id, c.openAngle]));
@@ -68,9 +69,7 @@ export default function FinalCTA() {
             Let&apos;s get <em>started.</em>
           </p>
           <div className={styles.ctas} data-final="ctas">
-            <a href="mailto:cyrilpdev@gmail.com" className="mono-label btn">
-              Start a conversation
-            </a>
+            <CopyEmail />
           </div>
         </div>
       </div>

@@ -1,0 +1,22 @@
+/* Geometry, border and hover come from the global .btn voice. Everything
+   here exists so the label can change without the control changing size:
+   the spacer is the longer of the two labels, laid out for real but
+   invisible, and the live label sits on top of it. Without this the
+   button shrinks on confirmation and the controls under it jump. */
+.slot {
+	position: relative;
+	display: inline-block;
+}
+
+.spacer {
+	visibility: hidden;
+}
+
+.label {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	white-space: nowrap;
+}
