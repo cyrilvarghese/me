@@ -13,8 +13,8 @@ const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
 export default function CaseStudies() {
   return (
     <section className={`section-shell ${styles.section}`} id="work" aria-label="Selected work">
-      <p className={`mono-label ${styles.sectionEyebrow}`}>Outcomes</p>
-      <h2 className={`serif-display ${styles.sectionTitle}`}>Three shipped systems.</h2>
+      <p className={`mono-label ${styles.sectionEyebrow}`}>Proof</p>
+      <h2 className={`serif-display ${styles.sectionTitle}`}>Three shipped outcomes.</h2>
 
       {cases.map((c) => (
         /* The reveal lives on the TEXT column, not the article: a hidden
