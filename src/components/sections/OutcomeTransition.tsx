@@ -30,7 +30,8 @@ const LIFT = 5;
     same vh-per-beat as always; 0.97 → DUR is pure runway — ~118vh of pinned
     scroll where the time-based needle hunt plays out with the wheel never
     blocked (replaces the old hard scroll lock). The module CSS height must
-    stay 100vh + 420vh × DUR. */
+    stay 200vh + 420vh × DUR — 200 because the section is pulled up over the
+    whole hero and the trigger's start is offset a viewport to match. */
 const DUR = 1.25;
 
 /**
@@ -146,10 +147,9 @@ export default function OutcomeTransition() {
           // handle and leaves it at identity — there is one knife on the page
           // and no swap left to get wrong (Hero.tsx).
 
-          // sits shifted right so the left-biased art reads centered. Slides
-          // back to
-          // neutral while the tools drift apart — the motion masks it and
-          // every later beat (lineup, circles, compass) keeps plain math.
+          // Sits shifted right so the left-biased art reads centered, then
+          // slides back to neutral while the tools drift apart — the motion
+          // masks it and every later beat keeps plain math.
           tl.fromTo(
             "[data-knife-el]",
             { x: () => 0.135 * S() },
