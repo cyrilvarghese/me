@@ -17,6 +17,7 @@ import {
   bladeDelay,
 } from "./scroll";
 import { cases } from "./cases";
+import { experience } from "./experience";
 
 describe("capabilities", () => {
   it("has six ordered tools with unique ids and nonzero angles", () => {
@@ -124,5 +125,28 @@ describe("opening beats", () => {
     expect(STAGGER).toBeLessThan(BLADE_DUR);
     expect(LABEL_DELAY).toBeGreaterThan(0);
     expect(LABEL_DELAY).toBeLessThan(BLADE_DUR);
+  });
+});
+
+describe("experience", () => {
+  it("runs newest first", () => {
+    // The timeline draws in array order and a mis-ordered array still
+    // renders — it just tells the wrong story. Nothing else catches it.
+    const years = experience.map((r) => r.from);
+    for (let i = 1; i < years.length; i++) {
+      expect(years[i]).toBeLessThan(years[i - 1]);
+    }
+  });
+
+  it("gives every role a year label, a one-line body and tools", () => {
+    expect(experience.length).toBeGreaterThan(0);
+    for (const role of experience) {
+      expect(role.years).toMatch(String(role.from));
+      expect(role.title.length).toBeGreaterThan(0);
+      expect(role.org.length).toBeGreaterThan(0);
+      expect(role.tools.length).toBeGreaterThan(0);
+      // one line, not a paragraph — the timeline is a scan
+      expect(role.body).not.toMatch(/\.\s+\S/);
+    }
   });
 });

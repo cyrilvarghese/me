@@ -1,0 +1,135 @@
+.section {
+	padding-block: var(--space-section);
+}
+
+.eyebrow {
+	color: var(--muted);
+	margin-bottom: 1rem;
+}
+
+.title {
+	font-size: var(--text-statement);
+	max-width: 20ch;
+	margin-bottom: 1.25rem;
+}
+
+.lede {
+	color: var(--fg-soft);
+	max-width: 46ch;
+	margin-bottom: clamp(3rem, 8vh, 5rem);
+}
+
+.timeline {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Three tracks: the years, the rung, then the role. The middle track is
+   exactly as wide as the dot, so the rule drawn down the entry's left
+   edge passes through every dot without any of them being positioned
+   against the others. */
+.entry {
+	display: grid;
+	grid-template-columns: minmax(0, 9rem) 0 minmax(0, 1fr);
+	column-gap: clamp(1.5rem, 4vw, 3rem);
+	padding-bottom: clamp(2.5rem, 6vh, 4rem);
+}
+
+/* the rule is the entry's own border, so it stops with the last entry
+   rather than running past it into the section's padding */
+.entry:not(:last-child) .detail {
+	position: relative;
+}
+
+.entry:not(:last-child) .detail::before {
+	content: "";
+	position: absolute;
+	/* back out to the middle track: half the gap, plus half a dot */
+	left: calc(clamp(1.5rem, 4vw, 3rem) / -2 - 1px);
+	top: 0.65rem;
+	bottom: calc(clamp(2.5rem, 6vh, 4rem) * -1);
+	border-left: 1px solid var(--hairline);
+}
+
+.years {
+	color: var(--muted);
+	font-size: var(--text-sublabel);
+	padding-top: 0.35rem;
+	text-align: right;
+}
+
+.dot {
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	border: 1px solid var(--fg-soft);
+	background: var(--bg);
+	/* centred on the rule that runs down the detail column */
+	margin-left: calc(clamp(1.5rem, 4vw, 3rem) / 2 - 4px);
+	margin-top: 0.55rem;
+}
+
+/* filled rather than hollow on the role Cyril is in now — the one rung
+   that is still open */
+.dotNow {
+	border-color: var(--accent);
+	background: var(--accent);
+}
+
+.role {
+	font-size: var(--text-h3);
+	font-weight: 500;
+	line-height: 1.3;
+}
+
+/* accent at sublabel size, the same voice the case list gives its
+   "01 / DESIGN ENGINEER" eyebrow — red names the subject of the entry
+   in both places */
+.org {
+	color: var(--accent);
+	font-size: var(--text-sublabel);
+	margin-top: 0.35rem;
+}
+
+.body {
+	color: var(--fg-soft);
+	max-width: 52ch;
+	margin-top: 0.9rem;
+}
+
+/* subordinate to the description on purpose — the tools answer a
+   question the reader only asks after the work has landed */
+.tools {
+	color: var(--muted);
+	font-size: var(--text-fine);
+	line-height: 1.8;
+	max-width: 52ch;
+	margin-top: 0.9rem;
+}
+
+/* One column: 9rem of years down the left costs a quarter of a phone
+   screen and leaves every line ragged, so the years become an eyebrow
+   over the role and the rung goes with them — a rule with nothing
+   beside it is decoration. */
+@media (max-width: 768px) {
+	.entry {
+		grid-template-columns: 1fr;
+		row-gap: 0.5rem;
+		border-top: 1px solid var(--hairline);
+		padding-top: clamp(1.75rem, 5vh, 2.5rem);
+	}
+
+	.years {
+		text-align: left;
+		padding-top: 0;
+	}
+
+	.dot {
+		display: none;
+	}
+
+	.entry:not(:last-child) .detail::before {
+		display: none;
+	}
+}
