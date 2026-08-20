@@ -27,6 +27,9 @@
 	--control-border: 1px;
 	--control-pad: 0.9rem 1.6rem;
 	--control-size: 2.75rem;
+	/* what a finger gets, as opposed to what the eye gets. The control
+	   keeps --control-size; the target under it grows to this on touch. */
+	--control-touch: 3.5rem;
 
 	/* type scale */
 	--text-display: clamp(2.75rem, 7.5vw, 6.5rem);

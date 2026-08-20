@@ -131,6 +131,7 @@ button {
    .mono-label for the label voice. Variants: .btn-ghost (quiet, hairline
    border) and .btn-icon (square, fixed size). */
 .btn {
+	position: relative;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -158,6 +159,35 @@ button {
 	padding: 0;
 	font-size: 1.05rem;
 	line-height: 1;
+}
+
+/* ---- touch targets ----
+   A finger is not a cursor. Every control grows its target to
+   --control-touch (3.5rem) where the pointer is coarse, while the control
+   itself keeps --control-size — so nothing on screen changes size and
+   nothing gets easier to miss.
+
+   An overlay rather than padding: padding would move the border, the
+   label and everything the control is aligned against. Anything that is
+   not a .btn — a scroll chevron, a bare icon — opts in with .touch-target.
+
+   The width query rides along with the pointer query so the behaviour can
+   be seen in a desktop browser at phone width, where it is checked. */
+.touch-target {
+	position: relative;
+}
+
+@media (pointer: coarse), (max-width: 700px) {
+	.btn::after,
+	.touch-target::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: max(100%, var(--control-touch));
+		height: max(100%, var(--control-touch));
+		transform: translate(-50%, -50%);
+	}
 }
 
 @media (hover: hover) and (pointer: fine) {

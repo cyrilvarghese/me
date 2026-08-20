@@ -14,6 +14,24 @@ export type Section = {
   body: React.ReactNode;
 };
 
+/** Drawn in the tabs' own stroke language rather than a glyph, so the two
+    chevrons read as part of the bar rather than as borrowed furniture. */
+function Chevron({ dir }: { dir: "prev" | "next" }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d={dir === "prev" ? "M10 3 L5 8 L10 13" : "M6 3 L11 8 L6 13"} />
+    </svg>
+  );
+}
+
 const ICONS: Record<TabIcon, React.ReactNode> = {
   /* three nodes on a run — a journey, or the points along one */
   flow: (
@@ -56,6 +74,7 @@ const ICONS: Record<TabIcon, React.ReactNode> = {
 export default function CaseNav({ sections, label }: { sections: Section[]; label: string }) {
   const [active, setActive] = useState(0);
   const [bar, setBar] = useState<{ x: number; s: number } | null>(null);
+  const [edges, setEdges] = useState({ prev: false, next: false });
   const [barH, setBarH] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
@@ -110,6 +129,43 @@ export default function CaseNav({ sections, label }: { sections: Section[]; labe
     return () => ro.disconnect();
   }, [measure]);
 
+  /* A row that scrolls without saying so is a row most readers never
+     scroll. The two chevrons appear only on the side that still has
+     something on it, so they double as the "there is more this way" the
+     cut-off label only hints at. */
+  const readEdges = useCallback(() => {
+    const list = listRef.current;
+    if (!list) return;
+    const max = list.scrollWidth - list.clientWidth;
+    /* 4px of slack: sub-pixel layout leaves scrollLeft a hair off the end
+       and a chevron pointing at nothing is worse than no chevron */
+    setEdges({ prev: list.scrollLeft > 4, next: list.scrollLeft < max - 4 });
+  }, []);
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    readEdges();
+    list.addEventListener("scroll", readEdges, { passive: true });
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(readEdges) : null;
+    ro?.observe(list);
+    return () => {
+      list.removeEventListener("scroll", readEdges);
+      ro?.disconnect();
+    };
+  }, [readEdges]);
+
+  const step = useCallback((dir: 1 | -1) => {
+    const list = listRef.current;
+    if (!list) return;
+    list.scrollBy({
+      left: dir * list.clientWidth * 0.7,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  }, []);
+
   /* The bar follows the reader rather than the reader following the bar.
      The top margin is the bar's own height, so a section counts as current
      the moment it clears the bar; the bottom margin keeps the band shallow
@@ -144,7 +200,17 @@ export default function CaseNav({ sections, label }: { sections: Section[]; labe
           if the sticky element itself carried .section-shell, its
           max-width would let the page scroll past it at both gutters */}
       <div ref={barRef} className={styles.bar}>
-        <div className="section-shell">
+        <div className={`section-shell ${styles.rail}`}>
+          <button
+            type="button"
+            className={`touch-target ${styles.step} ${styles.stepPrev}`}
+            data-show={edges.prev ? "true" : "false"}
+            aria-label="Show earlier sections"
+            onClick={() => step(-1)}
+          >
+            <Chevron dir="prev" />
+          </button>
+
           <nav ref={listRef} aria-label={label} className={styles.list}>
             {sections.map((s, i) => (
               <button
@@ -187,6 +253,16 @@ export default function CaseNav({ sections, label }: { sections: Section[]; labe
               style={bar ? { transform: `translateX(${bar.x}px) scaleX(${bar.s})` } : undefined}
             />
           </nav>
+
+          <button
+            type="button"
+            className={`touch-target ${styles.step} ${styles.stepNext}`}
+            data-show={edges.next ? "true" : "false"}
+            aria-label="Show later sections"
+            onClick={() => step(1)}
+          >
+            <Chevron dir="next" />
+          </button>
         </div>
       </div>
 

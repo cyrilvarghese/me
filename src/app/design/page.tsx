@@ -115,6 +115,15 @@ export default function DesignSystemPage() {
         Variants are <code>.btn-ghost</code> (quiet, hairline border) and <code>.btn-icon</code>{" "}
         (square, <code>--control-size</code>).
       </p>
+      <p className={styles.rule}>
+        A finger is not a cursor. Where the pointer is coarse — or the viewport is phone width —
+        every <code>.btn</code> grows its <em>target</em> to <code>--control-touch</code> (3.5rem)
+        while the control itself stays <code>--control-size</code> (2.75rem). Nothing on screen
+        changes size; nothing gets easier to miss. It is an overlay rather than padding, so the
+        border and the label stay where they were aligned. Anything that is not a{" "}
+        <code>.btn</code> — a scroll chevron, a bare icon — opts in with{" "}
+        <code>.touch-target</code>.
+      </p>
       <div className={styles.controls}>
         <span className="mono-label btn">Start a conversation</span>
         <span className="mono-label btn btn-ghost">Secondary</span>
