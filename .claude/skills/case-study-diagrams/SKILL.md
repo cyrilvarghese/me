@@ -81,14 +81,24 @@ it as `CaseFigure`'s `diagramMobile`. Without one the figure holds a 48rem
 floor and scrolls sideways inside its own box, which means the reader
 swipes to see half an argument.
 
-Rebuild the arrangement; never just shrink the wide one. Three panels side
-by side get ~126px each on a 420px screen and stop reading; stacked, each
-gets the full width. Ask what the layout is *for* and lay it out again.
+**Rebuild the arrangement; never shrink the wide one, and never simply
+drop its columns.** Three panels side by side get ~126px each on a 420px
+screen and stop reading. But stacking in source order is the subtler
+failure: whatever the wide arrangement was *saying* usually dies in it.
+Two people either side of one object say "used from both sides"; the same
+two stacked say "here is a list of two people".
+
+Ask what the geometry is arguing, then find the arrangement that still
+argues it at this width. Often the axis simply rotates — put the object
+between its two users instead of between two columns, and left-and-right
+becomes above-and-below with the point intact.
 
 Two things usually change with the arrangement:
 
-- **Rails go.** Stacked, they point at nothing, and a rail that arrives
-  nowhere is debris. Stacking order carries the sequence instead.
+- **Rails follow the new geometry, or go.** If the relayout keeps
+  something to point at, re-aim them — a diagonal rail becomes a vertical
+  one. If it does not, drop them: a rail arriving nowhere is debris, and
+  stacking order carries the sequence instead.
 - **Type returns to the site's mobile scale** — labels ~16px, captions
   ~13px rendered. A wide file may run larger because its drawings are
   large; that reasoning does not survive the change of arrangement.
@@ -290,7 +300,9 @@ underlining source deck meant anyway.
 | Emphasised a clause in red inside body text | Red is large-type only here. Brighten the clause and put the accent in the underline. |
 | Filtered a supplied icon to fit the palette | Black outlines on this ground become a smudge. Light disc, colours untouched — the third-party exception. |
 | Shipped a wide diagram with no phone telling | The reader swipes to see half the argument. Lay it out again at 420px; it is part of the job, not a follow-up. |
-| Made the mobile version by shrinking the wide one | Three panels side by side give ~126px each on a phone. Rebuild the arrangement — stack it. |
+| Made the mobile version by shrinking the wide one | Three panels side by side give ~126px each on a phone. Rebuild the arrangement. |
+| Made it by dropping the columns into a stack | Whatever the geometry argued dies in the stack. Ask what it was saying and find the arrangement that still says it — often the axis just rotates. |
+| An `svg` came out letterboxed at a fraction of its width | `preserveAspectRatio` defaults to `meet`. Either size the box to match the viewBox, or give each part its own box. |
 
 ## Checklist
 
@@ -306,5 +318,6 @@ underlining source deck meant anyway.
 9. Scenes: edited in the standalone file **and** every composed copy?
 10. Supplied marks: on a light disc, unfiltered, with rails that point at
     something and a gap they can actually cross?
-11. Drawn twice — a `-mobile.svg` laid out again for the width, not the
-    wide one shrunk, and screenshotted at 420px?
+11. Drawn twice — laid out again for the width, not the wide one shrunk or
+    its columns dropped, and screenshotted at 420px? Does the narrow
+    version still argue what the wide one argued?
