@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 770" role="img"
+     aria-label="Six stages of care — pick a patient, take history, order tests, diagnose, treat, read the feedback — running down a column and returning from the last to the first, with a new patient every time round.">
+  <!-- The phone telling of the ring.
+
+       A circle needs width on two axes and has neither here, so the axis
+       rotates: the six stops run down a column, and the edge that closes
+       them comes back up the left. That edge is the whole argument, so it
+       is the one thing that survives the change of arrangement intact —
+       dropping it would leave a list of six stages, which is what the ring
+       existed to not be.
+
+       Type returns to the ladder at this width: 15 for a stage, 20 for the
+       name of the thing they belong to. -->
+
+  <!-- the run down: dotted between one stop and the next, arrowheads
+       stating the direction once per gap -->
+  <g stroke="#ea0000" stroke-opacity=".7" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 10" fill="none">
+    <path d="M64 96 L64 144"/>
+    <path d="M64 216 L64 264"/>
+    <path d="M64 336 L64 384"/>
+    <path d="M64 456 L64 504"/>
+    <path d="M64 576 L64 624"/>
+  </g>
+  <g fill="#ea0000" fill-opacity=".8">
+    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 132) rotate(90)"/>
+    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 252) rotate(90)"/>
+    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 372) rotate(90)"/>
+    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 492) rotate(90)"/>
+    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 612) rotate(90)"/>
+  </g>
+
+  <!-- the closing edge, brought back up the outside. Solid rather than
+       dotted: at this width the run is long and the dash would read as
+       another gap between stages instead of the return. -->
+  <g class="cc-in" style="--d:.9s">
+    <path d="M64 690 L34 690 Q20 690 20 676 L20 44 Q20 30 34 30 L52 30"
+          fill="none" stroke="#ea0000" stroke-opacity=".7" stroke-width="2"/>
+    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(60 30)" fill="#ea0000" fill-opacity=".8"/>
+  </g>
+
+  <!-- The clinic the loop runs inside, named once at the foot of the
+       column rather than in a middle it no longer has. -->
+  <text class="cc-in" style="--d:.05s" x="110" y="712" font-size="20" fill="#ea0000">VIRTUAL CLINIC</text>
+  <text class="cc-in" style="--d:.05s" x="110" y="736" font-size="15" fill="currentColor" opacity=".5">unlimited patients</text>
+
+  <!-- the closing edge is named where it arrives rather than where it
+       leaves, which is the only place in a column with room for the words -->
+  <text class="cc-in" style="--d:1s" x="110" y="22" font-size="15" fill="#ea0000">and again — a new patient</text>
+
+  <!-- the six stops -->
+  <g font-size="15" fill="currentColor">
+    <g class="cc-in" style="--d:.15s">
+      <circle cx="64" cy="66" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/Patient.png" x="45.5" y="47.5" width="37" height="37"/>
+      <text x="110" y="71" opacity=".8">1 · PICK A PATIENT</text>
+    </g>
+
+    <g class="cc-in" style="--d:.25s">
+      <circle cx="64" cy="186" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/patient-history.png" x="45.5" y="167.5" width="37" height="37"/>
+      <text x="110" y="191" opacity=".8">2 · TAKE HISTORY</text>
+    </g>
+
+    <g class="cc-in" style="--d:.35s">
+      <circle cx="64" cy="306" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/test.png" x="45.5" y="287.5" width="37" height="37"/>
+      <text x="110" y="311" opacity=".8">3 · ORDER TESTS</text>
+    </g>
+
+    <g class="cc-in" style="--d:.45s">
+      <circle cx="64" cy="426" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/diagnosis.png" x="45.5" y="407.5" width="37" height="37"/>
+      <text x="110" y="431" opacity=".8">4 · DIAGNOSE</text>
+    </g>
+
+    <g class="cc-in" style="--d:.55s">
+      <circle cx="64" cy="546" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/treatment.png" x="45.5" y="527.5" width="37" height="37"/>
+      <text x="110" y="551" opacity=".8">5 · TREAT</text>
+    </g>
+
+    <g class="cc-in" style="--d:.65s">
+      <circle cx="64" cy="666" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/Feedback.png" x="45.5" y="647.5" width="37" height="37"/>
+      <text x="110" y="671" opacity=".8">6 · FEEDBACK</text>
+    </g>
+  </g>
+</svg>

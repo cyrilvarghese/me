@@ -1,6 +1,5 @@
 import CaseSummary from "@/components/case/CaseSummary";
 import CaseQuote from "@/components/case/CaseQuote";
-import CaseCompare from "@/components/case/CaseCompare";
 import CaseShowcase from "@/components/case/CaseShowcase";
 import CaseFigure from "@/components/case/CaseFigure";
 import CaseVoices from "@/components/case/CaseVoices";
@@ -190,27 +189,22 @@ export default function CaseChatContent() {
                   ]}
                   diagramMobile={`${D}/01-cases-mobile.svg`}
                 />
-
-                <CaseCompare
-                  index="01"
-                  eyebrow="Why cases stay rare"
-                  heading="Every teacher interviewed agrees cases are the best way to learn."
-                  lede="Every teacher is also a practising physician who is stretched for time."
-                  today={{
-                    title: "A line that ends",
-                    diagram: `${D}/02-today.svg`,
-                    caption:
-                      "Each case costs a scarce hour, is spent in a single session, and leaves the student where they started — holding theory.",
-                  }}
-                  after={{
-                    title: "A loop that closes",
-                    diagram: `${D}/02-clinic.svg`,
-                    stat: { value: "6", label: "stages, then a new patient" },
-                    caption:
-                      "The same six stages as a real consultation, generated on demand. Coming out of feedback and into the next patient is the product.",
-                  }}
-                />
               </>
+            ),
+          },
+          {
+            id: "solution",
+            icon: "loop",
+            label: "Solution",
+            body: (
+              <CaseFigure
+                eyebrow="The virtual clinic"
+                heading="A student works the whole consultation, then starts again."
+                lede="Pick a patient, take a history, order tests, commit to a diagnosis, treat, then read the feedback. It is the same six stages a real consultation runs, generated on demand — and coming out of the feedback into another patient is what makes it practice rather than a demonstration."
+                diagram={`${D}/02-clinic.svg`}
+                diagramMobile={`${D}/02-clinic-mobile.svg`}
+                caption="Six stops on one loop. The closing edge is the product: nothing has to be scheduled or prepared, so the student simply starts again with someone new."
+              />
             ),
           },
           {

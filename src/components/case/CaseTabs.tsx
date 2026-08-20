@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./CaseTabs.module.css";
 
-export type TabIcon = "flow" | "frames" | "note";
+export type TabIcon = "flow" | "loop" | "frames" | "note";
 
 export type Section = {
   id: string;
@@ -40,6 +40,13 @@ const ICONS: Record<TabIcon, React.ReactNode> = {
       <circle cx="3" cy="8" r="1.6" />
       <circle cx="8" cy="8" r="1.6" />
       <circle cx="13" cy="8" r="1.6" />
+    </>
+  ),
+  /* a ring with a break and a head — the loop the solution closes */
+  loop: (
+    <>
+      <path d="M12.5 5.5A5 5 0 1 1 8 3" />
+      <path d="M5.5 1.5 8 3 5.5 4.8" />
     </>
   ),
   /* two frames, one behind the other — screens */
