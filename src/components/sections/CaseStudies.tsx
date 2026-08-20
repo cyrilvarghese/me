@@ -42,14 +42,20 @@ export default function CaseStudies() {
               <p className={styles.rowBody}>{c.built}</p>
             </div>
 
+            {/* the third labelled row, after Started with and Built — the
+                numbers are the answer to those two, so they read in the same
+                column rather than as a separate band */}
             {c.results && (
-              <div className={styles.results}>
-                {c.results.map((r) => (
-                  <div key={r.label}>
-                    <p className={styles.resultValue}>{r.value}</p>
-                    <p className={`mono-label ${styles.resultLabel}`}>{r.label}</p>
-                  </div>
-                ))}
+              <div className={styles.row}>
+                <p className={`mono-label ${styles.rowLabel}`}>Impact</p>
+                <div className={styles.results}>
+                  {c.results.map((r) => (
+                    <div key={r.label}>
+                      <p className={styles.resultValue}>{r.value}</p>
+                      <p className={`mono-label ${styles.resultLabel}`}>{r.label}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 

@@ -60,7 +60,6 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
 	gap: 1.25rem;
-	margin-top: 0.5rem;
 }
 
 .resultValue {

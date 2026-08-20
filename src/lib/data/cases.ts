@@ -20,6 +20,10 @@ export const cases: CaseStudy[] = [
       "Creative teams moved between scripts, prompts, references and multiple generation tools to produce individual shots.",
     built:
       "A canvas-based production system where agents help compose shots, create prompts, manage references and generate image and video assets.",
+    results: [
+      { value: "2.5 hrs", label: "To produce one asset" },
+      { value: "40%", label: "Time saved per asset" },
+    ],
   },
   {
     slug: "case-chat",
@@ -31,6 +35,10 @@ export const cases: CaseStudy[] = [
       "Medical students need repeated opportunities to make clinical decisions and receive useful feedback.",
     built:
       "An interactive system where students work through AI-generated clinical cases, make diagnostic decisions and receive structured feedback.",
+    results: [
+      { value: "20:1", label: "Students per patient" },
+      { value: "1:∞", label: "Student access to unlimited digital patients" },
+    ],
   },
   {
     slug: "msig",
