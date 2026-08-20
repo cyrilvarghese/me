@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./ScrollRuler.module.css";
 
 const TICKS = 48;
@@ -19,6 +19,10 @@ const NAMED = new Set(["work", "about", "contact"]);
 export default function ScrollRuler() {
   const railRef = useRef<HTMLDivElement>(null);
   const markerRef = useRef<HTMLDivElement>(null);
+  /* tick index -> section id. State, not a data attribute, because the
+     labels are links now and links have to be real elements. It only
+     changes on load and resize — the scroll path never touches it. */
+  const [labels, setLabels] = useState<Record<number, string>>({});
 
   useEffect(() => {
     const rail = railRef.current;
@@ -39,14 +43,14 @@ export default function ScrollRuler() {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       if (max <= 0) return;
       const majors = new Set<number>();
-      const labels = new Map<number, string>();
+      const found = new Map<number, string>();
       const index = (f: number) =>
         Math.round(Math.min(1, Math.max(0, f)) * (TICKS - 1));
       const add = (f: number) => majors.add(index(f));
       document.querySelectorAll<HTMLElement>("main > section").forEach((s) => {
         const top = s.getBoundingClientRect().top + window.scrollY;
         add(top / max);
-        if (NAMED.has(s.id)) labels.set(index(top / max), s.id);
+        if (NAMED.has(s.id)) found.set(index(top / max), s.id);
         const range = s.offsetHeight - window.innerHeight;
         if (s.dataset.rulerBeats && range > 0) {
           for (const b of s.dataset.rulerBeats.split(",")) {
@@ -55,12 +59,11 @@ export default function ScrollRuler() {
           }
         }
       });
-      ticks.forEach((el, i) => {
-        el.classList.toggle(styles.major, majors.has(i));
-        const label = labels.get(i);
-        if (label) el.dataset.rulerLabel = label;
-        else delete el.dataset.rulerLabel;
-      });
+      ticks.forEach((el, i) => el.classList.toggle(styles.major, majors.has(i)));
+      const next = Object.fromEntries(found);
+      setLabels((prev) =>
+        JSON.stringify(prev) === JSON.stringify(next) ? prev : next
+      );
     };
 
     let raf = 0;
@@ -119,6 +122,15 @@ export default function ScrollRuler() {
       {Array.from({ length: TICKS }, (_, i) => (
         <span key={i} className={styles.tick}>
           <i className={styles.line} />
+          {labels[i] && (
+            /* tabIndex -1 on purpose: the rail is aria-hidden decoration,
+               and a focusable child inside it would be a keyboard trap
+               with no accessible name. The header carries the same three
+               links for anyone not using a pointer. */
+            <a href={`#${labels[i]}`} className={styles.label} tabIndex={-1}>
+              {labels[i]}
+            </a>
+          )}
         </span>
       ))}
       <div ref={markerRef} className={styles.marker} />

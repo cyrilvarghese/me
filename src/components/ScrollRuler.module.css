@@ -45,13 +45,18 @@
 
 /* Section name beside the tick it starts on, in the margin left of the
    content column. Sits on the fine rung — it is a map legend, not
-   something to read on the way past. */
-.tick[data-ruler-label]::after {
-	content: attr(data-ruler-label);
+   something to read on the way past — and it is a link: the rail is a
+   map of the page, so the map should take you there.
+
+   pointer-events come back on for the label alone. The rail spans the
+   viewport to let the playhead cross it, so switching the whole thing
+   back on would put an invisible sheet over the page. */
+.label {
 	position: absolute;
 	left: 26px;
 	top: 50%;
 	transform: translateY(-50%);
+	pointer-events: auto;
 	font-family: var(--font-mono);
 	font-size: var(--text-fine);
 	letter-spacing: 0.12em;
@@ -59,6 +64,25 @@
 	line-height: 1;
 	white-space: nowrap;
 	color: var(--muted);
+	transition: color 150ms ease;
+}
+
+/* the tick a label names lights with it, so the pointer is clearly on a
+   place in the ruler and not on a word floating in the margin */
+@media (hover: hover) and (pointer: fine) {
+	.label:hover {
+		color: var(--accent);
+	}
+
+	.tick:has(.label:hover) .line {
+		background: var(--accent);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.label {
+		transition: none;
+	}
 }
 
 /* The playhead: a solid head at the ruler, then a hairline running the
