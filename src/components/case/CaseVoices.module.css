@@ -2,8 +2,12 @@
 	margin-block: clamp(4rem, 10vh, 7rem);
 }
 
+/* --muted, like every other eyebrow on a case page. The accent here was
+   carried over from /labs, where a reference page's eyebrow is allowed to
+   shout; inside the case it just made one band look like a different kind
+   of thing from the one under it. */
 .eyebrow {
-	color: var(--accent);
+	color: var(--muted);
 	margin-bottom: 0.75rem;
 }
 
