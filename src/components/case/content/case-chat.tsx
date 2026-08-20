@@ -82,7 +82,7 @@ export default function CaseChatContent() {
           {
             label: "Role",
             body:
-              "Founding product designer & design engineer — product strategy, design and build.",
+              "Founder & CPTO — design engineer and AI engineer.",
           },
           {
             label: "Team",
