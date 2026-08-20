@@ -114,8 +114,10 @@ hand-tuned baked axes (`'opsz' 56, 'SOFT' 30, 'WONK' 0.9`, weight 380 in
   hold, no inner frames. Its Scenes section covers drawings of rooms and
   figures — flat fills separated by value, a `#c98080` tinge on the object
   that needs attention — and Supplied marks covers figures built from given
-  artwork: light disc, HTML when the text wraps, rails that point. `/labs`
-  is the drafting route. Invoke it before drawing or editing any diagram.
+  artwork: light disc, HTML when the text wraps, rails that point. Every
+  wide diagram is drawn twice — a `-mobile.svg` laid out again for the
+  width, passed as `CaseFigure`'s `diagramMobile`. `/labs` is the drafting
+  route. Invoke it before drawing or editing any diagram.
 - **Controls all come from the `.btn` voices in `globals.css`** — accent
   outline, square corners (`--radius: 0`), accent fill on hover; variants
   `.btn-ghost` (hairline border) and `.btn-icon` (square, `--control-size`).

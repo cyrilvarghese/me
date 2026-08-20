@@ -14,6 +14,7 @@ how it goes today, how it goes on the system. First used on
 | What | Where |
 |---|---|
 | Drawings | `public/assets/<Case>/diagrams/<nn>-<side>.svg` |
+| Phone telling | the same name plus `-mobile.svg`, passed as `diagramMobile` |
 | Scenes | `public/assets/<Case>/diagrams/scenes/<room>.svg` |
 | Supplied marks | `public/assets/<Case>/icons/<name>.png` |
 | Motion | `src/components/case/diagram-motion.css` — one **global** sheet of `@keyframes` |
@@ -71,6 +72,29 @@ A ratio rule does not survive this. `0.025 × viewBox` matches the 560-wide
 files by coincidence; applied to a full-width 900-unit diagram it renders
 at 27px, nearly double every other label on the page. If the viewBox and
 the render width diverge, use the formula.
+
+## Every diagram is drawn twice
+
+**A wide diagram needs a phone telling, and it is part of the job — not a
+follow-up.** Name it `<same-name>-mobile.svg` beside the original and pass
+it as `CaseFigure`'s `diagramMobile`. Without one the figure holds a 48rem
+floor and scrolls sideways inside its own box, which means the reader
+swipes to see half an argument.
+
+Rebuild the arrangement; never just shrink the wide one. Three panels side
+by side get ~126px each on a 420px screen and stop reading; stacked, each
+gets the full width. Ask what the layout is *for* and lay it out again.
+
+Two things usually change with the arrangement:
+
+- **Rails go.** Stacked, they point at nothing, and a rail that arrives
+  nowhere is debris. Stacking order carries the sequence instead.
+- **Type returns to the site's mobile scale** — labels ~16px, captions
+  ~13px rendered. A wide file may run larger because its drawings are
+  large; that reasoning does not survive the change of arrangement.
+
+The cost is real: a scene now lives in the standalone file, the wide
+composition and the narrow one. Edit all three in the same commit.
 
 ## Motion
 
@@ -265,6 +289,8 @@ underlining source deck meant anyway.
 | Curved a connector to make it feel drawn | An arc curls away from what it points at. A connector is a straight ray; curvature is for haloes, not pointers. |
 | Emphasised a clause in red inside body text | Red is large-type only here. Brighten the clause and put the accent in the underline. |
 | Filtered a supplied icon to fit the palette | Black outlines on this ground become a smudge. Light disc, colours untouched — the third-party exception. |
+| Shipped a wide diagram with no phone telling | The reader swipes to see half the argument. Lay it out again at 420px; it is part of the job, not a follow-up. |
+| Made the mobile version by shrinking the wide one | Three panels side by side give ~126px each on a phone. Rebuild the arrangement — stack it. |
 
 ## Checklist
 
@@ -280,3 +306,5 @@ underlining source deck meant anyway.
 9. Scenes: edited in the standalone file **and** every composed copy?
 10. Supplied marks: on a light disc, unfiltered, with rails that point at
     something and a gap they can actually cross?
+11. Drawn twice — a `-mobile.svg` laid out again for the width, not the
+    wide one shrunk, and screenshotted at 420px?
