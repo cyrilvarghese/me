@@ -26,6 +26,32 @@
 	}
 }
 
+/* the lap filling in behind the traveller. Drawn on a second copy of the
+   same path at pathLength 100, so the fraction is the same number at any
+   size, and held full until the loop comes round again. */
+@keyframes cctrail {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+/* ~250ms of a 6-second lap, so the ring opens and is gone before the
+   traveller has left the stop. It sits at nothing for the rest of it. */
+@keyframes ccping {
+	0% {
+		transform: scale(0.8);
+		opacity: 0.85;
+	}
+	4% {
+		transform: scale(2.4);
+		opacity: 0;
+	}
+	100% {
+		transform: scale(2.4);
+		opacity: 0;
+	}
+}
+
 @keyframes ccfade {
 	from {
 		opacity: 0;
@@ -57,6 +83,36 @@
 	animation: ccorbit 9s linear infinite;
 }
 
+/* The traveller. A short round-capped dash rather than a fat dot: a flat
+   mark implies motion where a dot just sits. The file supplies the path's
+   length as --len and the painted dash as --dash, and the gap is whatever
+   is left of the lap — one dash on the path at a time.
+
+   --dur is the lap, and the file works it out from the house speed rather
+   than picking a duration: 246 units a second, so --len / 246 seconds. */
+.cc-run {
+	stroke-dasharray: var(--dash, 10) calc(var(--len, 400) - var(--dash, 10));
+	animation: ccorbit var(--dur, 8s) linear infinite;
+}
+
+/* the lap filling in behind it, held full until the loop restarts */
+.cc-trail {
+	stroke-dasharray: 100 100;
+	stroke-dashoffset: 100;
+	animation: cctrail var(--dur, 8s) linear infinite;
+}
+
+/* A stop lighting as the traveller reaches it: a stroke-only ring that
+   opens out of the mark and fades. --d is the stop's own share of the lap,
+   so each one fires when the dash actually arrives rather than on a
+   stagger that happens to look close. */
+.cc-ping {
+	transform-box: fill-box;
+	transform-origin: center;
+	opacity: 0;
+	animation: ccping var(--dur, 8s) linear var(--d, 0s) infinite;
+}
+
 .cc-in {
 	opacity: 0;
 	animation: ccfade 0.5s ease-out var(--d, 0s) forwards;
@@ -73,7 +129,9 @@
 	.cc-draw,
 	.cc-orbit,
 	.cc-in,
-	.cc-beat {
+	.cc-beat,
+	.cc-run,
+	.cc-trail {
 		animation: none;
 		stroke-dashoffset: 0;
 		opacity: 1;
@@ -81,5 +139,14 @@
 
 	.cc-orbit {
 		stroke-dasharray: 6 10;
+	}
+
+	/* the lap is finished rather than paused part-way round: the trail is
+	   drawn all the way and the runner that drew it has nothing left to
+	   say, so it stands down with the ping it would have fired */
+	.cc-run,
+	.cc-ping {
+		animation: none;
+		opacity: 0;
 	}
 }

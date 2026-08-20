@@ -9,37 +9,40 @@
        dropping it would leave a list of six stages, which is what the ring
        existed to not be.
 
+       The route is one closed path, same as the ring: 1412 units, and the
+       house dash travels 246 a second, so the lap takes 5.74s.
+
        Type returns to the ladder at this width: 15 for a stage, 20 for the
        name of the thing they belong to. -->
+  <defs>
+    <!-- its own id: this file and the wide one are both inlined into the
+         same document, and a shared id would leave one of them pointing at
+         the other's definition -->
+    <radialGradient id="ccGlowCol">
+      <stop offset="0%" stop-color="#f8f4f2" stop-opacity=".22"/>
+      <stop offset="55%" stop-color="#f8f4f2" stop-opacity=".10"/>
+      <stop offset="100%" stop-color="#f8f4f2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
 
-  <!-- the run down: dotted between one stop and the next, arrowheads
-       stating the direction once per gap -->
-  <g stroke="#ea0000" stroke-opacity=".7" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 10" fill="none">
-    <path d="M64 96 L64 144"/>
-    <path d="M64 216 L64 264"/>
-    <path d="M64 336 L64 384"/>
-    <path d="M64 456 L64 504"/>
-    <path d="M64 576 L64 624"/>
-  </g>
-  <g fill="#ea0000" fill-opacity=".8">
-    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 132) rotate(90)"/>
-    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 252) rotate(90)"/>
-    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 372) rotate(90)"/>
-    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 492) rotate(90)"/>
-    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(64 612) rotate(90)"/>
+  <g fill="none">
+    <path d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
+          stroke="#f8f4f2" stroke-opacity=".28" stroke-width="2.1"
+          stroke-linecap="round" stroke-dasharray="1.4 9.8"/>
+
+    <path class="cc-trail" pathLength="100"
+          d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
+          stroke="#eee8e6" stroke-width="1.84" stroke-linecap="round"
+          style="--dur:5.74s"/>
+
+    <path class="cc-run"
+          d="M64 66 L64 690 Q64 704 50 704 L34 704 Q20 704 20 690 L20 44 Q20 30 34 30 L50 30 Q64 30 64 44 L64 66"
+          stroke="#ea0000" stroke-width="2.6" stroke-linecap="round"
+          style="--len:1412; --dash:7.35; --dur:5.74s"/>
   </g>
 
-  <!-- the closing edge, brought back up the outside. Solid rather than
-       dotted: at this width the run is long and the dash would read as
-       another gap between stages instead of the return. -->
-  <g class="cc-in" style="--d:.9s">
-    <path d="M64 690 L34 690 Q20 690 20 676 L20 44 Q20 30 34 30 L52 30"
-          fill="none" stroke="#ea0000" stroke-opacity=".7" stroke-width="2"/>
-    <path d="M-7 -5.5 L7 0 L-7 5.5 z" transform="translate(60 30)" fill="#ea0000" fill-opacity=".8"/>
-  </g>
-
-  <!-- The clinic the loop runs inside, named once at the foot of the
-       column rather than in a middle it no longer has. -->
+  <!-- The clinic the loop runs inside, named at the foot of the column
+       rather than in a middle it no longer has. -->
   <text class="cc-in" style="--d:.05s" x="110" y="712" font-size="20" fill="#ea0000">VIRTUAL CLINIC</text>
   <text class="cc-in" style="--d:.05s" x="110" y="736" font-size="15" fill="currentColor" opacity=".5">unlimited patients</text>
 
@@ -47,40 +50,49 @@
        leaves, which is the only place in a column with room for the words -->
   <text class="cc-in" style="--d:1s" x="110" y="22" font-size="15" fill="#ea0000">and again — a new patient</text>
 
-  <!-- the six stops -->
+  <!-- The six stops. Each ping's --d is that stop's distance along the
+       route as a share of the lap, so it fires as the runner reaches it —
+       the stops are evenly spaced, the return is not, so these are not a
+       sixth apart the way the ring's are. -->
   <g font-size="15" fill="currentColor">
     <g class="cc-in" style="--d:.15s">
-      <circle cx="64" cy="66" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="64" cy="66" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:0s"/>
+      <circle cx="64" cy="66" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/Patient.png" x="45.5" y="47.5" width="37" height="37"/>
       <text x="110" y="71" opacity=".8">1 · PICK A PATIENT</text>
     </g>
 
     <g class="cc-in" style="--d:.25s">
-      <circle cx="64" cy="186" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="64" cy="186" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:.488s"/>
+      <circle cx="64" cy="186" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/patient-history.png" x="45.5" y="167.5" width="37" height="37"/>
       <text x="110" y="191" opacity=".8">2 · TAKE HISTORY</text>
     </g>
 
     <g class="cc-in" style="--d:.35s">
-      <circle cx="64" cy="306" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="64" cy="306" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:.976s"/>
+      <circle cx="64" cy="306" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/test.png" x="45.5" y="287.5" width="37" height="37"/>
       <text x="110" y="311" opacity=".8">3 · ORDER TESTS</text>
     </g>
 
     <g class="cc-in" style="--d:.45s">
-      <circle cx="64" cy="426" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="64" cy="426" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:1.463s"/>
+      <circle cx="64" cy="426" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/diagnosis.png" x="45.5" y="407.5" width="37" height="37"/>
       <text x="110" y="431" opacity=".8">4 · DIAGNOSE</text>
     </g>
 
     <g class="cc-in" style="--d:.55s">
-      <circle cx="64" cy="546" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="64" cy="546" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:1.951s"/>
+      <circle cx="64" cy="546" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/treatment.png" x="45.5" y="527.5" width="37" height="37"/>
       <text x="110" y="551" opacity=".8">5 · TREAT</text>
     </g>
 
     <g class="cc-in" style="--d:.65s">
-      <circle cx="64" cy="666" r="30" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="64" cy="666" r="20" fill="none" stroke="#ea0000" stroke-width="1.6" style="--dur:5.74s; --d:2.439s"/>
+      <circle cx="64" cy="666" r="35" fill="url(#ccGlowCol)"/>
       <image href="/assets/CaseChat/icons/Feedback.png" x="45.5" y="647.5" width="37" height="37"/>
       <text x="110" y="671" opacity=".8">6 · FEEDBACK</text>
     </g>

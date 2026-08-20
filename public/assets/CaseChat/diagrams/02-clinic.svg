@@ -5,94 +5,122 @@
        student comes out of feedback and straight into another patient.
 
        Each stop carries the icon that names it elsewhere in this case
-       study, so the ring and the object diagram share one vocabulary.
-       Supplied clip-art is drawn with black outlines that vanish on this
-       ground, so every mark sits on the light disc the diagram skill
-       reserves for artwork it did not draw — colours untouched, because a
-       filtered logo reads as a smudge rather than a mark.
+       study, so the ring and the object diagram share one vocabulary. The
+       marks are <image> inside an inlined svg, not an <img> around one:
+       the file still inlines, so the text keeps the mono voice and the
+       animation still sees the shared motion sheet.
 
-       The icons are <image> inside an inlined svg, not an <img> around
-       one: the file still inlines, so the text keeps the mono voice and
-       the animation still sees the shared motion sheet.
+       No arrowheads. The runner going round states the direction, and the
+       numbers state it again for anyone the motion never reaches.
 
        Sized for a full-width band rather than half a compare panel, so it
        renders near 1:1 and the labels are the ladder's own numbers — 15
        for a stage, 20 for the name at the centre. -->
-  <circle cx="550" cy="330" r="250" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2"/>
-  <!-- 2πr = 1571, and the house dash travels 246 units a second, so the
-       lap takes 6.4s. Speed is distance per second, not cycle length. -->
-  <circle class="cc-orbit" cx="550" cy="330" r="250" fill="none" stroke="#ea0000" stroke-opacity=".7"
-          stroke-width="2" style="--len:1571; animation-duration:6.4s"/>
+  <defs>
+    <!-- Backlight instead of a disc. Supplied clip-art is drawn with dark
+         outlines that vanish on this ground and wants something behind it,
+         but a hard white plate cuts six holes in the drawing. A glow that
+         falls off to nothing lifts the mark without drawing an edge. -->
+    <radialGradient id="ccGlow">
+      <stop offset="0%" stop-color="#f8f4f2" stop-opacity=".22"/>
+      <stop offset="55%" stop-color="#f8f4f2" stop-opacity=".10"/>
+      <stop offset="100%" stop-color="#f8f4f2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
 
-  <!-- direction, stated once per arc so the loop reads clockwise. They sit
-       midway between two stops, where the discs leave the arc clear. -->
-  <g fill="#ea0000" fill-opacity=".8">
-    <path d="M-9 -7 L9 0 L-9 7 z" transform="translate(675 113.5) rotate(30)"/>
-    <path d="M-9 -7 L9 0 L-9 7 z" transform="translate(800 330) rotate(90)"/>
-    <path d="M-9 -7 L9 0 L-9 7 z" transform="translate(675 546.5) rotate(150)"/>
-    <path d="M-9 -7 L9 0 L-9 7 z" transform="translate(425 546.5) rotate(210)"/>
-    <path d="M-9 -7 L9 0 L-9 7 z" transform="translate(300 330) rotate(270)"/>
-    <path d="M-9 -7 L9 0 L-9 7 z" transform="translate(425 113.5) rotate(330)"/>
+  <!-- The lap, as one path so the ground, the trail and the runner are
+       the same geometry rather than three that have to be kept in step.
+       Clockwise from the top: 2πr = 1571 units, and the house dash travels
+       246 of them a second, so a lap takes 6.4s.
+
+       Numbers are CreativeOS 01-today and 02-canvas scaled to this box,
+       not invented: ground 3 wide on "2 14" at a 600-unit panel (×1.833
+       here), trail 2.4 and runner 3.4 on "9.6" at 02-canvas's 548 (×2.007).
+       The trail is the light one and the runner is the red one, which is
+       the way round 02-canvas has it — a trail in the accent would turn
+       the whole ring red and leave nothing for the moment that matters. -->
+  <g fill="none">
+    <path d="M550 80 A250 250 0 1 1 550 580 A250 250 0 1 1 550 80"
+          stroke="#f8f4f2" stroke-opacity=".28" stroke-width="5.5"
+          stroke-linecap="round" stroke-dasharray="3.7 25.7"/>
+
+    <path class="cc-trail" pathLength="100"
+          d="M550 80 A250 250 0 1 1 550 580 A250 250 0 1 1 550 80"
+          stroke="#eee8e6" stroke-width="4.8" stroke-linecap="round"
+          style="--dur:6.4s"/>
+
+    <path class="cc-run"
+          d="M550 80 A250 250 0 1 1 550 580 A250 250 0 1 1 550 80"
+          stroke="#ea0000" stroke-width="6.8" stroke-linecap="round"
+          style="--len:1571; --dash:19.3; --dur:6.4s"/>
   </g>
 
   <!-- The clinic the loop runs inside. Larger than the stops, because it
        is the thing they all belong to rather than one more of them.
 
-       The centre band ends at y402 and the discs at 3 and 5 start at y411.
+       The centre band ends at y402 and the stops at 3 and 5 start at y411.
        Placed by eye against the ring instead, the second line runs into
        their row. -->
   <g class="cc-in" style="--d:.05s">
-    <circle cx="550" cy="282" r="52" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+    <circle cx="550" cy="282" r="62" fill="url(#ccGlow)"/>
     <image href="/assets/CaseChat/icons/clinic.png" x="518" y="250" width="64" height="64"/>
   </g>
   <text class="cc-in" style="--d:.05s" x="550" y="374" font-size="20" text-anchor="middle" fill="#ea0000">VIRTUAL CLINIC</text>
   <text class="cc-in" style="--d:.05s" x="550" y="397" font-size="15" text-anchor="middle" fill="currentColor" opacity=".5">unlimited patients</text>
 
-  <!-- The six stops. Disc, mark and label move together, so a stage
-       arrives as one thing rather than three that happen to line up. -->
+  <!-- The six stops. Backlight, ping, mark and label move together, so a
+       stage arrives as one thing rather than four that happen to line up.
+       Each ping's --d is that stop's share of the lap — a sixth apart —
+       so it fires as the runner actually reaches it. -->
   <g font-size="15" fill="currentColor">
     <g class="cc-in" style="--d:.15s">
-      <circle cx="550" cy="80" r="44" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="550" cy="80" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:0s"/>
+      <circle cx="550" cy="80" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/Patient.png" x="522.5" y="52.5" width="55" height="55"/>
-      <text x="550" y="22" text-anchor="middle" opacity=".8">1 · PICK A PATIENT</text>
+      <text x="550" y="12" text-anchor="middle" opacity=".8">1 · PICK A PATIENT</text>
     </g>
 
     <g class="cc-in" style="--d:.25s">
-      <circle cx="766.5" cy="205" r="44" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="766.5" cy="205" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:1.067s"/>
+      <circle cx="766.5" cy="205" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/patient-history.png" x="739" y="177.5" width="55" height="55"/>
-      <text x="825" y="211" opacity=".8">2 · TAKE HISTORY</text>
+      <text x="833" y="211" opacity=".8">2 · TAKE HISTORY</text>
     </g>
 
     <g class="cc-in" style="--d:.35s">
-      <circle cx="766.5" cy="455" r="44" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="766.5" cy="455" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:2.133s"/>
+      <circle cx="766.5" cy="455" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/test.png" x="739" y="427.5" width="55" height="55"/>
-      <text x="825" y="461" opacity=".8">3 · ORDER TESTS</text>
+      <text x="833" y="461" opacity=".8">3 · ORDER TESTS</text>
     </g>
 
     <g class="cc-in" style="--d:.45s">
-      <circle cx="550" cy="580" r="44" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="550" cy="580" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:3.2s"/>
+      <circle cx="550" cy="580" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/diagnosis.png" x="522.5" y="552.5" width="55" height="55"/>
-      <text x="550" y="648" text-anchor="middle" opacity=".8">4 · DIAGNOSE</text>
+      <text x="550" y="652" text-anchor="middle" opacity=".8">4 · DIAGNOSE</text>
     </g>
 
     <g class="cc-in" style="--d:.55s">
-      <circle cx="333.5" cy="455" r="44" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="333.5" cy="455" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:4.267s"/>
+      <circle cx="333.5" cy="455" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/treatment.png" x="306" y="427.5" width="55" height="55"/>
-      <text x="275" y="461" text-anchor="end" opacity=".8">5 · TREAT</text>
+      <text x="267" y="461" text-anchor="end" opacity=".8">5 · TREAT</text>
     </g>
 
     <g class="cc-in" style="--d:.65s">
-      <circle cx="333.5" cy="205" r="44" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <circle class="cc-ping" cx="333.5" cy="205" r="30" fill="none" stroke="#ea0000" stroke-width="2.5" style="--dur:6.4s; --d:5.333s"/>
+      <circle cx="333.5" cy="205" r="52" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/Feedback.png" x="306" y="177.5" width="55" height="55"/>
-      <text x="275" y="211" text-anchor="end" opacity=".8">6 · FEEDBACK</text>
+      <text x="267" y="211" text-anchor="end" opacity=".8">6 · FEEDBACK</text>
     </g>
   </g>
 
   <!-- the closing edge, named. It sits clear of the ring with a leader
        rather than crowding the arc it annotates. -->
   <g class="cc-in" style="--d:1s" fill="#ea0000">
-    <text x="330" y="92" font-size="15" text-anchor="end">and again —</text>
-    <text x="330" y="114" font-size="15" text-anchor="end">a new patient</text>
-    <line x1="338" y1="106" x2="404" y2="118" stroke="#ea0000" stroke-opacity=".55" stroke-width="1.5"/>
+    <text x="300" y="92" font-size="15" text-anchor="end">and again —</text>
+    <text x="300" y="114" font-size="15" text-anchor="end">a new patient</text>
+    <line x1="308" y1="106" x2="392" y2="122" stroke="#ea0000" stroke-opacity=".55" stroke-width="1.5"/>
   </g>
 </svg>
