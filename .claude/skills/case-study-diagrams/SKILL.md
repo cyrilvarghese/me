@@ -1,6 +1,6 @@
 ---
 name: case-study-diagrams
-description: Use when creating, editing, recolouring or retiming an animated SVG diagram in a case study (public/assets/*/diagrams), when drawing a scene, room, figure or silhouette illustration for one, or when a diagram's colours, fonts, speed, figures or looping look wrong on the dark theme
+description: Use when creating, editing, recolouring or retiming a case-study diagram (public/assets/*/diagrams), when drawing a scene, room, figure or silhouette for one, when building a persona, quote or icon figure from supplied artwork, or when a diagram's colours, fonts, sizes, connectors, speed or looping look wrong on the dark theme
 ---
 
 # Case-study diagrams
@@ -14,8 +14,12 @@ how it goes today, how it goes on the system. First used on
 | What | Where |
 |---|---|
 | Drawings | `public/assets/<Case>/diagrams/<nn>-<side>.svg` |
+| Scenes | `public/assets/<Case>/diagrams/scenes/<room>.svg` |
+| Supplied marks | `public/assets/<Case>/icons/<name>.png` |
 | Motion | `src/components/case/diagram-motion.css` — one **global** sheet of `@keyframes` |
 | Rendering | `<CaseDiagram src="…" />` inlines the file at build time |
+| HTML figures | `CaseVoices` (persona + quotes), `CaseJourney` (stages) |
+| Drafting | `/labs` — noindex, never linked, renders candidates through `CaseDiagram` |
 
 **Never render with `<img>`.** An image-loaded SVG is an isolated
 document: it cannot see the page's fonts, and every copy carries its own
@@ -204,6 +208,43 @@ scene's markup. That copy is a maintenance trap: every edit must be made
 in both the standalone scene and each composed diagram, and nothing
 catches a divergence. Change them in the same commit, every time.
 
+## Supplied marks (a face instead of a drawing)
+
+Sometimes the reader recognises a mark faster than any drawing earns —
+a persona beside what they said, a product logo beside the step it owns.
+`CaseVoices` is the worked example: quotes fanned around a persona icon.
+
+**Supplied artwork keeps its own colours and sits on a light disc** —
+`--fg` fill, `rgba(248,244,242,0.28)` hairline, the icon unfiltered on
+top. This is the same exception the third-party marks take, for the same
+reason: flat clip-art is drawn with black outlines that vanish on this
+ground, and a filter over them reads as a smudge rather than a mark.
+
+**Build the figure in HTML when its text has to wrap.** Two- and
+three-line quotes cannot be hand-broken in `<text>` without eventually
+clipping off the viewBox. Lay it out in HTML and keep the rails as inline
+SVG so their dash still paints the round-capped pill; the sizes come from
+`--text-small` and `--text-label`, which is what makes an HTML figure and
+an SVG one read as the same voice.
+
+**A rail points; it does not decorate.** Use a straight ray out from the
+mark toward the thing it connects, never an arc — an arc curls away from
+whatever it is aimed at. Let the angle follow the geometry: two items on
+a side fan to about ±32°, a single item sits level and its ray runs
+straight out.
+
+**Spacing and connectors are one problem.** A ray needs somewhere to
+arrive, so the gap it crosses has to stay close to its reach. Widen the
+column for more air and the rail stops in open space, which reads worse
+than no rail. Widen the gap *between* stacked items instead — that is
+where the whitespace belongs.
+
+**Emphasis inside body-size text is a value step, not red text.** Red
+fails AA at this size on this ground. Brighten the clause to `--fg`
+against a `--muted` quote and put the accent in a `text-decoration`
+underline beneath it, which keeps red decorative and is what an
+underlining source deck meant anyway.
+
 ## Common mistakes
 
 | Mistake | Reality |
@@ -220,6 +261,10 @@ catches a divergence. Change them in the same commit, every time.
 | Sized diagram text as a ratio of the viewBox | The ratio only matches when viewBox ≈ rendered width. Solve for the target px instead, and check it against the type it sits beside. |
 | Sized an HTML figure by eye | `--text-small` and `--text-label` are the same sizes a diagram's text renders at. Use the tokens and the two voices match for free. |
 | An `svg` in HTML came out smaller than its CSS width | `globals.css` caps every svg at `max-width:100%`. Anything wider than its container needs `max-width: none`. |
+| Drew a short rail and it vanished | The house dash period is ~16px. A rail under ~60px paints one pill and reads as a speck. Lengthen it or leave it out. |
+| Curved a connector to make it feel drawn | An arc curls away from what it points at. A connector is a straight ray; curvature is for haloes, not pointers. |
+| Emphasised a clause in red inside body text | Red is large-type only here. Brighten the clause and put the accent in the underline. |
+| Filtered a supplied icon to fit the palette | Black outlines on this ground become a smudge. Light disc, colours untouched — the third-party exception. |
 
 ## Checklist
 
@@ -233,3 +278,5 @@ catches a divergence. Change them in the same commit, every time.
 8. Scenes: flat fills, the tinge only on the object that needs attention,
    and the accent still the largest and most saturated mark?
 9. Scenes: edited in the standalone file **and** every composed copy?
+10. Supplied marks: on a light disc, unfiltered, with rails that point at
+    something and a gap they can actually cross?
