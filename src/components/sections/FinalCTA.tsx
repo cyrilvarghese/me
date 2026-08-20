@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { capabilities } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
+import { ART_CENTRE_SHIFT } from "@/components/knife/art";
 import CopyEmail from "@/components/CopyEmail";
 import styles from "./FinalCTA.module.css";
 
@@ -56,14 +57,16 @@ export default function FinalCTA() {
     <section ref={sectionRef} className={styles.section} id="contact" aria-label="Contact">
       <div className={styles.stage}>
         <div className={styles.knifeWrap} data-knife-final="">
-          <div>
+          {/* the inner box carries the shift, not knifeWrap — GSAP writes
+              yPercent to knifeWrap and would overwrite a transform here */}
+          <div style={{ transform: `translateX(${ART_CENTRE_SHIFT * 100}%)` }}>
             <KnifeCanvas angles={OPEN_ANGLES} reducedPose="closed" />
           </div>
         </div>
 
         <div className={styles.copy}>
           <p className={`serif-display ${styles.question}`} data-final="question">
-            Got an outcome nobody owns?
+            Have a problem that needs more than one perspective?
           </p>
           <p className={`serif-display ${styles.give}`} data-final="give">
             Let&apos;s get <em>started.</em>
