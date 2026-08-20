@@ -28,9 +28,10 @@
 
 .headline {
 	font-size: var(--text-display);
-	/* the knife peeks into the right of the stage, so the measure has to stop
-	   short of it — 24ch let a long line run under the blade */
-	max-width: 19ch;
+	/* The knife peeks into the right of the stage, so the measure has to stop
+	   short of it. Narrower than it looks: Fraunces' zero is ~60px at display
+	   size, so 13ch is about 780px, not thirteen characters' worth. */
+	max-width: 13ch;
 	text-wrap: balance;
 }
 
