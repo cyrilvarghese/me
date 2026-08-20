@@ -14,6 +14,15 @@
        The chart sits between them with the callout beside it — the red
        wedge and the red sentence next to each other need no rail. -->
 
+  <defs>
+    <marker id="ccsmA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#f8f4f2" fill-opacity=".45"/>
+    </marker>
+    <marker id="ccsmR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#ea0000"/>
+    </marker>
+  </defs>
+
   <!-- ══ the two rooms that build recall ═══════════════════════════ -->
   <g class="cc-in" style="--d:.05s" transform="translate(10 18) scale(0.6)">
     <rect x="186" y="16" width="112" height="60" fill="#1e1818"/>
@@ -106,10 +115,17 @@
     <text x="110" y="299" font-size="15" text-anchor="middle" fill="#f8f4f2">20%</text>
   </g>
 
-  <!-- No rail down to the bedside. There are only 40 units between the
-       wedge and the drawing, and at the house dash period that paints a
-       single pill — which reads as a speck, not a connector. The wedge
-       already points at the room, and both are red; that is the join. -->
+  <!-- Each room to its wedge. Solid with an arrowhead rather than the
+       dotted rail: these runs are 30 to 60 units, and at the house dash
+       period a rail that short paints one pill and reads as a speck. A
+       drawn line carries the same job at any length, which is why the
+       stage arrows in 01-cases are built this way too.
+
+       Neutral for the two rooms being counted — they are structure — and
+       red for the one the drawing is about. -->
+  <line class="cc-draw" style="--len:37;--d:.5s" x1="76" y1="184" x2="58" y2="216" stroke="#f8f4f2" stroke-opacity=".38" stroke-width="2" marker-end="url(#ccsmA)"/>
+  <line class="cc-draw" style="--len:61;--d:.6s" x1="214" y1="180" x2="154" y2="208" stroke="#f8f4f2" stroke-opacity=".38" stroke-width="2" marker-end="url(#ccsmA)"/>
+  <line class="cc-draw" style="--len:30;--d:.7s" x1="110" y1="320" x2="110" y2="350" stroke="#ea0000" stroke-opacity=".75" stroke-width="2" marker-end="url(#ccsmR)"/>
 
   <text class="cc-in" style="--d:.5s" x="212" y="244" font-size="16" fill="#ea0000">Only 20% of the</text>
   <text class="cc-in" style="--d:.5s" x="212" y="266" font-size="16" fill="#ea0000">time is hands on</text>
