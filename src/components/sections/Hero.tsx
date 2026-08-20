@@ -140,6 +140,17 @@ export default function Hero() {
                   fanned = true;
                   fan.progress(1).pause();
                   gsap.set(labels, { autoAlpha: 0 });
+                } else if (p >= LABELS_OUT && fanned && fan.isActive()) {
+                  // The fan runs on its own clock for about a second, and the
+                  // scrub reaches LABELS_OUT only 37vh after it fires. Scroll
+                  // that fast and the fan is still tweening labels toward
+                  // visible while the scrub tries to hide them — the fan
+                  // finishes last and they stay lit all the way to the
+                  // compass. Past LABELS_OUT the hide is authoritative: jump
+                  // the fan to its end so the blades still reach their open
+                  // angles, then put the labels out for good.
+                  fan.progress(1);
+                  gsap.set(labels, { autoAlpha: 0 });
                 } else if (p < REARM_AT && fanned) {
                   fanned = false;
                   fan.pause(0);
@@ -176,7 +187,11 @@ export default function Hero() {
           );
 
           // labels retire before the lineup starts pulling the blades apart
-          tl.to(labels, { autoAlpha: 0, duration: 0.05, ease: "power2.in" }, LABELS_OUT);
+          tl.to(
+            labels,
+            { autoAlpha: 0, duration: 0.05, ease: "power2.in", overwrite: "auto" },
+            LABELS_OUT
+          );
 
           // §39: once the fan has finished, hovering a blade dims the others
           // and lifts its own label. Desktop only.
