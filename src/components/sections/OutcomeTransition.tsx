@@ -96,11 +96,13 @@ export default function OutcomeTransition() {
             defaults: { ease: "none" },
             scrollTrigger: {
               trigger: sectionRef.current,
-              // the section is pulled up to document 0 so its stage is pinned
-              // from the first pixel and the knife never rises into frame.
-              // The timeline itself still begins where the hero's ends.
+              // The section is pulled up to document 0 so its stage is pinned
+              // from the first pixel and the knife never rises into frame; the
+              // timeline itself still begins where the hero's ends. Both ends
+              // are absolute — a numeric start with a trigger-relative end
+              // resolves to a range neither of them meant.
               start: () => window.innerHeight,
-              end: "bottom bottom",
+              end: () => (sectionRef.current?.offsetHeight ?? 0) - window.innerHeight,
               scrub: 0.4,
               invalidateOnRefresh: true,
               // snapping only from the individual-tools lineup through to the

@@ -229,6 +229,20 @@
 
 	.inner {
 		width: min(60vw, 420px);
+		/* the square is for the overlaid animation; stacked, it must grow */
+		aspect-ratio: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	/* the knife takes its own row rather than lying on top of the compass */
+	.knifeEl {
+		position: static;
+	}
+
+	.knifeIntro {
+		position: relative;
 	}
 
 	.circles,

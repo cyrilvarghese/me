@@ -1,7 +1,6 @@
 import Header from "@/components/sections/Header";
 import ScrollRuler from "@/components/ScrollRuler";
 import Hero from "@/components/sections/Hero";
-import KnifeOpening from "@/components/knife/KnifeOpening";
 import OutcomeTransition from "@/components/sections/OutcomeTransition";
 import OperatingModel from "@/components/sections/OperatingModel";
 import CaseStudies from "@/components/sections/CaseStudies";
@@ -17,7 +16,6 @@ export default function Home() {
       <ScrollRuler />
       <main>
         <Hero />
-        <KnifeOpening />
         <OutcomeTransition />
         <CaseStudies />
         <Career />
