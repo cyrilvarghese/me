@@ -5,6 +5,10 @@ import styles from "./ScrollRuler.module.css";
 
 const TICKS = 48;
 
+/** The nav's three destinations, named on the rail where they fall. The
+    ruler already knew where every section starts; this says which. */
+const NAMED = new Set(["work", "about", "contact"]);
+
 /**
  * Line minimap: a fixed tick ruler on the left with a red playhead that
  * tracks overall page progress. The pinned scrub sections make the page
@@ -22,6 +26,9 @@ export default function ScrollRuler() {
     if (!rail || !marker) return;
 
     const ticks = Array.from(rail.querySelectorAll<HTMLElement>("span"));
+    /* the wave scales the LINE inside each tick, never the tick itself —
+       a scaleX on the tick would stretch the section label with it */
+    const lines = ticks.map((t) => t.firstElementChild as HTMLElement);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // major ticks land on the page's real beats: every section start is a
@@ -32,11 +39,14 @@ export default function ScrollRuler() {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       if (max <= 0) return;
       const majors = new Set<number>();
-      const add = (f: number) =>
-        majors.add(Math.round(Math.min(1, Math.max(0, f)) * (TICKS - 1)));
+      const labels = new Map<number, string>();
+      const index = (f: number) =>
+        Math.round(Math.min(1, Math.max(0, f)) * (TICKS - 1));
+      const add = (f: number) => majors.add(index(f));
       document.querySelectorAll<HTMLElement>("main > section").forEach((s) => {
         const top = s.getBoundingClientRect().top + window.scrollY;
         add(top / max);
+        if (NAMED.has(s.id)) labels.set(index(top / max), s.id);
         const range = s.offsetHeight - window.innerHeight;
         if (s.dataset.rulerBeats && range > 0) {
           for (const b of s.dataset.rulerBeats.split(",")) {
@@ -45,7 +55,12 @@ export default function ScrollRuler() {
           }
         }
       });
-      ticks.forEach((el, i) => el.classList.toggle(styles.major, majors.has(i)));
+      ticks.forEach((el, i) => {
+        el.classList.toggle(styles.major, majors.has(i));
+        const label = labels.get(i);
+        if (label) el.dataset.rulerLabel = label;
+        else delete el.dataset.rulerLabel;
+      });
     };
 
     let raf = 0;
@@ -65,12 +80,12 @@ export default function ScrollRuler() {
       for (let i = 0; i < ticks.length; i++) {
         const d = Math.abs(i * step - y) / step;
         if (d >= RADIUS) {
-          if (ticks[i].style.transform) ticks[i].style.transform = "";
+          if (lines[i].style.transform) lines[i].style.transform = "";
           continue;
         }
         const t = 1 - d / RADIUS;
         const ease = t * t * (3 - 2 * t); // smoothstep falloff
-        ticks[i].style.transform = `scaleX(${1 + 1.1 * ease})`;
+        lines[i].style.transform = `scaleX(${1 + 1.1 * ease})`;
       }
     };
     const queue = () => {
@@ -102,7 +117,9 @@ export default function ScrollRuler() {
   return (
     <div ref={railRef} className={styles.rail} aria-hidden="true">
       {Array.from({ length: TICKS }, (_, i) => (
-        <span key={i} className={styles.tick} />
+        <span key={i} className={styles.tick}>
+          <i className={styles.line} />
+        </span>
       ))}
       <div ref={markerRef} className={styles.marker} />
     </div>

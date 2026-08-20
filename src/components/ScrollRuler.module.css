@@ -20,7 +20,17 @@
 	pointer-events: none;
 }
 
+/* The tick is a box; the line inside it is what you see and what the
+   proximity wave scales. They are separate so a named tick can carry a
+   label the wave does not stretch. */
 .tick {
+	position: relative;
+	width: 20px;
+	height: 1px;
+}
+
+.line {
+	display: block;
 	width: 12px;
 	height: 1px;
 	background: rgba(248, 244, 242, 0.22);
@@ -28,9 +38,27 @@
 	transform-origin: left center;
 }
 
-.major {
+.major .line {
 	width: 20px;
 	background: rgba(248, 244, 242, 0.45);
+}
+
+/* Section name beside the tick it starts on, in the margin left of the
+   content column. Sits on the fine rung — it is a map legend, not
+   something to read on the way past. */
+.tick[data-ruler-label]::after {
+	content: attr(data-ruler-label);
+	position: absolute;
+	left: 26px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-family: var(--font-mono);
+	font-size: var(--text-fine);
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	line-height: 1;
+	white-space: nowrap;
+	color: var(--muted);
 }
 
 /* The playhead: a solid head at the ruler, then a hairline running the
