@@ -29,3 +29,17 @@
 	pointer-events: auto;
 	background: rgba(21, 17, 17, 0.78);
 }
+
+/* .btn-ghost:hover clears the background — correct where the variant
+   normally lives, on the page's own ground, and wrong for the one
+   control that spends its life over photographs: pointing at it took
+   the ground away and the label disappeared into the cover. The ground
+   simply stays put through the hover; the variant still brightens the
+   label and the border, which is the whole response the control needs.
+
+   Reached through .dockInner rather than doubling the class, so it
+   outweighs .btn-ghost:hover whichever order the two stylesheets land
+   in. */
+.dockInner .back:hover {
+	background: rgba(21, 17, 17, 0.78);
+}

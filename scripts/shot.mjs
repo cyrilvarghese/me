@@ -15,6 +15,12 @@ const clicks = (rest.find((a) => a.startsWith("click="))?.slice(6) ?? "")
   .split(",")
   .map((c) => c.trim())
   .filter(Boolean);
+/* hover=<selector> parks the pointer on a control so its hover state is
+   what gets shot. Applied after any clicks, and left there for the
+   screenshot — hover rules are otherwise unverifiable from a static
+   shot, which is how .btn-ghost's transparent hover reached a control
+   living over photographs. */
+const hover = rest.find((a) => a.startsWith("hover="))?.slice(6).trim();
 
 const browser = await chromium.launch({
   executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
@@ -32,6 +38,10 @@ for (const click of clicks) {
   await page.click(click, { timeout: 15000 });
   /* long enough for the slowest transition on the page to settle */
   await page.waitForTimeout(1200);
+}
+if (hover) {
+  await page.hover(hover, { timeout: 15000 });
+  await page.waitForTimeout(400);
 }
 await page.screenshot({ path: out, fullPage });
 console.log("SAVED", out);
