@@ -16,70 +16,6 @@
 
        No arrowheads. The runner going round states the direction, and the
        numbers state it again for anyone the motion never reaches. -->
-  <style>
-    /* Every animation on this drawing is declared here, together, and that
-       is the point rather than tidiness.
-
-       A CSS animation starts when its declaration first applies to the
-       element. Split across two stylesheets — the shared sheet in the head
-       and this one in the body — the two groups start at different moments
-       and drift apart: the runner and its wave kept time with each other
-       while the fills and pops ran most of a stop early. One stylesheet,
-       one start, and the phase cannot come apart. It is why the CreativeOS
-       runner is declared inside its own file too.
-
-       The lap is 5.36s: 2πr = 1320 units at the house 246 a second. Six
-       stops evenly spaced sit a sixth of it apart — 0.893s — and the fill,
-       the pop and the wave for a stop all land on that same sixth, because
-       they are one event seen three ways.
-
-       All six empty at 98% rather than at 100%, so the ring stands clear
-       for the last 2% before the runner comes round again. Without it the
-       first stop, which fills at 0%, would never be seen empty and the loop
-       would look like it never reset. */
-    @keyframes ringRun { to { stroke-dashoffset: -100 } }
-    @keyframes ringTrail { to { stroke-dashoffset: 0 } }
-    @keyframes ringPing {
-      0% { transform: scale(1); opacity: .9 }
-      15% { transform: scale(5); opacity: 0 }
-      100% { transform: scale(5); opacity: 0 }
-    }
-    @keyframes ringPop {
-      0%, 100% { transform: scale(1) }
-      1% { transform: scale(2.2) }
-      7% { transform: scale(1) }
-    }
-    @keyframes ringFill1 { 0%, 97.7% { fill: #ea0000 } 98%, 100% { fill: #1e1818 } }
-    @keyframes ringFill2 { 0%, 16.6% { fill: #1e1818 } 16.8%, 97.7% { fill: #ea0000 } 98%, 100% { fill: #1e1818 } }
-    @keyframes ringFill3 { 0%, 33.2% { fill: #1e1818 } 33.4%, 97.7% { fill: #ea0000 } 98%, 100% { fill: #1e1818 } }
-    @keyframes ringFill4 { 0%, 49.9% { fill: #1e1818 } 50.1%, 97.7% { fill: #ea0000 } 98%, 100% { fill: #1e1818 } }
-    @keyframes ringFill5 { 0%, 66.5% { fill: #1e1818 } 66.7%, 97.7% { fill: #ea0000 } 98%, 100% { fill: #1e1818 } }
-    @keyframes ringFill6 { 0%, 83.2% { fill: #1e1818 } 83.4%, 97.7% { fill: #ea0000 } 98%, 100% { fill: #1e1818 } }
-
-    /* the runner: one dash on the path at a time, 9.6 units of a 1320-unit
-       lap, so 0.727 of a path normalised to 100 */
-    .run { stroke-dasharray: .727 99.273; animation: ringRun 5.36s linear infinite }
-    .trail { stroke-dasharray: 100 100; stroke-dashoffset: 100; animation: ringTrail 5.36s linear infinite }
-    .w { transform-box: fill-box; transform-origin: center; opacity: 0; animation: ringPing 5.36s linear infinite }
-    .stop { transform-box: fill-box; transform-origin: center }
-
-    .s1 { animation: ringPop 5.36s linear 0s infinite, ringFill1 5.36s linear infinite }
-    .s2 { animation: ringPop 5.36s linear .893s infinite, ringFill2 5.36s linear infinite }
-    .s3 { animation: ringPop 5.36s linear 1.787s infinite, ringFill3 5.36s linear infinite }
-    .s4 { animation: ringPop 5.36s linear 2.68s infinite, ringFill4 5.36s linear infinite }
-    .s5 { animation: ringPop 5.36s linear 3.573s infinite, ringFill5 5.36s linear infinite }
-    .s6 { animation: ringPop 5.36s linear 4.467s infinite, ringFill6 5.36s linear infinite }
-
-    /* the lap is over rather than paused part-way: the trail is drawn the
-       whole way, every stop stands filled, and the runner and its waves
-       have nothing left to say */
-    @media (prefers-reduced-motion: reduce) {
-      .run, .w { animation: none; opacity: 0 }
-      .trail { animation: none; stroke-dashoffset: 0 }
-      .stop { animation: none; transform: none; fill: #ea0000 }
-    }
-  </style>
-
   <defs>
     <!-- Backlight rather than a disc. Supplied clip-art is drawn with dark
          outlines that vanish on this ground and wants something behind it,
@@ -114,13 +50,15 @@
           stroke="rgba(248,244,242,0.24)" stroke-width="2.06"
           stroke-linecap="round" stroke-dasharray="2 14"/>
 
-    <path class="trail" pathLength="100"
+    <path class="cc-trail" pathLength="100"
           d="M550 130 A210 210 0 1 1 550 550 A210 210 0 1 1 550 130"
-          stroke="#eee8e6" stroke-width="2.4" stroke-linecap="round"/>
+          stroke="#eee8e6" stroke-width="2.4" stroke-linecap="round"
+          style="--dur:5.36s"/>
 
-    <path class="run" pathLength="100"
+    <path class="cc-run" pathLength="100"
           d="M550 130 A210 210 0 1 1 550 550 A210 210 0 1 1 550 130"
-          stroke="#ea0000" stroke-width="3.4" stroke-linecap="round"/>
+          stroke="#ea0000" stroke-width="3.4" stroke-linecap="round"
+          style="--dash:0.727; --dur:5.36s"/>
   </g>
 
   <!-- The clinic the loop runs inside, named in the middle it belongs to. -->
@@ -140,48 +78,48 @@
        across the node it belongs to. -->
   <g font-size="15" fill="currentColor">
     <g class="cc-in" style="--d:.15s">
-      <circle class="w" vector-effect="non-scaling-stroke" cx="550" cy="130" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="animation-delay:0s"/>
-      <circle class="stop s1" cx="550" cy="130" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="550" cy="130" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:0s"/>
+      <circle class="cc-node" cx="550" cy="130" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:0s"/>
       <circle cx="550" cy="60" r="96" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/Patient.png" x="526" y="36" width="48" height="48"/>
       <text x="550" y="102" text-anchor="middle" opacity=".8">1 · PICK A PATIENT</text>
     </g>
 
     <g class="cc-in" style="--d:.25s">
-      <circle class="w" vector-effect="non-scaling-stroke" cx="731.9" cy="235" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="animation-delay:.893s"/>
-      <circle class="stop s2" cx="731.9" cy="235" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="731.9" cy="235" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:.893s"/>
+      <circle class="cc-node" cx="731.9" cy="235" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:.893s"/>
       <circle cx="792.5" cy="200" r="96" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/patient-history.png" x="768.5" y="176" width="48" height="48"/>
       <text x="768.5" y="242" opacity=".8">2 · TAKE HISTORY</text>
     </g>
 
     <g class="cc-in" style="--d:.35s">
-      <circle class="w" vector-effect="non-scaling-stroke" cx="731.9" cy="445" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="animation-delay:1.787s"/>
-      <circle class="stop s3" cx="731.9" cy="445" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="731.9" cy="445" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:1.787s"/>
+      <circle class="cc-node" cx="731.9" cy="445" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:1.787s"/>
       <circle cx="792.5" cy="480" r="96" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/test.png" x="768.5" y="456" width="48" height="48"/>
       <text x="768.5" y="522" opacity=".8">3 · ORDER TESTS</text>
     </g>
 
     <g class="cc-in" style="--d:.45s">
-      <circle class="w" vector-effect="non-scaling-stroke" cx="550" cy="550" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="animation-delay:2.68s"/>
-      <circle class="stop s4" cx="550" cy="550" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="550" cy="550" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:2.68s"/>
+      <circle class="cc-node" cx="550" cy="550" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:2.68s"/>
       <circle cx="550" cy="620" r="96" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/diagnosis.png" x="526" y="596" width="48" height="48"/>
       <text x="550" y="662" text-anchor="middle" opacity=".8">4 · DIAGNOSE</text>
     </g>
 
     <g class="cc-in" style="--d:.55s">
-      <circle class="w" vector-effect="non-scaling-stroke" cx="368.1" cy="445" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="animation-delay:3.573s"/>
-      <circle class="stop s5" cx="368.1" cy="445" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="368.1" cy="445" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:3.573s"/>
+      <circle class="cc-node" cx="368.1" cy="445" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:3.573s"/>
       <circle cx="307.5" cy="480" r="96" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/treatment.png" x="283.5" y="456" width="48" height="48"/>
       <text x="331.5" y="522" text-anchor="end" opacity=".8">5 · TREAT</text>
     </g>
 
     <g class="cc-in" style="--d:.65s">
-      <circle class="w" vector-effect="non-scaling-stroke" cx="368.1" cy="235" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="animation-delay:4.467s"/>
-      <circle class="stop s6" cx="368.1" cy="235" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2"/>
+      <circle class="cc-ping" vector-effect="non-scaling-stroke" cx="368.1" cy="235" r="6" fill="none" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:4.467s"/>
+      <circle class="cc-node" cx="368.1" cy="235" r="6" fill="#1e1818" stroke="#ea0000" stroke-width="2" style="--dur:5.36s; --d:4.467s"/>
       <circle cx="307.5" cy="200" r="96" fill="url(#ccGlow)"/>
       <image href="/assets/CaseChat/icons/Feedback.png" x="283.5" y="176" width="48" height="48"/>
       <text x="331.5" y="242" text-anchor="end" opacity=".8">6 · FEEDBACK</text>

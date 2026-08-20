@@ -59,72 +59,24 @@ describe("diagram motion", () => {
 describe("casechat diagrams", () => {
   const dir = join(process.cwd(), "public/assets/CaseChat/diagrams");
   const files = readdirSync(dir).filter((f) => f.endsWith(".svg"));
-  const shared = new Set(
+  const declared = new Set(
     [...caseChat.matchAll(/^\.([\w-]+)\s*\{/gm)].map((m) => m[1])
   );
 
-  const read = (file: string) => readFileSync(join(dir, file), "utf8");
-
-  /* A looping diagram declares its own animations in its own <style>, so
-     that its runner, trail, stops and waves start together — see the head
-     of casechat-motion.css. So a class is legitimate if either sheet
-     declares it. */
-  const localCss = (svg: string) =>
-    [...svg.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");
-
   it("has the diagrams the sheet was written for", () => {
     expect(files.length).toBeGreaterThan(0);
-    expect(shared.size).toBeGreaterThan(0);
+    expect(declared.size).toBeGreaterThan(0);
   });
 
-  it.each(files.map((f) => [f] as const))(
-    "%s only uses classes some sheet declares",
-    (file) => {
-      const svg = read(file);
-      const declared = new Set([
-        ...shared,
-        ...[...localCss(svg).matchAll(/\.([\w-]+)\s*(?=[,{])/g)].map((m) => m[1]),
-      ]);
-      const used = [...svg.matchAll(/class="([^"]+)"/g)].flatMap((m) =>
-        m[1].split(/\s+/)
-      );
-      expect([...new Set(used)].filter((c) => !declared.has(c))).toEqual([]);
-    }
-  );
-
-  /* The same silent failure one level down: an animation naming a keyframe
-     that does not exist runs for its full duration and changes nothing. */
-  it.each(files.map((f) => [f] as const))(
-    "%s only animates keyframes some sheet defines",
-    (file) => {
-      const svg = read(file);
-      const local = localCss(svg);
-      const defined = new Set(
-        [...caseChat.matchAll(/@keyframes\s+([\w-]+)/g), ...local.matchAll(/@keyframes\s+([\w-]+)/g)].map(
-          (m) => m[1]
-        )
-      );
-      /* the name is the first non-timing token of each animation shorthand */
-      const named = [...local.matchAll(/animation:\s*([^;}]+)/g)]
-        .flatMap((m) => m[1].split(","))
-        .map((part) => part.trim().split(/\s+/)[0])
-        .filter((n) => n && n !== "none");
-      expect([...new Set(named)].filter((n) => !defined.has(n))).toEqual([]);
-    }
-  );
-
-  /* A block whose last stop is short of 100% does not hold there, exactly
-     as in the sheets above — and a diagram's own keyframes are no less
-     prone to it. */
-  it.each(files.map((f) => [f] as const))(
-    "%s keyframes terminate at 100%%",
-    (file) => {
-      const short = keyframeBlocks(localCss(read(file)))
-        .filter((b) => Math.max(...b.stops) < 100)
-        .map((b) => `${b.name} (ends at ${Math.max(...b.stops)}%)`);
-      expect(short).toEqual([]);
-    }
-  );
+  it.each(
+    readdirSync(dir)
+      .filter((f) => f.endsWith(".svg"))
+      .map((f) => [f] as const)
+  )("%s only uses classes the sheet declares", (file) => {
+    const svg = readFileSync(join(dir, file), "utf8");
+    const used = [...svg.matchAll(/class="([^"]+)"/g)].flatMap((m) => m[1].split(/\s+/));
+    expect([...new Set(used)].filter((c) => !declared.has(c))).toEqual([]);
+  });
 
   /* Markers resolve by document-wide id, and CaseDiagram inlines every
      drawing into the same page — so two diagrams sharing an id would
