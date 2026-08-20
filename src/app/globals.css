@@ -39,9 +39,14 @@ main {
 	overflow-x: clip;
 }
 
+/* Selection is a neutral lift, not the accent. A red block is the site's
+   loudest mark, and dragging across a paragraph is not an event worth
+   shouting about — it also swallowed any red already in the copy. Left
+   unset the browser paints its own blue, which belongs to no palette
+   here, so this stays declared. */
 ::selection {
-	background: var(--accent);
-	color: var(--bg);
+	background: rgba(248, 244, 242, 0.2);
+	color: var(--fg);
 }
 
 a {

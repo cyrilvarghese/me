@@ -30,6 +30,7 @@ const TOKENS = [
   { name: "--muted", value: "#9e9493", note: "captions, labels" },
   { name: "--accent", value: "#ea0000", note: "signal red — decorative / large type only" },
   { name: "--accent-deep", value: "#c90000", note: "deep red — frames, needle" },
+  { name: "--accent-lift", value: "#ff0d0d", note: "red that may be text — 4.75:1, AA at body size" },
   { name: "--hairline", value: "rgba(248, 244, 242, 0.1)", note: "rules" },
   { name: "--hairline-red", value: "rgba(234, 0, 0, 0.28)", note: "red rules" },
 ];

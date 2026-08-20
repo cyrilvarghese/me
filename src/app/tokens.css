@@ -13,6 +13,13 @@
 	--muted: #9e9493;
 	--accent: #ea0000;
 	--accent-deep: #c90000;
+	/* The rung of the ramp that may be text. --accent carries the whole
+	   signal language but measures 4.02:1 on --bg, just under the 4.5 AA
+	   floor, which is why red has been decorative here. Full red channel
+	   at the same 0° hue lifts it to 4.75:1 — the same colour, legal at
+	   body size. Use it for a phrase inside running copy; anything large
+	   or decorative still takes --accent. */
+	--accent-lift: #ff0d0d;
 	--hairline: rgba(248, 244, 242, 0.1);
 	--hairline-red: rgba(234, 0, 0, 0.28);
 

@@ -24,7 +24,12 @@ export default function About() {
           </h2>
           <p className={styles.lede}>
             From sketching stories as a kid to designing products as a designer, that
-            same sense of <strong>curiosity and wonder still drives my work</strong>.
+            same sense of{" "}
+            <strong>
+              <span className={styles.spark}>curiosity and wonder</span> still drives my
+              work
+            </strong>
+            .
           </p>
           <p className={styles.lede}>
             With a background spanning product design, engineering and storytelling,

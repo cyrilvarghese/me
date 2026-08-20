@@ -95,12 +95,17 @@
 	margin-top: 1.1rem;
 }
 
-/* Emphasis is weight and full-strength ink against the softened body —
-   not red. Red would be the site's usual mark, but this runs at body
-   size, where it fails AA on this ground. */
+/* Emphasis is weight and full-strength ink against the softened body. */
 .lede strong {
 	color: var(--fg);
 	font-weight: 500;
+}
+
+/* The one phrase the paragraph is actually about, in the site's red.
+   --accent-lift, not --accent: this runs at body size, where the signal
+   red misses AA on this ground and the lifted rung clears it. */
+.spark {
+	color: var(--accent-lift);
 }
 
 .timeline {
