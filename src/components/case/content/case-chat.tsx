@@ -163,8 +163,8 @@ export default function CaseChatContent() {
 
                 <CaseObject
                   eyebrow="What a case carries"
-                  heading="One object, used from both sides."
-                  lede="A patient case holds the whole episode — the history, the tests, the diagnosis, the treatment. The teacher explains through it; the student decides inside it. Neither is handed their own separate material."
+                  heading="What if every student and teacher had a patient?"
+                  lede="Access to unlimited patient cases lets teachers teach and students learn through the lens of patient care."
                   object={{ icon: `${I}/Patient.png`, label: "Patient case" }}
                   attrs={[
                     { icon: `${I}/patient-history.png`, label: "History" },
@@ -198,9 +198,9 @@ export default function CaseChatContent() {
             label: "Solution",
             body: (
               <CaseFigure
-                eyebrow="The virtual clinic"
-                heading="A student works the whole consultation, then starts again."
-                lede="Pick a patient, take a history, order tests, commit to a diagnosis, treat, then read the feedback. It is the same six stages a real consultation runs, generated on demand — and coming out of the feedback into another patient is what makes it practice rather than a demonstration."
+                eyebrow="What we built"
+                heading="A virtual clinical environment with unlimited patients is better."
+                lede="A virtual clinic lets students practise every stage of patient care — from history-taking to treatment — without real-world constraints."
                 diagram={`${D}/02-clinic.svg`}
                 diagramMobile={`${D}/02-clinic-mobile.svg`}
                 caption="Six stops on one loop. The closing edge is the product: nothing has to be scheduled or prepared, so the student simply starts again with someone new."
