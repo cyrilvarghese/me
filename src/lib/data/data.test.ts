@@ -2,7 +2,21 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it, expect } from "vitest";
 import { capabilities } from "./capabilities";
-import { windowFor, INTRO_END, COMPLETE_START } from "./scroll";
+import {
+  windowFor,
+  INTRO_END,
+  COMPLETE_START,
+  TRAVEL_START,
+  TRAVEL_END,
+  OPEN_AT,
+  REARM_AT,
+  STAGGER,
+  BLADE_DUR,
+  LABEL_DELAY,
+  HANDOFF_START,
+  HANDOFF_DUR,
+  bladeDelay,
+} from "./scroll";
 import { cases } from "./cases";
 
 describe("capabilities", () => {
@@ -77,5 +91,36 @@ describe("cases", () => {
       expect(c.cover).toMatch(/^\/assets\//);
       expect(existsSync(join("public", c.cover))).toBe(true);
     }
+  });
+});
+
+describe("opening beats", () => {
+  it("travels, lands, then hands off, all inside one scroll pass", () => {
+    expect(TRAVEL_START).toBeGreaterThan(0);
+    expect(TRAVEL_END).toBeGreaterThan(TRAVEL_START);
+    expect(OPEN_AT).toBeGreaterThanOrEqual(TRAVEL_END);
+    expect(HANDOFF_START).toBeGreaterThan(OPEN_AT);
+    expect(HANDOFF_START + HANDOFF_DUR).toBeCloseTo(1);
+  });
+
+  it("re-arms the fan below the trigger, with hysteresis", () => {
+    expect(REARM_AT).toBeLessThan(OPEN_AT);
+    expect(REARM_AT).toBeGreaterThan(TRAVEL_START);
+  });
+
+  it("staggers one blade per capability, in order, with growing delay", () => {
+    const delays = capabilities.map((_, i) => bladeDelay(i));
+    expect(delays).toHaveLength(6);
+    expect(delays[0]).toBe(0);
+    for (let i = 1; i < delays.length; i++) {
+      expect(delays[i]).toBeGreaterThan(delays[i - 1]);
+    }
+    expect(delays[delays.length - 1]).toBeCloseTo(5 * STAGGER);
+  });
+
+  it("overlaps the blades so the fan reads as one gesture", () => {
+    expect(STAGGER).toBeLessThan(BLADE_DUR);
+    expect(LABEL_DELAY).toBeGreaterThan(0);
+    expect(LABEL_DELAY).toBeLessThan(BLADE_DUR);
   });
 });
