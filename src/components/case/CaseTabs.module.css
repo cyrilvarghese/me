@@ -22,8 +22,14 @@
 
 	   Padding rather than a min-height with flex — .section-shell centres
 	   its own box, so making the bar a flex container would pull the tabs
-	   out of the gutter. */
-	padding-block: clamp(3rem, 6vh, 4.5rem) 0;
+	   out of the gutter.
+
+	   The floor is arithmetic, not taste: CaseClose is fixed at top 1.5rem
+	   and is --control-size (2.75rem) tall, so it ends at 4.25rem, and the
+	   tabs need to start below that. The old 3rem floor did not, which
+	   only showed once the row started scrolling to the right edge on a
+	   phone and ran under the control. */
+	padding-block: clamp(4.75rem, 7vh, 5.75rem) 0;
 	/* the bar is the page's one navigational moment: give it room before
 	   it, so a reader scrolling past has to notice the change of gear */
 	margin-top: clamp(3rem, 8vh, 6rem);
