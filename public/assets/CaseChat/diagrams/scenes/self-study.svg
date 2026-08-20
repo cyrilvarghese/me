@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img"
+     aria-label="One student at a desk, hunched over an open book between two tall stacks of textbooks.">
+  <!-- The argument is the ratio: one person, two stacks taller than they
+       are. Slabs rather than drawn books — at panel width a spine line
+       reads as noise, a value step reads as a book.
+
+       The posture does the rest of the work. An upright figure reads as a
+       pawn, so the back curves and the head carries forward and down over
+       the page: the silhouette has to say "reading" without a face. -->
+
+  <!-- the reader, hunched over the page. A round head reads as a head; a
+       tilted ellipse merging into the shoulder reads as a beak. The arm
+       has to clear the back's silhouette or the whole figure goes shapeless. -->
+  <path d="M110 176 C104 140 114 106 140 94 C154 88 166 94 172 106 C158 116 148 142 148 176 Z" fill="#e7e3e1"/>
+  <path d="M170 118 C182 132 184 152 176 168 L160 164 C170 150 168 134 156 122 Z" fill="#e7e3e1"/>
+  <circle cx="188" cy="112" r="15" fill="#e7e3e1"/>
+
+  <!-- desk -->
+  <rect x="-2" y="172" width="324" height="9" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".22" stroke-width="1.5"/>
+  <rect x="-2" y="181" width="324" height="7" fill="#f8f4f2" fill-opacity=".05"/>
+
+  <!-- left stack — the read pile, further back and dimmer -->
+  <g fill="#f8f4f2" fill-opacity=".24">
+    <rect x="5" y="163" width="86" height="11"/>
+    <rect x="8" y="150" width="80" height="11"/>
+    <rect x="4" y="137" width="88" height="11"/>
+    <rect x="7" y="124" width="82" height="11"/>
+    <rect x="10" y="111" width="76" height="11"/>
+    <rect x="6" y="98" width="84" height="11"/>
+  </g>
+
+  <!-- right stack — the unread pile, nearer and taller than the reader -->
+  <g fill="#f8f4f2" fill-opacity=".34">
+    <rect x="218" y="163" width="92" height="11"/>
+    <rect x="221" y="150" width="86" height="11"/>
+    <rect x="217" y="137" width="94" height="11"/>
+    <rect x="220" y="124" width="88" height="11"/>
+    <rect x="223" y="111" width="82" height="11"/>
+    <rect x="219" y="98" width="90" height="11"/>
+    <rect x="222" y="85" width="84" height="11"/>
+    <rect x="225" y="72" width="78" height="11"/>
+  </g>
+
+  <!-- the open page: the only thing actually being read, so it is the
+       brightest thing on the desk -->
+  <path d="M136 170 L178 152 L178 163 L136 175 Z" fill="#f8f4f2" fill-opacity=".62"/>
+  <path d="M214 170 L178 152 L178 163 L214 175 Z" fill="#f8f4f2" fill-opacity=".46"/>
+</svg>

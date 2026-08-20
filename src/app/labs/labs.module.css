@@ -1,0 +1,54 @@
+/* Mirrors design.module.css — a reference page, not a section of the site,
+   so it sets its own page frame rather than reaching for .section-shell. */
+.page {
+	min-height: 100vh;
+	padding: clamp(3rem, 8vh, 6rem) var(--gutter);
+	max-width: var(--content-max);
+	margin-inline: auto;
+}
+
+.eyebrow {
+	color: var(--accent);
+	margin-bottom: 0.75rem;
+}
+
+.headline {
+	font-size: var(--text-h3);
+	margin-bottom: 3rem;
+}
+
+.rule {
+	color: var(--muted);
+	max-width: 60ch;
+	margin-bottom: 2.5rem;
+}
+
+.sectionLabel {
+	color: var(--fg-soft);
+	margin-block: 3.5rem 1rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--hairline);
+}
+
+/* Three scenes at the width a case panel gives them, so the value steps
+   are judged at the size they will actually be read. */
+.scenes {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 1.5rem;
+}
+
+.scene {
+	margin: 0;
+	border: 1px solid var(--hairline);
+	padding: 0.75rem;
+}
+
+.name {
+	color: var(--muted);
+	margin-top: 0.75rem;
+}
+
+.wide {
+	max-width: 100%;
+}
