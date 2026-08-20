@@ -53,8 +53,10 @@ match across layers.
 > slab that sits over the body, near-black graphite with a fine white top
 > edge highlight and a thin red hairline along the lower edge. Two metal
 > pins: a small plain pin near the left end, and a larger pivot pin with a
-> bright red ring near the right end. A small engraved monogram "CV" in red
-> in the center. (This is the only layer allowed to carry text.)
+> bright red ring near the right end. A small monogram "CV" in red just to
+> the left of that pivot pin, embossed — lit along its upper-left edges and
+> shadowed along its lower-right, as if raised out of the scale. (This is
+> the only layer allowed to carry text.)
 
 **research** — magnifier blade (hidden behind body when closed):
 > [style block] A slim magnifying-lens tool folded flat: a thin graphite arm
