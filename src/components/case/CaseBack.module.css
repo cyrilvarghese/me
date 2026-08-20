@@ -1,8 +1,31 @@
-/* Geometry, border and hover all come from the global .btn / .btn-ghost
-   voices — this only gives the control a ground to sit on, since it sits
-   over the hero photograph. rgba literal of --bg, not color-mix:
-   stylesheet color-mix silently no-ops in Cyril's browser (see the
-   header veil + hero scrim notes). */
+/* Fixed, so the exit is reachable from anywhere on a long page — but
+   aligned to the content column rather than to the window edge. The
+   inner box is the same .section-shell every section uses, so the
+   control's left edge lands exactly on the tab row's left edge without
+   restating the centring math here, and stays there if --content-max or
+   --gutter move.
+
+   The strip spans the viewport to do that centring, so it is inert;
+   only the control itself takes the pointer. */
+.dock {
+	position: fixed;
+	top: 1.5rem;
+	inset-inline: 0;
+	z-index: 190;
+	pointer-events: none;
+}
+
+.dockInner {
+	display: flex;
+	justify-content: flex-start;
+}
+
+/* Geometry, border and hover come from the global .btn / .btn-ghost
+   voices — this only gives the control a ground, since it travels over
+   the hero photograph and then over body copy. rgba literal of --bg,
+   not color-mix: stylesheet color-mix silently no-ops in Cyril's
+   browser (see the header veil + hero scrim notes). */
 .back {
+	pointer-events: auto;
 	background: rgba(21, 17, 17, 0.78);
 }

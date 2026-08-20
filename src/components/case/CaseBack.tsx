@@ -4,8 +4,13 @@ import { useRouter } from "next/navigation";
 import { takeCaseOrigin } from "@/lib/nav/case-origin";
 import styles from "./CaseBack.module.css";
 
-/** The case page's one exit, in the hero: collapses the page back into
-    the card it expanded from.
+/** The case page's one exit: collapses the page back into the card it
+    expanded from.
+
+    It rides with the reader rather than sitting in the hero — a case
+    page is long, and an exit you have to scroll back up to find is one
+    most readers never use again. Where the tab band is stuck it lands
+    in the room above the tabs, on their left edge.
 
     Next runs no view transition for history traversals (probed
     2026-08-17: startViewTransition never fires on popstate), and React
@@ -86,12 +91,16 @@ export default function CaseBack({ slug }: { slug: string }) {
   };
 
   return (
-    <button
-      type="button"
-      className={`mono-label btn btn-ghost ${styles.back}`}
-      onClick={back}
-    >
-      ← Work
-    </button>
+    <div className={styles.dock}>
+      <div className={`section-shell ${styles.dockInner}`}>
+        <button
+          type="button"
+          className={`mono-label btn btn-ghost ${styles.back}`}
+          onClick={back}
+        >
+          ← Work
+        </button>
+      </div>
+    </div>
   );
 }

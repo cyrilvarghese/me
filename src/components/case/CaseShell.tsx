@@ -18,6 +18,7 @@ export default function CaseShell({
 }) {
   return (
     <>
+      <CaseBack slug={caseStudy.slug} />
       <div className={styles.hero}>
         <ViewTransition name={`case-visual-${caseStudy.slug}`} share="morph" default="none">
           <div className={styles.heroVisual} data-case-visual={caseStudy.slug}>
@@ -27,7 +28,6 @@ export default function CaseShell({
         <div className={styles.scrim} aria-hidden="true" />
         <div className={styles.heroText}>
           <div className={`section-shell ${styles.heroInner}`}>
-            <CaseBack slug={caseStudy.slug} />
             <p className={`mono-label ${styles.kicker}`}>
               {caseStudy.num} / {caseStudy.category}
             </p>

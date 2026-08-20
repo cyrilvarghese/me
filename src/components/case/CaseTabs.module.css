@@ -2,7 +2,7 @@
    sections are long, and a control you have to scroll back up to find is a
    control most readers never use again. Solid ground rather than a
    translucent veil — translucent paint over the view-transition-promoted
-   hero drops out in Cyril's Edge build. */
+   hero drops out in Cyril's Edge build. Under CaseBack (190). */
 .bar {
 	position: sticky;
 	top: 0;
@@ -17,17 +17,19 @@
 	/* All the height goes above: the tabs sit on the band's lower edge so
 	   the active indicator lands ON the rule rather than floating over a
 	   strip of ground. The room above is what makes the band read as a
-	   change of gear.
+	   change of gear, and it is the room the fixed CaseBack lands in once
+	   the bar is stuck — the exit and the tabs share a left edge there,
+	   stacked rather than side by side.
 
 	   Padding rather than a min-height with flex — .section-shell centres
 	   its own box, so making the bar a flex container would pull the tabs
 	   out of the gutter.
 
-	   The floor was arithmetic while a fixed close control hung over this
-	   band and had to be cleared; the exit now lives in the hero, so the
-	   5.75rem it worked out to is kept as the measured floor — short
-	   viewports still need the band to read as a gear change. */
-	padding-block: clamp(5.75rem, 7vh, 7rem) 0;
+	   The floor is computed rather than guessed: CaseBack is fixed at top
+	   1.5rem and is one --control-size tall, so the tabs start below its
+	   bottom edge plus a gap. Written as arithmetic so it stays true when
+	   the control resizes, which a hard-coded rem did not. */
+	padding-block: clamp(calc(1.5rem + var(--control-size) + 1.5rem), 7vh, 7rem) 0;
 	/* the bar is the page's one navigational moment: give it room before
 	   it, so a reader scrolling past has to notice the change of gear */
 	margin-top: clamp(3rem, 8vh, 6rem);
@@ -55,9 +57,9 @@
    working because it is positioned inside the scrolling content and
    travels with it.
 
-   The row reserves no width for a control: the page's exit sits in the
-   hero, not over this band, so the padding that used to hold one off is
-   width the labels get back. */
+   The row reserves no width for CaseBack: the band is tall enough that
+   the exit sits above the tabs rather than beside them, so the padding
+   that would have held it off is width the labels get back. */
 @media (max-width: 700px) {
 	.list {
 		display: flex;
