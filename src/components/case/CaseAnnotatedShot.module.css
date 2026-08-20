@@ -10,12 +10,6 @@
 	background: var(--surface);
 	border: 1px solid var(--hairline);
 	padding: clamp(1.25rem, 3vw, 2.5rem);
-	/* 8px, against the site's square corners (--radius: 0). The app's own
-	   cards are drawn with a rounded corner and they are the content here,
-	   so a hard-cornered plate around them reads as two different systems
-	   stacked. Cyril's call, 2026-08-20 — a panel holding product artwork
-	   follows the artwork; everything else on the page stays square. */
-	border-radius: 8px;
 }
 
 /* Screen and callouts in one percentage grid. The columns come from the
@@ -46,6 +40,20 @@
 /* A transparent PNG on the section's own ground — the app is not given a
    white plate to sit on, which is what made the baked exports read as
    foreign rectangles on this page. */
+/* The wrapper carries the shadow, the image inside carries the clip. A
+   filter on the parent is applied to the already-clipped child, so the
+   shadow traces the rounded corner; putting both on one element would
+   clip the shadow away with everything else outside the card. */
+.shotWrap,
+.layerWrap {
+	display: block;
+	filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.5));
+}
+
+.layerWrap {
+	position: absolute;
+}
+
 .shot {
 	display: block;
 	width: 100%;
@@ -57,11 +65,6 @@
    same space the rails are drawn in. Source order is stacking order: the
    card drawn second sits on top, which is the diagonal the source decks
    used to say "one step, two screens". */
-.layer {
-	position: absolute;
-	display: block;
-	height: auto;
-}
 
 .rails {
 	position: absolute;

@@ -234,6 +234,7 @@ export default function CaseChatContent() {
                   { src: `${A}/case-library.webp`, caption: "Case library, grouped by specialty" },
                   {
                     src: `${S}/patient-history.png`,
+                    card: { top: 0, right: 8.2, bottom: 14.7, left: 8.1 },
                     caption: "Taking a history from the patient",
                     alt: "The consultation screen: a chat with the simulated patient, suggested openings beneath it, and a panel tracking which parts of the history are complete.",
                     /* Fractions of the screenshot, measured off the file
@@ -258,6 +259,7 @@ export default function CaseChatContent() {
                   },
                   {
                     src: `${S}/Physical-exam.png`,
+                    card: { top: 0, right: 6.9, bottom: 19.1, left: 6.8 },
                     caption: "Examination and lab tests, as in clinic",
                     /* Two cards overlapping on the diagonal, which is the
                        arrangement the source deck used: one step of the
@@ -268,6 +270,7 @@ export default function CaseChatContent() {
                     layers: [
                       {
                         src: `${S}/Physical-exam.png`,
+                        card: { top: 0, right: 6.9, bottom: 19.1, left: 6.8 },
                         alt: "A skin examination in the consultation: the findings written out above a clinical photograph of the patient's lower leg.",
                         left: 0,
                         top: 0,
@@ -275,6 +278,7 @@ export default function CaseChatContent() {
                       },
                       {
                         src: `${S}/test-biopsy.png`,
+                        card: { top: 0, right: 7.0, bottom: 19.7, left: 7.0 },
                         alt: "A completed skin biopsy: the result written out above four stained slides labelled A to D.",
                         left: 37.6,
                         top: 25.1,
@@ -296,6 +300,7 @@ export default function CaseChatContent() {
                   },
                   {
                     src: `${S}/diagnosis.png`,
+                    card: { top: 0, right: 6.4, bottom: 18.9, left: 6.4 },
                     caption: "Committing to a diagnosis and a differential",
                     alt: "The submit-diagnosis dialog: each candidate condition carries a dropdown marking it primary, differential or ruled out, and the primary one asks for a written justification.",
                     screen: 68,
@@ -314,6 +319,7 @@ export default function CaseChatContent() {
                   },
                   {
                     src: `${S}/Feedback.png`,
+                    card: { top: 2.9, right: 5.8, bottom: 17.1, left: 5.6 },
                     caption: "Feedback on how the case was reasoned",
                     alt: "Three feedback cards: a starred evidence-gathering score, an accuracy card confirming the diagnosis, and a panel listing strengths beside areas for improvement.",
                     screen: 70,
@@ -340,6 +346,7 @@ export default function CaseChatContent() {
                   },
                   {
                     src: `${S}/ideal-path-diagnosis.png`,
+                    card: { top: 0, right: 6.4, bottom: 18.9, left: 6.4 },
                     caption: "A suggested diagnostic timeline",
                     alt: "A numbered diagnostic timeline: ten steps, each tagged by task type — history taking, physical exam, lab test — with a one-line instruction beneath.",
                     screen: 64,
@@ -362,24 +369,33 @@ export default function CaseChatContent() {
                   },
                   {
                     src: `${S}/drugs-info.png`,
+                    card: { top: 0, right: 6.4, bottom: 14.9, left: 6.4 },
                     caption: "Drug concepts, read while treating",
                     alt: "A drug reference panel for clofazimine: why it suits this case, its indication and mechanism, dosing, a memory tip, alternatives, adverse effects and contraindications.",
                     screen: 68,
                     points: [
                       {
-                        /* the clear corner of each panel rather than the
-                           middle of its copy — a node dropped on a word
-                           reads as a defect in the screenshot */
-                        at: [{ x: 0.46, y: 0.1 }],
-                        text: "Why it matters here comes first, ahead of the reference detail.",
-                      },
-                      {
+                        /* The memory tip leads even though the panel beside
+                           it reads first. Every rail lands on the same
+                           column edge at a lower point than the last, so
+                           two anchors at the same height cross unless the
+                           right-hand one takes the upper row — the left one
+                           travels further and would climb back over it.
+
+                           Anchors sit on the clear corner of each panel
+                           rather than the middle of its copy: a node
+                           dropped on a word reads as a defect in the
+                           screenshot. */
                         at: [{ x: 0.86, y: 0.11 }],
                         text: "A memory hook sits at the top, because recall is what gets tested.",
                       },
                       {
+                        at: [{ x: 0.46, y: 0.1 }],
+                        text: "Why it matters here comes first, ahead of the reference detail.",
+                      },
+                      {
                         at: [
-                          { x: 0.9, y: 0.374 },
+                          { x: 0.9, y: 0.415 },
                           { x: 0.9, y: 0.504 },
                         ],
                         text: "Warnings and cautions earned their place in user testing.",
@@ -390,6 +406,7 @@ export default function CaseChatContent() {
                   },
                   {
                     src: `${S}/osce-layer2.png`,
+                    card: { top: 0, right: 6.6, bottom: 16.6, left: 6.4 },
                     caption: "Assessments shaped like the real exam",
                     /* The question card with the concept modal over its top
                        right, as the source deck arranged them: answering and
@@ -399,6 +416,7 @@ export default function CaseChatContent() {
                     layers: [
                       {
                         src: `${S}/osce-layer2.png`,
+                        card: { top: 0, right: 6.6, bottom: 16.6, left: 6.4 },
                         alt: "An OSCE question with four stain options, the chosen answer marked wrong and the correct one expanded with an explanation.",
                         left: 0,
                         top: 12.3,
@@ -406,6 +424,7 @@ export default function CaseChatContent() {
                       },
                       {
                         src: `${S}/osce-layer1.png`,
+                        card: { top: 0, right: 9.1, bottom: 27.4, left: 9.1 },
                         alt: "The concept panel: an explanation of why AFB staining identifies leprosy, and three key concepts — specific, general and lateral.",
                         left: 47.4,
                         top: 0,

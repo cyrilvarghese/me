@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import CaseVisual from "./CaseVisual";
-import CaseAnnotatedShot, { type Layer, type Point } from "./CaseAnnotatedShot";
+import CaseAnnotatedShot, { type Card, type Layer, type Point } from "./CaseAnnotatedShot";
 import styles from "./CaseShowcase.module.css";
 
 type Shot = {
@@ -23,6 +23,9 @@ type Shot = {
       layers, `src` is only the key — the pictures come from here. */
   layers?: Layer[];
   aspect?: number;
+  /** Where the app's card sits inside the export, so the clip can round
+      the corner the crop left square. */
+  card?: Card;
   /** Percent of the figure's width the screen takes; a landscape screen
       needs more of it than a portrait one. */
   screen?: number;
@@ -224,6 +227,7 @@ export default function CaseShowcase({
                 <CaseAnnotatedShot
                   image={sh.src}
                   alt={sh.alt ?? sh.caption}
+                  card={sh.card}
                   layers={sh.layers}
                   aspect={sh.aspect}
                   screen={sh.screen}

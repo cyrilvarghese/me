@@ -51,11 +51,34 @@ export type Layer = {
   left: number;
   top: number;
   width: number;
+  card?: Card;
 };
+
+/** Where the app's card sits inside its export, as an inset in percent
+    from each edge of the file.
+
+    The exports are cropped through the card, so its corners come out
+    square, and the space between the card and the file's edge holds the
+    baked drop shadow. A radius on the image would land out there in the
+    transparent margin and show nothing. Clipping to these bounds rounds
+    the corner that is actually visible; the shadow is given back in CSS,
+    where it follows the rounded edge instead of a square one.
+
+    Clipping does not change layout, so every anchor stays a fraction of
+    the whole file and none of them move. Measure a new screen once — the
+    opaque bounding box of its PNG — and put the four numbers here. */
+export type Card = { top?: number; right?: number; bottom?: number; left?: number };
+
+function clip(card?: Card): CSSProperties | undefined {
+  if (!card) return undefined;
+  const { top = 0, right = 0, bottom = 0, left = 0 } = card;
+  return { clipPath: `inset(${top}% ${right}% ${bottom}% ${left}% round 8px)` };
+}
 
 export default function CaseAnnotatedShot({
   image,
   alt,
+  card,
   layers,
   aspect,
   points,
@@ -64,6 +87,7 @@ export default function CaseAnnotatedShot({
   /** A single screen, sizing the figure from its own height. */
   image?: string;
   alt?: string;
+  card?: Card;
   /** Or several, overlapping. Needs `aspect` (width / height of the
       composite box), because absolutely placed layers cannot give the box
       a height of its own. */
@@ -133,15 +157,19 @@ export default function CaseAnnotatedShot({
           >
             {layers
               ? layers.map((l) => (
-                  <img
+                  <span
                     key={l.src}
-                    src={l.src}
-                    alt={l.alt}
-                    className={styles.layer}
+                    className={styles.layerWrap}
                     style={{ left: `${l.left}%`, top: `${l.top}%`, width: `${l.width}%` }}
-                  />
+                  >
+                    <img src={l.src} alt={l.alt} className={styles.shot} style={clip(l.card)} />
+                  </span>
                 ))
-              : image && <img src={image} alt={alt ?? ""} className={styles.shot} />}
+              : image && (
+                  <span className={styles.shotWrap}>
+                    <img src={image} alt={alt ?? ""} className={styles.shot} style={clip(card)} />
+                  </span>
+                )}
 
             {points.flatMap((p, i) =>
               p.at.map((a) => (
