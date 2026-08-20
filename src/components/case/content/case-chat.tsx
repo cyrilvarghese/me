@@ -218,14 +218,40 @@ export default function CaseChatContent() {
               <CaseShowcase
                 eyebrow="Inside the clinic"
                 stack
-                /* Source order is grid position: the two entry screens sit
-                   in the top strip, the decision and feedback screens run
-                   down the left, beside the demo they add up to. Each
-                   still carries its own annotations — open one to read
-                   what the choice was and why. */
+                /* Source order is reading order. A screen that explains
+                   itself stays a plain shot; the history screen carries
+                   callouts because the reasoning behind its details is not
+                   visible in the pixels. The rest still carry annotations
+                   baked into the export, and are the next ones to redraw. */
                 shots={[
                   { src: `${A}/case-library.webp`, caption: "Case library, grouped by specialty" },
-                  { src: `${A}/patient-chat.webp`, caption: "Taking a history from the patient" },
+                  {
+                    src: `${A}/screens/patient-history.png`,
+                    caption: "Taking a history from the patient",
+                    alt: "The consultation screen: a chat with the simulated patient, suggested openings beneath it, and a panel tracking which parts of the history are complete.",
+                    /* Fractions of the screenshot, measured off the file
+                       once. Ordered down the screen so the rails never
+                       cross each other. */
+                    points: [
+                      {
+                        x: 0.54,
+                        y: 0.313,
+                        text: "The patient answers in plain words and never names the diagnosis. Both are constraints in the prompt.",
+                      },
+                      {
+                        x: 0.42,
+                        y: 0.635,
+                        text: "Students said they often did not know how to begin, so the screen offers openings to pick from.",
+                        mark: "did not know how to begin",
+                        accent: true,
+                      },
+                      {
+                        x: 0.7,
+                        y: 0.826,
+                        text: "The progress panel shows which parts of the history are covered and what is still missing.",
+                      },
+                    ],
+                  },
                   { src: `${A}/examination.webp`, caption: "Examination and lab tests, as in clinic" },
                   { src: `${A}/diagnosis.webp`, caption: "Committing to a diagnosis and a differential" },
                   { src: `${A}/feedback.webp`, caption: "Feedback on how the case was reasoned" },

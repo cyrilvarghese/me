@@ -2,9 +2,24 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import CaseVisual from "./CaseVisual";
+import CaseAnnotatedShot, { type Point } from "./CaseAnnotatedShot";
 import styles from "./CaseShowcase.module.css";
 
-type Shot = { src: string; caption: string };
+type Shot = {
+  src: string;
+  caption: string;
+  /** Callouts pinned to parts of the screen. A shot that explains itself —
+      a library of cases grouped by specialty — takes none and stays a
+      plain screenshot; annotating everything is how annotation stops
+      meaning anything.
+
+      Honoured in `stack` only: the bento's tiles are thumbnails, and a
+      callout at that size is below the legibility floor. */
+  points?: Point[];
+  /** Only an annotated shot needs one: it is the whole screen described in
+      a sentence, where the plain tiles are already carrying a caption. */
+  alt?: string;
+};
 
 /** How long the panel takes to leave. The dialog is closed on a timer
     rather than on transitionend, because a cancelled transition (a second
@@ -198,7 +213,15 @@ export default function CaseShowcase({
         <div className={styles.stack}>
           {shots.map((sh) => (
             <figure key={sh.src} className={styles.stackFigure}>
-              <img src={sh.src} alt="" className={styles.stackImg} />
+              {sh.points?.length ? (
+                <CaseAnnotatedShot
+                  image={sh.src}
+                  alt={sh.alt ?? sh.caption}
+                  points={sh.points}
+                />
+              ) : (
+                <img src={sh.src} alt="" className={styles.stackImg} />
+              )}
               <figcaption className={`mono-label ${styles.caption}`}>
                 {sh.caption}
               </figcaption>

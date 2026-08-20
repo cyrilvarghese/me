@@ -1,0 +1,160 @@
+/* Screen and callouts in one percentage grid. The three numbers are the
+   same three the rails are drawn with (SCREEN / gap / COLUMN in
+   CaseAnnotatedShot.tsx) — change one and the rays stop landing. */
+.plot {
+	position: relative;
+	display: grid;
+	grid-template-columns: 52% 40%;
+	column-gap: 8%;
+}
+
+/* Rails are aimed in the figure's coordinate space, which holds only while
+   the screenshot is the tallest thing in the grid — otherwise the callout
+   column sets the height and every ray drifts off its node. At the widths
+   this runs the screen is roughly 700px against ~250px of text, so the
+   invariant has a wide margin; it is worth re-checking if a screen ever
+   carries more than four callouts. */
+.screenCell {
+	min-width: 0;
+}
+
+.screen {
+	position: relative;
+}
+
+/* A transparent PNG on the section's own ground — the app is not given a
+   white plate to sit on, which is what made the baked exports read as
+   foreign rectangles on this page. */
+.shot {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.rails {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	/* above the screenshot, which is an unpositioned grid item, and below
+	   the nodes the rays terminate on */
+	z-index: 1;
+	pointer-events: none;
+	overflow: visible;
+}
+
+/* The mark that lands on the screen. Dark fill rather than the usual
+   --surface-until-lit node: it sits on a white UI, where a light node
+   would disappear. */
+.node {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	width: 0.7rem;
+	height: 0.7rem;
+	border-radius: 50%;
+	background: var(--surface);
+	border: 2px solid #9e9493;
+	display: grid;
+	place-items: center;
+	/* the digit is for the phone telling, where the rails are gone and the
+	   number is the connector; here the ray already says which is which */
+	font-size: 0;
+	font-family: var(--font-mono);
+	color: var(--fg);
+	box-sizing: border-box;
+}
+
+/* The one finding the shot is about: largest and most saturated, so it
+   outranks the neutral nodes on both channels rather than on hue alone. */
+.node[data-accent] {
+	width: 0.95rem;
+	height: 0.95rem;
+	background: var(--accent);
+	border-color: var(--accent);
+	box-shadow: 0 0 0 3px rgba(234, 0, 0, 0.22);
+}
+
+/* Equal rows with centred contents, which is what lets a rail be aimed at
+   (i + 0.5) / count without measuring where the text actually wrapped. */
+.notes {
+	display: grid;
+	grid-auto-rows: 1fr;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	min-width: 0;
+}
+
+.note {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+}
+
+/* the number carries the connection only on the phone, where the rails
+   have gone */
+.index {
+	display: none;
+	flex: none;
+	color: var(--muted);
+}
+
+/* --text-small and the mono voice, which is what makes an HTML figure and
+   a drawn one sound like the same thing. The value step to --fg on the
+   marked clause is CaseMark's, so the accent underline stays one rule. */
+.noteText {
+	font-family: var(--font-mono);
+	letter-spacing: 0.02em;
+	font-size: var(--text-small);
+	line-height: 1.65;
+	color: var(--muted);
+	/* the same measure the ledes and captions hold. The side-by-side
+	   column is already narrower than this; it earns its keep once the
+	   callouts drop under the screen and have the full width to run in. */
+	max-width: 62ch;
+}
+
+/* The phone telling. Side by side, the geometry argues "this reasoning
+   belongs to that part of the screen" — a claim the rails make. Below this
+   width there is no room to run a ray, so the numbers make the same claim
+   instead: the screen keeps its marks, and each callout stacks under it
+   wearing the number it points to. The screen is not shrunk into a column;
+   it takes the full width it can get. */
+@media (max-width: 860px) {
+	.plot {
+		grid-template-columns: 1fr;
+		row-gap: clamp(1.75rem, 5vw, 2.5rem);
+	}
+
+	.rails {
+		display: none;
+	}
+
+	.node {
+		width: 1.5rem;
+		height: 1.5rem;
+		font-size: var(--text-label);
+		line-height: 1;
+	}
+
+	.node[data-accent] {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+
+	.notes {
+		grid-auto-rows: auto;
+		row-gap: clamp(1rem, 3vw, 1.5rem);
+	}
+
+	.note {
+		align-items: start;
+	}
+
+	.index {
+		display: block;
+		/* the digit sits on the callout's first line rather than its box */
+		padding-top: 0.15rem;
+	}
+}

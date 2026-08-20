@@ -49,3 +49,29 @@ export function MarkQuote({
     </p>
   );
 }
+
+/** The same emphasis as MarkQuote, without the quotation marks — for a
+    sentence the site is writing rather than one a person said. Shares
+    `.em`, so the value step and the accent underline stay one rule rather
+    than two copies drifting apart. */
+export function MarkText({
+  text,
+  mark,
+  className = "",
+}: {
+  text: string;
+  mark?: string;
+  className?: string;
+}) {
+  const at = mark ? text.indexOf(mark) : -1;
+
+  if (at < 0) return <span className={className}>{text}</span>;
+
+  return (
+    <span className={className}>
+      {text.slice(0, at)}
+      <em className={styles.em}>{mark}</em>
+      {text.slice(at + (mark?.length ?? 0))}
+    </span>
+  );
+}
