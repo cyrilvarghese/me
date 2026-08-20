@@ -242,17 +242,17 @@ export default function CaseChatContent() {
                     points: [
                       {
                         at: [{ x: 0.54, y: 0.313 }],
-                        text: "The patient answers in plain words and never names the diagnosis. Both are constraints in the prompt.",
+                        text: "The AI patient is prompted to answer in plain language and never give the diagnosis away.",
                       },
                       {
                         at: [{ x: 0.42, y: 0.635 }],
-                        text: "Students said they often did not know how to begin, so the screen offers openings to pick from.",
+                        text: "Students often did not know how to begin, so the screen suggests ways to open the conversation.",
                         mark: "did not know how to begin",
                         accent: true,
                       },
                       {
                         at: [{ x: 0.7, y: 0.826 }],
-                        text: "The progress panel shows which parts of the history are covered and what is still missing.",
+                        text: "A progress panel shows how much of the interview is done, and what is still missing.",
                       },
                     ],
                   },
@@ -264,7 +264,7 @@ export default function CaseChatContent() {
                        consultation that spans two screens. Percentages of
                        a 3:2 box, so the overlap holds at every width. */
                     aspect: 1.5,
-                    screen: 64,
+                    screen: 70,
                     layers: [
                       {
                         src: `${S}/Physical-exam.png`,
@@ -284,12 +284,12 @@ export default function CaseChatContent() {
                     points: [
                       {
                         at: [{ x: 0.3, y: 0.39 }],
-                        text: "A physical exam comes back as a real clinical photograph with the findings written out.",
+                        text: "Requesting an exam returns a real photograph, not a written verdict.",
                       },
                       {
                         at: [{ x: 0.736, y: 0.494 }],
-                        text: "A lab test comes back as stained slides, so the reading is still the student's work.",
-                        mark: "stained slides",
+                        text: "Results come back as images to interpret, so the judgement stays with the student.",
+                        mark: "images to interpret",
                         accent: true,
                       },
                     ],
@@ -298,16 +298,16 @@ export default function CaseChatContent() {
                     src: `${S}/diagnosis.png`,
                     caption: "Committing to a diagnosis and a differential",
                     alt: "The submit-diagnosis dialog: each candidate condition carries a dropdown marking it primary, differential or ruled out, and the primary one asks for a written justification.",
-                    screen: 62,
+                    screen: 68,
                     points: [
                       {
                         at: [{ x: 0.3, y: 0.296 }],
-                        text: "A diagnosis is not accepted until the student writes the reasoning behind it.",
+                        text: "An answer is not accepted until the reasoning behind it is typed alongside.",
                       },
                       {
                         at: [{ x: 0.82, y: 0.56 }],
-                        text: "The list carries distractors, so every candidate has to be marked primary, differential, or ruled out.",
-                        mark: "carries distractors",
+                        text: "Plausible wrong answers are mixed in, so every option has to be judged rather than skimmed.",
+                        mark: "Plausible wrong answers",
                         accent: true,
                       },
                     ],
@@ -316,24 +316,24 @@ export default function CaseChatContent() {
                     src: `${S}/Feedback.png`,
                     caption: "Feedback on how the case was reasoned",
                     alt: "Three feedback cards: a starred evidence-gathering score, an accuracy card confirming the diagnosis, and a panel listing strengths beside areas for improvement.",
-                    screen: 64,
+                    screen: 70,
                     points: [
                       {
                         /* the empty stars, which is the score the callout
                            is actually about */
                         at: [{ x: 0.115, y: 0.405 }],
-                        text: "The evidence score rates how thoroughly the tests and exams were chosen.",
+                        text: "One score for how thoroughly they gathered evidence before deciding.",
                       },
                       {
                         at: [{ x: 0.44, y: 0.375 }],
-                        text: "Accuracy is scored against the correct diagnosis, with the reasoning that got there named back.",
+                        text: "Another for whether the call was right, with their reasoning quoted back to them.",
                       },
                       {
                         /* the first missed item itself rather than the
                            heading over it, which the node would sit on */
                         at: [{ x: 0.699, y: 0.479 }],
-                        text: "Alongside the strengths, the exams and tests the student should have ordered.",
-                        mark: "should have ordered",
+                        text: "And the steps they skipped, so the feedback names the gap and not just the grade.",
+                        mark: "names the gap and not just the grade",
                         accent: true,
                       },
                     ],
@@ -342,21 +342,21 @@ export default function CaseChatContent() {
                     src: `${S}/ideal-path-diagnosis.png`,
                     caption: "A suggested diagnostic timeline",
                     alt: "A numbered diagnostic timeline: ten steps, each tagged by task type — history taking, physical exam, lab test — with a one-line instruction beneath.",
-                    screen: 58,
+                    screen: 64,
                     points: [
                       {
                         at: [{ x: 0.093, y: 0.455 }],
-                        text: "The steps are numbered in the order a clinician would work through them.",
-                        mark: "the order a clinician would work through them",
+                        text: "The path is numbered, so the order an expert would have worked in is visible.",
+                        mark: "the order an expert would have worked in",
                         accent: true,
                       },
                       {
                         at: [{ x: 0.236, y: 0.606 }],
-                        text: "Each step carries an icon and a label, so the kind of task is readable without reading the step.",
+                        text: "Each step is tagged by type, so the kind of task reads before the words do.",
                       },
                       {
                         at: [{ x: 0.57, y: 0.711 }],
-                        text: "A bold heading with the detail under it, so the path can be scanned rather than read.",
+                        text: "Heading first, detail under it, so the path can be scanned instead of read.",
                       },
                     ],
                   },
@@ -364,25 +364,25 @@ export default function CaseChatContent() {
                     src: `${S}/drugs-info.png`,
                     caption: "Drug concepts, read while treating",
                     alt: "A drug reference panel for clofazimine: why it suits this case, its indication and mechanism, dosing, a memory tip, alternatives, adverse effects and contraindications.",
-                    screen: 62,
+                    screen: 68,
                     points: [
                       {
                         /* the clear corner of each panel rather than the
                            middle of its copy — a node dropped on a word
                            reads as a defect in the screenshot */
                         at: [{ x: 0.46, y: 0.1 }],
-                        text: "The case comes first: why this drug, for this patient, before any of the facts about it.",
+                        text: "Why it matters here comes first, ahead of the reference detail.",
                       },
                       {
                         at: [{ x: 0.86, y: 0.11 }],
-                        text: "A memory tip sits at the top, because what an exam rewards is recall.",
+                        text: "A memory hook sits at the top, because recall is what gets tested.",
                       },
                       {
                         at: [
                           { x: 0.9, y: 0.374 },
                           { x: 0.9, y: 0.504 },
                         ],
-                        text: "Adverse effects and contraindications earned their place in user testing.",
+                        text: "Warnings and cautions earned their place in user testing.",
                         mark: "earned their place in user testing",
                         accent: true,
                       },
@@ -395,7 +395,7 @@ export default function CaseChatContent() {
                        right, as the source deck arranged them: answering and
                        the explanation that follows are one moment. */
                     aspect: 1.359,
-                    screen: 66,
+                    screen: 72,
                     layers: [
                       {
                         src: `${S}/osce-layer2.png`,
@@ -418,13 +418,13 @@ export default function CaseChatContent() {
                     points: [
                       {
                         at: [{ x: 0.711, y: 0.181 }],
-                        text: "Opening one teaches the concept underneath, not just which answer was correct.",
-                        mark: "the concept underneath",
+                        text: "Opening the explanation teaches the idea behind the answer, not just which option was right.",
+                        mark: "the idea behind the answer",
                         accent: true,
                       },
                       {
                         at: [{ x: 0.469, y: 0.696 }],
-                        text: "The questions are shaped like the real exam, and every choice carries its own explanation.",
+                        text: "Questions are modelled on the real exam, and every option carries its own explanation.",
                       },
                     ],
                   },

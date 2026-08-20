@@ -22,8 +22,8 @@ import styles from "./CaseAnnotatedShot.module.css";
 /** Percent of the figure's width between the screen and its callouts, when
     they sit side by side. The rails are drawn in the same percentage
     space, so the grid is handed these numbers rather than keeping a copy. */
-const GAP = 8;
-const SCREEN = 52;
+const GAP = 6;
+const SCREEN = 58;
 
 export type Point = {
   /** Where the callout points, as fractions of the screen — 0,0 is its

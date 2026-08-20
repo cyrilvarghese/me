@@ -10,6 +10,12 @@
 	background: var(--surface);
 	border: 1px solid var(--hairline);
 	padding: clamp(1.25rem, 3vw, 2.5rem);
+	/* 8px, against the site's square corners (--radius: 0). The app's own
+	   cards are drawn with a rounded corner and they are the content here,
+	   so a hard-cornered plate around them reads as two different systems
+	   stacked. Cyril's call, 2026-08-20 — a panel holding product artwork
+	   follows the artwork; everything else on the page stays square. */
+	border-radius: 8px;
 }
 
 /* Screen and callouts in one percentage grid. The columns come from the
