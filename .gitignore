@@ -42,3 +42,6 @@ next-env.d.ts
 
 # dev screenshots
 shots-*.png
+
+# git worktrees created by the agent harness
+/.claude/worktrees/
