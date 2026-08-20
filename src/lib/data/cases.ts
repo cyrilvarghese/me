@@ -33,8 +33,8 @@ export const cases: CaseStudy[] = [
     built:
       "An interactive system where students work through AI-generated clinical cases, make diagnostic decisions and receive structured feedback.",
     results: [
-      { value: "20:1", label: "One patient for 20 students" },
-      { value: "1:∞", label: "Unlimited patients for one student" },
+      { value: "1", label: "Patient for 20 students" },
+      { value: "∞", label: "Patients for 1 student" },
     ],
   },
   {
