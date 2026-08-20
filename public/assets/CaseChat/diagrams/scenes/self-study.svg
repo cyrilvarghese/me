@@ -9,9 +9,11 @@
        reads as a puzzle at this size and pulls attention off the stacks,
        which are the thing making the point.
 
-       Learning material carries a tinge of the accent: #b39a9a is the
-       first step of the ramp in the diagram skill, so the tint stays
-       inside the one-hue rule rather than introducing a second colour. -->
+       Learning material carries a tinge of the accent: #c98080 is the
+       second step of the ramp in the diagram skill, so the tint stays
+       inside the one-hue rule rather than introducing a second colour.
+       It stays well short of the accent in saturation, which is what
+       keeps the 20% wedge and the hands on the patient owning the red. -->
 
   <!-- the student -->
   <circle cx="158" cy="112" r="22" fill="#e7e3e1"/>
@@ -22,7 +24,7 @@
   <rect x="-2" y="181" width="324" height="7" fill="#f8f4f2" fill-opacity=".05"/>
 
   <!-- left stack — the read pile, further back and dimmer -->
-  <g fill="#b39a9a" fill-opacity=".32">
+  <g fill="#c98080" fill-opacity=".48">
     <rect x="5" y="163" width="86" height="11"/>
     <rect x="8" y="150" width="80" height="11"/>
     <rect x="4" y="137" width="88" height="11"/>
@@ -32,7 +34,7 @@
   </g>
 
   <!-- right stack — the unread pile, nearer and taller than the student -->
-  <g fill="#b39a9a" fill-opacity=".44">
+  <g fill="#c98080" fill-opacity=".66">
     <rect x="218" y="163" width="92" height="11"/>
     <rect x="221" y="150" width="86" height="11"/>
     <rect x="217" y="137" width="94" height="11"/>
@@ -46,6 +48,6 @@
   <!-- the open page: the one book actually being worked through. It has to
        reach past the shoulders — held narrower than the figure it stops
        reading as a book on a desk and starts reading as a stripe on a shirt. -->
-  <path d="M98 172 L158 152 L158 164 L98 176 Z" fill="#b39a9a" fill-opacity=".78"/>
-  <path d="M214 172 L158 152 L158 164 L214 176 Z" fill="#b39a9a" fill-opacity=".60"/>
+  <path d="M98 172 L158 152 L158 164 L98 176 Z" fill="#c98080" fill-opacity=".92"/>
+  <path d="M214 172 L158 152 L158 164 L214 176 Z" fill="#c98080" fill-opacity=".74"/>
 </svg>
