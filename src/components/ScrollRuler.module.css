@@ -53,9 +53,18 @@
    back on would put an invisible sheet over the page. */
 .label {
 	position: absolute;
-	left: 26px;
+	/* 20 rather than 26: the chip's own padding puts the text back where
+	   it was, so the labels still line up off the ends of the ticks */
+	left: 20px;
 	top: 50%;
 	transform: translateY(-50%);
+	/* The playhead crosses the whole page, so at some scroll position it
+	   crosses every label. The chip is opaque --bg and sits above the
+	   marker (which is later in the DOM and would otherwise win), so the
+	   line stops at the word and picks up after it. */
+	z-index: 1;
+	background: var(--bg);
+	padding: 3px 6px;
 	pointer-events: auto;
 	font-family: var(--font-mono);
 	font-size: var(--text-fine);
