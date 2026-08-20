@@ -34,13 +34,17 @@ const LIFT = 5;
     (user, 2026-08-20). */
 const LINEUP_LIFT = 0.22;
 
-/** Timeline length in spacer units. The choreography runs 0 → 0.97 at the
-    same vh-per-beat as always; 0.97 → DUR is pure runway — ~118vh of pinned
+/** Timeline length in spacer units. The choreography runs 0 → 1.20 at a
+    steady ~420vh per unit; 1.20 → DUR is pure runway — ~118vh of pinned
     scroll where the time-based needle hunt plays out with the wheel never
     blocked (replaces the old hard scroll lock). The module CSS height must
     stay 200vh + 420vh × DUR — 200 because the section is pulled up over the
-    whole hero and the trigger's start is offset a viewport to match. */
-const DUR = 1.25;
+    whole hero and the trigger's start is offset a viewport to match.
+
+    Grew from 1.25 so the tail could breathe (user, 2026-08-20): the circles
+    wait a beat after the line clears instead of arriving under it, and the
+    merge into the compass takes half again as long. */
+const DUR = 1.48;
 
 /**
  * The metaphor turns (user direction, 2026-08-15): the tool kit comes
@@ -144,8 +148,8 @@ export default function OutcomeTransition() {
                 snapTo(value: number) {
                   const t = value * DUR;
                   if (t < 0.45) return value;
-                  if (t > 1.02) return value;
-                  const beats = [0.5, 0.66, 0.78, 0.97];
+                  if (t > 1.25) return value;
+                  const beats = [0.5, 0.75, 0.9, 1.2];
                   return beats.reduce((a, b) => (Math.abs(b - t) < Math.abs(a - t) ? b : a)) / DUR;
                 },
                 duration: { min: 0.25, max: 0.9 },
@@ -158,12 +162,12 @@ export default function OutcomeTransition() {
                 // a scrub can hide a hovered caption without the pointer
                 // moving — no pointerleave, so drop stale glow here
                 if (glowing && (t < 0.38 || t > 0.6)) clearGlow();
-                // fire only after the dial's fade-in (0.87–0.97) has finished,
+                // fire only after the dial's fade-in (1.00–1.13) has finished,
                 // so appearing and swinging never overlap
-                if (t >= 0.96 && !needlePlayed) {
+                if (t >= 1.16 && !needlePlayed) {
                   needlePlayed = true;
                   swing.restart();
-                } else if (t < 0.8 && needlePlayed) {
+                } else if (t < 0.95 && needlePlayed) {
                   needlePlayed = false;
                   swing.pause(0);
                   gsap.set("[data-needle]", { rotation: -130 });
@@ -263,9 +267,9 @@ export default function OutcomeTransition() {
               });
             });
 
-            // beat 3: captions leave; circles wrap each still-standing tool.
-            // Starts at 0.63, not sooner — the full lineup composition
-            // (captions done 0.60) needs its reading dwell.
+            // beat 3: captions leave, and only then — after a clear beat, not
+            // under the departing line (user, 2026-08-20) — do the circles
+            // wrap each still-standing tool.
             tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.63);
             capabilities.forEach((c, k) => {
               const s = START[c.id];
@@ -276,17 +280,17 @@ export default function OutcomeTransition() {
                   // 0.45 wraps the standing tool; minus the lineup lift
                   y: () => (0.45 - LINEUP_LIFT - s.y / 100) * S(),
                 },
-                0.63
+                0.7
               );
             });
             tl.to(
               "[data-circle]",
               { autoAlpha: 1, scale: 1, duration: 0.05, stagger: 0.008, ease: "power2.out" },
-              0.64
+              0.7
             );
 
             // beat 4: only now do the tools leave — the circles lift off them
-            tl.to("[data-tool]", { autoAlpha: 0, duration: 0.05, stagger: 0.006, ease: "power2.in" }, 0.655);
+            tl.to("[data-tool]", { autoAlpha: 0, duration: 0.05, stagger: 0.006, ease: "power2.in" }, 0.72);
           } else {
             // compact: no room for the lineup — tools snap out, circles are
             // born at the blade tips as before
@@ -336,41 +340,42 @@ export default function OutcomeTransition() {
             const a = ((k * 60 - 90) * Math.PI) / 180;
             const cl = { x: 50 + CLUSTER_R * Math.cos(a), y: 50 - LIFT + CLUSTER_R * Math.sin(a) };
 
-            tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.1, ease: "power2.inOut" }, 0.66);
-            tl.to(el, { x: frac(50 - s.x), y: frac(50 - LIFT - s.y), duration: 0.08, ease: "power2.inOut" }, 0.78);
-            if (k > 0) tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.83);
+            tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.11, ease: "power2.inOut" }, 0.75);
+            tl.to(el, { x: frac(50 - s.x), y: frac(50 - LIFT - s.y), duration: 0.1, ease: "power2.inOut" }, 0.9);
+            if (k > 0) tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.96);
           });
 
           // backlight: blooms up behind the merging circle so the compass
           // emerges lit from behind, then settles to a faint ambient halo
           gsap.set("[data-bloom]", { scale: 0.7 });
-          tl.to("[data-bloom]", { autoAlpha: 1, scale: 1, duration: 0.09, ease: "power2.out" }, 0.79);
-          tl.to("[data-bloom]", { opacity: 0.4, scale: 1.04, duration: 0.08, ease: "power1.inOut" }, 0.9);
+          tl.to("[data-bloom]", { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power2.out" }, 0.91);
+          tl.to("[data-bloom]", { opacity: 0.4, scale: 1.04, duration: 0.08, ease: "power1.inOut" }, 1.06);
 
           // the last circle grows into the compass ring
-          tl.to(circles[0], { scale: 1.9, duration: 0.1, ease: "power2.inOut" }, 0.8);
-          tl.to(circles[0], { autoAlpha: 0, duration: 0.05 }, 0.89);
-          // slower arrival: the dial eases in over a tenth of the section
-          tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power2.out" }, 0.87);
+          tl.to(circles[0], { scale: 1.9, duration: 0.11, ease: "power2.inOut" }, 0.92);
+          tl.to(circles[0], { autoAlpha: 0, duration: 0.05 }, 1.03);
+          // slower arrival: the dial eases in over an eighth of the section,
+          // so the compass resolves rather than snapping into place
+          tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.13, ease: "power2.out" }, 1.0);
 
-          // copy — sequenced, not simultaneous: the circles gather (0.66–0.76),
+          // copy — sequenced, not simultaneous: the circles gather (0.75–0.86),
           // the statement rises as the cluster locks, THEN they fuse into one
-          // ring at 0.78 — gather, name it, merge. The statement then stays,
+          // ring at 0.90 — gather, name it, merge. The statement then stays,
           // shrinking and dimming so it reads with "Outcomes matter more."
-          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.745);
+          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.84);
           tl.to(
             "[data-statement='tools']",
             { scale: 0.6, opacity: 0.5, transformOrigin: "center bottom", duration: 0.05, ease: "power2.inOut" },
-            0.9
+            1.04
           );
-          tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.05, ease: "power2.out" }, 0.92);
+          tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.06, ease: "power2.out" }, 1.1);
 
-          // the runway: the telling is done by 0.97 — from there the stage
+          // the runway: the telling is done by 1.20 — from there the stage
           // stays pinned while the compass and its backlight drift gently
           // down with the scroll, at rest but alive, giving the needle hunt
           // room to play before the pin releases (user direction, 2026-08-16)
-          tl.to("[data-compass]", { y: () => 0.05 * S(), duration: DUR - 0.97 }, 0.97);
-          tl.to("[data-bloom]", { y: () => 0.05 * S(), duration: DUR - 0.97 }, 0.97);
+          tl.to("[data-compass]", { y: () => 0.05 * S(), duration: DUR - 1.2 }, 1.2);
+          tl.to("[data-bloom]", { y: () => 0.05 * S(), duration: DUR - 1.2 }, 1.2);
 
           return () => {
             colCleanups.forEach((fn) => fn());

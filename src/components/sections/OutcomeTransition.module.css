@@ -1,8 +1,8 @@
 .section {
 	position: relative;
-	/* 200vh viewport + 420vh of story + ~105vh of compass runway — locked to
-	   DUR in OutcomeTransition.tsx (height = 200vh + 420vh × DUR) */
-	height: 725vh;
+	/* 200vh of hero overlay + 420vh per timeline unit — locked to DUR in
+	   OutcomeTransition.tsx (height = 200vh + 420vh × DUR, DUR = 1.48) */
+	height: 822vh;
 	/* pulled up over the whole hero so the stage is pinned from the first
 	   pixel: the one knife on the page is already on screen, and never has to
 	   rise into frame. The trigger's own start is offset to compensate. */
