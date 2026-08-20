@@ -2,7 +2,7 @@ import Header from "@/components/sections/Header";
 import ScrollRuler from "@/components/ScrollRuler";
 import Hero from "@/components/sections/Hero";
 import OutcomeTransition from "@/components/sections/OutcomeTransition";
-import ToolCarousel from "@/components/sections/ToolCarousel";
+import ToolList from "@/components/sections/ToolList";
 import OperatingModel from "@/components/sections/OperatingModel";
 import CaseStudies from "@/components/sections/CaseStudies";
 import Career from "@/components/sections/Career";
@@ -18,9 +18,9 @@ export default function Home() {
       <main>
         <Hero />
         <OutcomeTransition />
-        {/* mobile only: the six tools as a swipe carousel, plus the compass
+        {/* mobile only: the six tools as a plain list, plus the compass
             close. The pinned desktop stage carries both above 768px. */}
-        <ToolCarousel />
+        <ToolList />
         <CaseStudies />
         <Career />
         <UnknownProblem />

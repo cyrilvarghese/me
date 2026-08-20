@@ -1,0 +1,151 @@
+/* Mobile only — the desktop lineup covers this ground inside
+   OutcomeTransition, and that section hides its own copy of it below 769px. */
+.section {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	.section {
+		display: block;
+		/* Rides up into the tail of the transition so the heading sits under
+		   the knife rather than a screen below it. The knife dissolves on its
+		   way out (OutcomeTransition.tsx), so nothing needs an opaque panel
+		   here — one would slice a hard edge across it. */
+		margin-top: -27vh;
+		padding-block: 0 var(--space-section);
+	}
+}
+
+.heading {
+	font-size: clamp(1.5rem, 6.5vw, 2rem);
+	text-align: center;
+	text-wrap: balance;
+	padding-inline: var(--gutter);
+	margin-bottom: 2.5rem;
+}
+
+/* ---- the six rows ---- */
+
+/* A ruled table: one row per tool, two columns — the tool, then what it is.
+   Every rule is drawn. The container carries the outer frame, each row its
+   own top edge, and the art cell the vertical between the columns. Square
+   corners per the geometry tokens; rgba literals throughout, since
+   colour-mix in a shadow silently no-ops in Edge here. */
+.list {
+	list-style: none;
+	margin-inline: var(--gutter);
+	border: 1px solid rgba(234, 0, 0, 0.42);
+	/* the minor blur: a low bloom off the frame, not a drop shadow */
+	box-shadow: 0 0 22px rgba(234, 0, 0, 0.13);
+}
+
+.row {
+	display: grid;
+	grid-template-columns: 6.5rem minmax(0, 1fr);
+	align-items: stretch;
+	border-top: 1px solid rgba(234, 0, 0, 0.2);
+}
+
+.row:first-child {
+	border-top: 0;
+}
+
+/* ---- the tool ---- */
+
+.art {
+	position: relative;
+	/* fills the row's full height so the column rule runs edge to edge; the
+	   square canvas inside just centres in it. The clip stops a long blade
+	   pushing into the row above. */
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	border-right: 1px solid rgba(234, 0, 0, 0.2);
+}
+
+/* The strip the rotated tool occupies is centred near 50.5% / 43% of the
+   canvas. Scaling about that point fills the cell without re-cropping. */
+.artScale {
+	position: relative;
+	width: 100%;
+	transform: scale(2.5);
+	transform-origin: 50.5% 43%;
+	filter: drop-shadow(0 3px 9px rgba(0, 0, 0, 0.7));
+}
+
+/* ---- the description ---- */
+
+.body {
+	padding: 1.1rem 1.1rem 1.2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin-bottom: 0.2rem;
+}
+
+.label {
+	color: var(--fg);
+}
+
+.years {
+	color: var(--accent);
+	font-size: 1rem;
+	white-space: nowrap;
+}
+
+.period {
+	color: var(--muted);
+	font-size: 0.65rem;
+	margin-bottom: 0.5rem;
+}
+
+.line {
+	color: var(--muted);
+	font-size: 0.82rem;
+	line-height: 1.5;
+}
+
+/* each 
+-separated fact chunks into its own block for scanning */
+.fact {
+	display: block;
+}
+
+/* the last fact is the current role — brighter, the same rule the desktop
+   lineup uses */
+.factNow {
+	color: var(--fg-soft);
+}
+
+/* ---- the compass close, which the pinned desktop stage carries there ---- */
+
+.close {
+	margin-top: var(--space-section);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.9rem;
+	text-align: center;
+	padding-inline: var(--gutter);
+}
+
+.compass {
+	width: min(58vw, 260px);
+	margin-bottom: 1.5rem;
+}
+
+.statement {
+	font-size: clamp(1.5rem, 6.5vw, 2rem);
+}
+
+.statement em {
+	font-style: normal;
+	color: var(--accent);
+}

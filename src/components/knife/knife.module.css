@@ -135,9 +135,11 @@
 	}
 }
 
-/* §33: no labels orbiting the object on mobile — there is not room */
+/* §33 hid these on mobile when the knife was 210px wide. It is 343px now,
+   so the six names fit around it — one type size down to clear the edges. */
 @media (max-width: 768px) {
-	.labels {
-		display: none;
+	.label {
+		font-size: 0.6rem;
+		letter-spacing: 0.06em;
 	}
 }
