@@ -3,10 +3,12 @@ import CaseQuote from "@/components/case/CaseQuote";
 import CaseCompare from "@/components/case/CaseCompare";
 import CaseShowcase from "@/components/case/CaseShowcase";
 import CaseFigure from "@/components/case/CaseFigure";
+import CaseVoices from "@/components/case/CaseVoices";
 import CaseNav from "@/components/case/CaseTabs";
 
 const A = "/assets/CaseChat";
 const D = `${A}/diagrams`;
+const I = `${A}/icons`;
 
 /** Spine: context → the two things that keep students out of a clinic,
     each argued by a paired diagram → the screens and the demo → the
@@ -101,6 +103,59 @@ export default function CaseChatContent() {
             label: "Pain points",
             body: (
               <>
+                {/* The evidence first, in the words it arrived in, then the
+                    week those words describe, then each pain point in
+                    detail. Quotes before diagrams: a reader who has heard
+                    the complaint reads the chart as confirmation rather
+                    than as an assertion. */}
+                <CaseVoices
+                  eyebrow="What we heard"
+                  heading="Both sides name the same gap."
+                  lede="Students describe theory they cannot apply and exams they do not feel ready for. Their teachers agree that cases are the answer, and cannot find the hours to build them."
+                  groups={[
+                    {
+                      icon: `${I}/students.png`,
+                      label: "Student",
+                      quotes: [
+                        {
+                          text: "I am not confident in my clinical exams and they are very stressful",
+                          mark: "not confident in my clinical exams",
+                        },
+                        { text: "Lectures are lengthy and boring", mark: "boring" },
+                        {
+                          text: "We often have to refer 4000 page textbooks to make sense of the concepts",
+                          mark: "have to refer 4000 page textbooks",
+                        },
+                        {
+                          text: "I don't know how this applies to the real world",
+                          mark: "don't know how this applies",
+                        },
+                      ],
+                    },
+                    {
+                      icon: `${I}/doctor-teachers.png`,
+                      label: "Doctor",
+                      quotes: [
+                        {
+                          text: "Cases are the most important method of teaching I can think of but students don't get enough practice",
+                          mark: "but students don't get enough practice",
+                        },
+                        {
+                          text: "I don't have the time needed to prepare cases for my classroom teaching",
+                          mark: "don't have the time needed",
+                        },
+                      ],
+                    },
+                  ]}
+                />
+
+                <CaseFigure
+                  eyebrow="The week in three rooms"
+                  heading="Only the smallest share is hands on."
+                  diagram={`${D}/01-today-scenes.svg`}
+                  caption="Lectures and textbooks take four fifths of the week between them. The bedside — the only room where a student touches a patient — takes the rest."
+                />
+
                 <CaseCompare
                   index="01"
                   eyebrow="Where the hours actually go"
