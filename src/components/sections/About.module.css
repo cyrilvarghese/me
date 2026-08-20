@@ -48,7 +48,7 @@
    against the others. */
 .entry {
 	display: grid;
-	grid-template-columns: minmax(0, 9rem) 0 minmax(0, 1fr);
+	grid-template-columns: minmax(0, 11rem) 0 minmax(0, 1fr);
 	column-gap: clamp(1.5rem, 4vw, 3rem);
 	padding-bottom: clamp(2.5rem, 6vh, 4rem);
 }
@@ -66,10 +66,17 @@
 	left: calc(clamp(1.5rem, 4vw, 3rem) / -2 - 1px);
 	top: 0.65rem;
 	bottom: calc(clamp(2.5rem, 6vh, 4rem) * -1);
-	border-left: 1px solid var(--hairline);
+	/* the run of the career, drawn in the accent at hairline weight —
+	   --hairline-red is the token that exists for exactly this: red
+	   thin enough to be structure rather than emphasis */
+	border-left: 1px solid var(--hairline-red);
 }
 
+/* the column is sized for the longest label, "2026 — PRESENT", and the
+   label refuses to wrap: broken across two lines it stops reading as
+   one span of time */
 .years {
+	white-space: nowrap;
 	color: var(--muted);
 	font-size: var(--text-sublabel);
 	padding-top: 0.35rem;
@@ -77,21 +84,48 @@
 }
 
 .dot {
+	position: relative;
 	width: 9px;
 	height: 9px;
 	border-radius: 50%;
-	border: 1px solid var(--fg-soft);
-	background: var(--bg);
+	background: var(--accent);
 	/* centred on the rule that runs down the detail column */
-	margin-left: calc(clamp(1.5rem, 4vw, 3rem) / 2 - 4px);
+	margin-left: calc(clamp(1.5rem, 4vw, 3rem) / 2 - 4.5px);
 	margin-top: 0.55rem;
 }
 
-/* filled rather than hollow on the role Cyril is in now — the one rung
-   that is still open */
-.dotNow {
-	border-color: var(--accent);
-	background: var(--accent);
+/* Every rung is filled, so the running role is told apart by movement
+   rather than by weight: a ring leaves the dot and fades, the way a
+   live reading does. The ring is a pseudo-element so the dot itself
+   never moves — it has a rule passing through it to stay on. */
+.dotNow::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	border: 1px solid var(--accent);
+	animation: ping 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+	0% {
+		transform: scale(1);
+		opacity: 0.75;
+	}
+	70%,
+	100% {
+		transform: scale(3);
+		opacity: 0;
+	}
+}
+
+/* the pulse is the only thing on this section that repeats forever, so
+   it is also the first thing to go when motion is not wanted. The years
+   already say which role is running. */
+@media (prefers-reduced-motion: reduce) {
+	.dotNow::after {
+		display: none;
+	}
 }
 
 .role {

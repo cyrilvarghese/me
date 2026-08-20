@@ -33,7 +33,7 @@ const AI_PRODUCT_TOOLS = [
     comment. */
 export const experience: Role[] = [
   {
-    years: "2026 —",
+    years: "2026 — Present",
     from: 2026,
     title: "Design Engineer / Product Manager",
     org: "Yuvabe",
