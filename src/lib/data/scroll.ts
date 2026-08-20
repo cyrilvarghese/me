@@ -33,12 +33,16 @@ export const LABEL_DELAY = 0.22;
 
 /** The peek is the same knife, smaller — so the travel is a genuine zoom in
     rather than the shrink two separate knives forced. */
-export const PEEK_SCALE = 0.75;
+export const PEEK_SCALE = 1.5;
 
 /** Phones peek smaller. The knife box fills far more of a narrow screen, and
     the hero copy runs to roughly two thirds of it, so 0.75 leaves the peek
     jammed against the bottom edge with nowhere to sit. */
-export const PEEK_SCALE_COMPACT = 0.5;
+export const PEEK_SCALE_COMPACT = 1;
+
+/** The peek stands the closed knife on end. Travel rotates it back to flat
+    as it comes to centre, so the object rights itself on the way in. */
+export const PEEK_ROTATION = -90;
 
 /** Start offset, in seconds, for blade `i` of the fan. */
 export function bladeDelay(i: number): number {

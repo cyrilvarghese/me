@@ -28,7 +28,9 @@
 
 .headline {
 	font-size: var(--text-display);
-	max-width: 24ch;
+	/* the knife peeks into the right of the stage, so the measure has to stop
+	   short of it — 24ch let a long line run under the blade */
+	max-width: 19ch;
 	text-wrap: balance;
 }
 

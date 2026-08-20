@@ -13,6 +13,7 @@ import {
   LABEL_DELAY,
   PEEK_SCALE,
   PEEK_SCALE_COMPACT,
+  PEEK_ROTATION,
   bladeDelay,
 } from "@/lib/data/scroll";
 import { gsap, useGSAP } from "@/lib/gsap";
@@ -69,8 +70,10 @@ export default function Hero() {
           // Desktop: tucked to the right of the copy. Compact: low-right, clear
           // of the headline, matching where the hero's knife always sat.
           const peekScale = compact ? PEEK_SCALE_COMPACT : PEEK_SCALE;
-          const peekX = () =>
-            window.innerWidth - 0.03 * window.innerWidth - (peekScale * S()) / 2 - artCentre();
+          // Stood on end, the closed knife sits near the middle of its square
+          // box rather than filling it, so aligning the BOX to the right edge
+          // leaves the art stranded well inside. Place the art directly.
+          const peekX = () => (compact ? 0.76 : 0.86) * window.innerWidth - artCentre();
           // desktop peeks above centre and travels down; on a phone the copy
           // owns the top two thirds, so it waits below and rises into place
           const peekY = () => (compact ? 0.26 * window.innerHeight : -0.08 * window.innerHeight);
@@ -79,7 +82,7 @@ export default function Hero() {
             x: peekX,
             y: peekY,
             scale: peekScale,
-            rotation: -14,
+            rotation: PEEK_ROTATION,
           });
 
           // The fan runs on its own clock, fired once when the knife lands and
@@ -224,12 +227,11 @@ export default function Hero() {
         <div className={`section-shell ${styles.inner}`} data-hero-copy="">
           <p className={`mono-label ${styles.eyebrow}`}>Product Builder · Designer · Engineer</p>
           <h1 className={`serif-display ${styles.headline}`}>
-            Give me the outcome.
-            <br />
-            I&apos;ll figure out the rest.
+            I own the outcome, not a slice of the problem.
           </h1>
           <p className={styles.desc}>
-            I enjoy looking at problems through a variety of lenses.
+            I work across product, design, engineering and AI to turn ambiguous problems into
+            shipped systems that make real impact.
           </p>
           <a href="#work" className={`mono-label ${styles.cue}`}>
             See how{" "}
