@@ -92,6 +92,82 @@
 	display: block;
 }
 
+/* Hover answers on the artwork itself: a slight scrim so the card reads as
+   pressable, and accent brackets at the opposing corners. Pointer-only —
+   there is no hover to answer on a touch screen, and the marks would just
+   sit there permanently. */
+@media (hover: hover) and (pointer: fine) {
+	.visualLink {
+		position: relative;
+	}
+
+	.visualLink::before,
+	.visualLink::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 2;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 220ms ease;
+	}
+
+	/* rgba literal of --bg rather than color-mix: color-mix in a stylesheet
+	   silently no-ops in Cyril's browser (see the header veil, hero scrim) */
+	.visualLink::before {
+		background: rgba(21, 17, 17, 0.28);
+	}
+
+	/* Four bars from one pseudo-element — two per corner. .frame already
+	   carries short static marks on BOTH bottom corners, so these run longer
+	   and read as the bracket extending rather than a second mark. */
+	.visualLink::after {
+		--bracket: 15px;
+		--rule: 1px;
+		background-image:
+			linear-gradient(rgba(234, 0, 0, 1), rgba(234, 0, 0, 1)),
+			linear-gradient(rgba(234, 0, 0, 1), rgba(234, 0, 0, 1)),
+			linear-gradient(rgba(234, 0, 0, 1), rgba(234, 0, 0, 1)),
+			linear-gradient(rgba(234, 0, 0, 1), rgba(234, 0, 0, 1));
+		background-repeat: no-repeat;
+		background-size:
+			var(--bracket) var(--rule),
+			var(--rule) var(--bracket),
+			var(--bracket) var(--rule),
+			var(--rule) var(--bracket);
+		background-position: top left, top left, bottom right, bottom right;
+	}
+
+	.visualLink:hover::before,
+	.visualLink:hover::after,
+	.visualLink:focus-visible::before,
+	.visualLink:focus-visible::after {
+		opacity: 1;
+	}
+
+	/* the artwork pushes forward a little and settles — a long ease-out, so
+	   it decelerates into place rather than arriving */
+	.visual img {
+		transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.visualLink:hover .visual img,
+	.visualLink:focus-visible .visual img {
+		transform: scale(1.04);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.visual img {
+		transition: none;
+	}
+
+	.visualLink:hover .visual img,
+	.visualLink:focus-visible .visual img {
+		transform: none;
+	}
+}
+
 .caseAside {
 	display: flex;
 	flex-direction: column;
