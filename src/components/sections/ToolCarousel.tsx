@@ -11,8 +11,10 @@ import styles from "./ToolCarousel.module.css";
 function pose(d: number) {
   const t = Math.min(Math.abs(d), 2);
   return {
-    // side cards tuck toward the middle so they overlap rather than trail off
-    translate: -d * 16,
+    // A gentle tuck only. Pulling side cards far inward puts their visual
+    // position well short of their snap position, which makes a single swipe
+    // read as though it skipped a tool.
+    translate: -d * 14,
     rotateY: -d * 34,
     scale: 1 - t * 0.2,
     opacity: 1 - t * 0.42,
