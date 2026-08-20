@@ -73,10 +73,10 @@ export default function Hero() {
           // Stood on end, the closed knife sits near the middle of its square
           // box rather than filling it, so aligning the BOX to the right edge
           // leaves the art stranded well inside. Place the art directly.
-          const peekX = () => (compact ? 0.76 : 0.86) * window.innerWidth - artCentre();
+          const peekX = () => (compact ? 0.7 : 0.67) * window.innerWidth - artCentre();
           // desktop peeks above centre and travels down; on a phone the copy
           // owns the top two thirds, so it waits below and rises into place
-          const peekY = () => (compact ? 0.26 * window.innerHeight : -0.08 * window.innerHeight);
+          const peekY = () => (compact ? 0.26 : -0.02) * window.innerHeight;
 
           gsap.set(intro, {
             x: peekX,
@@ -227,7 +227,7 @@ export default function Hero() {
         <div className={`section-shell ${styles.inner}`} data-hero-copy="">
           <p className={`mono-label ${styles.eyebrow}`}>Product Builder · Designer · Engineer</p>
           <h1 className={`serif-display ${styles.headline}`}>
-            I own the outcome, not a slice of the problem.
+            I own the outcome, not a slice of the fix.
           </h1>
           <p className={styles.desc}>
             I work across product, design, engineering and AI to turn ambiguous problems into
