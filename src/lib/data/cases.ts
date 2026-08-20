@@ -14,7 +14,7 @@ export const cases: CaseStudy[] = [
     slug: "creative-os",
     cover: "/assets/CreativeOS/cover-desk.webp",
     num: "01",
-    category: "Product Manager and Design Engineer",
+    category: "Design Engineer and Product Manager",
     headline: "Bringing a fragmented AI production process into one creative workspace.",
     startedWith:
       "Creative teams moved between scripts, prompts, references and multiple generation tools to produce individual shots.",
@@ -26,7 +26,7 @@ export const cases: CaseStudy[] = [
     slug: "case-chat",
     cover: "/assets/CaseChat/cover-desk.webp",
     num: "02",
-    category: "Founder and Design Engineer",
+    category: "Design Engineer and Founder",
     headline: "A safe space for medical students to learn from their mistakes.",
     startedWith:
       "Medical students need repeated opportunities to make clinical decisions and receive useful feedback.",
