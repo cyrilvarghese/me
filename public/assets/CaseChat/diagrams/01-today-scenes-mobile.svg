@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 1180" role="img"
+     aria-label="Three rooms a student learns in — a lecture hall, a desk of textbooks, a bedside — and the share of the week each one takes. Only the bedside is hands on, and it is the smallest share.">
+  <!-- The phone telling of 01-today-scenes.svg. Same drawings, same tint,
+       same argument; only the arrangement changes.
+
+       Side by side, each room would get about 126px on a 420px screen and
+       a row of eight heads would stop reading. Stacked, each gets the full
+       width — roughly three times the size — and the chart keeps its own.
+
+       Two things are deliberately dropped. The rails go: stacked, they
+       would point at nothing, and a rail that arrives nowhere is debris.
+       The type returns to the site's mobile scale — the desktop file runs
+       large because its drawings are large, and that reasoning does not
+       survive the change of arrangement. -->
+
+  <!-- the finding, first, because on a phone it may be all that is read -->
+  <text class="cc-in" style="--d:.05s" x="20" y="38" font-size="19" fill="#ea0000">Only 20% of the time</text>
+  <text class="cc-in" style="--d:.05s" x="20" y="64" font-size="19" fill="#ea0000">is spent hands on</text>
+
+  <!-- the share of the week -->
+  <g class="cc-in" style="--d:.15s">
+    <path d="M210 190 L279.6 139.4 A86 86 0 0 0 128.2 216.6 Z" fill="#f8f4f2" fill-opacity=".22" stroke="#f8f4f2" stroke-opacity=".28" stroke-width="2"/>
+    <path d="M210 190 L128.2 216.6 A86 86 0 0 0 279.6 240.6 Z" fill="#f8f4f2" fill-opacity=".13" stroke="#f8f4f2" stroke-opacity=".28" stroke-width="2"/>
+    <path transform="translate(10 0)" d="M210 190 L279.6 139.4 A86 86 0 0 1 279.6 240.6 Z" fill="#ea0000" fill-opacity=".85" stroke="#ea0000" stroke-width="2"/>
+
+    <text x="187" y="150" font-size="17" text-anchor="middle" fill="#f8f4f2" fill-opacity=".75">45%</text>
+    <text x="202" y="247" font-size="17" text-anchor="middle" fill="#f8f4f2" fill-opacity=".75">35%</text>
+    <text x="272" y="196" font-size="17" text-anchor="middle" fill="#f8f4f2">20%</text>
+  </g>
+
+  <!-- ══ the lecture hall ══════════════════════════════════════════ -->
+  <g class="cc-in" style="--d:.25s" transform="translate(50 310)">
+    <rect x="186" y="16" width="112" height="60" fill="#1e1818"/>
+    <rect x="186" y="16" width="112" height="60" fill="#c98080" fill-opacity=".20" stroke="#c98080" stroke-opacity=".70" stroke-width="2"/>
+    <rect x="200" y="32" width="60" height="4" fill="#c98080" fill-opacity=".62"/>
+    <rect x="200" y="44" width="84" height="4" fill="#c98080" fill-opacity=".62"/>
+    <rect x="200" y="56" width="44" height="4" fill="#c98080" fill-opacity=".62"/>
+    <rect x="92" y="92" width="58" height="5" fill="#9e9493" fill-opacity=".55"/>
+    <rect x="97" y="97" width="3" height="19" fill="#9e9493" fill-opacity=".35"/>
+    <rect x="141" y="97" width="3" height="19" fill="#9e9493" fill-opacity=".35"/>
+    <circle cx="168" cy="66" r="6.5" fill="#e7e3e1"/>
+    <path d="M161 71 L175 71 L178 116 L158 116 Z" fill="#e7e3e1"/>
+    <path d="M175 76 L196 68 L198 73 L176 82 Z" fill="#e7e3e1"/>
+    <rect x="0" y="116" width="320" height="1.5" fill="#f8f4f2" fill-opacity=".12"/>
+    <g fill="#f8f4f2" fill-opacity=".22">
+      <circle cx="20" cy="128" r="5.5"/><path d="M9 146a11 11 0 0 1 22 0z"/>
+      <circle cx="60" cy="128" r="5.5"/><path d="M49 146a11 11 0 0 1 22 0z"/>
+      <circle cx="100" cy="128" r="5.5"/><path d="M89 146a11 11 0 0 1 22 0z"/>
+      <circle cx="140" cy="128" r="5.5"/><path d="M129 146a11 11 0 0 1 22 0z"/>
+      <circle cx="180" cy="128" r="5.5"/><path d="M169 146a11 11 0 0 1 22 0z"/>
+      <circle cx="220" cy="128" r="5.5"/><path d="M209 146a11 11 0 0 1 22 0z"/>
+      <circle cx="260" cy="128" r="5.5"/><path d="M249 146a11 11 0 0 1 22 0z"/>
+      <circle cx="300" cy="128" r="5.5"/><path d="M289 146a11 11 0 0 1 22 0z"/>
+    </g>
+    <rect x="-2" y="146" width="324" height="9" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
+    <g fill="#f8f4f2" fill-opacity=".34">
+      <circle cx="24" cy="150" r="6.5"/><path d="M11 171a13 13 0 0 1 26 0z"/>
+      <circle cx="70" cy="150" r="6.5"/><path d="M57 171a13 13 0 0 1 26 0z"/>
+      <circle cx="116" cy="150" r="6.5"/><path d="M103 171a13 13 0 0 1 26 0z"/>
+      <circle cx="162" cy="150" r="6.5"/><path d="M149 171a13 13 0 0 1 26 0z"/>
+      <circle cx="208" cy="150" r="6.5"/><path d="M195 171a13 13 0 0 1 26 0z"/>
+      <circle cx="254" cy="150" r="6.5"/><path d="M241 171a13 13 0 0 1 26 0z"/>
+      <circle cx="300" cy="150" r="6.5"/><path d="M287 171a13 13 0 0 1 26 0z"/>
+    </g>
+    <rect x="-2" y="171" width="324" height="10" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
+    <g fill="#9e9493">
+      <circle cx="16" cy="172" r="7.5"/><path d="M0 196a16 15 0 0 1 32 0z"/>
+      <circle cx="72" cy="172" r="7.5"/><path d="M56 196a16 15 0 0 1 32 0z"/>
+      <circle cx="128" cy="172" r="7.5"/><path d="M112 196a16 15 0 0 1 32 0z"/>
+      <circle cx="184" cy="172" r="7.5"/><path d="M168 196a16 15 0 0 1 32 0z"/>
+      <circle cx="240" cy="172" r="7.5"/><path d="M224 196a16 15 0 0 1 32 0z"/>
+      <circle cx="296" cy="172" r="7.5"/><path d="M280 196a16 15 0 0 1 32 0z"/>
+    </g>
+    <rect x="-2" y="196" width="324" height="10" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".20" stroke-width="1.5"/>
+  </g>
+
+  <text class="cc-in" style="--d:.35s" x="50" y="542" font-size="18" fill="#e7e3e1">Lectures</text>
+  <text class="cc-in" style="--d:.4s" x="50" y="566" font-size="14" fill="#9e9493">150 students, one topic</text>
+
+  <!-- ══ the desk ══════════════════════════════════════════════════ -->
+  <g class="cc-in" style="--d:.45s" transform="translate(50 610)">
+    <circle cx="158" cy="112" r="22" fill="#e7e3e1"/>
+    <path d="M114 178a44 46 0 0 1 88 0z" fill="#e7e3e1"/>
+    <rect x="-2" y="172" width="324" height="9" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".22" stroke-width="1.5"/>
+    <rect x="-2" y="181" width="324" height="7" fill="#f8f4f2" fill-opacity=".05"/>
+    <g fill="#c98080" fill-opacity=".38">
+      <rect x="5" y="163" width="86" height="11"/>
+      <rect x="8" y="150" width="80" height="11"/>
+      <rect x="4" y="137" width="88" height="11"/>
+      <rect x="7" y="124" width="82" height="11"/>
+      <rect x="10" y="111" width="76" height="11"/>
+      <rect x="6" y="98" width="84" height="11"/>
+    </g>
+    <g fill="#c98080" fill-opacity=".52">
+      <rect x="218" y="163" width="92" height="11"/>
+      <rect x="221" y="150" width="86" height="11"/>
+      <rect x="217" y="137" width="94" height="11"/>
+      <rect x="220" y="124" width="88" height="11"/>
+      <rect x="223" y="111" width="82" height="11"/>
+      <rect x="219" y="98" width="90" height="11"/>
+      <rect x="222" y="85" width="84" height="11"/>
+      <rect x="225" y="72" width="78" height="11"/>
+    </g>
+    <path d="M98 172 L158 152 L158 164 L98 176 Z" fill="#c98080" fill-opacity=".92"/>
+    <path d="M214 172 L158 152 L158 164 L214 176 Z" fill="#c98080" fill-opacity=".74"/>
+  </g>
+
+  <text class="cc-in" style="--d:.55s" x="50" y="842" font-size="18" fill="#e7e3e1">Books and self study</text>
+  <text class="cc-in" style="--d:.6s" x="50" y="866" font-size="14" fill="#9e9493">Dense reference textbooks, read alone</text>
+
+  <!-- ══ the bedside ═══════════════════════════════════════════════ -->
+  <g class="cc-in" style="--d:.65s" transform="translate(50 910)">
+    <g fill="#f8f4f2" fill-opacity=".20">
+      <circle cx="58" cy="74" r="8"/><path d="M45 86 L71 86 L74 150 L42 150 Z"/>
+      <circle cx="92" cy="70" r="8"/><path d="M79 82 L105 82 L108 150 L76 150 Z"/>
+      <circle cx="126" cy="76" r="8"/><path d="M113 88 L139 88 L142 150 L110 150 Z"/>
+      <circle cx="160" cy="72" r="8"/><path d="M147 84 L173 84 L176 150 L144 150 Z"/>
+      <circle cx="194" cy="78" r="8"/><path d="M181 90 L207 90 L210 150 L178 150 Z"/>
+    </g>
+    <rect x="52" y="154" width="5" height="28" fill="#9e9493" fill-opacity=".45"/>
+    <rect x="272" y="154" width="5" height="28" fill="#9e9493" fill-opacity=".45"/>
+    <rect x="48" y="130" width="46" height="11" fill="#f8f4f2" fill-opacity=".22"/>
+    <rect x="40" y="140" width="244" height="14" fill="#1e1818" stroke="#f8f4f2" stroke-opacity=".28" stroke-width="2"/>
+    <circle cx="74" cy="124" r="8" fill="#c98080"/>
+    <path d="M86 140 C96 122 118 122 142 126 C162 130 176 133 190 133 C198 118 218 116 226 132 C242 136 256 138 268 140 Z" fill="#c98080"/>
+    <circle cx="280" cy="58" r="11" fill="#e7e3e1"/>
+    <path d="M268 80 L298 80 L304 184 L290 184 L284 140 L278 184 L264 184 Z" fill="#e7e3e1"/>
+    <path d="M266 70 L294 82 L214 130 L198 118 Z" fill="#e7e3e1"/>
+    <circle class="cc-beat" cx="204" cy="126" r="18" fill="#ea0000" fill-opacity=".18"/>
+    <circle cx="204" cy="126" r="9.5" fill="#ea0000"/>
+  </g>
+
+  <text class="cc-in" style="--d:.75s" x="50" y="1142" font-size="18" fill="#e7e3e1">Bedside teaching</text>
+  <text class="cc-in" style="--d:.8s" x="50" y="1166" font-size="14" fill="#9e9493">Watching a doctor work a real patient</text>
+</svg>

@@ -10,12 +10,17 @@ export default function CaseFigure({
   heading,
   lede,
   diagram,
+  diagramMobile,
   caption,
 }: {
   eyebrow: string;
   heading?: string;
   lede?: string;
   diagram: string;
+  /** The phone telling of the same drawing. Without one, a wide figure
+      holds a floor width and scrolls sideways inside its own box; with
+      one, the narrow layout simply replaces it. */
+  diagramMobile?: string;
   caption?: string;
 }) {
   return (
@@ -29,9 +34,14 @@ export default function CaseFigure({
       </div>
 
       <figure className={styles.figure}>
-        <div className={styles.drawing}>
+        <div className={`${styles.drawing} ${diagramMobile ? styles.wideOnly : ""}`}>
           <CaseDiagram src={diagram} />
         </div>
+        {diagramMobile && (
+          <div className={styles.narrowOnly}>
+            <CaseDiagram src={diagramMobile} />
+          </div>
+        )}
         {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
       </figure>
     </section>

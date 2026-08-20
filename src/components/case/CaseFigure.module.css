@@ -39,6 +39,12 @@
 	width: 100%;
 }
 
+/* the phone telling, when one is supplied — hidden until the breakpoint */
+.narrowOnly {
+	display: none;
+	width: 100%;
+}
+
 .caption {
 	color: var(--muted);
 	font-size: var(--text-small);
@@ -62,5 +68,16 @@
 
 	.drawing > * {
 		min-width: 48rem;
+	}
+
+	/* A drawing laid out for this width beats scrolling a wide one, so when
+	   a mobile telling exists it replaces the scroll rather than sitting
+	   beside it. Declared after .drawing so it wins on source order. */
+	.wideOnly {
+		display: none;
+	}
+
+	.narrowOnly {
+		display: block;
 	}
 }

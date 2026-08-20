@@ -150,34 +150,16 @@ export default function CaseChatContent() {
                 />
 
                 <CaseFigure
-                  eyebrow="The week in three rooms"
+                  eyebrow="Where the hours actually go"
                   heading="Only the smallest share is hands on."
+                  lede="Lectures and textbooks build recall, and recall is what gets examined. The competence the job needs is built at the bedside — which is the smallest slice of the week, and mostly spent watching someone else decide."
                   diagram={`${D}/01-today-scenes.svg`}
+                  diagramMobile={`${D}/01-today-scenes-mobile.svg`}
                   caption="Lectures and textbooks take four fifths of the week between them. The bedside — the only room where a student touches a patient — takes the rest."
                 />
 
                 <CaseCompare
                   index="01"
-                  eyebrow="Where the hours actually go"
-                  heading="The facts are taught. The judgement is left to chance."
-                  lede="Lectures and textbooks build recall, and recall is what gets examined. The competence the job needs is built at the bedside — which is the smallest slice of the week, and mostly spent watching someone else decide."
-                  today={{
-                    title: "Two paths build recall, one builds judgement",
-                    diagram: `${D}/01-today.svg`,
-                    stat: { value: "20%", label: "of learning time is hands-on" },
-                    caption:
-                      "Time splits three ways, and only the narrowest path arrives at being able to work a patient.",
-                  }}
-                  after={{
-                    title: "A case is one object, used from both sides",
-                    diagram: `${D}/01-cases.svg`,
-                    caption:
-                      "A patient case carries the whole episode — history, tests, diagnosis, treatment. The teacher explains through it; the student decides inside it.",
-                  }}
-                />
-
-                <CaseCompare
-                  index="02"
                   eyebrow="Why cases stay rare"
                   heading="Every teacher interviewed agrees cases are the best way to learn."
                   lede="Every teacher is also a practising physician who is stretched for time."
