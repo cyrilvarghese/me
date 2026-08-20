@@ -1,3 +1,4 @@
+import CaseDiagram from "./CaseDiagram";
 import { Mark, MarkQuote } from "./CaseMark";
 import styles from "./CaseObject.module.css";
 
@@ -22,6 +23,7 @@ export default function CaseObject({
   object,
   attrs,
   users,
+  diagramMobile,
   caption,
 }: {
   eyebrow: string;
@@ -30,6 +32,11 @@ export default function CaseObject({
   object: { icon: string; label: string };
   attrs: Attr[];
   users: [User, User];
+  /** The phone telling. A ring of marks and two quotes needs width to say
+      anything; a drawn diagram can say the same thing in a column. When
+      one is supplied it replaces the marks entirely below the breakpoint
+      rather than trying to rearrange them. */
+  diagramMobile?: string;
   caption?: string;
 }) {
   const split = Math.ceil(attrs.length / 2);
@@ -44,7 +51,13 @@ export default function CaseObject({
         </div>
       </div>
 
-      <figure className={styles.figure}>
+      <figure className={`${styles.figure} ${diagramMobile ? styles.hasNarrow : ""}`}>
+        {diagramMobile && (
+          <div className={styles.narrowDiagram}>
+            <CaseDiagram src={diagramMobile} />
+          </div>
+        )}
+
         <div className={styles.cluster}>
           <ul className={`${styles.attrs} ${styles.left}`}>
             {attrs.slice(0, split).map((a) => (

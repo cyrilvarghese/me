@@ -108,6 +108,12 @@
 	max-width: none;
 }
 
+/* the drawn telling, when one is supplied — hidden until the breakpoint */
+.narrowDiagram {
+	display: none;
+	width: 100%;
+}
+
 /* ---- the two who use it ---- */
 
 .users {
@@ -165,6 +171,19 @@
 
 	.figure {
 		display: grid;
+	}
+
+	/* A drawn diagram beats rearranging a ring of marks: the marks need
+	   width to mean anything, and a drawing can carry the same claim down
+	   a column. Where one is supplied the marks step aside entirely. */
+	.hasNarrow .cluster,
+	.hasNarrow .fan,
+	.hasNarrow .users {
+		display: none;
+	}
+
+	.hasNarrow .narrowDiagram {
+		display: block;
 	}
 
 	/* the users' wrapper dissolves so its two children can be ordered

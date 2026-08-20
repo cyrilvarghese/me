@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 470" role="img"
+     aria-label="One patient case, carrying history, tests, diagnosis and treatment, is the single object a teacher explains through and a student practises on.">
+  <!-- The phone telling of 01-cases.svg. The claim is unchanged — both
+       sides reach the same object — so the two of them stay side by side
+       at the top, which is the only part of this drawing that has to be
+       read as "both". Everything below is a sequence, and a sequence runs
+       down a column more naturally than across one.
+
+       Sized so its text lands at the house 15 and 12 once rendered at
+       phone width; the wide file shrunk to fit here puts them near 10 and
+       8, which is what this file exists to avoid. -->
+  <defs>
+    <marker id="ccA-01cm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor" opacity=".5"/>
+    </marker>
+    <marker id="ccR-01cm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#ea0000"/>
+    </marker>
+  </defs>
+
+  <!-- the two who use it, kept abreast so "both sides" survives -->
+  <rect x="16" y="16" width="160" height="42" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".22"/>
+  <text x="96" y="42" font-size="15" text-anchor="middle" fill="currentColor" opacity=".85">TEACHER</text>
+
+  <rect x="204" y="16" width="160" height="42" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".22"/>
+  <text x="284" y="42" font-size="15" text-anchor="middle" fill="currentColor" opacity=".85">STUDENT</text>
+
+  <line class="cc-draw" style="--len:71;--d:.2s" x1="96" y1="62" x2="150" y2="106" stroke="currentColor" stroke-opacity=".38" marker-end="url(#ccA-01cm)"/>
+  <line class="cc-draw" style="--len:71;--d:.35s" x1="284" y1="62" x2="230" y2="106" stroke="currentColor" stroke-opacity=".38" marker-end="url(#ccA-01cm)"/>
+
+  <text class="cc-in" style="--d:.8s" x="16" y="92" font-size="12" fill="currentColor" opacity=".55">teaches through</text>
+  <text class="cc-in" style="--d:.9s" x="364" y="92" font-size="12" text-anchor="end" fill="currentColor" opacity=".55">practises on</text>
+
+  <!-- the one object, and the whole episode it carries -->
+  <rect x="16" y="120" width="348" height="330" fill="#ea0000" fill-opacity=".05" stroke="#ea0000" stroke-opacity=".55"/>
+  <text x="190" y="152" font-size="16" text-anchor="middle" fill="#ea0000">PATIENT CASE</text>
+
+  <rect x="60" y="170" width="260" height="40" fill="currentColor" fill-opacity=".06" stroke="currentColor" stroke-opacity=".2"/>
+  <text x="190" y="195" font-size="13" text-anchor="middle" fill="currentColor" opacity=".8">HISTORY</text>
+
+  <rect x="60" y="232" width="260" height="40" fill="currentColor" fill-opacity=".06" stroke="currentColor" stroke-opacity=".2"/>
+  <text x="190" y="257" font-size="13" text-anchor="middle" fill="currentColor" opacity=".8">TESTS</text>
+
+  <rect x="60" y="294" width="260" height="40" fill="currentColor" fill-opacity=".06" stroke="currentColor" stroke-opacity=".2"/>
+  <text x="190" y="319" font-size="13" text-anchor="middle" fill="currentColor" opacity=".8">DIAGNOSIS</text>
+
+  <rect x="60" y="356" width="260" height="40" fill="currentColor" fill-opacity=".06" stroke="currentColor" stroke-opacity=".2"/>
+  <text x="190" y="381" font-size="13" text-anchor="middle" fill="currentColor" opacity=".8">TREATMENT</text>
+
+  <line class="cc-draw" style="--len:22;--d:1s" x1="190" y1="210" x2="190" y2="230" stroke="#ea0000" stroke-opacity=".7" marker-end="url(#ccR-01cm)"/>
+  <line class="cc-draw" style="--len:22;--d:1.15s" x1="190" y1="272" x2="190" y2="292" stroke="#ea0000" stroke-opacity=".7" marker-end="url(#ccR-01cm)"/>
+  <line class="cc-draw" style="--len:22;--d:1.3s" x1="190" y1="334" x2="190" y2="354" stroke="#ea0000" stroke-opacity=".7" marker-end="url(#ccR-01cm)"/>
+
+  <text x="190" y="422" font-size="12" text-anchor="middle" fill="currentColor" opacity=".5">generated on demand —</text>
+  <text x="190" y="440" font-size="12" text-anchor="middle" fill="currentColor" opacity=".5">a new one whenever it is wanted</text>
+</svg>
