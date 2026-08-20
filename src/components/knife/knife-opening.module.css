@@ -1,6 +1,7 @@
-.story {
+.opening {
 	position: relative;
-	height: 600vh;
+	/* one viewport of stage, one of scroll to play the opening across */
+	height: 200vh;
 }
 
 .stage {
@@ -10,116 +11,19 @@
 	overflow: hidden;
 }
 
-.stageInner {
-	display: grid;
-	grid-template-columns: minmax(0, 38fr) minmax(0, 52fr);
-	gap: clamp(1rem, 4vw, 4rem);
-	align-items: center;
-	height: 100%;
-	max-width: var(--content-max);
-	margin-inline: auto;
-	padding-inline: var(--gutter);
-}
-
+/* Starts exactly on the hero's knife peek — same width, same right offset,
+   same tilt — so the knife reads as the same object arriving, not a new one.
+   The vertical centring is `top`, not a translate: GSAP owns the transform
+   from the first tick and a percentage translate would fight it. */
 .knifeWrap {
-	position: relative;
-	width: 100%;
-	max-width: 850px;
-	justify-self: end;
-}
-
-/* closing statement under the centered knife (user storyboard) */
-.centerCopy {
 	position: absolute;
-	/* the knife box lands art-centered (KnifeStory.tsx), so plain center */
-	left: 50%;
-	transform: translateX(-50%);
-	/* below the knife box's lower blades (gtm tip ≈ 0.45 of the box),
-	   with breathing room */
-	top: calc(50% + 0.5 * min(58vh, 54vw, 660px));
-	text-align: center;
-	width: max-content;
-	max-width: 92vw;
-	/* catches the pointer so reading the statement never triggers
-	   blade hover behind it */
-	pointer-events: auto;
+	right: 3vw;
+	width: min(44vw, 640px);
+	top: calc(50% - 0.5 * min(44vw, 640px));
+	transform: rotate(-14deg);
 }
 
-.centerCopy .centerStatement {
-	font-size: clamp(1.6rem, 3.2vw, 2.6rem);
-}
-
-.centerStatement {
-	font-size: var(--text-statement);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	.centerStatement {
-		opacity: 0;
-		transform: translateY(16px);
-	}
-}
-
-/* ---- narrative panels ---- */
-
-.narrative {
-	position: relative;
-	height: 100%;
-}
-
-.panel {
-	position: absolute;
-	inset: 0;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 1.5rem;
-	pointer-events: none;
-}
-
-.hiddenPanel {
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(16px);
-}
-
-.eyebrow {
-	color: var(--muted);
-}
-
-.eyebrow .num {
-	color: var(--accent);
-}
-
-.statement {
-	font-size: var(--text-statement);
-	max-width: 16ch;
-}
-
-.tags {
-	list-style: none;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.6rem;
-}
-
-.tag {
-	color: var(--fg-soft);
-	border: 1px solid var(--hairline);
-	padding: 0.45rem 0.8rem;
-	border-radius: 2px;
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(10px);
-}
-
-.completeLine {
-	color: var(--muted);
-	opacity: 0;
-	visibility: hidden;
-}
-
-/* ---- labels around the knife ---- */
+/* ---- orbit labels ---- */
 
 .labels {
 	position: absolute;
@@ -143,10 +47,10 @@
 	visibility: visible;
 }
 
-/* ---- reduced motion: static, sequential, text-first (spec §34) ---- */
+/* ---- reduced motion: no stage, no travel, the knife simply stands open ---- */
 
 @media (prefers-reduced-motion: reduce) {
-	.story {
+	.opening {
 		height: auto;
 	}
 
@@ -157,77 +61,34 @@
 		padding-block: var(--space-section);
 	}
 
-	.stageInner {
-		grid-template-columns: 1fr;
-		height: auto;
-	}
-
-	.narrative {
-		display: flex;
-		flex-direction: column;
-		gap: 4rem;
-		height: auto;
-	}
-
-	.panel {
-		position: static;
-		opacity: 1 !important;
-		visibility: visible !important;
-		transform: none !important;
-	}
-
-	.tag,
-	.completeLine {
-		opacity: 1 !important;
-		visibility: visible !important;
-		transform: none !important;
-	}
-
-	.labels {
-		display: none;
-	}
-
+	/* the open blades sweep well outside the closed silhouette, so the knife
+	   gets the middle of the page rather than a corner */
 	.knifeWrap {
-		justify-self: center;
-		order: -1;
-		opacity: 1;
+		position: relative;
+		top: auto;
+		right: auto;
+		width: min(70vw, 520px);
+		margin-inline: auto;
+		transform: none;
 	}
 
-	.centerCopy {
-		position: static;
-		transform: none;
-		margin-top: 2rem;
-	}
-
-	.centerStatement {
+	.label {
 		opacity: 1;
-		transform: none;
+		visibility: visible;
 	}
 }
 
-/* ---- narrow screens: stacked copy/knife (spec §32–33) ---- */
+/* ---- narrow screens: match the hero's mobile peek ---- */
 
 @media (max-width: 768px) {
-	.stageInner {
-		grid-template-columns: 1fr;
-		align-content: center;
-		gap: 0;
-	}
-
 	.knifeWrap {
-		justify-self: center;
-		max-width: 92vw;
+		width: 72vw;
+		top: auto;
+		right: 4vw;
+		bottom: 3%;
 	}
 
-	.narrative {
-		height: 42vh;
-	}
-
-	.statement {
-		font-size: clamp(1.6rem, 7vw, 2.2rem);
-	}
-
-	/* §33: no labels orbiting the object on mobile — the panel eyebrow names the tool */
+	/* §33: no labels orbiting the object on mobile — there is not room */
 	.labels {
 		display: none;
 	}
