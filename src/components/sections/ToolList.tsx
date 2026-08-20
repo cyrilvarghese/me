@@ -66,7 +66,7 @@ export default function ToolList() {
           <CompassRose />
         </div>
         <h2 className={`serif-display ${styles.statement}`}>
-          Tools matter, but&nbsp;.&nbsp;.&nbsp;.
+          Tools matter.
         </h2>
         <h2 className={`serif-display ${styles.statement}`}>
           <em>Outcomes</em> matter more.

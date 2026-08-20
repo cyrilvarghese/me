@@ -459,7 +459,7 @@ export default function OutcomeTransition() {
             One problem, many parts — a tool for each.
           </p>
           <h2 className={`serif-display ${styles.statement}`} data-statement="tools">
-            Tools matter, but&nbsp;.&nbsp;.&nbsp;.
+            Tools matter.
           </h2>
           <h2 className={`serif-display ${styles.statement}`} data-statement="outcomes">
             <em>Outcomes</em> matter more.
