@@ -91,14 +91,29 @@ function Bubble({ quote }: { quote: Quote }) {
   );
 }
 
-/* One arc per quote, upper before lower, so the halo never promises more
-   connections than the group actually has. Each spans 40° at r46 — a short
-   arc is worse than none, because at the house dash period it paints one
-   pill and reads as a speck rather than a rail. */
-const ARCS = {
-  left: ["M-44.4 -11.9 A46 46 0 0 1 -26.4 -37.7", "M-26.4 37.7 A46 46 0 0 1 -44.4 11.9"],
-  right: ["M26.4 -37.7 A46 46 0 0 1 44.4 -11.9", "M44.4 11.9 A46 46 0 0 1 26.4 37.7"],
-};
+/* One ray per quote, running from just outside the disc out toward the
+   quote it belongs to. Straight rather than arced: an arc curls away from
+   what it points at, and the rail's whole job here is to say "this text
+   belongs to this person".
+
+   Two quotes on a side fan to ±32°; a single quote sits level with the
+   disc, so its ray runs straight out. The set is sliced by quote count, so
+   the halo never promises more connections than the group has. */
+const RAYS = {
+  left: {
+    1: ["M-31 0 L-58 0"],
+    2: ["M-26.3 -16.4 L-49.2 -30.7", "M-26.3 16.4 L-49.2 30.7"],
+  },
+  right: {
+    1: ["M31 0 L58 0"],
+    2: ["M26.3 -16.4 L49.2 -30.7", "M26.3 16.4 L49.2 30.7"],
+  },
+} as const;
+
+function rays(side: "left" | "right", count: number) {
+  if (count <= 0) return [];
+  return RAYS[side][count >= 2 ? 2 : 1];
+}
 
 /** Rails around the persona. They suggest the connection rather than
     reaching each quote: measuring real endpoints would need layout in JS,
@@ -117,10 +132,7 @@ function Halo({ left, right }: { left: number; right: number }) {
         strokeLinecap="round"
         strokeDasharray="0.9 6"
       >
-        {ARCS.left.slice(0, left).map((d) => (
-          <path key={d} d={d} />
-        ))}
-        {ARCS.right.slice(0, right).map((d) => (
+        {[...rays("left", left), ...rays("right", right)].map((d) => (
           <path key={d} d={d} />
         ))}
       </g>
