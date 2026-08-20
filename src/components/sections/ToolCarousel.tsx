@@ -16,8 +16,9 @@ function pose(d: number) {
     // read as though it skipped a tool.
     translate: -d * 14,
     rotateY: -d * 34,
-    scale: 1 - t * 0.2,
-    opacity: 1 - t * 0.42,
+    scale: 1 - t * 0.18,
+    // side tools stay legible rather than fading to near-black
+    opacity: 1 - t * 0.2,
   };
 }
 
@@ -53,7 +54,10 @@ export default function ToolCarousel() {
         const d = (card.offsetLeft + card.offsetWidth / 2 - mid) / card.offsetWidth;
         // the backlight follows focus even under reduced motion — it is a
         // static highlight there, not movement
-        card.style.setProperty("--focus", String(Math.max(0, 1 - Math.abs(d))));
+        // every tool keeps a floor of backlight so it reads against the
+        // near-black ground; the one in focus goes to full
+        const f = Math.max(0, 1 - Math.abs(d));
+        card.style.setProperty("--focus", String(0.34 + 0.66 * f));
         if (!flat) {
           const p = pose(d);
           card.style.transform = `perspective(760px) translateX(${p.translate}%) rotateY(${p.rotateY}deg) scale(${p.scale})`;
@@ -100,6 +104,13 @@ export default function ToolCarousel() {
     <section className={styles.section} aria-label="The six tools">
       <p className={`serif-display ${styles.heading}`}>
         One problem, many parts — a tool for each.
+      </p>
+
+      <p className={`mono-label ${styles.swipeHint}`}>
+        Swipe{" "}
+        <span className={styles.swipeArrow} aria-hidden="true">
+          →
+        </span>
       </p>
 
       <div className={styles.track} ref={trackRef}>

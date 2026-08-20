@@ -47,7 +47,7 @@ export const capabilities: Capability[] = [
       "Deciding what to build matters more than building it well — scope, sequence, and the discipline to say no.",
     years: "2023 — Present",
     duration: "3 yrs",
-    line: "Founded CaseChat\u00A0— built the platform ground up.\nCrrently Leading Product at Yuvabe\u00A0Studios.",
+    line: "Founded CaseChat\u00A0— built the platform ground up.\nCurrently Leading Product at Yuvabe\u00A0Studios.",
     openAngle: 42,
     layer: "back",
   },

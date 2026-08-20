@@ -26,6 +26,39 @@
 	margin-bottom: 2.5rem;
 }
 
+/* ---- the swipe affordance ---- */
+
+/* the dots below say where you are; this says the thing is swipeable at
+   all, which readers were missing entirely */
+.swipeHint {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	color: var(--accent);
+	margin-bottom: 1.25rem;
+}
+
+.swipeArrow {
+	display: inline-block;
+	animation: swipeNudge 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes swipeNudge {
+	from {
+		transform: translateX(-3px);
+	}
+	to {
+		transform: translateX(5px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.swipeArrow {
+		animation: none;
+	}
+}
+
 /* ---- the swipe track ---- */
 
 .track {
@@ -79,8 +112,8 @@
 	border-radius: 50%;
 	background: radial-gradient(
 		circle closest-side at 50% 46%,
-		rgba(248, 244, 242, 0.11),
-		rgba(248, 244, 242, 0.035) 52%,
+		rgba(248, 244, 242, 0.16),
+		rgba(248, 244, 242, 0.055) 52%,
 		transparent 78%
 	);
 	opacity: var(--focus, 0);
@@ -95,6 +128,9 @@
 	width: 100%;
 	transform: scale(2.6);
 	transform-origin: 50.5% 43%;
+	/* a dark tool on a near-black ground needs an edge; the backlight lifts
+	   it and this drops it forward off the halo */
+	filter: drop-shadow(0 3px 9px rgba(0, 0, 0, 0.7));
 }
 
 /* ---- the caption, swapped as you swipe ---- */
