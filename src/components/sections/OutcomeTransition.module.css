@@ -224,31 +224,45 @@
 	}
 }
 
-/* ---- mobile: the stage only has to carry the knife ---- */
+/* ---- mobile: an open knife in the flow, and nothing else ----
+
+   This section used to be 200vh of pinned stage here too, pulled up over
+   the hero, with the knife opening across it and fading as it left. None of
+   that runs now (see OutcomeTransition.tsx): the phone gets the knife drawn
+   open under the hero copy and scrolls past it like any other block. */
 
 @media (max-width: 768px) {
 	.section {
-		/* Exactly the hero's 200vh. The stage stays pinned for the viewport
-		   the hero scrubs across, then scrolls away carrying the open knife
-		   with it — no trailing height, so no black gap before the carousel. */
-		height: 200vh;
+		height: auto;
+		/* it no longer rides over the hero, so it must not be pulled up */
+		margin-top: 0;
+		padding-block: 0 var(--space-section);
 	}
 
-	/* No timeline runs here, so nothing slides this back to zero. The art is
-	   left-biased in its box; the shift is what makes it read centred. */
+	.stage {
+		position: static;
+		height: auto;
+		/* the six names orbit outside the knife's square — clipping them is
+		   what `hidden` would do once this box shrinks to the art */
+		overflow: visible;
+	}
+
 	.knifeEl {
+		/* Hero's gsap.set used to turn this back on after moving the knife to
+		   its peek; with no timeline here, the no-preference rule above would
+		   leave it invisible forever. */
+		opacity: 1;
+		/* the art is left-biased in its box; the shift reads it centred */
 		transform: translateX(13.5%);
 	}
 
-	/* 54vw was the binding term of the shared min() and left the open knife
-	   small on a phone. Nothing measures this on mobile — no timeline runs —
-	   so it is free to fill the screen. */
+	/* narrower than the old 88vw: the knife no longer has the screen to
+	   itself, and the orbit labels need room to sit outside it */
 	.inner {
-		width: min(76vh, 88vw);
+		width: min(76vh, 72vw);
 	}
 
-	/* the lineup, the merge and the compass close all live in ToolCarousel
-	   on small screens — swiped, not scrubbed */
+	/* the lineup, the merge and the compass close have no phone telling */
 	.circles,
 	.lineup,
 	.copy,
@@ -287,6 +301,9 @@
 	.stage {
 		position: static;
 		height: auto;
+		/* the orbit labels sit outside the knife's square; once this box is
+		   only as tall as its contents, `hidden` crops them */
+		overflow: visible;
 		display: flex;
 		flex-direction: column;
 		gap: 3rem;

@@ -73,28 +73,14 @@ export default function OutcomeTransition() {
           const stage = stageRef.current;
           if (!inner || !stage) return;
 
-          // Mobile stops before any of this. The hero opens the knife, the
-          // stage scrolls away with it whole, and ToolCarousel takes over
-          // below. Coming apart is a beat that only earns its place because
-          // the lineup follows it — without one, it just orphans the parts
-          // from the body (user, 2026-08-20).
-          if (compact) {
-            // The stage releases and carries the open knife up out of frame.
-            // It dissolves on the way so the carousel rising behind it never
-            // has an edge to cut across (user, 2026-08-20).
-            gsap.to("[data-knife-el]", {
-              autoAlpha: 0,
-              ease: "none",
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: () => 1.05 * window.innerHeight,
-                end: () => 1.5 * window.innerHeight,
-                scrub: 0.3,
-                invalidateOnRefresh: true,
-              },
-            });
-            return;
-          }
+          // Mobile runs none of this. Not the coming-apart, which only earns
+          // its place because the lineup follows it, and no longer the fade
+          // that used to carry the knife out of frame either: with the hero's
+          // opening gone, the phone simply shows the knife open below the
+          // copy and lets the page scroll past it like any other block
+          // (Cyril's call, 2026-08-21). Everything the stage does here is
+          // CSS at this width — no timeline, nothing to scrub.
+          if (compact) return;
 
           const S = () => inner.offsetWidth;
           const frac = (pct: number) => () => (pct / 100) * S();

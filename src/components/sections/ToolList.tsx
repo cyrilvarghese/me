@@ -1,6 +1,5 @@
 import { capabilities } from "@/lib/data/capabilities";
 import KnifeLayer from "@/components/knife/KnifeLayer";
-import CompassRose from "@/components/compass/CompassRose";
 import knife from "@/components/knife/knife.module.css";
 import styles from "./ToolList.module.css";
 
@@ -12,6 +11,12 @@ import styles from "./ToolList.module.css";
  * This was a swipe carousel first. It cost too much to operate for what it
  * showed: a gesture per tool, and five of the six hidden at any moment. Six
  * rows show everything at once and need no script at all.
+ *
+ * It used to close on a compass and "Tools matter. / Outcomes matter more."
+ * On desktop that pair is the payoff of a scrubbed sequence — the needle
+ * hunts and finds north as the line lands. None of that runs on a phone, so
+ * what arrived here was a still compass under a claim it had not earned
+ * (Cyril's call, 2026-08-21). The rows end the section instead.
  */
 export default function ToolList() {
   return (
@@ -61,17 +66,6 @@ export default function ToolList() {
         ))}
       </ul>
 
-      <div className={styles.close}>
-        <div className={styles.compass} aria-hidden="true">
-          <CompassRose />
-        </div>
-        <h2 className={`serif-display ${styles.statement}`}>
-          Tools matter.
-        </h2>
-        <h2 className={`serif-display ${styles.statement}`}>
-          <em>Outcomes</em> matter more.
-        </h2>
-      </div>
     </section>
   );
 }

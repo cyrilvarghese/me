@@ -21,7 +21,23 @@ export default function FinalCTA() {
     () => {
       const mm = gsap.matchMedia();
 
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
+      mm.add(
+        {
+          motionOk: "(prefers-reduced-motion: no-preference)",
+          compact: "(max-width: 768px)",
+        },
+        (ctx) => {
+          const { motionOk, compact } = ctx.conditions as {
+            motionOk: boolean;
+            compact: boolean;
+          };
+          if (!motionOk) return;
+          /* Phones fold nothing back. The reverse close only reads as a
+             close because the reader watched it open, and no opening plays
+             at this width any more (Hero.tsx) — so this is the knife shut
+             above the ask, from CSS. */
+          if (compact) return;
+
         const tl = gsap.timeline({
           defaults: { ease: "none" },
           scrollTrigger: {
@@ -45,8 +61,9 @@ export default function FinalCTA() {
         tl.to("[data-knife-final]", { yPercent: -14, duration: 0.14, ease: "power2.inOut" }, 0.58);
         tl.to("[data-final='question']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.62);
         tl.to("[data-final='give']", { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.72);
-        tl.to("[data-final='ctas']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.82);
-      });
+          tl.to("[data-final='ctas']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.82);
+        }
+      );
 
       return () => mm.revert();
     },

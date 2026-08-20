@@ -56,6 +56,13 @@ export default function Hero() {
             hoverOk: boolean;
           };
           if (!motionOk) return;
+          /* Phones get no opening at all (Cyril's call, 2026-08-21). The
+             whole sequence — peek, travel, fan — is a desktop pleasure that
+             on a phone amounted to a knife sliding over the copy while the
+             reader scrolled past it. Below 769px the knife is simply drawn
+             open under the hero by CSS, the same static pose reduced motion
+             has always shown, so nothing here needs to run. */
+          if (compact) return;
 
           const section = sectionRef.current;
           const knifeEl = document.querySelector<HTMLElement>("[data-knife-el]");

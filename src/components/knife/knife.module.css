@@ -102,6 +102,24 @@
 	}
 }
 
+/* Phones take the same static pose, for a different reason: no timeline is
+   built below 769px at all (Hero, OutcomeTransition and FinalCTA each return
+   early), so nothing would ever rotate a blade. The opening was a desktop
+   pleasure — on a phone it amounted to a knife sliding across the copy while
+   the reader scrolled past it (Cyril's call, 2026-08-21).
+
+   ×0.8 is §32's angle compression, which the timeline used to apply on this
+   width; with the timeline gone it has to be baked in here. */
+@media (max-width: 768px) {
+	.rmOpen .tool {
+		transform: rotate(calc(var(--open) * 0.8)) !important;
+	}
+
+	.rmClosed .tool {
+		transform: rotate(0deg) !important;
+	}
+}
+
 /* ---- orbit labels around an opened knife ---- */
 
 .labels {
@@ -127,8 +145,15 @@
 }
 
 /* the knife is shown open and annotated when motion is off — no timeline
-   ever runs to reveal these */
+   ever runs to reveal these. Same on a phone, where none is built either. */
 @media (prefers-reduced-motion: reduce) {
+	.label {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+@media (max-width: 768px) {
 	.label {
 		opacity: 1;
 		visibility: visible;

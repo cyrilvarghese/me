@@ -67,6 +67,49 @@
 
 /* the CTA uses the global .btn voice — nothing to add here */
 
+/* Phones get the finished composition straight from CSS, for the same
+   reason reduced motion does: no timeline is built at this width
+   (FinalCTA.tsx returns early), so nothing would ever reveal the ask. */
+@media (max-width: 768px) {
+	.section {
+		height: auto;
+		padding-block: var(--space-section);
+	}
+
+	.stage {
+		position: static;
+		height: auto;
+		overflow: visible;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	/* both of these are absolute overlays on the pinned stage — stacked,
+	   they each take their own row */
+	.knifeWrap {
+		position: static;
+	}
+
+	.knifeWrap > div {
+		width: min(52vh, 62vw);
+		margin-inline: auto;
+	}
+
+	.copy {
+		position: static;
+		padding-top: 0;
+	}
+
+	.question,
+	.give,
+	.ctas {
+		opacity: 1 !important;
+		visibility: visible !important;
+		transform: none !important;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.section {
 		height: auto;

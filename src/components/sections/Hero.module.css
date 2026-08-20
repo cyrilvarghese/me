@@ -64,8 +64,19 @@
 	}
 }
 
+/* Phones run no opening (Hero.tsx returns early below 769px), so the second
+   viewport this section carried to scrub it across is now empty scroll —
+   the same reason the reduced-motion block above collapses it. */
 @media (max-width: 768px) {
+	.hero {
+		height: auto;
+	}
+
 	.stage {
+		position: static;
+		height: auto;
+		min-height: 100vh;
+		overflow: visible;
 		align-items: flex-start;
 		padding-block: 8rem 0;
 	}

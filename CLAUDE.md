@@ -63,10 +63,19 @@ literally the scroll fractions from `scroll.ts` (OutcomeTransition's spacer
 is `DUR = 1.25`: positions 0–0.97 are the story at unchanged pacing, the
 rest is compass runway — snap beats and `onUpdate` thresholds there live in
 timeline time, ÷ `DUR` to get progress). All timelines live inside
-`gsap.matchMedia`: mobile (≤768px) compresses angles ×0.8 and hides orbit
-labels; reduced-motion builds **no** timelines — CSS renders the story static
-and open via the `--open` custom property (`rmOpen`/`rmClosed` in
-`knife.module.css`) and `!important` overrides in the section modules.
+`gsap.matchMedia`, and **two conditions build none of them at all**:
+reduced-motion, and mobile (≤768px) since 2026-08-21 (Cyril's call — the
+opening was a desktop pleasure that on a phone amounted to a knife sliding
+across the copy). Both land on the same static composition, rendered by CSS
+alone: the knife open via the `--open` custom property (`rmOpen`/`rmClosed`
+in `knife.module.css`, mobile baking in §32's ×0.8 since no timeline applies
+it any more), orbit labels lit, and `!important` overrides in the section
+modules. **Anything a scrubbed timeline reveals needs a CSS counterpart in
+both blocks or it is invisible on a phone** — `.knifeEl`'s `opacity: 0`
+under `no-preference` is the one that bites, since Hero's `gsap.set` used to
+be what turned it back on. Each of the three sections also collapses its
+scroll height (200/822/300vh → `auto`) at both conditions, or the page is
+viewports of empty scrolling.
 
 **Animation library split** (deliberate — keep it): GSAP ScrollTrigger owns the
 three scrubbed pinned sections and the hover-dim; Framer Motion (`motion`

@@ -16,8 +16,11 @@ export default function Home() {
       <main>
         <Hero />
         <OutcomeTransition />
-        {/* mobile only: the six tools as a plain list, plus the compass
-            close. The pinned desktop stage carries both above 768px. */}
+        {/* mobile only: the six tools as a plain list, which the pinned
+            desktop stage carries above 768px. It used to close on the
+            compass too; that came out on 2026-08-21 — nothing animates at
+            this width, and a still compass under "Outcomes matter more."
+            claims a payoff the desktop earns by moving. */}
         <ToolList />
         <CaseStudies />
         {/* the timeline reads after the proof: who did it, once what was

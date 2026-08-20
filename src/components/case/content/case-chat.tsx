@@ -49,7 +49,7 @@ export default function CaseChatContent() {
                of the measurement, and the reason for it follows */
             body: (
               <>
-                Fifteen minutes each.
+                Fifteen minutes with one patient.
                 <br />
                 Live patients teach best, and logistics ration them.
               </>

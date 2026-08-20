@@ -3,19 +3,20 @@
 .section {
 	display: none;
 	/* Composition, not a rung: this section only exists under 769px, so its
-	   two display lines are sized against the phone's width rather than the
-	   reading scale. One property because they must stay the same size. */
+	   display line is sized against the phone's width rather than the
+	   reading scale. */
 	--tool-display: clamp(1.5rem, 6.5vw, 2rem);
 }
 
 @media (max-width: 768px) {
 	.section {
 		display: block;
-		/* Rides up into the tail of the transition so the heading sits under
-		   the knife rather than a screen below it. The knife dissolves on its
-		   way out (OutcomeTransition.tsx), so nothing needs an opaque panel
-		   here — one would slice a hard edge across it. */
-		margin-top: -27vh;
+		/* No pull-up. This rode -27vh into the transition's tail so the
+		   heading would sit just under the knife, which only worked while the
+		   knife dissolved on its way out. It no longer does — the knife is
+		   static now, and with reduced motion it never faded either, so the
+		   pull-up laid this heading straight across the art (Cyril, 2026-08-21).
+		   The transition owns its own bottom padding; this starts after it. */
 		padding-block: 0 var(--space-section);
 	}
 }
@@ -130,28 +131,6 @@
 	color: var(--fg-soft);
 }
 
-/* ---- the compass close, which the pinned desktop stage carries there ---- */
-
-.close {
-	margin-top: var(--space-section);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 0.9rem;
-	text-align: center;
-	padding-inline: var(--gutter);
-}
-
-.compass {
-	width: min(58vw, 260px);
-	margin-bottom: 1.5rem;
-}
-
-.statement {
-	font-size: var(--tool-display);
-}
-
-.statement em {
-	font-style: normal;
-	color: var(--accent);
-}
+/* The compass close lived here and is gone: on a phone it was a still
+   compass under a claim the desktop earns by animating (see ToolList.tsx).
+   The pinned stage still carries it above 769px. */
