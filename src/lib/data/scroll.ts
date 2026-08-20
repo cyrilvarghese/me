@@ -35,6 +35,11 @@ export const LABEL_DELAY = 0.22;
     rather than the shrink two separate knives forced. */
 export const PEEK_SCALE = 0.75;
 
+/** Phones peek smaller. The knife box fills far more of a narrow screen, and
+    the hero copy runs to roughly two thirds of it, so 0.75 leaves the peek
+    jammed against the bottom edge with nowhere to sit. */
+export const PEEK_SCALE_COMPACT = 0.5;
+
 /** Start offset, in seconds, for blade `i` of the fan. */
 export function bladeDelay(i: number): number {
   return i * STAGGER;

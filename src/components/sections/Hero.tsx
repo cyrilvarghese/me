@@ -12,6 +12,7 @@ import {
   BLADE_DUR,
   LABEL_DELAY,
   PEEK_SCALE,
+  PEEK_SCALE_COMPACT,
   bladeDelay,
 } from "@/lib/data/scroll";
 import { gsap, useGSAP } from "@/lib/gsap";
@@ -67,14 +68,17 @@ export default function Hero() {
           // Where the peek sits, as an offset from the knife's resting place.
           // Desktop: tucked to the right of the copy. Compact: low-right, clear
           // of the headline, matching where the hero's knife always sat.
+          const peekScale = compact ? PEEK_SCALE_COMPACT : PEEK_SCALE;
           const peekX = () =>
-            window.innerWidth - 0.03 * window.innerWidth - (PEEK_SCALE * S()) / 2 - artCentre();
-          const peekY = () => (compact ? 0.3 * window.innerHeight : -0.08 * window.innerHeight);
+            window.innerWidth - 0.03 * window.innerWidth - (peekScale * S()) / 2 - artCentre();
+          // desktop peeks above centre and travels down; on a phone the copy
+          // owns the top two thirds, so it waits below and rises into place
+          const peekY = () => (compact ? 0.26 * window.innerHeight : -0.08 * window.innerHeight);
 
           gsap.set(intro, {
             x: peekX,
             y: peekY,
-            scale: PEEK_SCALE,
+            scale: peekScale,
             rotation: -14,
           });
 

@@ -13,6 +13,7 @@ import {
   BLADE_DUR,
   LABEL_DELAY,
   PEEK_SCALE,
+  PEEK_SCALE_COMPACT,
   bladeDelay,
 } from "./scroll";
 import { cases } from "./cases";
@@ -92,8 +93,12 @@ describe("opening beats", () => {
   });
 
   it("peeks smaller than it lands, so the travel is a zoom in", () => {
-    expect(PEEK_SCALE).toBeGreaterThan(0);
-    expect(PEEK_SCALE).toBeLessThan(1);
+    for (const s of [PEEK_SCALE, PEEK_SCALE_COMPACT]) {
+      expect(s).toBeGreaterThan(0);
+      expect(s).toBeLessThan(1);
+    }
+    // a phone's knife box fills more of the screen, so it peeks smaller still
+    expect(PEEK_SCALE_COMPACT).toBeLessThan(PEEK_SCALE);
   });
 
   it("re-arms the fan below the trigger, with hysteresis", () => {
