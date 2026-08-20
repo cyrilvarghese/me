@@ -41,3 +41,17 @@
 	text-decoration-thickness: 1.5px;
 	text-underline-offset: 4px;
 }
+
+/* On a phone the quote is the tallest thing in any of these figures. At
+   20px it runs six or seven lines and pushes the rest of the drawing off
+   the screen, which costs more than the extra point of size buys. */
+@media (max-width: 760px) {
+	.quote {
+		font-size: 1.0625rem;
+		line-height: 1.55;
+	}
+
+	.em {
+		text-underline-offset: 3px;
+	}
+}
