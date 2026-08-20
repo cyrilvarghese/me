@@ -112,6 +112,23 @@
 		grid-template-columns: 1fr;
 	}
 
+	/* the visual leads: stacked, it is what identifies the case at a glance,
+	   and reading a headline before seeing the thing is the wrong order */
+	.caseAside {
+		order: -1;
+	}
+
+	/* the label becomes an eyebrow over its paragraph. A 9rem column costs a
+	   quarter of a phone screen and leaves the body ragged. */
+	.row {
+		grid-template-columns: 1fr;
+		gap: 0.45rem;
+	}
+
+	.rowLabel {
+		padding-top: 0;
+	}
+
 	.results {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
