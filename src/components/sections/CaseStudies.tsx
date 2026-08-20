@@ -13,7 +13,7 @@ const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
 export default function CaseStudies() {
   return (
     <section className={`section-shell ${styles.section}`} id="work" aria-label="Selected work">
-      <p className={`mono-label ${styles.sectionEyebrow}`}>Proof</p>
+      <p className={`mono-label ${styles.sectionEyebrow}`}>Outcomes</p>
       <h2 className={`serif-display ${styles.sectionTitle}`}>Three shipped systems.</h2>
 
       {cases.map((c) => (
@@ -48,7 +48,7 @@ export default function CaseStudies() {
                 column rather than as a separate band */}
             {c.results && (
               <div className={styles.row}>
-                <p className={`mono-label ${styles.rowLabel}`}>Impact</p>
+                <p className={`mono-label ${styles.rowLabel}`}>Outcomes</p>
                 <div className={styles.results}>
                   {c.results.map((r) => (
                     <div key={r.label}>

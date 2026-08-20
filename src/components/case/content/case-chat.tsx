@@ -62,7 +62,7 @@ export default function CaseChatContent() {
               "The student talks, examines, tests, treats — then sees where the reasoning broke, and goes again.",
           },
           {
-            label: "Impact",
+            label: "Outcomes",
             value: "Unlimited patients",
             /* "on demand" is the tail of the line above, so it stays lowercase
                and leads the body rather than starting a sentence */

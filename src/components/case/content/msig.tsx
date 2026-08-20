@@ -35,7 +35,7 @@ export default function MsigContent() {
             ),
           },
           {
-            label: "Impact",
+            label: "Outcomes",
             value: "~8 min",
             body:
               "Cut from every quote issued, with fewer errors from fields grouped by meaning.",
@@ -134,7 +134,7 @@ export default function MsigContent() {
                 />
 
                 <CaseImpact
-                  eyebrow="Impact"
+                  eyebrow="Outcomes"
                   value="~8 min"
                   detail="Cut from quote-issuance time"
                   note="A scalable, responsive design system with semantically grouped data entry reduced errors and improved efficiency."

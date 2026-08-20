@@ -27,7 +27,7 @@ export default function CreativeOsContent() {
               "One platform where brand context, script through reels, and approvals all live in the same space — faster iterations, lower cost.",
           },
           {
-            label: "Impact",
+            label: "Outcomes",
             value: "40% time saved",
             body:
               "2.5 hrs → 1.5 hrs per asset, with errors caught while they are still cheap to fix.",
@@ -107,7 +107,7 @@ export default function CreativeOsContent() {
                 />
 
                 <CaseImpact
-                  eyebrow="Impact"
+                  eyebrow="Outcomes"
                   value="40% time saved"
                   detail="2.5 hrs → 1.5 hrs per asset"
                   note="Context set once, one canvas end to end, and a review checkpoint before the expensive step."
