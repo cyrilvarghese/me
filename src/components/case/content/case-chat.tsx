@@ -111,7 +111,7 @@ export default function CaseChatContent() {
                     than as an assertion. */}
                 <CaseVoices
                   eyebrow="What we heard"
-                  heading="Both sides name the same gap."
+                  heading="Lack of real cases hurts medical learning."
                   lede="Students describe theory they cannot apply and exams they do not feel ready for. Their teachers agree that cases are the answer, and cannot find the hours to build them."
                   groups={[
                     {
