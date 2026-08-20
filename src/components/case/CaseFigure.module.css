@@ -43,6 +43,13 @@
 .narrowOnly {
 	display: none;
 	width: 100%;
+	/* A phone telling is drawn at ~340–420 viewBox units, and an svg with
+	   width:100% has no opinion about that — in the band between a tablet
+	   and the 900px swap it stretches to ~770px and renders its 15-unit
+	   labels near 34px. Cap it at the widest such drawing so it lands at
+	   its own size and simply centres in the panel instead. */
+	max-width: 26rem;
+	margin-inline: auto;
 }
 
 .caption {

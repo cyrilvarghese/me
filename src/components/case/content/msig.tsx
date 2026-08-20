@@ -66,6 +66,7 @@ export default function MsigContent() {
                   eyebrow="The agent's day"
                   heading="The day is half selling, half servicing."
                   diagram="/assets/MSIG/diagrams/01-agent-day.svg"
+                  diagramMobile="/assets/MSIG/diagrams/01-agent-day-mobile.svg"
                 />
 
                 <CaseJourney

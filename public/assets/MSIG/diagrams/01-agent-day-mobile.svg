@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 420" role="img"
+     aria-label="How an agent spends her time: selling a new policy 45 per cent, servicing an existing policy 45 per cent, and other admin tasks 10 per cent.">
+  <!-- The phone telling of 01-agent-day.svg. The claim is the split
+       itself — two equal halves and a sliver — and the pie carries that
+       at any width, so the drawing stays. What breaks on a phone is the
+       fan of callouts: three rays out of one small circle need the wide
+       file's 960 units to land anywhere, and any two of them cross once
+       the column narrows.
+
+       So the rays give way to the one connector that still points at this
+       width: each entry carries its slice's own colour as a rule down its
+       left edge. Order runs by share rather than by clock position, which
+       is what the heading above the figure says out loud.
+
+       viewBox 340 because the figure's inner box is ~338px on a 420px
+       phone — near 1:1, so 15 and 13 here are the site's --text-sublabel
+       and --text-caption at true size. -->
+  <defs>
+    <clipPath id="msClip-01m" clipPathUnits="objectBoundingBox">
+      <circle cx=".5" cy=".5" r=".46"/>
+    </clipPath>
+  </defs>
+
+  <!-- band: persona, y12–y60 -->
+  <image href="/assets/MSIG/icons/agent.png" x="16" y="12" width="48" height="48" clip-path="url(#msClip-01m)"/>
+  <text x="76" y="34" font-size="13" fill="currentColor" opacity=".62">Jane, insurance agent</text>
+  <text x="76" y="56" font-size="15" fill="currentColor">How Jane spends her time</text>
+
+  <!-- band: the day at 45 / 45 / 10, y76–y220. Same hue assignment and
+       same clock positions as the wide file, so the two read as one
+       chart: selling takes the left half and the accent, servicing steps
+       down the ramp on the right, admin is the neutral wedge on top. -->
+  <g stroke="#151111" stroke-width="2">
+    <!-- selling, 45% — the left half -->
+    <path d="M170,148 L170,220 A72,72 0 0,1 147.75,79.52 Z" fill="#ea0000"/>
+    <!-- servicing, 45% — the right half -->
+    <path d="M170,148 L192.25,79.52 A72,72 0 0,1 170,220 Z" fill="#c98080"/>
+    <!-- other admin, 10% — the wedge at the top -->
+    <path d="M170,148 L147.75,79.52 A72,72 0 0,1 192.25,79.52 Z" fill="#6d6362"/>
+  </g>
+
+  <!-- band: the three shares named, y249–y406 -->
+  <rect x="12" y="249" width="4" height="30" fill="#ea0000"/>
+  <text x="32" y="262" font-size="15" fill="currentColor">Selling a new policy (45%)</text>
+  <text x="32" y="282" font-size="13" fill="currentColor" opacity=".62">Quotes, negotiations, onboarding.</text>
+
+  <rect x="12" y="309" width="4" height="30" fill="#c98080"/>
+  <text x="32" y="322" font-size="15" fill="currentColor">Servicing a policy (45%)</text>
+  <text x="32" y="342" font-size="13" fill="currentColor" opacity=".62">Renewals, changes, claims.</text>
+
+  <rect x="12" y="369" width="4" height="30" fill="#6d6362"/>
+  <text x="32" y="382" font-size="15" fill="currentColor">Other admin tasks (10%)</text>
+  <text x="32" y="402" font-size="13" fill="currentColor" opacity=".62">Training, coordination, compliance.</text>
+</svg>
