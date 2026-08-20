@@ -15,7 +15,10 @@ import { svgProps, EDGE_WHITE, EDGE_WHITE_SOFT, RED } from "./common";
    both offsets carry the accent tinge every neutral on this site does. */
 const MARK = {
   x: 478,
-  y: 639,
+  /* 630, not a nudge below it: the mark shares the scale's long axis
+     with the pivot pin it sits beside — same centre line as the pin,
+     the slab and the midpoint between the two edge rules. */
+  y: 630,
   textAnchor: "end",
   dominantBaseline: "middle",
   fontFamily: "var(--font-mono)",
