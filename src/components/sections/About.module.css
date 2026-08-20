@@ -13,6 +13,106 @@
 	margin-bottom: 1.25rem;
 }
 
+/* Text left, portrait right — the reverse of the Framer page on purpose.
+   Everything on this site starts on the same left rail: the eyebrow, the
+   headline, the timeline years. A portrait in the first column would
+   push all of that inward and break the one line the page is built on. */
+.intro {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) clamp(13rem, 22vw, 20rem);
+	gap: clamp(2rem, 5vw, 4rem);
+	align-items: start;
+	margin-bottom: clamp(3rem, 8vh, 5rem);
+}
+
+/* The portrait is three stacked layers on one square box: a blurred
+   backlight behind, the photograph, and a ring above it. Separate
+   elements rather than pseudo-elements — an <img> has none, and the
+   stacking is easier to read written out. */
+.portraitFrame {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 1;
+}
+
+/* The file is already square, padded in --bg rather than cropped, so
+   nothing here has to choose what the circle keeps. Cropping a square
+   out of the 3:2 original always put the woman on Cyril's right — she
+   sits about 90% across the frame — under the rim; padding squares it
+   without losing anyone, and the bands land on the page's own colour. */
+.portrait {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 1px solid rgba(248, 244, 242, 0.16);
+}
+
+/* Backlight: a soft disc a little larger than the photograph, drifting
+   under it. rgba literals and its own compositor layer, because
+   translucent paint and color-mix both drop out in Cyril's browser
+   otherwise (same quirk family as the header veil and hero scrim). */
+.glow {
+	position: absolute;
+	inset: -14%;
+	z-index: 0;
+	border-radius: 50%;
+	background: radial-gradient(
+		circle at 52% 38%,
+		rgba(234, 0, 0, 0.2),
+		rgba(248, 244, 242, 0.07) 42%,
+		rgba(21, 17, 17, 0) 68%
+	);
+	filter: blur(24px);
+	transform: translateZ(0);
+	animation: backlight 11s ease-in-out infinite alternate;
+}
+
+/* The shimmer is a second ring laid over the photograph's own hairline,
+   transparent except for a bright arc at the top, turning slowly. A
+   rotating border beats a conic-gradient masked into a ring: it is one
+   property, it needs no mask-composite, and it animates transform only.
+   The arc fades along the right edge so it reads as light moving across
+   a rim rather than a loading spinner. */
+.shimmer {
+	position: absolute;
+	inset: -1px;
+	z-index: 2;
+	border-radius: 50%;
+	border: 1px solid transparent;
+	border-top-color: rgba(248, 244, 242, 0.5);
+	border-right-color: rgba(248, 244, 242, 0.16);
+	pointer-events: none;
+	animation: shimmer 14s linear infinite;
+}
+
+@keyframes backlight {
+	from {
+		transform: translate3d(-3%, -2%, 0) scale(1);
+	}
+	to {
+		transform: translate3d(4%, 3%, 0) scale(1.06);
+	}
+}
+
+@keyframes shimmer {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Both loops run forever, so both stop when motion is not wanted. The
+   ring stays put as a lit edge and the backlight holds where it is —
+   the portrait keeps its depth, it just stops moving. */
+@media (prefers-reduced-motion: reduce) {
+	.glow,
+	.shimmer {
+		animation: none;
+	}
+}
+
 .lede {
 	color: var(--fg-soft);
 	max-width: 54ch;
@@ -20,12 +120,6 @@
 
 .lede + .lede {
 	margin-top: 1.1rem;
-}
-
-/* the last paragraph carries the gap down to the timeline, so adding or
-   removing one does not change the spacing below */
-.lede:last-of-type {
-	margin-bottom: clamp(3rem, 8vh, 5rem);
 }
 
 /* Emphasis is weight and full-strength ink against the softened body —
@@ -164,6 +258,21 @@
    over the role and the rung goes with them — a rule with nothing
    beside it is decoration. */
 @media (max-width: 768px) {
+	/* One column, portrait first: it introduces the section the way a
+	   photograph does, and a 13rem circle beside body copy on a phone is
+	   too small to be a portrait and too large to be a mark. Capped
+	   rather than full-bleed — a circle the width of the screen reads as
+	   a hero image, which this is not. */
+	.intro {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.portraitFrame {
+		order: -1;
+		max-width: 15rem;
+	}
+
 	.entry {
 		grid-template-columns: 1fr;
 		row-gap: 0.5rem;

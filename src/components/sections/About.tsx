@@ -16,22 +16,42 @@ export default function About() {
   return (
     <section className={`section-shell ${styles.section}`} id="about" aria-label="About">
       <p className={`mono-label ${styles.eyebrow}`}>About</p>
-      <h2 className={`serif-display ${styles.title}`}>
-        Where design meets code: creating products that scale from 0&rarr;1
-      </h2>
-      <p className={styles.lede}>
-        From sketching stories as a kid to designing products as a designer, that same
-        sense of <strong>curiosity and wonder still drives my work</strong>.
-      </p>
-      <p className={styles.lede}>
-        With a background spanning product design, engineering and storytelling, I&apos;m
-        now a{" "}
-        <strong>
-          digital product design engineer exploring how AI can reshape the way we learn,
-          build and solve problems
-        </strong>
-        .
-      </p>
+
+      <div className={styles.intro}>
+        <div>
+          <h2 className={`serif-display ${styles.title}`}>
+            Where design meets code: creating products that scale from 0&rarr;1
+          </h2>
+          <p className={styles.lede}>
+            From sketching stories as a kid to designing products as a designer, that
+            same sense of <strong>curiosity and wonder still drives my work</strong>.
+          </p>
+          <p className={styles.lede}>
+            With a background spanning product design, engineering and storytelling,
+            I&apos;m now a{" "}
+            <strong>
+              digital product design engineer exploring how AI can reshape the way we
+              learn, build and solve problems
+            </strong>
+            .
+          </p>
+        </div>
+        {/* width/height are the real intrinsic size of the file: the box is
+            reserved before the image lands, so the timeline below it never
+            jumps. next/image is not in play here — the export is static and
+            images are unoptimized, so every asset is pre-sized by hand. */}
+        <div className={styles.portraitFrame}>
+          <span className={styles.glow} aria-hidden="true" />
+          <img
+            src="/assets/profile.webp"
+            width={1100}
+            height={1100}
+            alt='Cyril at a pottery wheel in a workshop, marked "me" in the photograph.'
+            className={styles.portrait}
+          />
+          <span className={styles.shimmer} aria-hidden="true" />
+        </div>
+      </div>
 
       <ol className={styles.timeline}>
         {experience.map((role, i) => (
