@@ -229,8 +229,7 @@ export default function Hero() {
             I&apos;ll figure out the rest.
           </h1>
           <p className={styles.desc}>
-            I work across product, design, engineering and AI to turn ambiguous problems into
-            shipped systems.
+            I enjoy looking at problems through a variety of lenses.
           </p>
           <a href="#work" className={`mono-label ${styles.cue}`}>
             See how{" "}
