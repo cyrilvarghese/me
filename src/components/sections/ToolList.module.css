@@ -39,9 +39,12 @@
 .list {
 	list-style: none;
 	margin-inline: var(--gutter);
+	/* The frame, and nothing behind it. It carried a low red bloom
+	   (0 0 22px rgba(234,0,0,.13)) that haloed the whole table and the art
+	   inside it; removed 2026-08-21 (Cyril) — the drawn rule is the
+	   structure here, and a glow around it is decoration the rest of the
+	   page does not spend. */
 	border: 1px solid rgba(234, 0, 0, 0.42);
-	/* the minor blur: a low bloom off the frame, not a drop shadow */
-	box-shadow: 0 0 22px rgba(234, 0, 0, 0.13);
 }
 
 .row {
