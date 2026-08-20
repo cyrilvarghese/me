@@ -26,6 +26,14 @@ const CLUSTER_R = 10;
     the statement to breathe below (user, 2026-08-16). */
 const LIFT = 5;
 
+/** How far above centre the lineup's tools stand, as a fraction of the box.
+    Three things are pinned to this: the tools' own y, the circles that wrap
+    them later, and `.lineup`'s `top` in the module CSS — that last one cannot
+    read this value, so it carries the arithmetic in a comment. Raised from
+    0.16 because on short laptops the captions ran into the headline below
+    (user, 2026-08-20). */
+const LINEUP_LIFT = 0.22;
+
 /** Timeline length in spacer units. The choreography runs 0 → 0.97 at the
     same vh-per-beat as always; 0.97 → DUR is pure runway — ~118vh of pinned
     scroll where the time-based needle hunt plays out with the wheel never
@@ -220,9 +228,9 @@ export default function OutcomeTransition() {
                 `[data-tool="${c.id}"]`,
                 {
                   x: () => colX(k) - (innerLeft() + 0.505 * S()),
-                  // stands 16% of the box above center — clear air around
-                  // the settled headline below (user direction, 2026-08-16)
-                  y: () => -0.16 * S(),
+                  // stands LINEUP_LIFT of the box above center — clear air
+                  // around the settled headline below (user, 2026-08-16)
+                  y: () => -LINEUP_LIFT * S(),
                   rotation: 90,
                   duration: 0.14,
                   ease: "power2.inOut",
@@ -265,8 +273,8 @@ export default function OutcomeTransition() {
                 `[data-circle="${c.id}"]`,
                 {
                   x: () => colX(k) - (innerLeft() + (s.x / 100) * S()),
-                  // 0.45 wraps the standing tool; minus the 16% lineup lift
-                  y: () => (0.29 - s.y / 100) * S(),
+                  // 0.45 wraps the standing tool; minus the lineup lift
+                  y: () => (0.45 - LINEUP_LIFT - s.y / 100) * S(),
                 },
                 0.63
               );

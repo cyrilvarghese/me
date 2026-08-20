@@ -102,8 +102,9 @@
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	/* 0.145 hugs the standing tools; minus the 16% lineup lift */
-	top: calc(50% - 0.015 * min(58vh, 54vw, 660px) + 18px);
+	/* 0.145 hugs the standing tools; minus LINEUP_LIFT (0.22) from
+	   OutcomeTransition.tsx, which this cannot read. Keep them in step. */
+	top: calc(50% - 0.075 * min(58vh, 54vw, 660px) + 18px);
 	width: min(92vw, 1200px);
 	display: flex;
 	pointer-events: none;
@@ -242,6 +243,25 @@
 	.compassWrap,
 	.bloom {
 		display: none;
+	}
+}
+
+/* Short laptops. Everything here scales with viewport height except the
+   caption text, so on a 680px screen the six-line entries are proportionally
+   twice as tall and run into the headline. Tighten the block and drop the
+   headline away from it. */
+@media (max-height: 760px) {
+	.colLine {
+		font-size: 0.78rem;
+		line-height: 1.35;
+	}
+
+	.colPeriod {
+		margin-bottom: 0.4rem;
+	}
+
+	.copy {
+		bottom: 7vh;
 	}
 }
 
