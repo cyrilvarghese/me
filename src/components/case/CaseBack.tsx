@@ -1,10 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./CaseClose.module.css";
+import { takeCaseOrigin } from "@/lib/nav/case-origin";
+import styles from "./CaseBack.module.css";
 
-/** Fixed close control: collapses the page back into the card frame it
-    expanded from.
+/** The case page's one exit, in the hero: collapses the page back into
+    the card it expanded from.
 
     Next runs no view transition for history traversals (probed
     2026-08-17: startViewTransition never fires on popstate), and React
@@ -12,14 +13,19 @@ import styles from "./CaseClose.module.css";
     vt-* attributes exist after client-side navigation. So the reverse
     morph is driven manually on our own data-case-visual hooks: name the
     hero inline, start a native view transition, go back, name the
-    restored card before the new-state capture. Falls back to a plain
-    navigation without support, under reduced motion, or for direct
-    visitors with no history. */
-export default function CaseClose({ slug }: { slug: string }) {
+    restored card before the new-state capture.
+
+    The morph needs the card to be one history entry behind, at the
+    scroll position it was left at, so it runs only for a visitor who
+    arrived by clicking that card (see lib/nav/case-origin). Everyone
+    else — direct link, no view-transition support, reduced motion —
+    gets a plain navigation to the work list, which is where this
+    control claims to go either way. */
+export default function CaseBack({ slug }: { slug: string }) {
   const router = useRouter();
 
-  const close = () => {
-    const hasHistory = window.history.length > 1;
+  const back = () => {
+    const cameFromCard = takeCaseOrigin(slug);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const name = `case-visual-${slug}`;
     const hero = document.querySelector<HTMLElement>(`[data-case-visual="${slug}"]`);
@@ -37,13 +43,11 @@ export default function CaseClose({ slug }: { slug: string }) {
       root.style.scrollBehavior = inlineBehavior;
     };
 
-    if (!hasHistory) {
+    const canMorph =
+      cameFromCard && !reduce && hero && typeof document.startViewTransition === "function";
+
+    if (!canMorph) {
       router.push("/#work");
-      setTimeout(restoreBehavior, 600);
-      return;
-    }
-    if (reduce || !hero || typeof document.startViewTransition !== "function") {
-      router.back();
       setTimeout(restoreBehavior, 600);
       return;
     }
@@ -84,11 +88,10 @@ export default function CaseClose({ slug }: { slug: string }) {
   return (
     <button
       type="button"
-      aria-label="Close case study"
-      className={`mono-label btn btn-icon ${styles.close}`}
-      onClick={close}
+      className={`mono-label btn btn-ghost ${styles.back}`}
+      onClick={back}
     >
-      ×
+      ← Work
     </button>
   );
 }

@@ -56,15 +56,6 @@
 	gap: 1.1rem;
 }
 
-.backLink {
-	color: var(--muted);
-	transition: color 0.2s ease;
-}
-
-.backLink:hover {
-	color: var(--fg);
-}
-
 .kicker {
 	color: var(--accent);
 	font-size: var(--text-sublabel);
@@ -82,6 +73,13 @@
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 2rem;
+}
+
+/* the two controls are the same gesture at different weights — they sit
+   closer to each other than to the line above them. Voice and geometry
+   come from .btn / .btn-ghost; this is placement only. */
+.backLink {
+	margin-top: -1rem;
 }
 
 .ctaLine {

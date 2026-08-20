@@ -237,7 +237,7 @@ button {
 	animation-duration: 420ms;
 }
 
-/* the manual reverse morph (CaseClose) pairs by name, not class — keep
+/* the manual reverse morph (CaseBack) pairs by name, not class — keep
    its pace identical to the forward morph */
 ::view-transition-group(case-visual-creative-os),
 ::view-transition-group(case-visual-case-chat),

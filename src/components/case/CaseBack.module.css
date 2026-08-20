@@ -1,0 +1,8 @@
+/* Geometry, border and hover all come from the global .btn / .btn-ghost
+   voices — this only gives the control a ground to sit on, since it sits
+   over the hero photograph. rgba literal of --bg, not color-mix:
+   stylesheet color-mix silently no-ops in Cyril's browser (see the
+   header veil + hero scrim notes). */
+.back {
+	background: rgba(21, 17, 17, 0.78);
+}

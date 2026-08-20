@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ViewTransition } from "react";
 import { m } from "motion/react";
 import { cases } from "@/lib/data/cases";
+import { markCaseOrigin } from "@/lib/nav/case-origin";
 import CaseVisual from "@/components/case/CaseVisual";
 import styles from "./CaseStudies.module.css";
 
@@ -59,7 +60,11 @@ export default function CaseStudies() {
               </div>
             )}
 
-            <Link href={`/work/${c.slug}`} className={`mono-label btn ${styles.explore}`}>
+            <Link
+              href={`/work/${c.slug}`}
+              className={`mono-label btn ${styles.explore}`}
+              onClick={() => markCaseOrigin(c.slug)}
+            >
               Explore →
             </Link>
           </m.div>
@@ -70,6 +75,7 @@ export default function CaseStudies() {
               className={styles.visualLink}
               aria-label={`Open case study: ${c.headline}`}
               data-case-visual={c.slug}
+              onClick={() => markCaseOrigin(c.slug)}
             >
               <ViewTransition name={`case-visual-${c.slug}`} share="morph" default="none">
                 <CaseVisual cover={c.cover} className={styles.visual} />

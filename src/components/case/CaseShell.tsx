@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ViewTransition } from "react";
 import type { CaseStudy } from "@/lib/data/cases";
-import CaseClose from "./CaseClose";
+import CaseBack from "./CaseBack";
 import CaseVisual from "./CaseVisual";
 import styles from "./CaseShell.module.css";
 
@@ -18,7 +18,6 @@ export default function CaseShell({
 }) {
   return (
     <>
-      <CaseClose slug={caseStudy.slug} />
       <div className={styles.hero}>
         <ViewTransition name={`case-visual-${caseStudy.slug}`} share="morph" default="none">
           <div className={styles.heroVisual} data-case-visual={caseStudy.slug}>
@@ -28,9 +27,7 @@ export default function CaseShell({
         <div className={styles.scrim} aria-hidden="true" />
         <div className={styles.heroText}>
           <div className={`section-shell ${styles.heroInner}`}>
-            <Link href="/#work" className={`mono-label ${styles.backLink}`}>
-              ← Work
-            </Link>
+            <CaseBack slug={caseStudy.slug} />
             <p className={`mono-label ${styles.kicker}`}>
               {caseStudy.num} / {caseStudy.category}
             </p>
@@ -48,7 +45,7 @@ export default function CaseShell({
         <a href="mailto:cyrilpdev@gmail.com" className="mono-label btn">
           Start a conversation
         </a>
-        <Link href="/#work" className={`mono-label ${styles.backLink}`}>
+        <Link href="/#work" className={`mono-label btn btn-ghost ${styles.backLink}`}>
           ← All work
         </Link>
       </section>
