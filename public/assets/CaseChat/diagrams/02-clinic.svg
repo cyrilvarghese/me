@@ -1,12 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" role="img"
-     aria-label="Six stages of care — pick a patient, take history, order tests, diagnose, treat, read the feedback — closing back on themselves, with a new patient every time round.">
+     aria-label="Six stages of care around a virtual clinic — pick a patient, take history, order tests, diagnose, treat, read the feedback — closing back on themselves, with a new patient every time round.">
   <!-- The same six stages as a real consultation, drawn as a circuit
        rather than a list, because the closing edge is the product: the
-       student comes out of feedback and straight into another patient. -->
+       student comes out of feedback and straight into another patient.
+
+       Each stop carries the icon that names it elsewhere in this case
+       study, so the ring and the object diagram share one vocabulary.
+       Supplied clip-art is drawn with black outlines that vanish on this
+       ground, so every mark sits on the light disc the diagram skill
+       reserves for artwork it did not draw — colours untouched, because a
+       filtered logo reads as a smudge rather than a mark.
+
+       The icons are <image> inside an inlined svg, not an <img> around
+       one: the file still inlines, so the text keeps the mono voice and
+       the animation still sees the shared motion sheet. -->
   <circle cx="280" cy="200" r="120" fill="none" stroke="currentColor" stroke-opacity=".18"/>
   <circle class="cc-orbit" cx="280" cy="200" r="120" fill="none" stroke="#ea0000" stroke-opacity=".7" style="--len:754"/>
 
-  <!-- direction, stated once per arc so the loop reads clockwise -->
+  <!-- direction, stated once per arc so the loop reads clockwise. They sit
+       midway between two stops, where the discs leave the arc clear. -->
   <g fill="#ea0000" fill-opacity=".8">
     <path d="M-5 -4 L5 0 L-5 4 z" transform="translate(340 96) rotate(30)"/>
     <path d="M-5 -4 L5 0 L-5 4 z" transform="translate(400 200) rotate(90)"/>
@@ -16,33 +28,63 @@
     <path d="M-5 -4 L5 0 L-5 4 z" transform="translate(220 96) rotate(330)"/>
   </g>
 
-  <!-- nodes punched out of the ring so the stages read as stops on it -->
-  <g fill="#1e1818" stroke="currentColor" stroke-opacity=".5">
-    <circle class="cc-in" style="--d:.15s" cx="280" cy="80" r="6"/>
-    <circle class="cc-in" style="--d:.25s" cx="384" cy="140" r="6"/>
-    <circle class="cc-in" style="--d:.35s" cx="384" cy="260" r="6"/>
-    <circle class="cc-in" style="--d:.45s" cx="280" cy="320" r="6"/>
-    <circle class="cc-in" style="--d:.55s" cx="176" cy="260" r="6"/>
-    <circle class="cc-in" style="--d:.65s" cx="176" cy="140" r="6"/>
+  <!-- The clinic the loop runs inside. Larger than the stops, because it
+       is the thing they all belong to rather than one more of them. -->
+  <!-- The centre band ends at y234, which is where the discs at 3 and 5
+       start. Placed by eye against the ring instead, the second line runs
+       into their row. -->
+  <g class="cc-in" style="--d:.05s">
+    <circle cx="280" cy="168" r="28" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+    <image href="/assets/CaseChat/icons/clinic.png" x="262" y="150" width="36" height="36"/>
   </g>
+  <text class="cc-in" style="--d:.05s" x="280" y="216" font-size="15" text-anchor="middle" fill="#ea0000">VIRTUAL CLINIC</text>
+  <text class="cc-in" style="--d:.05s" x="280" y="232" font-size="12" text-anchor="middle" fill="currentColor" opacity=".5">unlimited patients</text>
 
-  <g font-size="12" fill="currentColor" opacity=".8">
-    <text class="cc-in" style="--d:.15s" x="280" y="58" text-anchor="middle">1 · PICK A PATIENT</text>
-    <text class="cc-in" style="--d:.25s" x="400" y="136">2 · TAKE HISTORY</text>
-    <text class="cc-in" style="--d:.35s" x="400" y="264">3 · ORDER TESTS</text>
-    <text class="cc-in" style="--d:.45s" x="280" y="346" text-anchor="middle">4 · DIAGNOSE</text>
-    <text class="cc-in" style="--d:.55s" x="160" y="264" text-anchor="end">5 · TREAT</text>
-    <text class="cc-in" style="--d:.65s" x="160" y="136" text-anchor="end">6 · FEEDBACK</text>
+  <!-- The six stops. Disc, mark and label move together, so a stage
+       arrives as one thing rather than three that happen to line up. -->
+  <g font-size="12" fill="currentColor">
+    <g class="cc-in" style="--d:.15s">
+      <circle cx="280" cy="80" r="26" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/Patient.png" x="264" y="64" width="32" height="32"/>
+      <text x="280" y="44" text-anchor="middle" opacity=".8">1 · PICK A PATIENT</text>
+    </g>
+
+    <g class="cc-in" style="--d:.25s">
+      <circle cx="384" cy="140" r="26" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/patient-history.png" x="368" y="124" width="32" height="32"/>
+      <text x="420" y="144" opacity=".8">2 · TAKE HISTORY</text>
+    </g>
+
+    <g class="cc-in" style="--d:.35s">
+      <circle cx="384" cy="260" r="26" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/test.png" x="368" y="244" width="32" height="32"/>
+      <text x="420" y="264" opacity=".8">3 · ORDER TESTS</text>
+    </g>
+
+    <g class="cc-in" style="--d:.45s">
+      <circle cx="280" cy="320" r="26" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/diagnosis.png" x="264" y="304" width="32" height="32"/>
+      <text x="280" y="366" text-anchor="middle" opacity=".8">4 · DIAGNOSE</text>
+    </g>
+
+    <g class="cc-in" style="--d:.55s">
+      <circle cx="176" cy="260" r="26" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/treatment.png" x="160" y="244" width="32" height="32"/>
+      <text x="140" y="264" text-anchor="end" opacity=".8">5 · TREAT</text>
+    </g>
+
+    <g class="cc-in" style="--d:.65s">
+      <circle cx="176" cy="140" r="26" fill="#e7e3e1" stroke="rgba(248,244,242,.28)"/>
+      <image href="/assets/CaseChat/icons/Feedback.png" x="160" y="124" width="32" height="32"/>
+      <text x="140" y="144" text-anchor="end" opacity=".8">6 · FEEDBACK</text>
+    </g>
   </g>
-
-  <text x="280" y="196" font-size="15" text-anchor="middle" fill="#ea0000">VIRTUAL CLINIC</text>
-  <text x="280" y="216" font-size="12" text-anchor="middle" fill="currentColor" opacity=".5">unlimited patients</text>
 
   <!-- the closing edge, named. It sits clear of the ring with a leader
        rather than crowding the arc it annotates. -->
   <g class="cc-in" style="--d:1s" fill="#ea0000">
-    <text x="186" y="62" font-size="12" text-anchor="end">and again —</text>
-    <text x="186" y="78" font-size="12" text-anchor="end">a new patient</text>
-    <line x1="194" y1="82" x2="228" y2="98" stroke="#ea0000" stroke-opacity=".55"/>
+    <text x="150" y="52" font-size="12" text-anchor="end">and again —</text>
+    <text x="150" y="68" font-size="12" text-anchor="end">a new patient</text>
+    <line x1="158" y1="72" x2="212" y2="96" stroke="#ea0000" stroke-opacity=".55"/>
   </g>
 </svg>
