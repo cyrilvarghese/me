@@ -123,7 +123,7 @@
 
        Neutral for the two rooms being counted — they are structure — and
        red for the one the drawing is about. -->
-  <line class="cc-draw" style="--len:37;--d:.5s" x1="76" y1="184" x2="58" y2="216" stroke="#f8f4f2" stroke-opacity=".38" stroke-width="2" marker-end="url(#ccsmA)"/>
+  <line class="cc-draw" style="--len:33;--d:.5s" x1="58" y1="176" x2="84" y2="196" stroke="#f8f4f2" stroke-opacity=".38" stroke-width="2" marker-end="url(#ccsmA)"/>
   <line class="cc-draw" style="--len:61;--d:.6s" x1="214" y1="180" x2="154" y2="208" stroke="#f8f4f2" stroke-opacity=".38" stroke-width="2" marker-end="url(#ccsmA)"/>
   <line class="cc-draw" style="--len:30;--d:.7s" x1="110" y1="320" x2="110" y2="350" stroke="#ea0000" stroke-opacity=".75" stroke-width="2" marker-end="url(#ccsmR)"/>
 
