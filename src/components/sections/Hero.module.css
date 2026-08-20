@@ -28,11 +28,21 @@
 
 .headline {
 	font-size: var(--text-display);
-	/* The knife peeks into the right of the stage, so the measure has to stop
-	   short of it. Narrower than it looks: Fraunces' zero is ~60px at display
-	   size, so 13ch is about 780px, not thirteen characters' worth. */
-	max-width: 13ch;
+	/* Wide enough that "Owning the outcome," holds as one line, so balance
+	   breaks the headline in two at the comma; on narrow screens it rewraps
+	   instead of overflowing, which a hard <br> would not. The knife peeks
+	   into the right of the stage, so the measure still stops short of it —
+	   Fraunces' zero is ~60px at display size, so ch runs wide. */
+	max-width: 20ch;
 	text-wrap: balance;
+}
+
+/* below the display clamp's floor "Owning the outcome," is wider than the
+   screen, so the forced break steps aside and the line wraps as it must */
+@media (max-width: 479px) {
+	.headBreak {
+		display: none;
+	}
 }
 
 .desc {

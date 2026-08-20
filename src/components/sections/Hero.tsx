@@ -256,7 +256,13 @@ export default function Hero() {
         <div className={`section-shell ${styles.inner}`} data-hero-copy="">
           <p className={`mono-label ${styles.eyebrow}`}>Product Builder · Designer · Engineer</p>
           <h1 className={`serif-display ${styles.headline}`}>
-            Owning the outcome, end to end.
+            {/* the break is the comma's: balance alone weighs "Owning the
+                outcome," and "outcome, end to end." within pixels of each
+                other and picks the wrong one. Hidden on narrow screens,
+                where the first phrase cannot hold as a line. */}
+            Owning the outcome,{" "}
+            <br className={styles.headBreak} />
+            end to end.
           </h1>
           <p className={styles.desc}>
             I work across product, design, engineering and AI to turn ambiguous problems into
