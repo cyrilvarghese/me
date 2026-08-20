@@ -34,8 +34,14 @@
 /* A ruled table: one row per tool, two columns — the tool, then what it is.
    Every rule is drawn. The container carries the outer frame, each row its
    own top edge, and the art cell the vertical between the columns. Square
-   corners per the geometry tokens; rgba literals throughout, since
-   colour-mix in a shadow silently no-ops in Edge here. */
+   corners per the geometry tokens.
+
+   The rules are NEUTRAL (Cyril, 2026-08-21). They were red — 0.42 on the
+   frame, 0.2 inside — which spent the accent on the furniture of a table
+   and left the tool art competing with its own grid. Red is for the moment
+   that matters, and a row divider is not one. The two weights are kept, so
+   the frame still reads as the outer edge and the rules inside it as
+   structure. */
 .list {
 	list-style: none;
 	margin-inline: var(--gutter);
@@ -44,14 +50,14 @@
 	   inside it; removed 2026-08-21 (Cyril) — the drawn rule is the
 	   structure here, and a glow around it is decoration the rest of the
 	   page does not spend. */
-	border: 1px solid rgba(234, 0, 0, 0.42);
+	border: 1px solid rgba(248, 244, 242, 0.22);
 }
 
 .row {
 	display: grid;
 	grid-template-columns: 6.5rem minmax(0, 1fr);
 	align-items: stretch;
-	border-top: 1px solid rgba(234, 0, 0, 0.2);
+	border-top: 1px solid var(--hairline);
 }
 
 .row:first-child {
@@ -68,7 +74,7 @@
 	display: grid;
 	place-items: center;
 	overflow: hidden;
-	border-right: 1px solid rgba(234, 0, 0, 0.2);
+	border-right: 1px solid var(--hairline);
 }
 
 /* The strip the rotated tool occupies is centred near 50.5% / 43% of the
