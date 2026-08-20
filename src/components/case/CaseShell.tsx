@@ -41,7 +41,7 @@ export default function CaseShell({
 
       <section className={`section-shell ${styles.cta}`}>
         <p className={`serif-display ${styles.ctaLine}`}>
-          Have a problem that doesn't fit a job title?
+          Have a problem that needs a varied perspective?
         </p>
         <a href="mailto:cyrilpdev@gmail.com" className="mono-label btn">
           Start a conversation
