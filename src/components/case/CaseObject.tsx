@@ -125,10 +125,15 @@ const RAIL = {
     exact at every width instead.
 
     The arms land at 24% and 76%, which is where a two-column grid puts its
-    column centres once the gap between them is taken out. */
+    column centres once the gap between them is taken out, and they run to
+    the bottom edge of the box. An arm that stops short of it leaves the
+    arrowhead hanging in the gap above the disc, pointing at nothing —
+    which is what the extra margin under this svg used to produce. The
+    users' block starts flush against it instead, so the head lands just
+    over the mark it means. */
 function Fan() {
   return (
-    <svg className={styles.fan} viewBox="0 0 900 104" aria-hidden="true">
+    <svg className={styles.fan} viewBox="0 0 900 120" aria-hidden="true">
       <defs>
         <marker
           id="caseObjArrow"
@@ -144,8 +149,8 @@ function Fan() {
       </defs>
       <g {...RAIL}>
         <path d="M450 40 L450 8" markerEnd="url(#caseObjArrow)" />
-        <path d="M450 42 L220 92" markerEnd="url(#caseObjArrow)" />
-        <path d="M450 42 L680 92" markerEnd="url(#caseObjArrow)" />
+        <path d="M450 42 L216 114" markerEnd="url(#caseObjArrow)" />
+        <path d="M450 42 L684 114" markerEnd="url(#caseObjArrow)" />
       </g>
     </svg>
   );

@@ -467,8 +467,8 @@ export default function CaseChatContent() {
 
                 <CaseFigure
                   eyebrow="What moved the needle"
-                  heading="Engagement followed the thing they were graded on."
-                  lede="Students were not uninterested in becoming better clinicians. They gave their time to the learning that showed up as visible progress — and progress, to them, meant exams. Shaping the assessments like the ones they actually sit turned out to raise engagement and outcomes together, rather than trading one for the other."
+                  heading="Getting better at exams was the most important thing."
+                  lede="Students appreciated the learning, and valued retention and practice more. Shaping the assessments like the ones they actually sit raised engagement and outcomes together, rather than trading one for the other."
                   diagram={`${D}/03-engagement.svg`}
                   caption="Aligning the learning design with what students were already measured on lifted engagement and effectiveness at once — the second line is steeper on both axes, not tilted between them."
                 />

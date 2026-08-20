@@ -100,7 +100,7 @@
 .fan {
 	display: block;
 	width: 100%;
-	aspect-ratio: 900 / 104;
+	aspect-ratio: 900 / 120;
 	max-width: none;
 }
 
@@ -126,7 +126,9 @@
 	grid-template-columns: 1fr 1fr;
 	gap: clamp(1.5rem, 5vw, 4rem);
 	align-items: start;
-	margin-top: clamp(1rem, 3vh, 2rem);
+	/* flush against the fan: the arms already run to the bottom of its box,
+	   and any margin here reopens the gap they were extended to close */
+	margin-top: 0;
 }
 
 .user {
