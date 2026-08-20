@@ -36,10 +36,16 @@ export const LABEL_DELAY = 0.22;
     of arrival is carried by the 90° righting and the fan, not by scale. */
 export const PEEK_SCALE = 1.5;
 
-/** Phones peek smaller. The knife box fills far more of a narrow screen, and
-    the hero copy runs to roughly two thirds of it, so 0.75 leaves the peek
-    jammed against the bottom edge with nowhere to sit. */
-export const PEEK_SCALE_COMPACT = 1;
+/** Phones peek smaller than desktop but not small: the knife box fills far
+    more of a narrow screen, so it cannot take the desktop 1.5, and the hero
+    copy runs to roughly half of it, which leaves a real band underneath for
+    the peek to sit in rather than a strip at the bottom edge. */
+export const PEEK_SCALE_COMPACT = 1.35;
+
+/** A short phone runs the same copy through a shallower viewport, so the band
+    under it cannot hold the 1.35 peek — it either lands on the paragraph or
+    hangs off the bottom edge. Below 760px tall the peek keeps its old size. */
+export const PEEK_SCALE_COMPACT_SHORT = 1;
 
 /** The peek lays the closed knife on a diagonal. Travel rotates it back to
     flat as it comes to centre, so the object rights itself on the way in. */

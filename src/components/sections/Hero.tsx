@@ -13,6 +13,7 @@ import {
   LABEL_DELAY,
   PEEK_SCALE,
   PEEK_SCALE_COMPACT,
+  PEEK_SCALE_COMPACT_SHORT,
   PEEK_ROTATION,
   bladeDelay,
 } from "@/lib/data/scroll";
@@ -40,12 +41,18 @@ export default function Hero() {
         {
           motionOk: "(prefers-reduced-motion: no-preference)",
           compact: "(max-width: 768px)",
+          /* a phone is not one shape. On a tall one the copy leaves a deep
+             band underneath and the peek can be large and high in it; on a
+             short one the same copy eats the band, so the peek stays small
+             and low or it lands on the paragraph. */
+          short: "(max-height: 760px)",
           hoverOk: "(hover: hover) and (pointer: fine)",
         },
         (ctx) => {
-          const { motionOk, compact, hoverOk } = ctx.conditions as {
+          const { motionOk, compact, short, hoverOk } = ctx.conditions as {
             motionOk: boolean;
             compact: boolean;
+            short: boolean;
             hoverOk: boolean;
           };
           if (!motionOk) return;
@@ -69,17 +76,18 @@ export default function Hero() {
           // Where the peek sits, as an offset from the knife's resting place.
           // Desktop: tucked to the right of the copy. Compact: low-right, clear
           // of the headline, matching where the hero's knife always sat.
-          const peekScale = compact ? PEEK_SCALE_COMPACT : PEEK_SCALE;
+          const peekScale = compact
+            ? short
+              ? PEEK_SCALE_COMPACT_SHORT
+              : PEEK_SCALE_COMPACT
+            : PEEK_SCALE;
           // Stood on end, the closed knife sits near the middle of its square
           // box rather than filling it, so aligning the BOX to the right edge
           // leaves the art stranded well inside. Place the art directly.
-          const peekX = () => (compact ? 0.58 : 0.75) * window.innerWidth - artCentre();
+          const peekX = () => (compact ? (short ? 0.66 : 0.58) : 0.75) * window.innerWidth - artCentre();
           // desktop peeks above centre and travels down; on a phone the copy
-          // owns the top half, so it waits below and rises into place. The
-          // compact numbers sit the art in the middle of the band the copy
-          // leaves rather than crowding the bottom corner — the corner is
-          // where it landed while a scroll cue still took up that space.
-          const peekY = () => (compact ? 0.185 : 0.108) * window.innerHeight;
+          // owns the top half, so it waits below and rises into place.
+          const peekY = () => (compact ? (short ? 0.3 : 0.095) : 0.108) * window.innerHeight;
 
           gsap.set(intro, {
             x: peekX,
