@@ -12,8 +12,8 @@
 		   black. Deliberately NO ground of its own: an opaque panel slides a
 		   hard edge across the knife and cuts it in half. The knife dissolves
 		   on its way out instead (OutcomeTransition.tsx). */
-		margin-top: -22vh;
-		padding-block: 2rem var(--space-section);
+		margin-top: -27vh;
+		padding-block: 0 var(--space-section);
 		overflow: hidden;
 	}
 }
