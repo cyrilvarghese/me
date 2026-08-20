@@ -28,16 +28,59 @@
 .nav {
 	display: flex;
 	gap: clamp(1.25rem, 3vw, 2.5rem);
+	/* the links run the header's full height so the current-stop rule can
+	   sit on the bottom hairline by geometry rather than by a calc against
+	   the font's line box */
+	align-self: stretch;
+	align-items: stretch;
 }
 
 .nav a {
+	position: relative;
+	display: flex;
+	align-items: center;
 	color: var(--muted);
 	transition: color 150ms ease;
-	padding-block: 0.6rem;
+}
+
+/* The rule under the stop the reader is in. It rides the header's own
+   bottom hairline rather than floating above it, so the nav reads as one
+   ruled edge with one segment lit. Drawn on every link and revealed by
+   scaleX so arriving is a wipe from the left, not a flash — transform
+   only, like everything else that moves here.
+
+   Red on the rule, never on the label: the accent fails AA for text this
+   small on this background, so the current link goes to --fg and the
+   colour does its work underneath. */
+.nav a::after {
+	content: "";
+	position: absolute;
+	inset-inline: 0;
+	/* over the header's own border-bottom, which sits 1px below */
+	bottom: -1px;
+	height: 2px;
+	background: var(--accent);
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav a[aria-current]::after {
+	transform: scaleX(1);
+}
+
+.nav a[aria-current] {
+	color: var(--fg);
 }
 
 @media (hover: hover) and (pointer: fine) {
 	.nav a:hover {
 		color: var(--fg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.nav a::after {
+		transition: none;
 	}
 }

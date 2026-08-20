@@ -1,7 +1,10 @@
 import styles from "./Header.module.css";
+import SiteNav from "./SiteNav";
 
 /** Home-page chrome. Case pages are takeovers and render no header, so
-    the nav is plain hash anchors and SmoothAnchors owns the glide. */
+    the nav is plain hash anchors and SmoothAnchors owns the glide.
+    The header itself stays a server component; only the nav, which has
+    to know where the reader is, runs on the client. */
 export default function Header() {
   return (
     <header className={styles.header} style={{ viewTransitionName: "site-header" }}>
@@ -23,17 +26,7 @@ export default function Header() {
         <a href="#top" className={`mono-label ${styles.brand}`}>
           CV
         </a>
-        <nav className={styles.nav} aria-label="Site">
-          <a href="#work" className="mono-label">
-            Work
-          </a>
-          <a href="#about" className="mono-label">
-            About
-          </a>
-          <a href="#contact" className="mono-label">
-            Contact
-          </a>
-        </nav>
+        <SiteNav />
       </div>
     </header>
   );
