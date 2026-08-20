@@ -68,8 +68,13 @@
 	justify-content: flex-start;
 }
 
+/* A ladder, not one size for every label. The object outranks the people
+   who use it, who outrank the four things it holds — flat, the figure gave
+   "PATIENT CASE" no more weight than "TREATMENT" and the centre stopped
+   reading as the centre. */
 .attrLabel {
 	color: var(--muted);
+	font-size: 0.8125rem;
 }
 
 /* the object is the centre, so it carries the larger disc — size is the
@@ -83,19 +88,19 @@
 
 .objectLabel {
 	color: var(--fg);
+	font-size: 1.0625rem;
 }
 
-/* sized to match its viewBox exactly, so the dash paints the house rail
-   at its own numbers rather than a scaled approximation of them */
-.railWide {
+/* aspect-ratio matches the viewBox, so preserveAspectRatio has nothing to
+   letterbox and the fan spans the figure at its full length */
+.fan {
 	display: block;
-	width: 6rem;
-	height: 3.25rem;
-	margin: 0 auto;
+	width: 100%;
+	aspect-ratio: 900 / 104;
 	max-width: none;
 }
 
-.railNarrow {
+.rail {
 	display: none;
 	width: 1.5rem;
 	height: 3.75rem;
@@ -127,7 +132,8 @@
 }
 
 .userLabel {
-	color: var(--muted);
+	color: var(--fg-soft);
+	font-size: 0.9375rem;
 }
 
 .userQuote {
@@ -195,21 +201,21 @@
 		gap: 0.6rem;
 	}
 
-	.railNarrow {
+	.rail {
 		height: 2.5rem;
 	}
 
 	/* the teacher's rail hangs below their quote, pointing down into the
 	   object; the student's already sits above theirs, pointing up */
-	.user[data-side="left"] .railNarrow {
+	.user[data-side="left"] .rail {
 		order: 3;
 	}
 
-	.railWide {
+	.fan {
 		display: none;
 	}
 
-	.railNarrow {
+	.rail {
 		display: block;
 	}
 

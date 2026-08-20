@@ -70,10 +70,12 @@ export default function CaseObject({
           </ul>
         </div>
 
+        <Fan />
+
         <div className={styles.users}>
           {users.map((u, i) => (
             <div key={u.label} className={styles.user} data-side={i === 0 ? "left" : "right"}>
-              <Rail side={i === 0 ? "left" : "right"} />
+              <Rail />
               <div className={styles.persona}>
                 <Mark icon={u.icon} />
                 <p className={`mono-label ${styles.userLabel}`}>{u.label}</p>
@@ -100,26 +102,48 @@ const RAIL = {
   strokeDasharray: "2 14",
 };
 
-/** A rail per user, pointing at the object.
+/** The wide connector: one stem out of the object, splitting to each user.
 
-    Two of them, because the figure has two arrangements and the rail has
-    to point in each. Wide, the users sit left and right below the object,
-    so the rail leans diagonally back up to it. Narrow, the object sits
-    between them, so the rail runs vertically — down out of the teacher,
-    up into the student.
+    It has to span the figure, and an svg given a width but no matching
+    height gets letterboxed by `preserveAspectRatio` — which is how the
+    first attempt ended up a third of its length and read as a small
+    bracket. `aspect-ratio` on the box, matching the viewBox, makes the fit
+    exact at every width instead.
 
-    Each lives in its own column at a fixed size: a single rail spanning
-    the figure has to be letterboxed to fit and arrives at a fraction of
-    its length, which is how the first attempt read as a small bracket. */
-function Rail({ side }: { side: "left" | "right" }) {
+    The arms land at 24% and 76%, which is where a two-column grid puts its
+    column centres once the gap between them is taken out. */
+function Fan() {
   return (
-    <>
-      <svg className={`${styles.rail} ${styles.railWide}`} viewBox="0 0 96 52" aria-hidden="true">
-        <path d={side === "left" ? "M6 48 L90 6" : "M90 48 L6 6"} {...RAIL} />
-      </svg>
-      <svg className={`${styles.rail} ${styles.railNarrow}`} viewBox="0 0 24 60" aria-hidden="true">
-        <path d="M12 4 L12 56" {...RAIL} />
-      </svg>
-    </>
+    <svg className={styles.fan} viewBox="0 0 900 104" aria-hidden="true">
+      <defs>
+        <marker
+          id="caseObjArrow"
+          viewBox="0 0 10 10"
+          refX="9"
+          refY="5"
+          markerWidth="5"
+          markerHeight="5"
+          orient="auto-start-reverse"
+        >
+          <path d="M0 0 L10 5 L0 10 z" fill="#f8f4f2" fillOpacity=".45" />
+        </marker>
+      </defs>
+      <g {...RAIL}>
+        <path d="M450 40 L450 8" markerEnd="url(#caseObjArrow)" />
+        <path d="M450 42 L220 92" markerEnd="url(#caseObjArrow)" />
+        <path d="M450 42 L680 92" markerEnd="url(#caseObjArrow)" />
+      </g>
+    </svg>
+  );
+}
+
+/** The narrow connector. Rotated with the arrangement: once the object
+    sits between its two users rather than above them, the rail runs
+    vertically — down out of the teacher, up into the student. */
+function Rail() {
+  return (
+    <svg className={styles.rail} viewBox="0 0 24 60" aria-hidden="true">
+      <path d="M12 4 L12 56" {...RAIL} />
+    </svg>
   );
 }
