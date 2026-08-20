@@ -31,8 +31,9 @@ export const BLADE_DUR = 0.75;
 /** Seconds after a blade starts before its label arrives. */
 export const LABEL_DELAY = 0.22;
 
-/** The peek is the same knife, smaller — so the travel is a genuine zoom in
-    rather than the shrink two separate knives forced. */
+/** How large the closed knife peeks, as a multiple of its landing size. Above
+    1 since the peek was asked to be much bigger (user, 2026-08-20): the sense
+    of arrival is carried by the 90° righting and the fan, not by scale. */
 export const PEEK_SCALE = 1.5;
 
 /** Phones peek smaller. The knife box fills far more of a narrow screen, and

@@ -92,12 +92,13 @@ describe("opening beats", () => {
     expect(LABELS_OUT).toBeLessThan(1);
   });
 
-  it("peeks smaller than it lands, so the travel is a zoom in", () => {
+  it("peeks at a sane size, smaller on a phone than on a desktop", () => {
     for (const s of [PEEK_SCALE, PEEK_SCALE_COMPACT]) {
       expect(s).toBeGreaterThan(0);
-      expect(s).toBeLessThan(1);
+      expect(s).toBeLessThanOrEqual(2);
     }
-    // a phone's knife box fills more of the screen, so it peeks smaller still
+    // a phone's knife box already fills far more of the screen, so it peeks
+    // smaller — the two must not drift back into one shared number
     expect(PEEK_SCALE_COMPACT).toBeLessThan(PEEK_SCALE);
   });
 
