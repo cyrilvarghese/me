@@ -1,5 +1,16 @@
+/* the band, as CaseFigure and CaseCompare draw it: a hairline above and
+   the same padding, so the page opens each section the same way */
 .block {
-	margin-block: clamp(4rem, 10vh, 7rem);
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3.5rem, 9vh, 6.5rem);
+}
+
+.head {
+	display: grid;
+	grid-template-columns: 14rem minmax(0, 1fr);
+	gap: clamp(1.5rem, 4vw, 4rem);
+	align-items: start;
+	margin-bottom: clamp(3.25rem, 8vh, 5.5rem);
 }
 
 /* --muted, like every other eyebrow on a case page. The accent here was
@@ -8,21 +19,19 @@
    of thing from the one under it. */
 .eyebrow {
 	color: var(--muted);
-	margin-bottom: 0.75rem;
 }
 
 .heading {
 	/* tops out at 32px rather than --text-h3's 29px at this width, so the
 	   heading holds its own against the figure's enlarged type */
 	font-size: clamp(1.5rem, 3vw, 2rem);
-	max-width: 22ch;
+	max-width: 24ch;
 	margin-bottom: 1rem;
 }
 
 .lede {
-	color: var(--muted);
-	max-width: 56ch;
-	margin-bottom: clamp(2.5rem, 5vh, 4rem);
+	color: var(--fg-soft);
+	max-width: 62ch;
 }
 
 /* Quotes flank the persona. The centre column is sized by its content so
@@ -100,6 +109,14 @@
 
 /* Narrow: the persona leads, the quotes stack under it in source order and
    the halo goes — short arcs pointing at nothing read as debris. */
+/* the head folds at the same width the other bands fold at, so the whole
+   page changes shape on one line rather than section by section */
+@media (max-width: 900px) {
+	.head {
+		grid-template-columns: 1fr;
+	}
+}
+
 @media (max-width: 760px) {
 	.group {
 		grid-template-columns: 1fr;

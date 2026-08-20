@@ -29,9 +29,16 @@ export default function CaseVoices({
 }) {
   return (
     <section className={`section-shell ${styles.block}`}>
-      <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
-      {heading && <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>}
-      {lede && <p className={styles.lede}>{lede}</p>}
+      {/* the same head as CaseFigure and CaseCompare — eyebrow in its own
+          column beside the heading — so every band on the page reads as
+          one template rather than as several */}
+      <div className={styles.head}>
+        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
+        <div>
+          {heading && <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>}
+          {lede && <p className={styles.lede}>{lede}</p>}
+        </div>
+      </div>
 
       {groups.map((g) => {
         /* Source order is reading order: the first half sits left of the
