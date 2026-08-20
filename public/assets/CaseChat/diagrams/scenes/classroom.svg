@@ -9,9 +9,11 @@
        nearest student's head starts below it. Let them overlap and the
        lectern legs come out of somebody's skull.
 
-       Learning material carries a tinge of the accent — #c98080 is the
-       second step of the ramp in the diagram skill, so the tint stays
-       inside the one-hue rule instead of introducing a colour of its own. -->
+       The object that needs attention carries a tinge of the accent —
+       #c98080 is the second step of the ramp in the diagram skill, so the
+       tint stays inside the one-hue rule instead of introducing a colour
+       of its own. The first step (#b39a9a) was too quiet to read as a
+       category at all. -->
 
   <!-- ── stage band: everything above the floor line at y=116 ── -->
   <rect x="186" y="16" width="112" height="60" fill="#1e1818"/>

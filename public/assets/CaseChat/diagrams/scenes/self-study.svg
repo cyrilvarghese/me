@@ -9,11 +9,12 @@
        reads as a puzzle at this size and pulls attention off the stacks,
        which are the thing making the point.
 
-       Learning material carries a tinge of the accent: #c98080 is the
-       second step of the ramp in the diagram skill, so the tint stays
-       inside the one-hue rule rather than introducing a second colour.
-       It stays well short of the accent in saturation, which is what
-       keeps the 20% wedge and the hands on the patient owning the red. -->
+       The object that needs attention carries a tinge of the accent:
+       #c98080 is the second step of the ramp in the diagram skill, so the
+       tint stays inside the one-hue rule rather than introducing a second
+       colour. It stays well short of the accent in saturation, which is
+       what keeps the 20% wedge and the hands on the patient owning the
+       red outright. -->
 
   <!-- the student -->
   <circle cx="158" cy="112" r="22" fill="#e7e3e1"/>

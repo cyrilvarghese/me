@@ -111,7 +111,10 @@ hand-tuned baked axes (`'opsz' 56, 'SOFT' 30, 'WONK' 0.9`, weight 380 in
 - **Case-study diagrams follow the `case-study-diagrams` skill**
   (`.claude/skills/case-study-diagrams/`) — one hue (red only on the moment
   that matters), mono text, markers at 246 units/second, finished states
-  hold, no inner frames. Invoke it before drawing or editing any diagram.
+  hold, no inner frames. Its Scenes section covers drawings of rooms and
+  figures: flat fills separated by value, a `#c98080` tinge on the object
+  that needs attention, and `/labs` as the drafting route. Invoke it before
+  drawing or editing any diagram.
 - **Controls all come from the `.btn` voices in `globals.css`** — accent
   outline, square corners (`--radius: 0`), accent fill on hover; variants
   `.btn-ghost` (hairline border) and `.btn-icon` (square, `--control-size`).

@@ -1,6 +1,6 @@
 ---
 name: case-study-diagrams
-description: Use when creating, editing, recolouring or retiming an animated SVG diagram in a case study (public/assets/*/diagrams), or when a diagram's colours, fonts, speed or looping look wrong on the dark theme
+description: Use when creating, editing, recolouring or retiming an animated SVG diagram in a case study (public/assets/*/diagrams), when drawing a scene, room, figure or silhouette illustration for one, or when a diagram's colours, fonts, speed, figures or looping look wrong on the dark theme
 ---
 
 # Case-study diagrams
@@ -130,6 +130,64 @@ layer derives from, never four hand-matched offsets.
 - Both sides share one visual language, so the difference the reader sees
   is the argument, not the styling.
 
+## Scenes (a room instead of a block)
+
+Some arguments land better drawn than named — the three rooms a student
+learns in, rather than three labelled rectangles. A scene is still a
+diagram and still obeys everything above; it adds a figure vocabulary and
+nothing else. Draft candidates on `/labs`, a noindex route that renders
+them through `CaseDiagram` so they inherit the real inlining, the mono
+voice and the one motion sheet.
+
+**Flat fills, never outlines.** Depth is a value step — the same logic as
+`TOOL_BACK`/`TOOL_FRONT` separating overlapping knife shapes. Hand-wobbled
+strokes look charming at 800px and turn to mud at panel width.
+
+| Role | Fill |
+|---|---|
+| The subject — whoever the drawing is about | `--fg` `#e7e3e1` |
+| Near figures | `--muted` `#9e9493` |
+| Far figures, receding rows | `#f8f4f2` at `.20`–`.34` |
+| Planes — floors, desks, beds, benches | `--surface` + a `.20` hairline |
+| **The object that needs attention** | `#c98080` — ramp step 2 |
+| The moment that matters | `--accent` `#ea0000` |
+
+**The object that needs attention takes a tinge, not the accent.**
+`#c98080` is the ramp's second stop, so the tint reads as the existing
+one-hue language rather than a new colour. Step 1 (`#b39a9a`) is invisible
+on this ground — warm grey among neutrals, saying nothing. Tint the
+objects, never the people: a panel whose mass is mostly tinted stops
+saying "this is the thing to look at" and starts saying "this scene is the
+loud one".
+
+**The accent must outrank the tint on two channels, not one.** Saturation
+alone fails at panel width — a tinted patient head at r9 beside a red
+contact dot at r7 gives two similar dots and the eye picks the wrong one.
+The accent mark is the largest *and* the most saturated thing in frame.
+
+**Bands must not share vertical space.** Write the boundary as a number
+and state it in a comment: the stage ends at y116, the nearest head starts
+at y122. Positioned by eye against neighbours instead, lectern legs come
+out of a student's skull.
+
+**Negative space between limbs is authored, never emergent.** Two thick
+round-capped strokes meeting at an elbow *cannot* hold a gap at this
+scale — the triangle's incircle radius comes out smaller than the stroke
+half-width, so the hole closes and the pose dies. Draw the limb as one
+closed path whose outline traces the notch.
+
+**Keep figures simple.** A head circle plus a shoulder dome
+(`M cx-hw,base a hw,hh 0 0 1 2hw,0 z`) is the reusable person-mark — use
+it at every scale, from a lecture row to a single seated student. A posed
+figure reads as a puzzle at this size and pulls attention off whatever
+actually argues the point.
+
+**Composing scenes into a figure.** Panels drop into a layout as
+`<g transform="translate(x y) scale(s)">` wrapped around a copy of the
+scene's markup. That copy is a maintenance trap: every edit must be made
+in both the standalone scene and each composed diagram, and nothing
+catches a divergence. Change them in the same commit, every time.
+
 ## Common mistakes
 
 | Mistake | Reality |
@@ -139,6 +197,10 @@ layer derives from, never four hand-matched offsets.
 | Matched cycle durations to match speed | Different path lengths. Equal durations = unequal speeds. Use the formula. |
 | Grayscale alone on logos | Mid-grey on near-black is unreadable. Lift brightness too. |
 | Checked the built HTML and trusted it | Colours can be correct in markup and wrong on screen. Screenshot it. |
+| Drew a figure with strokes so it would feel hand-made | At panel width the strokes merge into a blob. Flat fills, separated by value. |
+| Posed a figure to show what it is doing | A pose is a puzzle at this size. Use the plain person-mark and let the props carry the meaning. |
+| Positioned each element against its neighbours | Overlaps between separately-placed shapes are invisible in markup and obvious on screen. Declare band boundaries as numbers. |
+| Edited the scene file and shipped | Every composed diagram carries its own copy of that markup. Edit both in one commit. |
 
 ## Checklist
 
@@ -149,3 +211,6 @@ layer derives from, never four hand-matched offsets.
 5. Reduced motion lands on the finished state?
 6. No inner frame, mono text, neutrals from tokens?
 7. Screenshotted, not assumed?
+8. Scenes: flat fills, the tinge only on the object that needs attention,
+   and the accent still the largest and most saturated mark?
+9. Scenes: edited in the standalone file **and** every composed copy?
