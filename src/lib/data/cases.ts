@@ -6,6 +6,10 @@ export type CaseStudy = {
   startedWith: string;
   built: string;
   cover?: string;
+  /** Market and subject, under the cover — what kind of product this was,
+      before the reader commits to the headline. Written in natural case;
+      .mono-label uppercases them. */
+  tags?: string[];
   results?: { value: string; label: string }[];
 };
 
@@ -13,6 +17,7 @@ export const cases: CaseStudy[] = [
   {
     slug: "creative-os",
     cover: "/assets/CreativeOS/cover-desk.webp",
+    tags: ["B2C", "B2B", "GenAI asset generation"],
     num: "01",
     category: "Design Engineer and Product Manager",
     headline: "Bringing a fragmented AI production process into one creative workspace.",
@@ -25,6 +30,7 @@ export const cases: CaseStudy[] = [
   {
     slug: "case-chat",
     cover: "/assets/CaseChat/cover-desk.webp",
+    tags: ["B2C", "Medical education", "AI-powered simulation"],
     num: "02",
     category: "Design Engineer and Founder",
     headline: "A safe space for medical students to learn from their mistakes.",
@@ -37,6 +43,7 @@ export const cases: CaseStudy[] = [
   {
     slug: "msig",
     cover: "/assets/MSIG/cover-desk.webp",
+    tags: ["B2B", "Agent insurance portal"],
     num: "03",
     category: "Lead Product Designer",
     headline: "Turning a legacy insurance portal into a consumer-grade one.",

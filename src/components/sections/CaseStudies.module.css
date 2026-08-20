@@ -91,6 +91,15 @@
 	display: block;
 }
 
+/* Market and subject, sitting under the cover. Muted and dot-separated so
+   they read as a caption on the image rather than a row of buttons — the
+   same voice the timeline gives a role's tools. */
+.tags {
+	margin-top: 0.85rem;
+	color: var(--muted);
+	line-height: 1.6;
+}
+
 /* Hover answers on the artwork itself: a slight scrim so the card reads as
    pressable, and accent brackets at the opposing corners. Pointer-only —
    there is no hover to answer on a touch screen, and the marks would just

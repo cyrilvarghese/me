@@ -81,6 +81,12 @@ export default function CaseStudies() {
                 <CaseVisual cover={c.cover} className={styles.visual} />
               </ViewTransition>
             </Link>
+            {/* outside the link: these say what the work was, they are not a
+                second thing to press. Same voice as the timeline's tools —
+                mono, dot-separated (About.tsx). */}
+            {c.tags && (
+              <p className={`mono-label ${styles.tags}`}>{c.tags.join(" · ")}</p>
+            )}
           </aside>
         </article>
       ))}
