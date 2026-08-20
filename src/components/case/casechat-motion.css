@@ -1,9 +1,15 @@
 /* Motion for the CaseChat diagrams. The CreativeOS sheet next door was
    generated from a source deck and its keyframes are named for that
    deck's elements; these are hand-authored, so they are a small general
-   vocabulary instead — draw a connector on, fade a node in, run a dash
-   round a loop — driven by classes the SVGs carry and lengths they set
-   inline as --len.
+   vocabulary instead — draw a connector on, fade a node in — driven by
+   classes the SVGs carry and lengths they set inline as --len.
+
+   A loop's own motion is not here. Its runner, trail, stops and waves have
+   to hold one phase, and a CSS animation starts when its declaration first
+   applies: split between this sheet and a diagram's, the two groups start
+   at different moments and drift. Each looping diagram declares all of its
+   own animations together, in its own <style>, the way the CreativeOS
+   files do.
 
    Global rather than a CSS module for the same reason diagram-motion.css
    is: CaseDiagram inlines the SVG markup into the document, so the rules
@@ -15,73 +21,6 @@
 	}
 	to {
 		stroke-dashoffset: 0;
-	}
-}
-
-/* The traveller going round. The offset it travels to is a plain -100
-   against pathLength 100, not the path's own length via a custom property:
-   a var() inside the keyframe's value left the offset unresolved, the
-   animation did nothing, and the dash sat at the start of the path looking
-   like it had never left. Normalising the path takes the variable out of
-   the keyframe and the length out of the arithmetic. */
-@keyframes ccrun {
-	to {
-		stroke-dashoffset: -100;
-	}
-}
-
-/* the lap filling in behind the traveller. Drawn on a second copy of the
-   same path at pathLength 100, so the fraction is the same number at any
-   size, and held full until the loop comes round again. */
-@keyframes cctrail {
-	to {
-		stroke-dashoffset: 0;
-	}
-}
-
-/* A stop filling when the work reaches it. The keyframe is the lit state
-   the whole way through and the delay is what holds it back, so the node
-   sits on its own base fill until its moment and keeps the colour after —
-   the accumulation round the loop is the argument, and dropping all six
-   back to empty every lap would throw it away. */
-@keyframes ccfill {
-	0%,
-	100% {
-		fill: #ea0000;
-	}
-}
-
-/* the node itself taking the hit: a fast pop and a slower settle, so the
-   dot reads as struck rather than as breathing */
-@keyframes ccpop {
-	0%,
-	100% {
-		transform: scale(1);
-	}
-	1% {
-		transform: scale(2.2);
-	}
-	7% {
-		transform: scale(1);
-	}
-}
-
-/* The wave off the stop. It opens over about 800ms of the lap — at a
-   quarter of that it was gone before the eye found it, which read as no
-   wave at all — and travels far enough to clear the mark before it dies.
-   It sits at nothing for the rest of the cycle. */
-@keyframes ccping {
-	0% {
-		transform: scale(1);
-		opacity: 0.9;
-	}
-	15% {
-		transform: scale(5);
-		opacity: 0;
-	}
-	100% {
-		transform: scale(5);
-		opacity: 0;
 	}
 }
 
@@ -111,49 +50,6 @@
 	animation: ccdraw 1s ease-out var(--d, 0s) forwards;
 }
 
-/* The traveller. A short round-capped dash rather than a fat dot: a flat
-   mark implies motion where a dot just sits.
-
-   Needs pathLength="100" on the element. --dash is then the painted dash
-   as a percent of the lap — the path's own length divided into 100 — and
-   the gap is the rest of it, so there is one dash on the path at a time.
-
-   --dur is the lap, and the file works it out from the house speed rather
-   than picking a duration: 246 units a second, so length / 246 seconds. */
-.cc-run {
-	stroke-dasharray: var(--dash, 1) calc(100 - var(--dash, 1));
-	animation: ccrun var(--dur, 8s) linear infinite;
-}
-
-/* the lap filling in behind it, held full until the loop restarts */
-.cc-trail {
-	stroke-dasharray: 100 100;
-	stroke-dashoffset: 100;
-	animation: cctrail var(--dur, 8s) linear infinite;
-}
-
-/* A stop lighting as the traveller reaches it: a stroke-only ring that
-   opens out of the mark and fades. --d is the stop's own share of the lap,
-   so each one fires when the dash actually arrives rather than on a
-   stagger that happens to look close. */
-.cc-ping {
-	transform-box: fill-box;
-	transform-origin: center;
-	opacity: 0;
-	animation: ccping var(--dur, 8s) linear var(--d, 0s) infinite;
-}
-
-/* The stop's own dot: empty until the work gets there, then struck and
-   filled on the same beat. One class carrying both, because two would each
-   set `animation` and the second would win. */
-.cc-node {
-	transform-box: fill-box;
-	transform-origin: center;
-	animation:
-		ccpop var(--dur, 8s) linear var(--d, 0s) infinite,
-		ccfill var(--dur, 8s) linear var(--d, 0s) infinite;
-}
-
 .cc-in {
 	opacity: 0;
 	animation: ccfade 0.5s ease-out var(--d, 0s) forwards;
@@ -164,33 +60,15 @@
 }
 
 /* Reduced motion gets the finished frame, not a paused first one: the
-   connectors are drawn, the nodes are present, the loop simply does not
-   travel. */
+   connectors are drawn and the nodes are present, they simply did not
+   arrive in front of anyone. A looping diagram parks its own motion in
+   its own sheet, next to the animations it is parking. */
 @media (prefers-reduced-motion: reduce) {
 	.cc-draw,
 	.cc-in,
-	.cc-beat,
-	.cc-run,
-	.cc-trail {
+	.cc-beat {
 		animation: none;
 		stroke-dashoffset: 0;
 		opacity: 1;
-	}
-
-	/* the lap is finished rather than paused part-way round: the trail is
-	   drawn all the way and the runner that drew it has nothing left to
-	   say, so it stands down with the ping it would have fired */
-	.cc-run,
-	.cc-ping {
-		animation: none;
-		opacity: 0;
-	}
-
-	/* the stops are all reached by the end of a lap, so they stand filled
-	   rather than paused mid-pop */
-	.cc-node {
-		animation: none;
-		transform: none;
-		fill: #ea0000;
 	}
 }
