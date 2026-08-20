@@ -4,11 +4,10 @@ import { useRef } from "react";
 import { capabilities, type CapabilityId } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
+import ToolLabels from "@/components/knife/ToolLabels";
 import CompassRose from "@/components/compass/CompassRose";
 import knifeStyles from "@/components/knife/knife.module.css";
 import styles from "./OutcomeTransition.module.css";
-
-const OPEN_ANGLES = Object.fromEntries(capabilities.map((c) => [c.id, c.openAngle]));
 
 /** Where each discipline circle is born: its blade-tip position (% of the box). */
 const START: Record<CapabilityId, { x: number; y: number }> = {
@@ -97,7 +96,10 @@ export default function OutcomeTransition() {
             defaults: { ease: "none" },
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top top",
+              // the section is pulled up to document 0 so its stage is pinned
+              // from the first pixel and the knife never rises into frame.
+              // The timeline itself still begins where the hero's ends.
+              start: () => window.innerHeight,
               end: "bottom bottom",
               scrub: 0.4,
               invalidateOnRefresh: true,
@@ -363,7 +365,14 @@ export default function OutcomeTransition() {
 
         <div className={styles.inner} ref={innerRef}>
           <div className={styles.knifeEl} data-knife-el="">
-            <KnifeCanvas angles={OPEN_ANGLES} />
+            {/* The Hero's timeline drives this wrapper — peek, travel, zoom,
+                fan — and leaves it at identity exactly as that timeline ends.
+                Everything below therefore sees the same geometry it always
+                did, and there is only ever one knife on the page. */}
+            <div className={styles.knifeIntro} data-knife-intro="">
+              <KnifeCanvas />
+              <ToolLabels />
+            </div>
           </div>
 
           <div className={styles.circles} aria-hidden="true">
