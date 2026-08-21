@@ -278,22 +278,39 @@
 
    Revealed by hover alone, and only where a hover exists — a touch
    screen has none, and a permanently-visible video would just be an
-   autoplaying loop the reader never asked for. */
+   autoplaying loop the reader never asked for.
+
+   This element is the MASK, not the film: it holds the circle and clips,
+   so the film inside can be panned and zoomed to match the photograph
+   without a square corner ever appearing past the rim. --bg fills it,
+   matching the bands baked into the padded photograph underneath. */
 .portraitFilm {
 	position: absolute;
 	inset: 0;
 	z-index: 2;
-	width: 100%;
-	height: 100%;
-	/* the file is 16:9 and this box is square: cover crops the sides
-	   rather than letterboxing inside the circle */
-	object-fit: cover;
+	display: block;
+	overflow: hidden;
 	border-radius: 50%;
 	border: 1px solid rgba(248, 244, 242, 0.16);
+	background: var(--bg);
 	opacity: 0;
-	/* the frame below is what listens for the pointer; the film must not
+	/* the frame below is what listens for the pointer; the mask must not
 	   swallow the enter/leave it sits on top of */
 	pointer-events: none;
+}
+
+/* CONTAIN, not cover, and this is what makes the swap seamless: the
+   photograph is a 3:2 frame padded out to a square rather than a crop
+   (see .portrait), so covering threw away the sides of the 16:9 film and
+   enlarged what was left — the scene jumped in size under the pointer.
+   Contained, both fill the box's WIDTH and the scene stays put. */
+.film {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	/* the transform is written inline from FILM_SCALE / X / Y in
+	   About.tsx, and the ?tune bench drives the same three */
+	transform-origin: center;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -312,4 +329,27 @@
 	.portraitFilm {
 		display: none;
 	}
+}
+
+/* ---- the ?tune bench (not shipped UI; only rendered with ?tune) ---- */
+
+.tuner {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-bottom: 2rem;
+	padding: 1rem;
+	border: 1px solid var(--hairline);
+}
+
+.tunerNote {
+	color: var(--muted);
+}
+
+.tunerRow {
+	display: grid;
+	grid-template-columns: 8rem 1fr 4rem;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--fg-soft);
 }
