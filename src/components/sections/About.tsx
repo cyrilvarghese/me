@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { m } from "motion/react";
 import { experience } from "@/lib/data/experience";
 import styles from "./About.module.css";
@@ -13,36 +13,8 @@ const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
 const fromY24 = { ["--fx-from" as string]: "translateY(24px)" };
 const viewport = { once: true, margin: "0px 0px -18% 0px" };
 
-/* How the hover film is fitted inside the portrait circle. The photograph
-   under it is a 3:2 frame padded out to a square, not a crop, so the film
-   is contained rather than covered — cover threw away the sides of the
-   16:9 and enlarged what was left, and the scene jumped in size the moment
-   the pointer arrived.
-
-   Contain gets the two close but not identical: the film was shot tighter
-   than the photograph, so the same fit still leaves the people slightly
-   larger. SCALE / X / Y close that gap by hand. Dial them on the bench
-   below (any page with ?tune) and bring the numbers back here. */
-const FILM_SCALE = 1;
-const FILM_X = 0;
-const FILM_Y = 0;
-
 export default function About() {
   const filmRef = useRef<HTMLVideoElement>(null);
-  /* ?tune in the URL swaps the shipped framing for live sliders — a
-     bench for matching the film to the photograph, not a shipped
-     control, so it costs nothing unasked (same pattern as CaseJourney) */
-  const [tune, setTune] = useState<null | { scale: number; x: number; y: number }>(null);
-
-  useEffect(() => {
-    if (new URLSearchParams(window.location.search).has("tune")) {
-      setTune({ scale: FILM_SCALE, x: FILM_X, y: FILM_Y });
-    }
-  }, []);
-
-  const scale = tune?.scale ?? FILM_SCALE;
-  const x = tune?.x ?? FILM_X;
-  const y = tune?.y ?? FILM_Y;
 
   /* The portrait plays under the pointer. Deliberately not autoplaying:
      the film is a reward for hovering, and a looping video in the corner
@@ -120,54 +92,22 @@ export default function About() {
               phone can never hover, so it would be paid for and never
               spent. poster is the photograph itself, so the first hover
               cannot flash black while the first frame decodes. */}
-          {/* the mask is the circle; the film pans and zooms INSIDE it, so
-              a scale can never push a square corner past the rim */}
-          <span className={styles.portraitFilm} aria-hidden="true">
-            <video
-              ref={filmRef}
-              className={styles.film}
-              src="/assets/profile-hover-video.mp4"
-              poster="/assets/profile.webp"
-              width={1280}
-              height={720}
-              muted
-              loop
-              playsInline
-              preload="none"
-              tabIndex={-1}
-              style={{ transform: `translate(${x}%, ${y}%) scale(${scale})` }}
-            />
-          </span>
+          <video
+            ref={filmRef}
+            className={styles.portraitFilm}
+            src="/assets/profile-hover-video.mp4"
+            poster="/assets/profile.webp"
+            width={1280}
+            height={720}
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden="true"
+            tabIndex={-1}
+          />
         </div>
       </div>
-
-      {tune && (
-        <div className={styles.tuner}>
-          <p className={`mono-label ${styles.tunerNote}`}>
-            Hover the portrait while you drag. Bring these back to FILM_SCALE / X / Y.
-          </p>
-          {(
-            [
-              ["scale", "Zoom", 0.5, 2.5, 0.01],
-              ["x", "Pan X (%)", -60, 60, 0.5],
-              ["y", "Pan Y (%)", -60, 60, 0.5],
-            ] as const
-          ).map(([key, label, min, max, step]) => (
-            <label key={key} className={`mono-label ${styles.tunerRow}`}>
-              {label}
-              <input
-                type="range"
-                min={min}
-                max={max}
-                step={step}
-                value={tune[key]}
-                onChange={(e) => setTune({ ...tune, [key]: Number(e.target.value) })}
-              />
-              {tune[key]}
-            </label>
-          ))}
-        </div>
-      )}
 
       <ol className={styles.timeline}>
         {experience.map((role, i) => (
