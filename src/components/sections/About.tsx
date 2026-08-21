@@ -16,9 +16,11 @@ const viewport = { once: true, margin: "0px 0px -18% 0px" };
 export default function About() {
   const filmRef = useRef<HTMLVideoElement>(null);
 
-  /* The portrait plays under the pointer. Deliberately not autoplaying:
-     the film is a reward for hovering, and a looping video in the corner
-     of a page that is otherwise still would pull the eye off the copy.
+  /* The portrait plays under the pointer, ONCE, and then holds on its
+     last frame — it is a three-second moment, not a loop, and a clip
+     going round and round in the corner of an otherwise still page pulls
+     the eye off the copy. Leaving rewinds it, so the next hover is the
+     moment again from the top rather than a jump back to the start.
 
      Reduced motion never starts it — the CSS hides it there too, so the
      photograph is all that exists. play() is a promise that browsers
@@ -29,6 +31,9 @@ export default function About() {
     const v = filmRef.current;
     if (!v || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     v.muted = true;
+    // belt and braces: leaving rewinds, but if the pointer never left and
+    // the clip ran out, play() on an ended video would sit on the last frame
+    if (v.ended) v.currentTime = 0;
     void v.play().catch(() => {});
   };
 
@@ -100,7 +105,6 @@ export default function About() {
             width={1280}
             height={720}
             muted
-            loop
             playsInline
             preload="none"
             aria-hidden="true"
