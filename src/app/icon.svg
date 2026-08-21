@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="CV">
+  <!-- The header's stamp at tab size: token black plate, square corners,
+       accent-deep frame, accent letters. The values are literal because a
+       favicon renders outside the document and cannot read tokens.css, so
+       they must be kept in step with it by hand.
+
+       (Token names are written bare here on purpose. An XML comment may not
+       contain a double hyphen, so the usual CSS custom-property spelling
+       makes the whole file fail to parse.)
+
+       The letters are STROKED PATHS rather than text. An SVG favicon renders
+       in an isolated context with no access to the page's fonts, so asking
+       for JetBrains Mono would silently fall back to whatever monospace the
+       machine supplies and the mark would differ per visitor. Drawn, it is
+       the same everywhere.
+
+       32 units, so it halves cleanly to 16 and trebles to 48. -->
+  <rect width="32" height="32" fill="#151111"/>
+  <rect x="1" y="1" width="30" height="30" fill="none" stroke="#c90000" stroke-width="2"/>
+  <g fill="none" stroke="#ea0000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- C: the major arc of r5 about (11,16), left open to the right -->
+    <path d="M14.08 12.06 A5 5 0 1 0 14.08 19.94"/>
+    <!-- V -->
+    <path d="M19 11.5 L23 20.5 L27 11.5"/>
+  </g>
+</svg>
