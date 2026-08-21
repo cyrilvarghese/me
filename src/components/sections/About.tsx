@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { m } from "motion/react";
 import { experience } from "@/lib/data/experience";
 import styles from "./About.module.css";
@@ -13,6 +14,31 @@ const fromY24 = { ["--fx-from" as string]: "translateY(24px)" };
 const viewport = { once: true, margin: "0px 0px -18% 0px" };
 
 export default function About() {
+  const filmRef = useRef<HTMLVideoElement>(null);
+
+  /* The portrait plays under the pointer. Deliberately not autoplaying:
+     the film is a reward for hovering, and a looping video in the corner
+     of a page that is otherwise still would pull the eye off the copy.
+
+     Reduced motion never starts it — the CSS hides it there too, so the
+     photograph is all that exists. play() is a promise that browsers
+     reject when their autoplay policy says no; the catch is what keeps
+     that from throwing, and the still photograph underneath is already
+     the fallback. */
+  const playFilm = () => {
+    const v = filmRef.current;
+    if (!v || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    v.muted = true;
+    void v.play().catch(() => {});
+  };
+
+  const stopFilm = () => {
+    const v = filmRef.current;
+    if (!v) return;
+    v.pause();
+    v.currentTime = 0;
+  };
+
   return (
     <section className={`section-shell ${styles.section}`} id="about" aria-label="About">
       <p className={`mono-label ${styles.eyebrow}`}>About</p>
@@ -45,7 +71,11 @@ export default function About() {
             reserved before the image lands, so the timeline below it never
             jumps. next/image is not in play here — the export is static and
             images are unoptimized, so every asset is pre-sized by hand. */}
-        <div className={styles.portraitFrame}>
+        <div
+          className={styles.portraitFrame}
+          onPointerEnter={playFilm}
+          onPointerLeave={stopFilm}
+        >
           <span className={styles.glow} aria-hidden="true" />
           <img
             src="/assets/profile.webp"
@@ -53,6 +83,28 @@ export default function About() {
             height={1100}
             alt='Cyril at a pottery wheel in a workshop, marked "me" in the photograph.'
             className={styles.portrait}
+          />
+          {/* The same moment, moving. aria-hidden and untabbable: it says
+              nothing the photograph's alt text does not already say, so to
+              a screen reader it is not a second thing to announce.
+
+              preload="none" keeps its 660KB off the initial load — a
+              phone can never hover, so it would be paid for and never
+              spent. poster is the photograph itself, so the first hover
+              cannot flash black while the first frame decodes. */}
+          <video
+            ref={filmRef}
+            className={styles.portraitFilm}
+            src="/assets/profile-hover-video.mp4"
+            poster="/assets/profile.webp"
+            width={1280}
+            height={720}
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden="true"
+            tabIndex={-1}
           />
         </div>
       </div>
