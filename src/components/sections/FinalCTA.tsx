@@ -58,9 +58,15 @@ export default function FinalCTA() {
           );
         });
 
-        tl.to("[data-knife-final]", { yPercent: -14, duration: 0.14, ease: "power2.inOut" }, 0.58);
-        tl.to("[data-final='question']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.62);
-        tl.to("[data-final='give']", { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.72);
+          tl.to("[data-knife-final]", { yPercent: -14, duration: 0.14, ease: "power2.inOut" }, 0.58);
+          // and it dissolves on the way up, clearing the stage for the ask.
+          // The knife used to hold its place while the question faded in
+          // underneath it, which put a closed knife across the middle of the
+          // line (Cyril, 2026-08-21). Gone by 0.72, which is exactly when
+          // "Let's get started." starts to arrive.
+          tl.to("[data-knife-final]", { autoAlpha: 0, duration: 0.1, ease: "power2.in" }, 0.62);
+          tl.to("[data-final='question']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.62);
+          tl.to("[data-final='give']", { autoAlpha: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.72);
           tl.to("[data-final='ctas']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.82);
         }
       );
