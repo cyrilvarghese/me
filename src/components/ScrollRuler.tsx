@@ -40,9 +40,10 @@ export default function ScrollRuler() {
     const marker = markerRef.current;
     if (!rail || !marker) return;
 
-    /* [data-tick], not "span": the marker carries a span of its own for
-       the bloom, and a loose tag selector swept it up as a 49th tick
-       whose missing inner line then threw on every scroll frame. */
+    /* [data-tick], not "span": a loose tag selector once swept the
+       marker's own child up as a 49th tick, whose missing inner line then
+       threw on every scroll frame. That child is gone, but the explicit
+       hook is what stops the next one from doing it again. */
     const ticks = Array.from(rail.querySelectorAll<HTMLElement>("[data-tick]"));
     /* the wave scales the LINE inside each tick, never the tick itself —
        a scaleX on the tick would stretch the section label with it */
@@ -175,9 +176,7 @@ export default function ScrollRuler() {
           <span className={styles.markName}>{m.name}</span>
         </a>
       ))}
-      <div ref={markerRef} className={styles.marker}>
-        <span className={styles.bloom} />
-      </div>
+      <div ref={markerRef} className={styles.marker} />
     </div>
   );
 }

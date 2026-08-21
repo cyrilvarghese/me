@@ -141,32 +141,6 @@
 	will-change: transform;
 }
 
-/* The bloom the head throws down the line: brightest where the solid
-   accent is, gone by the middle of the page. A blurred child rather
-   than a box-shadow or a filter on the marker itself — the marker takes
-   a new transform every frame, and a filter there would re-rasterise a
-   viewport-wide strip on each one. This is painted once and rides along.
-
-   rgba literals, since color-mix inside a stylesheet gradient silently
-   no-ops in Cyril's browser (the header veil and hero scrim notes). */
-.bloom {
-	position: absolute;
-	left: -12px;
-	right: 0;
-	top: 50%;
-	height: 18px;
-	transform: translateY(-50%);
-	background: linear-gradient(
-		to right,
-		rgba(234, 0, 0, 0.1),
-		rgba(234, 0, 0, 0.03) 10%,
-		rgba(234, 0, 0, 0.01) 42%,
-		rgba(234, 0, 0, 0)
-	);
-	filter: blur(6px);
-	pointer-events: none;
-}
-
 .marker::after {
 	content: "";
 	position: absolute;
