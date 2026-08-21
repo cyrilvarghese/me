@@ -34,17 +34,41 @@ const LIFT = 5;
     (user, 2026-08-20). */
 const LINEUP_LIFT = 0.22;
 
-/** Timeline length in spacer units. The choreography runs 0 → 1.20 at a
-    steady ~420vh per unit; 1.20 → DUR is pure runway — ~118vh of pinned
+/** Timeline length in spacer units. The choreography runs 0 → 1.32 at a
+    steady ~420vh per unit; 1.32 → DUR is pure runway — ~118vh of pinned
     scroll where the time-based needle hunt plays out with the wheel never
     blocked (replaces the old hard scroll lock). The module CSS height must
     stay 200vh + 420vh × DUR — 200 because the section is pulled up over the
     whole hero and the trigger's start is offset a viewport to match.
 
-    Grew from 1.25 so the tail could breathe (user, 2026-08-20): the circles
-    wait a beat after the line clears instead of arriving under it, and the
-    merge into the compass takes half again as long. */
-const DUR = 1.48;
+    Grew from 1.25 so the tail could breathe (user, 2026-08-20), then from
+    1.48 to hold still at each beat (2026-08-21) — see BEATS. */
+const DUR = 1.6;
+
+/** The five moments the scroll is allowed to stop on, in timeline units.
+    Each one is a COMPLETE picture: the composition it names has finished
+    arriving and nothing else has started leaving.
+
+      0.50  the tools stand in their lineup under the headline
+      0.645 every caption is up beside its tool
+      0.85  six circles, one around each tool, all of them landed
+      0.985 the circles overlap in the middle under "Tools matter."
+      1.29  the compass is up, with both lines under it
+
+    They were [0.5, 0.75, 0.9, 1.2] and two of those were mid-flight —
+    0.75 arrived while the circles were still appearing AND the tools still
+    fading, 0.9 while "Tools matter." was still fading in — so the scroll
+    stopped on half-drawn frames (Cyril, 2026-08-21). Every beat below sits
+    inside a hold where no tween is running; the choreography was retimed to
+    create the two holds that did not exist. Move a tween near one of these
+    and the hold closes: the beat has to move with it. */
+const BEATS = [0.5, 0.645, 0.85, 0.985, 1.29];
+
+/** The rail's tick marks for this section, as fractions of its own scroll
+    range — derived from BEATS so the two can never drift. The trigger runs
+    from 100vh to 100vh + 420vh × DUR, and the ruler measures against
+    offsetHeight - innerHeight, which is 100vh + 420vh × DUR. */
+const RULER_BEATS = BEATS.map((t) => ((100 + 420 * t) / (100 + 420 * DUR)).toFixed(3)).join(",");
 
 /**
  * The metaphor turns (user direction, 2026-08-15): the tool kit comes
@@ -146,17 +170,28 @@ export default function OutcomeTransition() {
                    for that - direction is 1 scrolling down, -1 up. */
                 snapTo(value: number, self?: { direction: number }) {
                   const t = value * DUR;
-                  if (t < 0.45) return value;
-                  if (t > 1.25) return value;
+                  // free before the first beat and free on the runway after
+                  // the last: arriving and leaving are never tugged
+                  if (t < 0.47) return value;
+                  if (t > 1.32) return value;
                   // GSAP's own type marks `self` optional, so without a
                   // direction to honour there is nothing to do but leave the
                   // reader where they stopped.
                   if (!self) return value;
-                  const beats = [0.5, 0.75, 0.9, 1.2];
+                  // Already standing on a beat: stay. Without this the
+                  // reader who stops exactly on one is shoved to the NEXT
+                  // one, because the natural end reads a hair past it and
+                  // "the next beat ahead" is then the following beat. The
+                  // tolerance is narrower than every hold in BEATS, so
+                  // resting inside it still means resting on a complete
+                  // picture — and returning the value unchanged keeps the
+                  // promise that the page never moves against the scroll.
+                  const NEAR = 0.015;
+                  if (BEATS.some((b) => Math.abs(b - t) <= NEAR)) return value;
                   const next =
                     self.direction >= 0
-                      ? beats.find((b) => b >= t)
-                      : [...beats].reverse().find((b) => b <= t);
+                      ? BEATS.find((b) => b > t)
+                      : [...BEATS].reverse().find((b) => b < t);
                   // past the last beat in the direction of travel: leave it
                   return next === undefined ? value : next / DUR;
                 },
@@ -169,13 +204,13 @@ export default function OutcomeTransition() {
                 const t = self.progress * DUR;
                 // a scrub can hide a hovered caption without the pointer
                 // moving — no pointerleave, so drop stale glow here
-                if (glowing && (t < 0.38 || t > 0.6)) clearGlow();
-                // fire only after the dial's fade-in (1.00–1.13) has finished,
+                if (glowing && (t < 0.50 || t > 0.73)) clearGlow();
+                // fire only after the dial's fade-in (1.10–1.23) has finished,
                 // so appearing and swinging never overlap
-                if (t >= 1.16 && !needlePlayed) {
+                if (t >= 1.26 && !needlePlayed) {
                   needlePlayed = true;
                   swing.restart();
-                } else if (t < 0.95 && needlePlayed) {
+                } else if (t < 1.05 && needlePlayed) {
                   needlePlayed = false;
                   swing.pause(0);
                   gsap.set("[data-needle]", { rotation: -130 });
@@ -250,12 +285,15 @@ export default function OutcomeTransition() {
                 0.26
               );
             });
-            // beat 2: captions wait until the descending headline has
-            // cleared their band (0.50), then fill it column by column
+            // BEAT 2 (0.645): the captions fill the band column by column.
+            // They start at 0.52, not the instant the headline lands at
+            // 0.485 — that left BEAT 1 on a zero-width boundary, where the
+            // scrub's own smoothing was enough to drop the reader into the
+            // first caption's fade. The gap is the hold BEAT 1 sits in.
             tl.to(
               "[data-col]",
               { autoAlpha: 1, y: 0, duration: 0.05, stagger: 0.01, ease: "power2.out" },
-              0.5
+              0.52
             );
 
             // hovering a caption blooms its standing tool (user request)
@@ -278,7 +316,7 @@ export default function OutcomeTransition() {
             // beat 3: captions leave, and only then — after a clear beat, not
             // under the departing line (user, 2026-08-20) — do the circles
             // wrap each still-standing tool.
-            tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.63);
+            tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.67);
             capabilities.forEach((c, k) => {
               const s = START[c.id];
               tl.set(
@@ -288,17 +326,21 @@ export default function OutcomeTransition() {
                   // 0.45 wraps the standing tool; minus the lineup lift
                   y: () => (0.45 - LINEUP_LIFT - s.y / 100) * S(),
                 },
-                0.7
+                0.72
               );
             });
             tl.to(
               "[data-circle]",
               { autoAlpha: 1, scale: 1, duration: 0.05, stagger: 0.008, ease: "power2.out" },
-              0.7
+              0.72
             );
 
-            // beat 4: only now do the tools leave — the circles lift off them
-            tl.to("[data-tool]", { autoAlpha: 0, duration: 0.05, stagger: 0.006, ease: "power2.in" }, 0.72);
+            // the tools leave — the circles lift off them. The last one is
+            // out by 0.826 and nothing moves again until 0.87: that hold is
+            // BEAT 3 (0.85), six circles landed and standing alone. They
+            // used to start converging at 0.75, while they were still
+            // arriving and the tools were still fading.
+            tl.to("[data-tool]", { autoAlpha: 0, duration: 0.05, stagger: 0.006, ease: "power2.in" }, 0.74);
           } else {
             // compact: no room for the lineup — tools snap out, circles are
             // born at the blade tips as before
@@ -326,7 +368,7 @@ export default function OutcomeTransition() {
             tl.to(
               "[data-statement='different']",
               { y: 0, duration: 0.045, ease: "power1.inOut" },
-              0.455
+              0.44
             );
           } else {
             tl.to(
@@ -338,7 +380,7 @@ export default function OutcomeTransition() {
           tl.to(
             "[data-statement='different']",
             { autoAlpha: 0, duration: 0.035, ease: "power2.in" },
-            0.63
+            0.67
           );
 
           // converge into the overlapping cluster, then merge into one ring
@@ -348,42 +390,45 @@ export default function OutcomeTransition() {
             const a = ((k * 60 - 90) * Math.PI) / 180;
             const cl = { x: 50 + CLUSTER_R * Math.cos(a), y: 50 - LIFT + CLUSTER_R * Math.sin(a) };
 
-            tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.11, ease: "power2.inOut" }, 0.75);
-            tl.to(el, { x: frac(50 - s.x), y: frac(50 - LIFT - s.y), duration: 0.1, ease: "power2.inOut" }, 0.9);
-            if (k > 0) tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.96);
+            // gather into the overlapping cluster, landing at 0.96 together
+            // with the statement; hold through BEAT 4; then fuse into one
+            // ring from 1.01
+            tl.to(el, { x: frac(cl.x - s.x), y: frac(cl.y - s.y), duration: 0.09, ease: "power2.inOut" }, 0.87);
+            tl.to(el, { x: frac(50 - s.x), y: frac(50 - LIFT - s.y), duration: 0.08, ease: "power2.inOut" }, 1.01);
+            if (k > 0) tl.to(el, { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 1.05);
           });
 
           // backlight: blooms up behind the merging circle so the compass
           // emerges lit from behind, then settles to a faint ambient halo
           gsap.set("[data-bloom]", { scale: 0.7 });
-          tl.to("[data-bloom]", { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power2.out" }, 0.91);
-          tl.to("[data-bloom]", { opacity: 0.4, scale: 1.04, duration: 0.08, ease: "power1.inOut" }, 1.06);
+          tl.to("[data-bloom]", { autoAlpha: 1, scale: 1, duration: 0.1, ease: "power2.out" }, 1.02);
+          tl.to("[data-bloom]", { opacity: 0.4, scale: 1.04, duration: 0.08, ease: "power1.inOut" }, 1.16);
 
           // the last circle grows into the compass ring
-          tl.to(circles[0], { scale: 1.9, duration: 0.11, ease: "power2.inOut" }, 0.92);
-          tl.to(circles[0], { autoAlpha: 0, duration: 0.05 }, 1.03);
+          tl.to(circles[0], { scale: 1.9, duration: 0.09, ease: "power2.inOut" }, 1.03);
+          tl.to(circles[0], { autoAlpha: 0, duration: 0.05 }, 1.12);
           // slower arrival: the dial eases in over an eighth of the section,
           // so the compass resolves rather than snapping into place
-          tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.13, ease: "power2.out" }, 1.0);
+          tl.to("[data-compass]", { autoAlpha: 1, scale: 1, duration: 0.13, ease: "power2.out" }, 1.1);
 
           // copy — sequenced, not simultaneous: the circles gather (0.75–0.86),
           // the statement rises as the cluster locks, THEN they fuse into one
           // ring at 0.90 — gather, name it, merge. The statement then stays,
           // shrinking and dimming so it reads with "Outcomes matter more."
-          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.84);
+          tl.to("[data-statement='tools']", { autoAlpha: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.89);
           tl.to(
             "[data-statement='tools']",
             { scale: 0.6, opacity: 0.5, transformOrigin: "center bottom", duration: 0.05, ease: "power2.inOut" },
-            1.04
+            1.14
           );
-          tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.06, ease: "power2.out" }, 1.1);
+          tl.to("[data-statement='outcomes']", { autoAlpha: 1, y: 0, duration: 0.06, ease: "power2.out" }, 1.2);
 
-          // the runway: the telling is done by 1.20 — from there the stage
+          // the runway: the telling is done by 1.32 — from there the stage
           // stays pinned while the compass and its backlight drift gently
           // down with the scroll, at rest but alive, giving the needle hunt
           // room to play before the pin releases (user direction, 2026-08-16)
-          tl.to("[data-compass]", { y: () => 0.05 * S(), duration: DUR - 1.2 }, 1.2);
-          tl.to("[data-bloom]", { y: () => 0.05 * S(), duration: DUR - 1.2 }, 1.2);
+          tl.to("[data-compass]", { y: () => 0.05 * S(), duration: DUR - 1.32 }, 1.32);
+          tl.to("[data-bloom]", { y: () => 0.05 * S(), duration: DUR - 1.32 }, 1.32);
 
           return () => {
             colCleanups.forEach((fn) => fn());
@@ -404,7 +449,7 @@ export default function OutcomeTransition() {
       aria-label="From tools to navigation"
       /* chapter marks: lineup, cluster, merge, compass landing — the snap
          beats as fractions of the section's scroll range (timeline ÷ DUR) */
-      data-ruler-beats="0.4,0.53,0.62,0.78"
+      data-ruler-beats={RULER_BEATS}
     >
       <div className={styles.stage} ref={stageRef}>
         <div className={styles.bloom} data-bloom="" aria-hidden="true" />
