@@ -131,12 +131,34 @@ export default function OutcomeTransition() {
               // compass landing — the scrub before is free (user direction),
               // and so is the runway after: leaving is never tugged back
               snap: {
-                snapTo(value: number) {
+                /* Direction, never proximity. This used to return the NEAREST
+                   beat, and the beats are 63-126vh apart, so stopping past a
+                   gap's midpoint animated the reader BACKWARDS by as much as
+                   63vh - then the next scroll down fell into the same gap and
+                   was thrown back again. That is the oscillation (Cyril,
+                   2026-08-21).
+
+                   GSAP has a guard for exactly this, `snap.directional`, and
+                   it does not apply here: ScrollTrigger only wires it up when
+                   snapTo is NOT a function (see the `_isFunction(snap.snapTo)`
+                   branch in ScrollTrigger.js). A custom snapTo opts out of it
+                   and has to carry the direction itself. `self` is handed in
+                   for that - direction is 1 scrolling down, -1 up. */
+                snapTo(value: number, self?: { direction: number }) {
                   const t = value * DUR;
                   if (t < 0.45) return value;
                   if (t > 1.25) return value;
+                  // GSAP's own type marks `self` optional, so without a
+                  // direction to honour there is nothing to do but leave the
+                  // reader where they stopped.
+                  if (!self) return value;
                   const beats = [0.5, 0.75, 0.9, 1.2];
-                  return beats.reduce((a, b) => (Math.abs(b - t) < Math.abs(a - t) ? b : a)) / DUR;
+                  const next =
+                    self.direction >= 0
+                      ? beats.find((b) => b >= t)
+                      : [...beats].reverse().find((b) => b <= t);
+                  // past the last beat in the direction of travel: leave it
+                  return next === undefined ? value : next / DUR;
                 },
                 duration: { min: 0.25, max: 0.9 },
                 delay: 0.08,
