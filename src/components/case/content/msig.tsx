@@ -57,9 +57,9 @@ export default function MsigContent() {
         label="Case study sections"
         sections={[
           {
-            id: "user-journeys",
+            id: "pain-points",
             icon: "flow",
-            label: "User journeys",
+            label: "Pain points",
             body: (
               <>
                 <CaseFigure
