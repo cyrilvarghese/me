@@ -45,12 +45,17 @@ const CURVES = [
     reduced motion never starts it and skips every slide. */
 export default function CaseJourney({
   eyebrow,
+  eyebrowNote,
   heading,
   icon,
   iconLabel,
   stages,
 }: {
   eyebrow: string;
+  /** A second label under the eyebrow, in the accent — what the walk
+      below is showing. Optional: a journey without one just carries the
+      eyebrow, and nothing is rendered in its place. */
+  eyebrowNote?: string;
   heading: string;
   icon: string;
   iconLabel: string;
@@ -170,7 +175,14 @@ export default function CaseJourney({
   return (
     <m.section ref={rootRef} {...reveal(`section-shell ${styles.block}`)}>
       <div className={styles.head}>
-        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
+        {/* the two labels share the head's first column, so the heading
+            still starts on the same line as the eyebrow above it */}
+        <div>
+          <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
+          {eyebrowNote && (
+            <p className={`mono-label ${styles.eyebrowNote}`}>{eyebrowNote}</p>
+          )}
+        </div>
         <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>
       </div>
 

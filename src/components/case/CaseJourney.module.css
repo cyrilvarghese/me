@@ -17,6 +17,15 @@
 	color: var(--muted);
 }
 
+/* The second line of the eyebrow: what the walk below is showing. Red at
+   label size, so --accent-lift rather than --accent — the signal red
+   measures 4.02:1 on this ground and misses AA, and the lifted rung is
+   the same hue at 4.75:1. */
+.eyebrowNote {
+	color: var(--accent-lift);
+	margin-top: 0.45rem;
+}
+
 .heading {
 	font-size: var(--text-h3);
 	max-width: 24ch;
