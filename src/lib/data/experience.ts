@@ -14,20 +14,31 @@ export type Role = {
 };
 
 /** Shared rather than repeated: the Yuvabe and CaseChat work runs on the
-    same stack, and two copies of a list drift the moment one is edited. */
+    same stack, and two copies of a list drift the moment one is edited.
+
+    Design engineering and front end, in that order — this is the work as
+    it is actually done, not a catalogue of everything the stack touches.
+    Corrected 2026-08-21 (Cyril): it claimed Svelte-TS, FastAPI and
+    LangChain, none of which are in play. */
 const AI_PRODUCT_TOOLS = [
   "Figma",
+  "Design systems",
   "User interviews",
   "Usability testing",
   "GTM strategy",
-  "Svelte-TS",
-  "FastAPI",
+  "Next.js",
+  "Tailwind",
+  "shadcn/ui",
   "RAG",
-  "LangChain",
   "LLM APIs",
 ];
 
 /** Reverse chronological, newest first — the order the timeline draws.
+
+    Two roles in one title are joined with "and", three with a comma and
+    an "and" — never slashes. cases.ts already names these same roles that
+    way ("Design Engineer and Product Manager"), and a slash reads as a
+    toggle between two jobs rather than one person holding both.
     Locked by data.test.ts: a timeline that silently falls out of order
     still renders, which is exactly why it needs a test rather than a
     comment. */
@@ -35,7 +46,7 @@ export const experience: Role[] = [
   {
     years: "2026 — Present",
     from: 2026,
-    title: "Design Engineer / Product Manager",
+    title: "Design Engineer and Product Manager",
     org: "Yuvabe",
     body: "Leading UX, product and front-end engineering on CreativeOS, Yuvabe's flagship AI content generation platform.",
     tools: AI_PRODUCT_TOOLS,
@@ -43,7 +54,7 @@ export const experience: Role[] = [
   {
     years: "2024 — 2026",
     from: 2024,
-    title: "Founder / Design Engineer / CTPO",
+    title: "Founder, Design Engineer and CTPO",
     org: "CaseChat",
     body: "Built and shipped an AI simulator where medical students practise diagnosis, from first research through launch.",
     tools: AI_PRODUCT_TOOLS,
