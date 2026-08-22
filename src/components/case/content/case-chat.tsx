@@ -464,6 +464,7 @@ export default function CaseChatContent() {
                   heading="Getting better at exams was the most important thing."
                   lede="Students appreciated the learning, and valued retention and practice more. Shaping the assessments like the ones they actually sit raised engagement and outcomes together, rather than trading one for the other."
                   diagram={`${D}/03-engagement.svg`}
+                  diagramMobile={`${D}/03-engagement-mobile.svg`}
                   caption="Aligning the learning design with what students were already measured on lifted engagement and effectiveness at once — the second line is steeper on both axes, not tilted between them."
                 />
               </>

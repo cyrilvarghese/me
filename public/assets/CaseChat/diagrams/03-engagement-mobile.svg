@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 590" role="img"
+     aria-label="Engagement plotted against effectiveness: the line the product started on, and the steeper one it ended on, alongside the three versions that moved it.">
+  <!-- The phone telling of 03-engagement.svg.
+
+       The wide file sets the plot beside the version rail with a vertical
+       rule between them. Rotating that axis is the whole relayout: the
+       rule turns horizontal and the rail drops underneath, which reads
+       better here than it does wide — the red V3 node now lands directly
+       below the red ray it produced, so cause sits under effect instead
+       of beside it.
+
+       Sizes are the wide file's unchanged. Both viewBoxes render at about
+       1:1 (1100 at full width, 420 inside the 26rem cap), so 12 for the
+       ticks and 14 for the finding are already the rungs they should be —
+       there is nothing to return to. -->
+  <defs>
+    <marker id="ccA-03m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="currentColor" opacity=".4"/>
+    </marker>
+    <marker id="ccR-03m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#ea0000"/>
+    </marker>
+  </defs>
+
+  <!-- Two rays from the same origin. Nothing was traded: the second is
+       steeper on both axes at once, which is the finding. -->
+  <line x1="64" y1="250" x2="64" y2="44" stroke="currentColor" stroke-opacity=".3" marker-end="url(#ccA-03m)"/>
+  <line x1="64" y1="250" x2="386" y2="250" stroke="currentColor" stroke-opacity=".3" marker-end="url(#ccA-03m)"/>
+  <text x="78" y="36" font-size="12" fill="currentColor" opacity=".5">ENGAGEMENT</text>
+  <text x="386" y="272" font-size="12" text-anchor="end" fill="currentColor" opacity=".5">EFFECTIVENESS</text>
+
+  <line class="cc-in" style="--d:.3s" x1="64" y1="250" x2="296" y2="182" stroke="currentColor" stroke-opacity=".4" stroke-dasharray="5 6" marker-end="url(#ccA-03m)"/>
+  <!-- clear of the shallow ray above it (y219 at this x) and of the axis
+       below it (y250) -->
+  <text class="cc-in" style="--d:.5s" x="170" y="242" font-size="12" fill="currentColor" opacity=".5">where we started</text>
+
+  <line class="cc-draw" style="--len:288;--d:.5s" x1="64" y1="250" x2="300" y2="90" stroke="#ea0000" stroke-opacity=".85" marker-end="url(#ccR-03m)"/>
+  <text class="cc-in" style="--d:1.2s" x="306" y="76" font-size="14" text-anchor="end" fill="#ea0000">where we ended up</text>
+
+  <line x1="20" y1="316" x2="400" y2="316" stroke="currentColor" stroke-opacity=".12"/>
+
+  <!-- What actually moved it, in the order it shipped. -->
+  <text x="30" y="354" font-size="12" fill="currentColor" opacity=".5">WHAT CHANGED</text>
+
+  <line class="cc-draw" style="--len:70;--d:.4s" x1="44" y1="406" x2="44" y2="474" stroke="currentColor" stroke-opacity=".3"/>
+  <line class="cc-draw" style="--len:70;--d:.7s" x1="44" y1="486" x2="44" y2="554" stroke="#ea0000" stroke-opacity=".6"/>
+
+  <circle class="cc-in" style="--d:.2s" cx="44" cy="400" r="6" fill="currentColor" fill-opacity=".4"/>
+  <circle class="cc-in" style="--d:.5s" cx="44" cy="480" r="6" fill="currentColor" fill-opacity=".7"/>
+  <circle class="cc-beat" style="--d:1.2s" cx="44" cy="560" r="6" fill="#ea0000"/>
+
+  <text class="cc-in" style="--d:.2s" x="70" y="404" font-size="15" fill="currentColor" opacity=".8">V1</text>
+  <text class="cc-in" style="--d:.2s" x="110" y="404" font-size="12" fill="currentColor" opacity=".55">case practice with feedback</text>
+
+  <text class="cc-in" style="--d:.5s" x="70" y="484" font-size="15" fill="currentColor" opacity=".8">V2</text>
+  <text class="cc-in" style="--d:.5s" x="110" y="484" font-size="12" fill="currentColor" opacity=".55">concept overlays inside the case</text>
+
+  <text class="cc-in" style="--d:.9s" x="70" y="564" font-size="15" fill="#ea0000">V3</text>
+  <text class="cc-in" style="--d:.9s" x="110" y="564" font-size="12" fill="#ea0000" opacity=".8">exam-shaped assessments</text>
+</svg>
