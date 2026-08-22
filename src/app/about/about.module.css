@@ -118,11 +118,14 @@
    account reads in. Equal 1fr columns are what put the rule exactly on
    the centre line without any positioning maths. */
 .chapter {
+	/* the gap to the next chapter — one value, because the stop mark
+	   and the thread's end below both have to subtract it */
+	--chapter-gap: calc(clamp(4rem, 12vh, 8rem) + 100px);
 	position: relative;
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	column-gap: clamp(2.5rem, 7vw, 6rem);
-	padding-bottom: clamp(4rem, 12vh, 8rem);
+	padding-bottom: var(--chapter-gap);
 	/* picture and chapter sit level either side of the rule — the row's
 	   middles align, the way the reference reads (Cyril, 2026-08-22) */
 	align-items: center;
@@ -147,7 +150,7 @@
 .last::before {
 	/* same padding subtraction as the dot below, so the thread stops
 	   exactly at the final stop */
-	bottom: calc(50% + clamp(4rem, 12vh, 8rem) / 2);
+	bottom: calc(50% + var(--chapter-gap) / 2);
 }
 
 /* the stop mark, at the row's vertical middle — level with the centred
@@ -158,7 +161,7 @@
 	content: "";
 	position: absolute;
 	left: 50%;
-	top: calc((100% - clamp(4rem, 12vh, 8rem)) / 2);
+	top: calc((100% - var(--chapter-gap)) / 2);
 	width: 9px;
 	height: 9px;
 	border-radius: 50%;

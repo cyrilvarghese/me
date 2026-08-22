@@ -251,6 +251,8 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "single",
       seed: 4177,
+      /* at 0.7 of the box, centred — a tablet, not a wall */
+      cards: [{ left: 15, top: 15, width: 70, rotate: 0, z: 0, from: { x: 0, y: 29 } }],
       shots: [
         {
           src: "/assets/about/04/RgZ2K4fmI2UoSDGbQO2Zfj9jY.gif",
@@ -304,11 +306,22 @@ export const chapters: Chapter[] = [
     ],
     gallery: {
       ratio: "4 / 3",
-      kind: "arc",
+      kind: "wall",
       seed: 6091,
       /* three of the five marks come on white chips; on a white wall
          the chips disappear and the marks read as a set */
       surface: true,
+      /* A grid, three over two, each mark sized for the same visual
+         mass — equal widths would make the wordmarks slivers and the
+         1Finance square a monolith. Order in `shots`: Verizon, Azentio,
+         Razorpay, MSIG, 1Finance. They pop on out of order. */
+      cards: [
+        { left: 23, top: 60, width: 24, rotate: 0, z: 1, from: { x: 0, y: 0 }, pop: true, delay: 0.35 },
+        { left: 37, top: 29, width: 26, rotate: 0, z: 2, from: { x: 0, y: 0 }, pop: true, delay: 0.1 },
+        { left: 6, top: 29, width: 28, rotate: 0, z: 3, from: { x: 0, y: 0 }, pop: true, delay: 0.5 },
+        { left: 68, top: 27, width: 24, rotate: 0, z: 4, from: { x: 0, y: 0 }, pop: true, delay: 0.25 },
+        { left: 59, top: 57, width: 12, rotate: 0, z: 5, from: { x: 0, y: 0 }, pop: true, delay: 0.6 },
+      ],
       shots: [
         {
           src: "/assets/about/06/dDb5U8I21mxn4b3ewPCbwTOVNc.webp",
@@ -354,7 +367,6 @@ export const chapters: Chapter[] = [
     body: [
       "CaseChat began with a childhood friend who became a doctor. It is an AI case-based learning platform where medical students practise clinical reasoning against simulated patients, and get told where the reasoning went wrong.",
     ],
-    link: { href: "https://mycasechat.com", label: "mycasechat.com" },
     gallery: {
       /* the wordmark's own shape — a wide mark, not a screen */
       ratio: "833 / 207",
@@ -420,6 +432,14 @@ export const sparetime: Omit<Chapter, "num"> = {
     ratio: "4 / 3",
     kind: "pile",
     seed: 9067,
+    /* Three pictures that should each be seen: scaled down and spread
+       so only a corner of the drawing photo laps the dog — the forest
+       up left, the dog up right, Cyril drawing along the foot. */
+    cards: [
+      { left: 0, top: 0, width: 46, rotate: -4, z: 1, from: { x: -64, y: -10 } },
+      { left: 56, top: 2, width: 40, rotate: 3, z: 2, from: { x: 64, y: -10 } },
+      { left: 22, top: 48, width: 50, rotate: -2, z: 3, from: { x: 0, y: 29 } },
+    ],
     shots: [
       {
         src: "/assets/about/final/03tbGiggMDclL6ZqSDbeF5deA0.webp",
