@@ -24,15 +24,27 @@
 	inset-inline: 0;
 	bottom: 0;
 	height: 74vh;
-	/* the covers are bright, daylit photographs: the ramp starts earlier and
-	   lands denser so the kicker and headline sit on near-solid ground
-	   rather than on whatever the photograph happens to put behind them.
+	/* The covers are bright, daylit photographs, so the ramp goes solid
+	   ABOVE the text rather than under it: the kicker's top edge sits at
+	   54% of this box, and the stop at 52% is what puts it on --bg proper
+	   instead of on whatever the photograph happens to leave there.
+
+	   It used to reach only 0.82 by then. Measured behind the hero text,
+	   the brightest pixel was 65/255 on CreativeOS — a white desk showing
+	   through — and the red kicker fell to 2.30:1 (Cyril, 2026-08-21).
+
+	   Worth knowing why red is the one that suffers: #ea0000 has a
+	   relative luminance of 0.175, so even on pure black it tops out at
+	   4.50:1. It has no headroom to give. Every point the ground lifts
+	   comes straight off the kicker.
+
 	   rgba literals, not color-mix — the latter no-ops in Cyril's Edge */
 	background: linear-gradient(
 		transparent,
-		rgba(21, 17, 17, 0.45) 26%,
-		rgba(21, 17, 17, 0.82) 55%,
-		rgba(21, 17, 17, 0.97) 80%,
+		rgba(21, 17, 17, 0.40) 22%,
+		rgba(21, 17, 17, 0.80) 40%,
+		rgba(21, 17, 17, 0.97) 52%,
+		rgba(21, 17, 17, 1) 66%,
 		rgba(21, 17, 17, 1)
 	);
 	pointer-events: none;

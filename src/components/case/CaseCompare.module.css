@@ -132,7 +132,7 @@
 }
 
 .panel[data-side="after"] .statValue {
-	color: var(--accent-lift);
+	color: var(--accent);
 }
 
 .statLabel {

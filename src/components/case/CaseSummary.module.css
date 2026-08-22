@@ -56,7 +56,7 @@
 
 .value {
 	font-size: var(--text-h3);
-	color: var(--accent-lift);
+	color: var(--accent);
 	/* 1 was safe while every value was one word; a value that is a whole
 	   sentence needs the leading, and balanced wrapping so it breaks into
 	   even lines rather than a long line and an orphan */
