@@ -51,7 +51,7 @@
 /* scoped to the columns: the engagement facts below reuse .label and stay
    in the muted label voice */
 .col .label {
-	color: var(--accent);
+	color: var(--accent-lift);
 }
 
 .value {

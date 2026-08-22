@@ -28,7 +28,7 @@
 }
 
 .caseNum {
-	color: var(--accent);
+	color: var(--accent-lift);
 	font-size: var(--text-sublabel);
 }
 

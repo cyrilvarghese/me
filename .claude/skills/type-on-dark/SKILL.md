@@ -70,6 +70,29 @@ rule, and it is also why they never buzz.
 Red is still rare by intent. If red is already on the nodes and on a tag
 and on the label, a fourth red is not emphasis any more.
 
+**The split is by SIZE, and it was swept once.** Every red text under the
+large-type threshold uses `--accent-lift`; `--accent` is left to marks,
+rules, borders and type at 24px and up. That sweep covered the case
+kickers, the timeline org names, the tool durations, the PAIN / SOLUTION
+/ OUTCOMES labels, the compare index and after-tag, the header and footer
+wordmarks, and the /design and /labs eyebrows.
+
+Two reds sitting inches apart is how it was noticed: a case kicker in
+`--accent` next to its tag in `--accent-lift`, on the same card. To check
+the whole site rather than one card, ask the page:
+
+```js
+[...document.querySelectorAll('*')].filter(el => {
+  const cs = getComputedStyle(el);
+  const own = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
+  const px = parseFloat(cs.fontSize);
+  const large = px >= 24 || (px >= 18.66 && +cs.fontWeight >= 700);
+  return own && cs.color === 'rgb(234, 0, 0)' && !large;   // --accent on small text
+});
+```
+
+That should return nothing.
+
 ## Weight: subtract, do not add
 
 **Light-on-dark gains optical weight.** Bright type visually expands

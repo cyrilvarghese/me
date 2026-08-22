@@ -23,7 +23,7 @@
 }
 
 .brand em {
-	color: var(--accent);
+	color: var(--accent-lift);
 	font-style: normal;
 }
 

@@ -107,7 +107,7 @@
 
 @media (hover: hover) and (pointer: fine) {
 	.mark:hover {
-		color: var(--accent);
+		color: var(--accent-lift);
 	}
 
 	.mark:hover .markDash {

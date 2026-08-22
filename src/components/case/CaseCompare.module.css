@@ -12,7 +12,7 @@
 }
 
 .index {
-	color: var(--accent);
+	color: var(--accent-lift);
 }
 
 .eyebrow {
@@ -170,6 +170,6 @@
 	border-right: 1px solid var(--hairline);
 }
 .panel[data-side="after"] .tag {
-	color: var(--accent);
+	color: var(--accent-lift);
 	border-right-color: var(--hairline-red);
 }

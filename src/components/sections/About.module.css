@@ -207,7 +207,7 @@
    "01 / DESIGN ENGINEER" eyebrow — red names the subject of the entry
    in both places */
 .org {
-	color: var(--accent);
+	color: var(--accent-lift);
 	font-size: var(--text-sublabel);
 	margin-top: 0.35rem;
 }
