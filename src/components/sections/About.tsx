@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { m } from "motion/react";
 import { experience } from "@/lib/data/experience";
 import styles from "./About.module.css";
@@ -13,8 +13,137 @@ const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
 const fromY24 = { ["--fx-from" as string]: "translateY(24px)" };
 const viewport = { once: true, margin: "0px 0px -18% 0px" };
 
+/* How far the backlight is allowed to lean toward the pointer, in px.
+   Small on purpose: the disc is ~380px across, so this reads as the
+   light shifting rather than as something chasing the cursor. */
+const LEAN_PX = 16;
+
+/* The nudge's cadence. First one soon after the portrait is on screen,
+   the rest at a random gap inside this window — a fixed interval is a
+   metronome, and a metronome in the corner of the eye is exactly the
+   loop this section refuses everywhere else. It gives up after
+   NUDGE_MAX: a reader who has ignored four of them is not going to
+   hover, and a fifth is nagging. */
+const NUDGE_FIRST_MS = 1600;
+const NUDGE_GAP_MS: [number, number] = [4500, 9000];
+const NUDGE_MAX = 4;
+const rand = (a: number, b: number) => a + Math.random() * (b - a);
+
 export default function About() {
   const filmRef = useRef<HTMLVideoElement>(null);
+  const leanRef = useRef<HTMLSpanElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const rimRef = useRef<HTMLSpanElement>(null);
+  const raf = useRef<number | undefined>(undefined);
+  const warmed = useRef(false);
+  /* set the first time the reader actually hovers the portrait: the
+     nudge exists to be obeyed once, and then it has done its job */
+  const found = useRef(false);
+
+  /* Where the reward lives: hovering the portrait plays a film, and
+     nothing on the page says so. These two together are the invitation —
+     the light leans toward the reader before they arrive (below), and
+     the disc breathes once when it first comes into view (in the JSX).
+     Neither of them labels itself. */
+  const canHover = () =>
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* The backlight leans toward the pointer while it is anywhere in the
+     section. The damping is the CSS transition on .glowLean, not a
+     spring here: the light arrives a beat late, which is what keeps it
+     ambient instead of reading as a cursor toy.
+
+     One rAF per move, and the rect is read inside it — a pointermove
+     fires far faster than the screen redraws, and a layout read per
+     event is how that turns into jank. */
+  const trackPointer = (e: React.PointerEvent) => {
+    const el = leanRef.current;
+    const frame = frameRef.current;
+    if (!el || !frame || !canHover()) return;
+    frame.dataset.near = "";
+    const { clientX, clientY } = e;
+    if (raf.current !== undefined) cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
+      const r = frame.getBoundingClientRect();
+      const ox = clientX - (r.left + r.width / 2);
+      const oy = clientY - (r.top + r.height / 2);
+      const dx = Math.max(-1, Math.min(1, ox / r.width));
+      const dy = Math.max(-1, Math.min(1, oy / r.height));
+      el.style.transform = `translate3d(${dx * LEAN_PX}px, ${dy * LEAN_PX}px, 0)`;
+      /* the lit arc is drawn at the top of the ring, so aiming it is a
+         rotation: atan2 reads 0° at three o'clock, +90 brings it round
+         to twelve */
+      if (rimRef.current) {
+        const deg = (Math.atan2(oy, ox) * 180) / Math.PI + 90;
+        rimRef.current.style.transform = `rotate(${deg.toFixed(1)}deg)`;
+      }
+    });
+  };
+
+  const restPointer = () => {
+    if (raf.current !== undefined) cancelAnimationFrame(raf.current);
+    if (leanRef.current) leanRef.current.style.transform = "translate3d(0, 0, 0)";
+    if (frameRef.current) delete frameRef.current.dataset.near;
+  };
+
+  /* A pointer in this section is a pointer that might hover the
+     portrait, and that is the moment to fetch the film — preload="none"
+     otherwise means the first hover waits on 660KB. Once only, and never
+     before play(), so load() can never interrupt a running clip. */
+  const warmFilm = () => {
+    const v = filmRef.current;
+    if (!v || warmed.current || !canHover()) return;
+    warmed.current = true;
+    v.preload = "auto";
+    v.load();
+  };
+
+  /* The nudge scheduler. It only runs while the portrait is actually on
+     screen — an IntersectionObserver rather than a plain timer, or the
+     disc spends the whole page hopping to nobody — and it stops for good
+     the moment the reader hovers it. The attribute comes off on
+     animationend so the next firing re-triggers the animation. */
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame || !canHover()) return;
+
+    let timer: number | undefined;
+    let fired = 0;
+
+    const schedule = (delay: number) => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (found.current || fired >= NUDGE_MAX) return;
+        fired += 1;
+        frame.style.animationDuration = `${Math.round(rand(680, 860))}ms`;
+        frame.dataset.nudge = Math.random() < 0.5 ? "hop" : "tilt";
+        schedule(rand(NUDGE_GAP_MS[0], NUDGE_GAP_MS[1]));
+      }, delay);
+    };
+
+    const end = () => delete frame.dataset.nudge;
+    frame.addEventListener("animationend", end);
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !found.current) schedule(NUDGE_FIRST_MS);
+        else window.clearTimeout(timer);
+      },
+      { threshold: 0.6 }
+    );
+    io.observe(frame);
+
+    return () => {
+      window.clearTimeout(timer);
+      io.disconnect();
+      frame.removeEventListener("animationend", end);
+    };
+  }, []);
+
+  useEffect(() => () => {
+    if (raf.current !== undefined) cancelAnimationFrame(raf.current);
+  }, []);
 
   /* The portrait plays under the pointer, ONCE, and then holds on its
      last frame — it is a three-second moment, not a loop, and a clip
@@ -28,6 +157,7 @@ export default function About() {
      that from throwing, and the still photograph underneath is already
      the fallback. */
   const playFilm = () => {
+    found.current = true;
     const v = filmRef.current;
     if (!v || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     v.muted = true;
@@ -45,7 +175,14 @@ export default function About() {
   };
 
   return (
-    <section className={`section-shell ${styles.section}`} id="about" aria-label="About">
+    <section
+      className={`section-shell ${styles.section}`}
+      id="about"
+      aria-label="About"
+      onPointerMove={trackPointer}
+      onPointerEnter={warmFilm}
+      onPointerLeave={restPointer}
+    >
       <p className={`mono-label ${styles.eyebrow}`}>About</p>
 
       <div className={styles.intro}>
@@ -74,12 +211,22 @@ export default function About() {
             reserved before the image lands, so the timeline below it never
             jumps. next/image is not in play here — the export is static and
             images are unoptimized, so every asset is pre-sized by hand. */}
+        {/* A plain div, not an m.div: the nudge is a CSS keyframe
+            animation re-triggered from the scheduler above, and Framer
+            writing an inline transform to the same element would fight
+            it on every firing. */}
         <div
+          ref={frameRef}
           className={styles.portraitFrame}
           onPointerEnter={playFilm}
           onPointerLeave={stopFilm}
         >
-          <span className={styles.glow} aria-hidden="true" />
+          {/* the glow drifts on a keyframe animation of its own, and a
+              CSS animation beats an inline transform — so the lean is
+              written to this wrapper instead */}
+          <span ref={leanRef} className={styles.glowLean} aria-hidden="true">
+            <span className={styles.glow} />
+          </span>
           <img
             src="/assets/profile.webp"
             width={1100}
@@ -108,6 +255,8 @@ export default function About() {
             aria-hidden="true"
             tabIndex={-1}
           />
+          {/* above the film, so the glint survives the hover swap */}
+          <span ref={rimRef} className={styles.rim} aria-hidden="true" />
         </div>
       </div>
 

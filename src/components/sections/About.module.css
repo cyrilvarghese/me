@@ -32,6 +32,9 @@
 	position: relative;
 	width: 100%;
 	aspect-ratio: 1;
+	/* the plainest affordance there is, and the only one that says
+	   "this does something" before the reader commits the movement */
+	cursor: pointer;
 }
 
 /* The file is already square, padded in --bg rather than cropped, so
@@ -49,19 +52,143 @@
 	border: 1px solid rgba(248, 244, 242, 0.16);
 }
 
+/* The nudge. The breath it replaces — a 1.2% swell — was invisible
+   (Cyril, 2026-08-22): a scale that small on a 380px disc moves its edge
+   by two pixels, which is under the threshold peripheral vision picks
+   up. This hops the whole disc instead, overshoots its rest and settles.
+
+   Two variants and a duration set per firing (About.tsx), so no two
+   nudges are identical — a hop that repeats exactly reads as a loop,
+   and a loop in the corner of the eye is what pulls a reader off the
+   copy. Amplitude stays in the keyframes rather than a custom property:
+   var() inside an interpolated transform is the kind of thing that
+   silently drops out in this browser. */
+@keyframes nudge {
+	0% { transform: translate3d(0, 0, 0) scale(1); }
+	28% { transform: translate3d(0, -7px, 0) scale(1.022); }
+	52% { transform: translate3d(0, 2px, 0) scale(0.993); }
+	74% { transform: translate3d(0, -2px, 0) scale(1.007); }
+	89% { transform: translate3d(0, 1px, 0) scale(0.998); }
+	100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* the same hop with a half-degree of tilt in it — the difference is
+   barely nameable, which is the point: it stops the eye recognising the
+   movement as a repeat */
+@keyframes nudgeTilt {
+	0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+	28% { transform: translate3d(-2px, -6px, 0) rotate(-0.6deg) scale(1.02); }
+	52% { transform: translate3d(1px, 2px, 0) rotate(0.25deg) scale(0.994); }
+	74% { transform: translate3d(-1px, -2px, 0) rotate(-0.15deg) scale(1.006); }
+	100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+}
+
+/* Hover-capable pointers only: a phone gets no reward to advertise (the
+   film is hover-only), so a disc jumping at a reader who cannot claim
+   the payoff is just noise. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+	.portraitFrame[data-nudge] {
+		/* the overshoot lives in the curve as well as the keyframes */
+		animation-timing-function: cubic-bezier(0.34, 1.12, 0.4, 1);
+		animation-fill-mode: both;
+	}
+
+	.portraitFrame[data-nudge="hop"] {
+		animation-name: nudge;
+	}
+
+	.portraitFrame[data-nudge="tilt"] {
+		animation-name: nudgeTilt;
+	}
+}
+
+/* Rim light, kept slight (Cyril, 2026-08-22 — the first pass at 0.75
+   was a glint you could not miss, which is the opposite of the brief).
+   The ring is lit on one short arc, and the arc turns to face the
+   pointer: a full circle of light masked down to a hairline, so aiming
+   it is a rotate rather than a repaint of the gradient.
+
+   closest-side, or the mask circle sizes itself to the box's diagonal
+   and the ring lands outside the picture entirely. */
+.rim {
+	position: absolute;
+	inset: -1px;
+	z-index: 3;
+	border-radius: 50%;
+	pointer-events: none;
+	opacity: 0;
+	background: radial-gradient(
+		circle at 50% 0%,
+		rgba(248, 244, 242, 0.34),
+		rgba(248, 244, 242, 0.06) 24%,
+		rgba(248, 244, 242, 0) 40%
+	);
+	-webkit-mask: radial-gradient(
+		circle closest-side,
+		transparent calc(100% - 1.5px),
+		#000 calc(100% - 1.5px)
+	);
+	mask: radial-gradient(
+		circle closest-side,
+		transparent calc(100% - 1.5px),
+		#000 calc(100% - 1.5px)
+	);
+	transform: rotate(0deg);
+	transform-origin: 50% 50%;
+	/* the turn lags the pointer by the beat the backlight lags it, so the
+	   two read as one light source moving rather than two effects */
+	transition: opacity 380ms ease, transform 420ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.portraitFrame[data-near] .rim {
+	opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.rim {
+		display: none;
+	}
+}
+
+/* The lean: the glow's wrapper, and the only thing the pointer moves.
+   The drift below is a keyframe animation, and a CSS animation overrides
+   an inline transform, so the two cannot share an element.
+
+   The transition IS the damping — 700ms out-cubic means the light
+   arrives a beat after the reader's pointer does, which reads as the
+   room shifting rather than as something following the mouse. Nothing
+   is written here on a touch screen or under reduced motion: About.tsx
+   checks both before it writes a transform at all. */
+.glowLean {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	transform: translate3d(0, 0, 0);
+	transition: transform 700ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.glowLean {
+		transition: none;
+	}
+}
+
 /* Backlight: a soft disc a little larger than the photograph, drifting
    under it. rgba literals and its own compositor layer, because
    translucent paint and color-mix both drop out in Cyril's browser
    otherwise (same quirk family as the header veil and hero scrim). */
 .glow {
 	position: absolute;
-	inset: -14%;
+	/* wider and brighter than it first shipped (Cyril, 2026-08-22): the
+	   backlight is what leans toward the reader, so it has to be visible
+	   enough to be leaning at all */
+	inset: -18%;
 	z-index: 0;
 	border-radius: 50%;
 	background: radial-gradient(
 		circle at 52% 38%,
-		rgba(234, 0, 0, 0.2),
-		rgba(248, 244, 242, 0.07) 42%,
+		rgba(234, 0, 0, 0.3),
+		rgba(248, 244, 242, 0.11) 42%,
 		rgba(21, 17, 17, 0) 68%
 	);
 	filter: blur(24px);
