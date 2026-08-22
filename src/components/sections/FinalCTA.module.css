@@ -73,7 +73,11 @@
 @media (max-width: 768px) {
 	.section {
 		height: auto;
-		padding-block: var(--space-section);
+		/* Half the usual rhythm on top. The section above already ends with
+		   its own --space-section, so a full one here stacked two gaps into
+		   a quarter-screen of nothing before the question — and with the
+		   knife gone there is no longer anything standing in it. */
+		padding-block: 3rem var(--space-section);
 	}
 
 	.stage {
@@ -85,15 +89,13 @@
 		gap: 2rem;
 	}
 
-	/* both of these are absolute overlays on the pinned stage — stacked,
-	   they each take their own row */
+	/* No knife. On desktop the timeline dissolves it as the ask arrives,
+	   so the finished composition — which is all this width ever shows —
+	   does not contain one. Left in, it was also 242px of box holding a
+	   31px pill: 13% ink and the rest a void between the timeline above
+	   and the question below (Cyril, 2026-08-21). */
 	.knifeWrap {
-		position: static;
-	}
-
-	.knifeWrap > div {
-		width: min(52vh, 62vw);
-		margin-inline: auto;
+		display: none;
 	}
 
 	.copy {
@@ -124,12 +126,10 @@
 		gap: 3rem;
 	}
 
+	/* the finished state of that timeline has the knife dissolved, and
+	   reduced motion is meant to land on the finished state */
 	.knifeWrap {
-		position: static;
-	}
-
-	.knifeWrap > div {
-		margin-inline: auto;
+		display: none;
 	}
 
 	.copy {
