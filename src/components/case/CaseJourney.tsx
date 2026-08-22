@@ -196,7 +196,30 @@ export default function CaseJourney({
           } as React.CSSProperties
         }
       >
-        {/* the rail. Dots are buttons — the timeline is the nav */}
+        {/* the card: one stage speaking. Keyed so the swap re-runs the
+            entrance; min-height in the module keeps the rail still */}
+        <div key={cardIndex} className={styles.card}>
+          <img src={icon} alt={iconLabel} className={styles.avatar} />
+          <div className={styles.words}>
+            <p className={styles.quote}>&#8220;{stage.quote}&#8221;</p>
+            {stage.consequence && (
+              <p className={styles.consequence}>
+                <span className={`mono-label ${styles.consequenceTag}`}>
+                  Pain
+                </span>
+                {stage.consequence}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* The rail, UNDER the quote it belongs to. It used to lead the
+            panel, which put a moving marker directly above a card whose
+            text was swapping at the same moment — two things changing in
+            two places, and the reader had to watch both (Cyril,
+            2026-08-21). Below and smaller, it reads as a legend for the
+            quote rather than a second event competing with it.
+            Dots are still buttons: the timeline is the nav. */}
         <div className={styles.rail} data-instant={instant || undefined}>
           {/* a real SVG line, not a CSS gradient: the house ground is a
               round-capped "2 14" dash, and gradient dots rasterize square
@@ -208,8 +231,8 @@ export default function CaseJourney({
               x2="100%"
               y2="1.5"
               stroke="rgba(248,244,242,0.28)"
-              strokeWidth="3"
-              strokeDasharray="2 14"
+              strokeWidth="2.25"
+              strokeDasharray="1.5 10.5"
               strokeLinecap="round"
             />
           </svg>
@@ -242,23 +265,6 @@ export default function CaseJourney({
               <span className={`mono-label ${styles.stopLabel}`}>{s.label}</span>
             </button>
           ))}
-        </div>
-
-        {/* the card: one stage speaking. Keyed so the swap re-runs the
-            entrance; min-height in the module keeps the rail still */}
-        <div key={cardIndex} className={styles.card}>
-          <img src={icon} alt={iconLabel} className={styles.avatar} />
-          <div className={styles.words}>
-            <p className={styles.quote}>&#8220;{stage.quote}&#8221;</p>
-            {stage.consequence && (
-              <p className={styles.consequence}>
-                <span className={`mono-label ${styles.consequenceTag}`}>
-                  Pain
-                </span>
-                {stage.consequence}
-              </p>
-            )}
-          </div>
         </div>
 
         <div className={styles.controls}>

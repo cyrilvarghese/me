@@ -46,10 +46,16 @@
    one centreline --rail-y so nothing can drift. */
 
 .rail {
-	--rail-y: 1rem;
+	/* Smaller and centred, because it now follows the quote instead of
+	   leading it. At full width and full size above the card it read as
+	   the headline of the panel, and its marker moved at the same moment
+	   the quote swapped underneath — the reader had to watch two places
+	   at once. Everything below is the same house geometry at 0.75. */
+	--rail-y: 0.7rem;
 	position: relative;
-	height: 4.5rem;
-	margin-inline: 1.25rem;
+	height: 2.9rem;
+	max-width: min(100%, 40rem);
+	margin: clamp(1.25rem, 3vh, 1.75rem) auto 0;
 }
 
 .track,
@@ -67,9 +73,9 @@
 }
 
 .trail {
-	top: calc(var(--rail-y) - 1.2px);
-	height: 2.4px;
-	border-radius: 1.2px;
+	top: calc(var(--rail-y) - 0.9px);
+	height: 1.8px;
+	border-radius: 0.9px;
 	background: rgba(248, 244, 242, 0.55);
 	transform-origin: left center;
 	transition: transform var(--msj-travel, 600ms) cubic-bezier(0.4, 0, 0.2, 1);
@@ -86,10 +92,10 @@
 .marker {
 	position: absolute;
 	top: var(--rail-y);
-	width: 13px;
-	height: 3.4px;
-	margin: -1.7px 0 0 -6.5px;
-	border-radius: 1.7px;
+	width: 10px;
+	height: 2.6px;
+	margin: -1.3px 0 0 -5px;
+	border-radius: 1.3px;
 	background: var(--accent);
 	transition: left var(--msj-travel, 600ms) cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -98,7 +104,7 @@
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	width: 2.75rem;
+	width: 2.25rem;
 	transform: translateX(-50%);
 	border: 0;
 	background: none;
@@ -116,12 +122,12 @@
 	position: absolute;
 	top: var(--rail-y);
 	left: 50%;
-	width: 11px;
-	height: 11px;
-	margin: -5.5px 0 0 -5.5px;
+	width: 8px;
+	height: 8px;
+	margin: -4px 0 0 -4px;
 	border-radius: 50%;
 	background: var(--surface);
-	border: 2px solid rgba(248, 244, 242, 0.55);
+	border: 1.5px solid rgba(248, 244, 242, 0.55);
 	transition: border-color 300ms ease, background-color 300ms ease;
 }
 
@@ -144,14 +150,14 @@
 .stop[data-active] .dot::after {
 	content: "";
 	position: absolute;
-	inset: -2px;
+	inset: -1.5px;
 	border-radius: 50%;
-	border: 2px solid var(--accent);
+	border: 1.5px solid var(--accent);
 }
 
 .stopLabel {
 	position: absolute;
-	top: calc(var(--rail-y) + 1.5rem);
+	top: calc(var(--rail-y) + 1.05rem);
 	left: 50%;
 	transform: translateX(-50%);
 	white-space: nowrap;
@@ -208,10 +214,11 @@
 	display: flex;
 	gap: clamp(1rem, 2.5vw, 1.75rem);
 	align-items: flex-start;
-	border-top: 1px solid var(--hairline);
-	padding-top: clamp(1.25rem, 3vh, 2rem);
-	margin-top: 0.75rem;
-	/* tallest stage sets this, so the rail never jumps mid-cycle */
+	/* the rule now sits UNDER the quote, dividing it from the rail that
+	   follows — the card leads the panel, so it has nothing above it */
+	border-bottom: 1px solid var(--hairline);
+	padding-bottom: clamp(1.25rem, 3vh, 1.75rem);
+	/* tallest stage sets this, so nothing below jumps mid-cycle */
 	min-height: 9.5rem;
 }
 
