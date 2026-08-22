@@ -327,11 +327,19 @@ column for more air and the rail stops in open space, which reads worse
 than no rail. Widen the gap *between* stacked items instead — that is
 where the whitespace belongs.
 
-**Emphasis inside body-size text is a value step, not red text.** Red
-fails AA at this size on this ground. Brighten the clause to `--fg`
-against a `--muted` quote and put the accent in a `text-decoration`
-underline beneath it, which keeps red decorative and is what an
-underlining source deck meant anyway.
+**Emphasis inside body-size text is a value step, not red text — inside
+an SVG.** A standalone diagram cannot read `tokens.css`, so the only red
+available to it is the literal `--accent` `#ea0000`, which is 4.02:1 and
+fails AA at this size. Brighten the clause to `--fg` against a `--muted`
+quote and put the accent in a `text-decoration` underline beneath it,
+which keeps red decorative and is what an underlining source deck meant
+anyway.
+
+In an **HTML** figure the token is readable, so `--accent-lift`
+(`#d95a5a`) may be the text itself — that is what the journey's pain
+lines use. See the `type-on-dark` skill for the weight and size that has
+to come with it; red text at 500 and 13px is how that started and it read
+badly.
 
 ## Common mistakes
 

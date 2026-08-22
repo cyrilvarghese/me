@@ -125,8 +125,10 @@ export default function DesignSystemPage() {
       <h1 className={`serif-display ${styles.headline}`}>Black, white, red — warmed.</h1>
       <p className={styles.rule}>
         Every neutral carries a ~2% blend toward the accent at constant lightness — never plain
-        black or plain white. Red is decorative and large-type only; it fails AA contrast for
-        small text on this ground.
+        black or plain white. <code>--accent</code> is decorative and large-type only — 4.02:1,
+        under the AA floor. <code>--accent-lift</code> is the one red that may be running text:
+        4.96:1 here, 4.64:1 on <code>--surface</code>, and desaturated to 63% so it stops buzzing
+        against the dark. Contrast is only one axis on this ground.
       </p>
 
       <p className={`mono-label ${styles.sectionLabel}`}>Core tokens — tokens.css</p>
