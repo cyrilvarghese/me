@@ -83,6 +83,8 @@ export const experience: Role[] = [
     tools: [
       "Figma",
       "FigJam",
+      "Sketch",
+      "Building Figma plugins",
       "Design systems",
       "Field research",
       "Cross-functional collaboration",
