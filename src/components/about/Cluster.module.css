@@ -5,6 +5,15 @@
 	width: 100%;
 }
 
+/* the box as a wall, with a card's corner and shadow. Plain white, the
+   one place on the site the tinge rule yields: the marks arrive on
+   #fff chips, and a wall one shade off #fff is a wall with patches. */
+.surface {
+	background: #fff;
+	border-radius: 4px;
+	box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5);
+}
+
 .card {
 	position: absolute;
 	left: var(--l);

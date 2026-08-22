@@ -94,6 +94,7 @@ export default function Cluster({
   seed,
   kind,
   placed,
+  surface,
 }: {
   shots: Shot[];
   /** the box the cards are scattered inside */
@@ -103,12 +104,18 @@ export default function Cluster({
   /** hand-placed cards, one per shot in order — for the composition
       that is art-directed rather than derived (the seed goes unused) */
   placed?: Card[];
+  /** draw the box itself as a light surface with the card shadow */
+  surface?: boolean;
 }) {
   const cards =
     placed ??
     layout(kind, shots.map((s) => parseRatio(s.ratio)), parseRatio(ratio), seed);
   return (
-    <div className={styles.cluster} data-kind={kind} style={{ aspectRatio: ratio }}>
+    <div
+      className={`${styles.cluster}${surface ? ` ${styles.surface}` : ""}`}
+      data-kind={kind}
+      style={{ aspectRatio: ratio }}
+    >
       {shots.map((shot, i) => {
         const card = cards[i];
         const file = shot.src.slice(shot.src.lastIndexOf("/") + 1);

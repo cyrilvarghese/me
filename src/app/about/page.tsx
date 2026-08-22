@@ -78,6 +78,7 @@ export default function AboutPage() {
                     seed={c.gallery.seed}
                     kind={c.gallery.kind}
                     placed={c.gallery.cards}
+                    surface={c.gallery.surface}
                   />
                   <span className={`mono-label ${styles.figureCaption}`}>
                     {c.gallery.link.label} →
@@ -90,6 +91,7 @@ export default function AboutPage() {
                   seed={c.gallery.seed}
                   kind={c.gallery.kind}
                   placed={c.gallery.cards}
+                  surface={c.gallery.surface}
                 />
               )}
             </div>
@@ -130,6 +132,7 @@ export default function AboutPage() {
               seed={sparetime.gallery.seed}
               kind={sparetime.gallery.kind}
               placed={sparetime.gallery.cards}
+              surface={sparetime.gallery.surface}
             />
           </div>
           <RevealDiv className={styles.copy}>

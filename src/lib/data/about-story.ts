@@ -42,19 +42,11 @@ export type Chapter = {
     /** where the pictures themselves lead — the whole cluster becomes
         the link, with the label set beneath it */
     link?: { href: string; label: string };
+    /** the cluster box drawn as a light surface with the card shadow —
+        a wall for marks that bring their own white */
+    surface?: boolean;
   };
 };
-
-/** placeholder frames for the one chapter whose pictures are still to
-    come — drawn at the shape they will have, named for the file they
-    are waiting for (see Cluster's slot) */
-const awaiting = (base: string, ratios: string[], alt: string): Shot[] =>
-  ratios.map((ratio, i) => ({
-    src: `/assets/about/${base}-${i + 1}.webp`,
-    ready: false,
-    alt: `${alt} (${i + 1})`,
-    ratio,
-  }));
 
 export const chapters: Chapter[] = [
   {
@@ -314,6 +306,9 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "arc",
       seed: 6091,
+      /* three of the five marks come on white chips; on a white wall
+         the chips disappear and the marks read as a set */
+      surface: true,
       shots: [
         {
           src: "/assets/about/06/dDb5U8I21mxn4b3ewPCbwTOVNc.webp",
@@ -387,7 +382,28 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "cascade",
       seed: 8093,
-      shots: awaiting("08-yuvabe", ["16 / 10", "16 / 10"], "The CreativeOS canvas"),
+      /* desk → canvas → one generation, from the CreativeOS case
+         study's own assets */
+      shots: [
+        {
+          src: "/assets/CreativeOS/cover-desk.webp",
+          ready: true,
+          alt: "The CreativeOS canvas open on a monitor at a desk",
+          ratio: "2100 / 1575",
+        },
+        {
+          src: "/assets/CreativeOS/canvas.webp",
+          ready: true,
+          alt: "The CreativeOS canvas — shots, prompts, references and generations wired into one run",
+          ratio: "2554 / 1396",
+        },
+        {
+          src: "/assets/CreativeOS/video-gen.webp",
+          ready: true,
+          alt: "CreativeOS video generation — model, frames, and the finished clip",
+          ratio: "2553 / 1402",
+        },
+      ],
     },
   },
 ];
