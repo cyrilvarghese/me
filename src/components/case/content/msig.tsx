@@ -163,7 +163,7 @@ export default function MsigContent() {
                    than promising one. */
                 shots={[
                   {
-                    src: "/assets/MSIG/Rqpyj1Ih5zkdEhilndGmKU7f8I.avif",
+                    src: "/assets/MSIG/Dashboard.png",
                     caption: "Dashboard — premium against target, renewals, payments, claims",
                   },
                   {
