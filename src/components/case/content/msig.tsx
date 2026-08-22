@@ -26,13 +26,12 @@ export default function MsigContent() {
           },
           {
             label: "Solution",
-            body: (
-              <>
-                <em>One responsive design system</em> — stepper, form, details
-                sidebar. Fields grouped by context, wizards that autosave, and
-                renewals, payments and GWP tracked rather than remembered.
-              </>
-            ),
+            /* the answer said once, set level with the two numbers it sits
+               between; the body then names the three things the system
+               remembers so the agent does not have to */
+            value: "One responsive design system.",
+            body:
+              "Quotes save as you fill them, every submission shows where it stands, and renewals are tracked rather than remembered.",
           },
           {
             label: "Outcomes",
