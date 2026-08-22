@@ -73,6 +73,11 @@ export default function CaseJourney({
      (0/20/40/60/80/100%) and left Journey 02's dash stopping at 20%
      while its second dot sat at 25% (Cyril, 2026-08-21). */
   const [step, setStep] = useState(0);
+  /* set by the arrows. The walk stands still while it is true, and one
+     resume window after the last press it picks up again from wherever
+     the reader left it — the arrows exist to let someone stop and read,
+     not to hand them a widget they then have to operate. */
+  const [held, setHeld] = useState(false);
 
   useEffect(() => {
     const el = railRef.current;
@@ -90,23 +95,43 @@ export default function CaseJourney({
     return () => io.disconnect();
   }, []);
 
-  /* The walk itself: one leg every --leg, from the first stop to the
-     last. The dash and the trail are CSS transitions off `step`, so the
-     travel is the browser's to draw and this only has to say when. */
+  /* The walk: one leg at a time, each scheduled off the last. Not a row
+     of timers laid out in advance — those cannot be interrupted, and the
+     reader has to be able to take the dash somewhere and have it carry on
+     from there. The dash and the trail are CSS transitions off `step`, so
+     the travel is the browser's to draw and this only says when. */
   useEffect(() => {
-    if (!lit) return;
+    if (!lit || held || step >= last) return;
     const rail = railRef.current;
     if (!rail) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setStep(last);
       return;
     }
-    const leg = cssMs(rail, "--leg", 4000);
-    const timers = Array.from({ length: last }, (_, k) =>
-      window.setTimeout(() => setStep(k + 1), (k + 1) * leg),
+    const t = window.setTimeout(
+      () => setStep((at) => Math.min(last, at + 1)),
+      cssMs(rail, "--leg", 4000),
     );
-    return () => timers.forEach(clearTimeout);
-  }, [lit, last]);
+    return () => clearTimeout(t);
+  }, [lit, held, step, last]);
+
+  /* hand it back. The countdown restarts on every press, so pressing
+     through several stops does not fight an autoplay waiting to resume. */
+  useEffect(() => {
+    if (!held) return;
+    const rail = railRef.current;
+    if (!rail) return;
+    const t = window.setTimeout(
+      () => setHeld(false),
+      cssMs(rail, "--resume", 9000),
+    );
+    return () => clearTimeout(t);
+  }, [held, step]);
+
+  const go = (dir: 1 | -1) => {
+    setHeld(true);
+    setStep((at) => Math.max(0, Math.min(last, at + dir)));
+  };
 
   /* On a phone only one quote fits, so the note the dash is standing at
      is the one on screen — the rest are stacked behind it in the same
@@ -178,6 +203,7 @@ export default function CaseJourney({
             >
               <span className={styles.dot} aria-hidden="true" />
               <span className={`mono-label ${styles.stopLabel}`}>
+                <span className={styles.stopNum}>{i + 1}</span>
                 {s.label}
               </span>
             </div>
@@ -218,19 +244,39 @@ export default function CaseJourney({
                       {s.label}
                     </span>
                     <p className={styles.quote}>&#8220;{s.quote}&#8221;</p>
+                    {/* no "Pain" tag: the label above the figure already
+                        says these are pain points, and the line is red,
+                        which says it again. The text is the thing. */}
                     {s.consequence && (
-                      <p className={styles.consequence}>
-                        <span className={`mono-label ${styles.painTag}`}>
-                          Pain
-                        </span>
-                        {s.consequence}
-                      </p>
+                      <p className={styles.consequence}>{s.consequence}</p>
                     )}
                   </div>
                 </div>
               ) : null,
             )}
           </div>
+        </div>
+
+        {/* the house control voices — never a button rolled here */}
+        <div className={styles.controls}>
+          <button
+            type="button"
+            className="btn btn-ghost btn-icon"
+            onClick={() => go(-1)}
+            disabled={step === 0}
+            aria-label="Previous stage"
+          >
+            &#8592;
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost btn-icon"
+            onClick={() => go(1)}
+            disabled={step === last}
+            aria-label="Next stage"
+          >
+            &#8594;
+          </button>
         </div>
       </div>
     </m.section>

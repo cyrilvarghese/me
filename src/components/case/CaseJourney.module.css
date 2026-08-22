@@ -75,6 +75,10 @@
 	--travel: 600ms;
 	--dwell: 3400ms;
 	--leg: 4000ms;
+	/* how long the walk waits after the last arrow press before carrying
+	   on by itself — longer than a leg, so a reader who stopped to read
+	   is not immediately moved along again */
+	--resume: 9000ms;
 	--walk: 20000ms; /* five legs */
 	position: relative;
 	height: 15.5rem;
@@ -155,6 +159,33 @@
 
 .stop[data-pain] .stopLabel {
 	color: var(--fg);
+}
+
+/* the stop's number, ahead of its name — the journey is an order, and
+   the numbers say so without the reader counting dots */
+.stopNum {
+	margin-right: 0.45em;
+	color: var(--muted);
+}
+
+.stop[data-shown] .stopNum {
+	color: var(--fg-soft);
+}
+
+/* The arrows: a reader who wants to go back can, and the walk resumes on
+   its own --resume later. Hidden when motion is off — there the whole
+   journey is already on the page and there is nothing to navigate. */
+.controls {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.5rem;
+	margin-top: 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.controls {
+		display: none;
+	}
 }
 
 /* the stem from a node to its card: solid, not dotted. The house dash
@@ -241,18 +272,14 @@
 	text-wrap: balance;
 }
 
+/* The pain itself, in the accent — it used to be neutral text behind a
+   red "Pain" tag, which spent a whole label saying what the line already
+   is. --accent-lift, not --accent: this runs at caption size, where the
+   signal red measures 4.02:1 on this ground and misses AA. */
 .consequence {
-	display: flex;
-	align-items: baseline;
-	gap: 0.6rem;
 	margin-top: 0.6rem;
 	font-size: var(--text-caption);
 	font-weight: 500;
-	color: var(--fg);
-}
-
-.painTag {
-	flex: none;
 	color: var(--accent-lift);
 }
 
