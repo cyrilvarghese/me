@@ -191,19 +191,21 @@ export const chapters: Chapter[] = [
       "Learning to draw properly changed how I look at everything since — and I learned it from some remarkable people.",
     ],
     gallery: {
-      ratio: "3 / 2",
+      /* square, so a pile this size has the height to stack in */
+      ratio: "1 / 1",
       kind: "pile",
       seed: 3313,
       /* Hand-placed to match the sabbatical spread on Cyril's earlier
          site: the light page up top, the open spread beside it, the
          held-open book tilted on the left, the wide spread along the
-         foot — and the animation clip lands last, on top of the pile. */
+         foot — and the animation clip lands last, on top of the pile,
+         at twice the size of anything under it. */
       cards: [
-        { left: 17, top: 0, width: 24, rotate: 0, z: 1, from: { x: 0, y: -29 } },
-        { left: 44, top: 2, width: 40, rotate: -2, z: 3, from: { x: 45, y: -20 } },
-        { left: 1, top: 22, width: 26, rotate: -8, z: 2, from: { x: -64, y: 0 } },
-        { left: 30, top: 55, width: 40, rotate: -2, z: 4, from: { x: 0, y: 29 } },
-        { left: 58, top: 42, width: 30, rotate: 6, z: 9, from: { x: 0, y: 0 }, pop: true, delay: 0.75 },
+        { left: 22, top: 0, width: 36, rotate: 0, z: 1, from: { x: 0, y: -29 } },
+        { left: 40, top: 2, width: 60, rotate: -2, z: 3, from: { x: 45, y: -20 } },
+        { left: 0, top: 18, width: 39, rotate: -8, z: 2, from: { x: -64, y: 0 } },
+        { left: 18, top: 52, width: 60, rotate: -2, z: 4, from: { x: 0, y: 29 } },
+        { left: 40, top: 40, width: 60, rotate: 6, z: 9, from: { x: 0, y: 0 }, pop: true, delay: 0.75 },
       ],
       shots: [
         {
