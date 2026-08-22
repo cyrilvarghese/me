@@ -8,5 +8,5 @@ export const EMAIL = "hi@cyril.design";
     address is here: a link typed into a component is a link nobody finds
     when it needs replacing. Both are off-site. */
 export const CV_URL =
-  "https://drive.google.com/file/d/1J552ArGI4mkiqq_kyd2rWui43FTPjBCN/view?usp=sharing";
+  "https://drive.google.com/file/d/1ehtbZcjkQSmK8TS0xKI8h-AWvfKHxxUj/view?usp=sharing";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/cyril-philip-varghese/";
