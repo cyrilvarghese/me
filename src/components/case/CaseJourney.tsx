@@ -61,7 +61,6 @@ export default function CaseJourney({
 }) {
   const last = stages.length - 1;
   const railRef = useRef<HTMLDivElement>(null);
-  const notesRef = useRef<HTMLDivElement>(null);
   /* One observer for the whole rail rather than one per card: the stagger
      is driven off `step`, so all this has to decide is the single moment
      the walk starts. Once only — a
@@ -109,51 +108,13 @@ export default function CaseJourney({
     return () => timers.forEach(clearTimeout);
   }, [lit, last]);
 
-  /* Phones only: walk the quote track along with the dash.
-     Desktop needs nothing here — every card is already on screen and the
-     stagger is pure CSS. A phone shows one card at a time, so something
-     has to move it, and it has to move on the same clock the dash walks
-     on or the two would drift apart within a leg.
-
-     The cadence is read off --leg rather than repeated here, so the CSS
-     stays the one place the rhythm is written.
-
-     The first touch ends it. After that the row is the reader's: the
-     cards are all still there to swipe back through, which is the reason
-     this scrolls the track rather than animating it to a resting
-     translate the reader could never scroll out of. */
-  useEffect(() => {
-    if (!lit) return;
-    const rail = railRef.current;
-    const track = notesRef.current;
-    if (!rail || !track) return;
-    if (!window.matchMedia("(max-width: 900px)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const leg = cssMs(rail, "--leg", 4000);
-    const cards = [...track.children] as HTMLElement[];
-    const home = cards[0]?.offsetLeft ?? 0;
-
-    const timers = cards
-      .slice(1)
-      .map((card, k) =>
-        window.setTimeout(
-          () =>
-            track.scrollTo({
-              left: card.offsetLeft - home,
-              behavior: "smooth",
-            }),
-          (k + 1) * leg,
-        ),
-      );
-
-    const stop = () => timers.forEach(clearTimeout);
-    track.addEventListener("pointerdown", stop, { once: true });
-    return () => {
-      stop();
-      track.removeEventListener("pointerdown", stop);
-    };
-  }, [lit]);
+  /* On a phone only one quote fits, so the note the dash is standing at
+     is the one on screen — the rest are stacked behind it in the same
+     cell and take their turn as the walk reaches them. */
+  const current = stages.reduce(
+    (at, stage, i) => (stage.quote && i <= step ? i : at),
+    -1
+  );
 
   /* The persona is one person saying all of these, so the icon is drawn
      once beside the heading rather than repeated against every quote —
@@ -236,7 +197,7 @@ export default function CaseJourney({
               (the rail) rather than a zero-width post, and on a phone the
               whole layer becomes one snapping row without touching the
               rail above it. */}
-          <div className={styles.notes} ref={notesRef}>
+          <div className={styles.notes}>
             {stages.map((s, i) =>
               s.quote ? (
                 <div
@@ -249,6 +210,7 @@ export default function CaseJourney({
                   }
                   data-side={i % 2 === 0 ? "up" : "down"}
                   data-shown={i <= step ? "" : undefined}
+                data-current={i === current ? "" : undefined}
                   /* the end stops sit on the rail's edges, so their cards
                    align to the edge instead of centring off it */
                   data-edge={

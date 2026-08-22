@@ -317,16 +317,17 @@
 	}
 }
 
-/* ---- phone: a compact rail, and one quote at a time ----
+/* ---- phone: one quote at a time, in place ----
 
-   Five cards either side of a line needs width a phone does not have,
-   and all five stacked is a wall of scroll (Cyril, 2026-08-21). So the
-   rail stays horizontal and shrinks to a row of nodes — still showing at
-   a glance how many steps hurt — and the quotes become a swipeable
-   track, one snapped into view at a time.
+   Five cards either side of a line needs width a phone does not have, so
+   the rail compacts to its nodes and the quotes take turns in a single
+   cell beneath it.
 
-   Scroll-snap, not a carousel: no timer, no controls, no state. The
-   reader moves it, and it stops where they leave it. */
+   They are STACKED, not a swipe track (Cyril, 2026-08-21): the next
+   quote fades up where the last one was, which is the same appear the
+   desktop cards already use. A horizontal slide would have been a second
+   kind of motion in a figure that already has one, and a track the
+   reader could push is a third. The dash keeps the timing. */
 
 @media (max-width: 900px) {
 	/* the head stacks: 14rem of eyebrow column beside the heading leaves
@@ -341,75 +342,61 @@
 		--y: 1.4rem;
 		height: auto;
 		/* the dots are absolute, so they contribute no height — this band
-		   is what the swipe track flows after */
+		   is what the notes below flow after */
 		padding-top: 3.25rem;
 	}
 
-	.track {
-		top: calc(var(--y) - 1.5px);
-	}
-
-	.stop {
-		top: 0;
-		bottom: auto;
-		height: 3.5rem;
-	}
-
-	/* the stage names do not fit under six nodes at this width; the
-	   quote below names its own stage instead */
+	/* six names will not fit under six nodes at this width; the quote
+	   below carries its own stage name instead */
 	.stopLabel,
 	.stop[data-side]::before {
 		display: none;
 	}
 
-	/* the notes leave the absolute layer and become one snapping row */
 	.notes {
-		/* out of the absolute layer: on a phone this IS the layout, not an
-		   overlay on the rail */
 		position: static;
-		display: flex;
-		gap: 1rem;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		scrollbar-width: none;
-		/* the row is edge to edge, so a card can sit centred in the panel
-		   rather than against its padding */
-		padding-bottom: 0.25rem;
+		display: grid;
 	}
 
-	.notes::-webkit-scrollbar {
-		display: none;
-	}
-
+	/* every note in the one cell, so the panel is as tall as the tallest
+	   and nothing below it moves as they take turns */
 	.note {
 		position: static;
-		width: 100%;
-		flex: 0 0 100%;
+		grid-area: 1 / 1;
+		width: auto;
 		transform: none;
 		left: auto !important;
 		right: auto;
 		top: auto;
 		bottom: auto;
-		scroll-snap-align: start;
 	}
 
 	.noteStage {
 		display: block;
 	}
 
-	/* The desktop keyframes carry translateX(-50%), which is how a card
-	   centres on its node. In this row that is 150px of shift onto the
-	   next card, so the build uses the un-centred keyframes here — the
-	   same ones the edge cards already needed. */
-	/* Every card is present from the start here and the TRACK moves
-	   instead, scrolled along by the same clock the dash walks on
-	   (CaseJourney.tsx). A card that stayed faded until the dash reached
-	   its stop would be blank when the reader swiped to it early. The
-	   dots still light as the dash arrives. */
 	@media (prefers-reduced-motion: no-preference) {
-		.noteIn {
+		/* only the stop the dash is standing at. The desktop rule shows
+		   every note the walk has passed, which stacked would be five
+		   quotes printed over each other. */
+		.note[data-shown] .noteIn {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+
+		.note[data-current] .noteIn {
 			opacity: 1;
-			transform: none;
+			transform: translateY(0);
+		}
+	}
+
+	/* Motion off: nothing takes a turn, so they cannot share a cell —
+	   they run down the page instead, all readable. */
+	@media (prefers-reduced-motion: reduce) {
+		.notes {
+			display: flex;
+			flex-direction: column;
+			gap: 1.75rem;
 		}
 	}
 }
