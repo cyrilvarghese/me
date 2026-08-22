@@ -31,6 +31,12 @@
 
 .head {
 	margin-bottom: clamp(4rem, 12vh, 8rem);
+	/* centred, unlike every other section on this site: the page has a
+	   rule down its middle, and a head hugging the left edge reads
+	   against it (Cyril, 2026-08-22). The chapters below stay ranged
+	   left — centred running text has no reliable left edge for the eye
+	   to return to. */
+	text-align: center;
 }
 
 .eyebrow {
@@ -46,11 +52,25 @@
 /* The quote is the one voice on the page that is not Cyril's, so it is
    set as a quote and not as a lede: serif, indented off a red hairline,
    with the attribution in the label voice underneath. */
+/* Centred, so the rule that marked it as a quote cannot sit on its left
+   any more — it goes above instead, short and red, which is the same
+   mark the site uses for structure elsewhere. */
 .quote {
-	margin: 0;
-	max-width: 46ch;
-	border-left: 1px solid var(--hairline-red);
-	padding-left: clamp(1rem, 2.5vw, 1.75rem);
+	margin: 0 auto;
+	max-width: 44ch;
+	padding-top: 1.75rem;
+	position: relative;
+}
+
+.quote::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 2.5rem;
+	height: 1px;
+	background: var(--accent);
 }
 
 .quoteLine {
@@ -90,7 +110,9 @@
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	column-gap: clamp(2.5rem, 7vw, 6rem);
 	padding-bottom: clamp(4rem, 12vh, 8rem);
-	align-items: start;
+	/* picture and chapter sit level either side of the rule — the row's
+	   middles align, the way the reference reads (Cyril, 2026-08-22) */
+	align-items: center;
 }
 
 /* the rule itself: static, and NOT inside either revealed column — a
@@ -107,31 +129,40 @@
 	transform: translateX(-50%);
 }
 
-/* the last stop ends the thread rather than letting it run on into the
-   closing block */
+/* the last stop ends the thread at its own dot rather than letting it
+   run on into the closing block */
 .last::before {
-	bottom: auto;
-	height: 4.5rem;
+	/* same padding subtraction as the dot below, so the thread stops
+	   exactly at the final stop */
+	bottom: calc(50% + clamp(4rem, 12vh, 8rem) / 2);
 }
 
-/* the stop mark, level with the chapter number */
+/* the stop mark, at the row's vertical middle — level with the centred
+   chapter beside it rather than with the top of the column. The row's
+   padding-bottom (the gap to the next chapter, which the thread runs
+   through) is subtracted, or the dot sits below the middle it marks. */
 .chapter::after {
 	content: "";
 	position: absolute;
 	left: 50%;
-	top: 0.3rem;
+	top: calc((100% - clamp(4rem, 12vh, 8rem)) / 2);
 	width: 9px;
 	height: 9px;
 	border-radius: 50%;
 	background: var(--accent);
-	transform: translateX(-50%);
+	transform: translate(-50%, -50%);
 }
 
 .figureCol {
-	/* the pictures hang toward the spine, so the gutter between column
-	   and rule stays constant however wide each one is */
+	/* the cluster hangs toward the spine, so the gutter between the
+	   pictures and the rule stays constant however wide the pile is */
 	display: flex;
 	justify-content: flex-end;
+}
+
+.figureCol > * {
+	width: 100%;
+	max-width: 34rem;
 }
 
 .copy {
@@ -175,51 +206,12 @@
 
 /* ---- pictures, and the frames waiting for them ---- */
 
-.figure {
-	position: relative;
-	margin: 0;
-	width: 100%;
-	max-width: 34rem;
-	overflow: hidden;
-}
-
-.shot {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	display: block;
-}
-
-/* The reserved frame. It has to look deliberate rather than broken, so
-   it is a dashed hairline with the exact filename it wants inside it —
-   which doubles as the drop list while the photographs are missing. */
-.slot {
-	position: absolute;
-	inset: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 0.5rem;
-	border: 1px dashed var(--hairline);
-	background: rgba(30, 24, 24, 0.55);
-}
-
-.slotName {
-	color: var(--muted);
-}
-
-.slotRatio {
-	color: var(--muted);
-	font-size: var(--text-fine);
-	opacity: 0.7;
-}
-
 /* ---- the close ---- */
 
 .end {
 	border-top: 1px solid var(--hairline);
 	padding-top: clamp(3rem, 8vh, 5rem);
+	text-align: center;
 }
 
 .thanks {
@@ -230,6 +222,7 @@
 .ctas {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
 	gap: 1rem;
 }
 
@@ -252,7 +245,7 @@
 		justify-content: flex-start;
 	}
 
-	.figure {
+	.figureCol > * {
 		max-width: none;
 	}
 }
