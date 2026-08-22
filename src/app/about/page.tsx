@@ -3,6 +3,7 @@ import Link from "next/link";
 import { chapters, sparetime } from "@/lib/data/about-story";
 import { CV_URL, LINKEDIN_URL } from "@/lib/data/contact";
 import { RevealDiv } from "@/components/case/Reveal";
+import Cluster from "@/components/about/Cluster";
 import CopyEmail from "@/components/CopyEmail";
 import styles from "./about.module.css";
 
@@ -12,35 +13,19 @@ export const metadata: Metadata = {
     "The long version: drawing, a sabbatical, VR, product design, and the products that came out of it.",
 };
 
-/** The picture beside a chapter. Until the file exists the frame is
-    still drawn — at the exact ratio the picture will have — so dropping
-    one in later moves nothing on the page and the layout is verified
-    before the photographs arrive. */
-function Figure({ image }: { image: (typeof chapters)[number]["image"] }) {
-  const file = image.src.slice(image.src.lastIndexOf("/") + 1);
-  return (
-    <figure className={styles.figure} style={{ aspectRatio: image.ratio }}>
-      {image.ready ? (
-        <img src={image.src} alt={image.alt} className={styles.shot} />
-      ) : (
-        <span className={styles.slot} aria-hidden="true">
-          <span className={`mono-label ${styles.slotName}`}>{file}</span>
-          <span className={`mono-label ${styles.slotRatio}`}>{image.ratio}</span>
-        </span>
-      )}
-    </figure>
-  );
-}
-
 /**
  * The long About. One spine down the middle: pictures on the left, the
  * chapter on the right, the way Cyril's own account of it reads.
  *
- * Motion is the site's one reveal contract and nothing else — each
- * chapter's copy fades up as it arrives, its picture a beat behind it,
- * once. The hidden state lives in `.fx-hidden` behind a
- * prefers-reduced-motion query, so a reduced-motion reader gets the
- * whole page visible with no tween to undo.
+ * The head and the close are centred on that spine; the chapters are
+ * not, because running text set centre is text nobody's eye can find
+ * the start of. Symmetry belongs to the page, not to the paragraph.
+ *
+ * Motion is the site's reveal contract and nothing else. The chapter
+ * fades up as it arrives; its pictures slide in behind it from the side
+ * of the cluster they sit on (Cluster.tsx). Hidden states stay in
+ * `.fx-hidden`, behind a prefers-reduced-motion query, so a reduced
+ * reader gets the whole page with no tween to undo.
  */
 export default function AboutPage() {
   return (
@@ -70,11 +55,14 @@ export default function AboutPage() {
       <ol className={`section-shell ${styles.chapters}`}>
         {chapters.map((c) => (
           <li key={c.num} className={styles.chapter}>
-            {/* the picture leads on the left, and follows the copy in by
-                a beat: the reader reads the chapter, then looks at it */}
-            <RevealDiv className={styles.figureCol} delay={0.12}>
-              <Figure image={c.image} />
-            </RevealDiv>
+            <div className={styles.figureCol}>
+              <Cluster
+                shots={c.gallery.shots}
+                ratio={c.gallery.ratio}
+                seed={c.gallery.seed}
+                kind={c.gallery.kind}
+              />
+            </div>
             <RevealDiv className={styles.copy}>
               <p className={`mono-label ${styles.num}`}>{c.num}</p>
               <h2 className={`serif-display ${styles.label}`}>{c.label}</h2>
@@ -105,9 +93,14 @@ export default function AboutPage() {
         {/* the last stop on the same spine, and the one that stops being
             a career */}
         <li className={`${styles.chapter} ${styles.last}`}>
-          <RevealDiv className={styles.figureCol} delay={0.12}>
-            <Figure image={sparetime.image} />
-          </RevealDiv>
+          <div className={styles.figureCol}>
+            <Cluster
+              shots={sparetime.gallery.shots}
+              ratio={sparetime.gallery.ratio}
+              seed={sparetime.gallery.seed}
+              kind={sparetime.gallery.kind}
+            />
+          </div>
           <RevealDiv className={styles.copy}>
             <h2 className={`serif-display ${styles.label}`}>{sparetime.label}</h2>
             {sparetime.body.map((p) => (
