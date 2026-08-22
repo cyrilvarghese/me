@@ -86,7 +86,7 @@
 }
 
 .panelTitle {
-	color: var(--muted);
+	color: var(--fg);
 	display: flex;
 	align-items: center;
 	gap: 0.6rem;
@@ -102,8 +102,21 @@
 	flex: none;
 }
 
-.panel[data-side="after"] .dot {
+/* Red marks the pain, on the dot and on the statement beside it. It used
+   to mark the solution, which put the accent on the side the reader is
+   not being asked to feel — and, once the pain line went red, put red on
+   both sides of the seam saying two different things. */
+.panel[data-side="today"] .dot {
 	background: var(--accent);
+}
+
+/* The statement carries the colour; the tag in front of it stays neutral.
+   A red tag before a red line spends a whole label saying what the colour
+   already said (type-on-dark, "one emphasis per block"). Caps at 12px
+   with 0.14em tracking is the case --accent is allowed to be text in — the
+   cap height and the tracking are what keep the saturated red resolving. */
+.panel[data-side="today"] .panelTitle {
+	color: var(--accent);
 }
 
 /* the drawing sits in the flexible row; it centres there so a shorter
@@ -169,7 +182,6 @@
 	padding-right: 0.6rem;
 	border-right: 1px solid var(--hairline);
 }
-.panel[data-side="after"] .tag {
-	color: var(--accent);
+.panel[data-side="today"] .tag {
 	border-right-color: var(--hairline-red);
 }
