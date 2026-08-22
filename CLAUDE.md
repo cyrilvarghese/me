@@ -103,10 +103,11 @@ with `reduce`.
 palette (bg `#151111`, fg `#f8f4f2`, accent `#ea0000`). Every neutral —
 including the knife steels in `placeholders/common.ts` and compass strokes —
 carries a ~2% tinge of the accent; never plain black or plain white (user
-rule, 2026-08-16, dialed down 30% same day). `--accent` is decorative and
-large-type only — 4.02:1, under the AA floor; `--accent-lift` (`#d95a5a`)
-is the one red that may be running text. **Type and colour on this ground
-follow the `type-on-dark` skill** (`.claude/skills/type-on-dark/`) —
+rule, 2026-08-16, dialed down 30% same day). Two reds, split by CASE:
+`--accent` (`#ea0000`) takes every uppercase label and the two big
+statements; `--accent-lift` (`#d95a5a`, desaturated) takes lower-case red
+and the supporting stat values. **Type and colour on this ground follow
+the `type-on-dark` skill** (`.claude/skills/type-on-dark/`) —
 contrast is only one axis, saturation is the other, light-on-dark gains
 optical weight so weights go down rather than up, and a coloured line
 wants the 14px rung. Invoke it before colouring or sizing any text. Type

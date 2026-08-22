@@ -20,7 +20,7 @@
 
 .value {
 	font-size: var(--text-statement);
-	color: var(--accent);
+	color: var(--accent-lift);
 	line-height: 0.95;
 }
 

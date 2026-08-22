@@ -70,28 +70,50 @@ rule, and it is also why they never buzz.
 Red is still rare by intent. If red is already on the nodes and on a tag
 and on the label, a fourth red is not emphasis any more.
 
-**The split is by SIZE, and it was swept once.** Every red text under the
-large-type threshold uses `--accent-lift`; `--accent` is left to marks,
-rules, borders and type at 24px and up. That sweep covered the case
-kickers, the timeline org names, the tool durations, the PAIN / SOLUTION
-/ OUTCOMES labels, the compare index and after-tag, the header and footer
-wordmarks, and the /design and /labs eyebrows.
+**The split is by CASE, not size** (Cyril, 2026-08-21).
 
-Two reds sitting inches apart is how it was noticed: a case kicker in
-`--accent` next to its tag in `--accent-lift`, on the same card. To check
-the whole site rather than one card, ask the page:
+- **Caps take `--accent`.** Every label on this site is `.mono-label`, so
+  it is uppercase with `0.14em` tracking, and that is what makes the
+  saturated red survive at 12–15px: full cap height, no ascenders or
+  descenders to lose, and the tracking already opening the letters out.
+  The kickers, the org names, the durations, the PAIN / SOLUTION /
+  OUTCOMES labels, the case tags, both wordmarks and the internal
+  eyebrows are all caps, and all `--accent`.
+- **Lower case takes `--accent-lift`.** Sentence-case red has none of
+  those advantages — the journey's pain lines are the case, at 14px.
+- **Statements take `--accent`, whatever their case.** "Outcomes" at
+  68px and "started." at 128px are the two lines the page is built
+  toward; softening them made them recede, which is the opposite of what
+  they are for. Size is the reason they can carry it.
+- **Supporting values take `--accent-lift`** — the stat numbers in the
+  case studies, which are large but subordinate to the statement above
+  them.
+
+Be honest about what this trades. **Caps do not change the measured
+ratio**: `#ea0000` is 4.02:1 whatever the glyphs are, and WCAG grants no
+exemption for case. This is a deliberate house exception, taken with the
+tracking and cap height as the reason. Do not "fix" it back.
+
+One further exception, named so it stops being re-litigated: **About's
+"curiosity and wonder still drives my work" is sentence case and takes
+`--accent`** — it is the one phrase the section exists for.
+
+To audit the whole site rather than one card, ask the page which red each
+piece of text landed on and whether it is caps:
 
 ```js
-[...document.querySelectorAll('*')].filter(el => {
+[...document.querySelectorAll('*')].flatMap(el => {
   const cs = getComputedStyle(el);
   const own = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
-  const px = parseFloat(cs.fontSize);
-  const large = px >= 24 || (px >= 18.66 && +cs.fontWeight >= 700);
-  return own && cs.color === 'rgb(234, 0, 0)' && !large;   // --accent on small text
+  const accent = cs.color === 'rgb(234, 0, 0)', lift = cs.color === 'rgb(217, 90, 90)';
+  if (!own || (!accent && !lift)) return [];
+  return [{ caps: cs.textTransform === 'uppercase', token: accent ? 'accent' : 'lift',
+            px: parseFloat(cs.fontSize), text: el.textContent.trim().slice(0, 30) }];
 });
 ```
 
-That should return nothing.
+Caps on `lift` is always wrong. Lower case on `accent` should only ever
+be the statements and the one About phrase.
 
 ## Weight: subtract, do not add
 

@@ -102,7 +102,7 @@
    this ground, and it is the saturated one — see tokens.css, where the
    lift trades saturation for legibility as well as ratio. */
 .spark {
-	color: var(--accent-lift);
+	color: var(--accent);
 }
 
 .timeline {
@@ -207,7 +207,7 @@
    "01 / DESIGN ENGINEER" eyebrow — red names the subject of the entry
    in both places */
 .org {
-	color: var(--accent-lift);
+	color: var(--accent);
 	font-size: var(--text-sublabel);
 	margin-top: 0.35rem;
 }

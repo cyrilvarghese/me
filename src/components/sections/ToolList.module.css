@@ -111,7 +111,7 @@
 /* Same card as OutcomeTransition's desktop lineup column — the rungs are
    shared so the two tellings cannot drift again; change both together. */
 .years {
-	color: var(--accent-lift);
+	color: var(--accent);
 	font-size: var(--text-sublabel);
 	white-space: nowrap;
 }

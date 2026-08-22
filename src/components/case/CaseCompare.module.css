@@ -12,7 +12,7 @@
 }
 
 .index {
-	color: var(--accent-lift);
+	color: var(--accent);
 }
 
 .eyebrow {
@@ -132,7 +132,7 @@
 }
 
 .panel[data-side="after"] .statValue {
-	color: var(--accent);
+	color: var(--accent-lift);
 }
 
 .statLabel {
@@ -170,6 +170,6 @@
 	border-right: 1px solid var(--hairline);
 }
 .panel[data-side="after"] .tag {
-	color: var(--accent-lift);
+	color: var(--accent);
 	border-right-color: var(--hairline-red);
 }

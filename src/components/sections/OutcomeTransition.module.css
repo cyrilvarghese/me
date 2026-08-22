@@ -130,7 +130,7 @@
    apart (0.85 here, 0.82 there). Every rung below is shared with
    ToolList.module.css; change the two together. */
 .colYears {
-	color: var(--accent-lift);
+	color: var(--accent);
 	font-size: var(--text-sublabel);
 	margin-bottom: 0.3rem;
 }

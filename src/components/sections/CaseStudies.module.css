@@ -28,7 +28,7 @@
 }
 
 .caseNum {
-	color: var(--accent-lift);
+	color: var(--accent);
 	font-size: var(--text-sublabel);
 }
 
@@ -107,7 +107,7 @@
    measures 4.02:1 on this ground and misses AA, and it is the saturated
    one — see tokens.css, where the lift answers both. */
 .tagAccent {
-	color: var(--accent-lift);
+	color: var(--accent);
 }
 
 /* Hover answers on the artwork itself: a slight scrim so the card reads as

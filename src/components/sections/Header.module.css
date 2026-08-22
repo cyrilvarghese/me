@@ -16,7 +16,7 @@
 }
 
 .brand {
-	color: var(--accent-lift);
+	color: var(--accent);
 	font-size: var(--text-sublabel);
 	/* stamp box around the wordmark, square-cornered like the CTA button;
 	   solid token black so nothing ever shows through the plate */

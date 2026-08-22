@@ -79,7 +79,7 @@
 }
 
 .kicker {
-	color: var(--accent-lift);
+	color: var(--accent);
 	font-size: var(--text-sublabel);
 }
 
