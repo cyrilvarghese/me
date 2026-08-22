@@ -37,347 +37,367 @@
 	padding: clamp(1.5rem, 3.5vw, 3rem);
 }
 
-/* ---- the rail ----
-   Geometry and motion follow the CreativeOS diagrams: a 3px dotted
-   ground ("2 14", round caps), a 3.5px trail filling behind the
-   traveller, 11px nodes (r 5.5, 2px ring, surface fill) that fill and
-   pop scale(1.5) when lit, with a single expanding ping (0.8 → 2.6,
-   fading out) at the moment of arrival. Everything registers on the
-   one centreline --rail-y so nothing can drift. */
-
-.rail {
-	/* Smaller and centred, because it now follows the quote instead of
-	   leading it. At full width and full size above the card it read as
-	   the headline of the panel, and its marker moved at the same moment
-	   the quote swapped underneath — the reader had to watch two places
-	   at once. Everything below is the same house geometry at 0.75. */
-	--rail-y: 0.7rem;
-	position: relative;
-	height: 2.9rem;
-	max-width: min(100%, 40rem);
-	margin: clamp(1.25rem, 3vh, 1.75rem) auto 0;
+.headMain {
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+	align-items: flex-start;
 }
 
-.track,
-.trail {
-	position: absolute;
-	left: 0;
-	right: 0;
+/* the persona, once. Five copies of the same face against five quotes
+   read as a row of holes rather than as one agent speaking five times. */
+.persona {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.avatar {
+	width: 2.25rem;
+	height: 2.25rem;
+	flex: none;
+}
+
+.personaName {
+	color: var(--muted);
+}
+
+/* ---- the rail ----
+   House geometry at 0.75: a 2.25px dotted ground ("1.5 10.5", round
+   caps) and 8px nodes on one shared centreline, --y, that every layer
+   derives from rather than four hand-matched offsets. Nothing travels
+   along it any more — the notes are what arrive. */
+
+.rail {
+	--y: 7.5rem; /* the centreline: the band above it holds the up-notes */
+	position: relative;
+	height: 15.5rem;
 }
 
 .track {
-	top: calc(var(--rail-y) - 1.5px);
+	position: absolute;
+	top: calc(var(--y) - 1.5px);
+	left: 0;
+	right: 0;
 	width: 100%;
 	height: 3px;
 	overflow: visible;
 }
 
-.trail {
-	top: calc(var(--rail-y) - 0.9px);
-	height: 1.8px;
-	border-radius: 0.9px;
-	background: rgba(248, 244, 242, 0.55);
-	transform-origin: left center;
-	transition: transform var(--msj-travel, 600ms) cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* the restart swap: the cycle begins again in place, never rewinds */
-.rail[data-instant] .trail,
-.rail[data-instant] .marker {
-	transition: none;
-}
-
-/* the traveller: a short round-capped dash — spread out, because flat
-   implies motion where a fat dot just sits */
-.marker {
-	position: absolute;
-	top: var(--rail-y);
-	width: 10px;
-	height: 2.6px;
-	margin: -1.3px 0 0 -5px;
-	border-radius: 1.3px;
-	background: var(--accent);
-	transition: left var(--msj-travel, 600ms) cubic-bezier(0.4, 0, 0.2, 1);
-}
-
+/* a zero-width post at the stop's x; everything in it centres on that */
 .stop {
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	width: 2.25rem;
-	transform: translateX(-50%);
-	border: 0;
-	background: none;
-	padding: 0;
-	color: var(--muted);
-	cursor: pointer;
+	width: 0;
 }
 
-.stop:disabled {
-	cursor: default;
-}
-
-/* the node: house circle, on the same centreline as the marker */
 .dot {
 	position: absolute;
-	top: var(--rail-y);
-	left: 50%;
+	top: var(--y);
+	left: 0;
 	width: 8px;
 	height: 8px;
 	margin: -4px 0 0 -4px;
 	border-radius: 50%;
 	background: var(--surface);
-	border: 1.5px solid rgba(248, 244, 242, 0.55);
-	transition: border-color 300ms ease, background-color 300ms ease;
+	border: 1.5px solid rgba(248, 244, 242, 0.28);
 }
 
-.stop[data-quiet] .dot {
-	border-color: rgba(248, 244, 242, 0.28);
-}
-
-/* travelled: the node holds its lit fill — finished states hold */
-.stop[data-passed] .dot {
-	background: #eee8e6;
-	border-color: #eee8e6;
-}
-
-.stop[data-active] .dot {
-	background: var(--accent);
+/* red marks the stops that hurt, and only those — what makes "five of
+   six" readable without counting */
+.stop[data-pain] .dot {
 	border-color: var(--accent);
-}
-
-/* the arrival ping — exists only while active, so it fires once per visit */
-.stop[data-active] .dot::after {
-	content: "";
-	position: absolute;
-	inset: -1.5px;
-	border-radius: 50%;
-	border: 1.5px solid var(--accent);
+	background: var(--accent);
 }
 
 .stopLabel {
 	position: absolute;
-	top: calc(var(--rail-y) + 1.05rem);
-	left: 50%;
+	top: calc(var(--y) + 0.8rem);
+	left: 0;
 	transform: translateX(-50%);
 	white-space: nowrap;
 	font-size: var(--text-fine);
-	transition: color 300ms ease;
+	color: var(--muted);
 }
 
-.stop[data-active] .stopLabel {
+.stop[data-pain] .stopLabel {
 	color: var(--fg);
 }
 
-@media (hover: hover) and (pointer: fine) {
-	.stop:not(:disabled):hover .stopLabel {
-		color: var(--fg-soft);
-	}
+/* the stem from a node to its card: solid, not dotted. The house dash
+   period is ~16px and this run is shorter than one, so a dotted stem
+   would paint a single pill and read as a speck. */
+.stop[data-side]::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 1px;
+	background: var(--hairline-red);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	.stop[data-active] .dot {
-		animation: msjPop 240ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-
-	.stop[data-active] .dot::after {
-		animation: msjPing 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-	}
+.stop[data-side="up"]::before {
+	bottom: calc(100% - var(--y) + 0.45rem);
+	height: 1.15rem;
 }
 
-@keyframes msjPop {
-	0% {
-		transform: scale(1);
-	}
-	10% {
-		transform: scale(1.5);
-	}
-	100% {
-		transform: scale(1);
-	}
+.stop[data-side="down"]::before {
+	top: calc(var(--y) + 2.05rem);
+	height: 1.15rem;
 }
 
-@keyframes msjPing {
-	0% {
-		transform: scale(0.8);
-		opacity: 0.9;
-	}
-	100% {
-		transform: scale(2.6);
-		opacity: 0;
-	}
+/* ---- the notes ----
+   Children of the rail, not of their stop, so the width can be a
+   PERCENTAGE OF THE RAIL — the one measure that keeps a card just under
+   two stops wide at every viewport. Two stops apart is where the next
+   card on the same side sits, which is what alternating buys. */
+
+/* on desktop this layer is just a transparent overlay the width of the
+   rail, so the notes inside keep resolving their % against it */
+.notes {
+	position: absolute;
+	inset: 0;
 }
 
-/* ---- the card ---- */
-
-.card {
-	display: flex;
-	gap: clamp(1rem, 2.5vw, 1.75rem);
-	align-items: flex-start;
-	/* the rule now sits UNDER the quote, dividing it from the rail that
-	   follows — the card leads the panel, so it has nothing above it */
-	border-bottom: 1px solid var(--hairline);
-	padding-bottom: clamp(1.25rem, 3vh, 1.75rem);
-	/* tallest stage sets this, so nothing below jumps mid-cycle */
-	min-height: 9.5rem;
+/* the stage name inside a card: only needed where the dots lose their
+   labels, which is the phone layout */
+.noteStage {
+	display: none;
+	color: var(--muted);
+	margin-bottom: 0.5rem;
 }
 
-.avatar {
-	width: 56px;
-	height: 56px;
-	flex: none;
-	/* the source icon bakes a grey ring into the bitmap; the clip is
-	   what "remove the circle" means without redrawing the asset */
-	clip-path: circle(46% at 50% 50%);
+.note {
+	position: absolute;
+	/* 26%, not 36%. Same-side stops are 40% apart, so a centred card can
+	   be 36% wide — but the card on the FIRST stop is aligned to the
+	   rail's edge rather than centred on 0%, and at 36% it ran straight
+	   into the next up-card. Left-aligned at 0 and centred at 40 only
+	   clear each other while w <= 40 - w/2, which is 26.6% — and at 26%
+	   they cleared by 11px, close enough to read as one block. 23% puts
+	   ~5% of the rail between them, which is the air a separate card
+	   needs. */
+	width: 23%;
+	transform: translateX(-50%);
+}
+
+.note[data-side="up"] {
+	bottom: calc(100% - var(--y) + 1.6rem);
+}
+
+.note[data-side="down"] {
+	top: calc(var(--y) + 3.2rem);
+}
+
+/* the first and last stops sit ON the rail's ends, so their cards align
+   to the edge rather than centring half-off it */
+.note[data-edge="first"] {
+	transform: none;
+}
+
+.note[data-edge="last"] {
+	left: auto !important;
+	right: 0;
+	transform: none;
 }
 
 .quote {
 	font-family: var(--font-mono);
-	letter-spacing: 0.02em;
-	font-size: clamp(1rem, 1.6vw, 1.2rem);
-	color: var(--fg);
-	max-width: 34ch;
-	margin-bottom: 0.9rem;
-}
-
-/* the cost, boxed: a red hairline and a PAIN label make the pain point
-   the loudest thing on the card after the quote itself */
-.consequence {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.85rem;
-	border: 1px solid var(--hairline-red);
-	background: rgba(234, 0, 0, 0.06);
-	padding: 0.55rem 0.9rem;
 	font-size: var(--text-small);
-	font-weight: 600;
+	line-height: 1.55;
+	color: var(--fg-soft);
+	text-wrap: balance;
+}
+
+.consequence {
+	display: flex;
+	align-items: baseline;
+	gap: 0.6rem;
+	margin-top: 0.6rem;
+	font-size: var(--text-caption);
+	font-weight: 500;
 	color: var(--fg);
 }
 
-.consequenceTag {
-	color: var(--accent);
-	font-size: var(--text-fine);
-	border-right: 1px solid var(--hairline-red);
-	padding-right: 0.85rem;
+.painTag {
+	flex: none;
+	color: var(--accent-lift);
 }
 
-/* ---- controls ---- */
+/* ---- the build ----
+   Each note arrives in journey order and then holds. --k is its place in
+   that order, so one delay expression staggers the whole rail. `both`
+   is what makes it hold: the end state stays painted. */
 
-.controls {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	justify-content: flex-end;
-	margin-top: clamp(1rem, 2.5vh, 1.75rem);
-}
-
-.count {
-	color: var(--muted);
-	margin-left: 0.5rem;
-}
-
-/* the card swap: only the words move — the card's hairline and the
-   avatar hold still while the text fades in, half-present to fully present. No movement — a fade alone. */
 @media (prefers-reduced-motion: no-preference) {
-	.words {
-		/* the swap happens at departure; the fade waits until the dot is
-		   halfway to the node, holding the from-state (backwards fill)
-		   through the delay */
-		animation: msjEnter var(--msj-fade, 300ms) var(--msj-curve, ease-in-out)
-			calc(var(--msj-travel, 600ms) / 2) backwards;
-	}
-}
-
-@keyframes msjEnter {
-	from {
-		opacity: 0.4;
-	}
-	to {
-		opacity: 1;
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.trail,
-	.marker,
-	.dot,
-	.stopLabel {
-		transition: none;
-	}
-
-	.stop[data-active] .dot,
-	.stop[data-active] .dot::after {
-		animation: none;
-	}
-}
-
-/* ---- the ?tune panel: dev-only knobs, styled in the mono voice ---- */
-
-.tuner {
-	display: grid;
-	gap: 0.6rem;
-	margin-top: 1.25rem;
-	padding-top: 1rem;
-	border-top: 1px dashed var(--hairline);
-}
-
-.tunerRow {
-	display: grid;
-	grid-template-columns: 9rem minmax(0, 1fr) 4.5rem;
-	align-items: center;
-	gap: 0.75rem;
-	color: var(--muted);
-	font-size: var(--text-fine);
-}
-
-.tunerRow input {
-	accent-color: var(--accent);
-}
-
-.tunerRow select {
-	background: var(--bg);
-	color: var(--fg-soft);
-	border: 1px solid var(--hairline);
-	border-radius: var(--radius);
-	font: inherit;
-	padding: 0.25rem 0.4rem;
-	grid-column: 2 / 4;
-}
-
-/* ---- mobile ---- */
-
-@media (max-width: 768px) {
-	.head {
-		grid-template-columns: 1fr;
-		gap: 0.75rem;
-	}
-
-	/* dots stay; only the active stage announces itself */
-	.stopLabel {
+	.note,
+	.stop[data-pain] .dot {
 		opacity: 0;
 	}
 
-	.stop[data-active] .stopLabel {
+	.rail[data-lit] .note {
+		animation: msjNoteIn 520ms cubic-bezier(0.215, 0.61, 0.355, 1) both;
+		animation-delay: calc(var(--k) * 340ms);
+	}
+
+	.rail[data-lit] .stop[data-pain] .dot {
+		animation: msjDotIn 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+		animation-delay: calc(var(--k) * 340ms);
+	}
+
+	.rail[data-lit] .stop[data-side]::before {
+		animation: msjStemIn 320ms ease-out both;
+		animation-delay: calc(var(--k) * 340ms + 120ms);
+	}
+
+	.stop[data-side]::before {
+		transform-origin: center;
+		opacity: 0;
+	}
+}
+
+@keyframes msjNoteIn {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(6px);
+	}
+	to {
 		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+}
+
+/* the edge cards are not centred, so they cannot borrow the -50% above */
+@keyframes msjNoteInEdge {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.rail[data-lit] .note[data-edge] {
+		animation-name: msjNoteInEdge;
+	}
+}
+
+@keyframes msjDotIn {
+	0% {
+		opacity: 0;
+		transform: scale(0.4);
+	}
+	60% {
+		opacity: 1;
+		transform: scale(1.5);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes msjStemIn {
+	from {
+		opacity: 0;
+		transform: scaleY(0.2);
+	}
+	to {
+		opacity: 1;
+		transform: scaleY(1);
+	}
+}
+
+/* ---- phone: a compact rail, and one quote at a time ----
+
+   Five cards either side of a line needs width a phone does not have,
+   and all five stacked is a wall of scroll (Cyril, 2026-08-21). So the
+   rail stays horizontal and shrinks to a row of nodes — still showing at
+   a glance how many steps hurt — and the quotes become a swipeable
+   track, one snapped into view at a time.
+
+   Scroll-snap, not a carousel: no timer, no controls, no state. The
+   reader moves it, and it stops where they leave it. */
+
+@media (max-width: 900px) {
+	/* the head stacks: 14rem of eyebrow column beside the heading leaves
+	   the heading three words wide on a phone */
+	.head {
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		margin-bottom: 2.25rem;
 	}
 
 	.rail {
-		height: 3.75rem;
-		margin-inline: 0.5rem;
+		--y: 1.4rem;
+		height: auto;
+		/* the dots are absolute, so they contribute no height — this band
+		   is what the swipe track flows after */
+		padding-top: 3.25rem;
 	}
 
-	.card {
-		flex-direction: column;
-		gap: 0.9rem;
-		min-height: 13rem;
+	.track {
+		top: calc(var(--y) - 1.5px);
 	}
 
-	.avatar {
-		width: 44px;
-		height: 44px;
+	.stop {
+		top: 0;
+		bottom: auto;
+		height: 3.5rem;
 	}
 
-	.controls {
-		justify-content: flex-start;
+	/* the stage names do not fit under six nodes at this width; the
+	   quote below names its own stage instead */
+	.stopLabel,
+	.stop[data-side]::before {
+		display: none;
+	}
+
+	/* the notes leave the absolute layer and become one snapping row */
+	.notes {
+		/* out of the absolute layer: on a phone this IS the layout, not an
+		   overlay on the rail */
+		position: static;
+		display: flex;
+		gap: 1rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+		/* the row is edge to edge, so a card can sit centred in the panel
+		   rather than against its padding */
+		padding-bottom: 0.25rem;
+	}
+
+	.notes::-webkit-scrollbar {
+		display: none;
+	}
+
+	.note {
+		position: static;
+		width: 100%;
+		flex: 0 0 100%;
+		transform: none;
+		left: auto !important;
+		right: auto;
+		top: auto;
+		bottom: auto;
+		scroll-snap-align: start;
+	}
+
+	.noteStage {
+		display: block;
+	}
+
+	/* The desktop keyframes carry translateX(-50%), which is how a card
+	   centres on its node. In this row that is 150px of shift onto the
+	   next card, so the build uses the un-centred keyframes here — the
+	   same ones the edge cards already needed. */
+	@media (prefers-reduced-motion: no-preference) {
+		.rail[data-lit] .note {
+			animation-name: msjNoteInEdge;
+		}
 	}
 }
