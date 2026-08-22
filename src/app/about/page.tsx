@@ -49,6 +49,13 @@ export default function AboutPage() {
             and I think you&apos;ll be happier for the trouble.
           </blockquote>
           <figcaption className={`mono-label ${styles.quoteWho}`}>Bill Watterson</figcaption>
+          {/* the one drawing in the head: Watterson's own characters
+              under his words */}
+          <img
+            src="/assets/about/quote.webp"
+            alt="Calvin and Hobbes racing downhill in their wagon"
+            className={styles.quoteArt}
+          />
         </figure>
       </header>
 
