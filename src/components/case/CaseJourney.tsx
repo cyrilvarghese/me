@@ -48,6 +48,11 @@ export default function CaseJourney({
   iconLabel,
   stages,
 }: {
+  /** What this journey's pains belong to, in the reader's words — "Pain
+      points in selling a policy". Written per journey rather than derived:
+      the component cannot infer that phrasing from a heading. It replaced
+      a numbered "Journey 01" above it, which named the figure's position
+      in a list the reader was never shown (Cyril, 2026-08-21). */
   eyebrow: string;
   heading: string;
   icon: string;
@@ -111,27 +116,15 @@ export default function CaseJourney({
     -1
   );
 
-  /* The persona is one person saying all of these, so the icon is drawn
-     once beside the heading rather than repeated against every quote —
-     five copies of the same face reads as a row of holes, not as five
-     remarks by the same agent. */
-  const painCount = stages.filter((s) => s.quote).length;
-
   return (
     <m.section {...reveal(`section-shell ${styles.block}`)}>
       <div className={styles.head}>
-        <div>
-          <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
-          {/* Counted here rather than written into the data: it is the
-              claim the whole figure makes, and a hand-kept number drifts
-              the first time a stage is added. */}
-          {painCount > 0 && (
-            <p className={`mono-label ${styles.eyebrowNote}`}>
-              {painCount} of {stages.length} steps hurt
-            </p>
-          )}
-        </div>
+        <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
         <div className={styles.headMain}>
+          {/* The persona is one person saying all of these, so the icon is
+              drawn once here rather than against every quote — five copies
+              of the same face reads as a row of holes, not as five remarks
+              by the same agent. */}
           <h2 className={`serif-display ${styles.heading}`}>{heading}</h2>
           <p className={styles.persona}>
             <img src={icon} alt="" className={styles.avatar} />

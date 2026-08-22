@@ -69,7 +69,7 @@ export default function MsigContent() {
                 />
 
                 <CaseJourney
-                  eyebrow="Journey 01"
+                  eyebrow="Pain points in selling a policy"
                   heading="Selling a new policy."
                   icon="/assets/MSIG/icons/agent.png"
                   iconLabel="Jane, insurance agent"
@@ -104,7 +104,7 @@ export default function MsigContent() {
                 />
 
                 <CaseJourney
-                  eyebrow="Journey 02"
+                  eyebrow="Pain points in renewing a policy"
                   heading="Renewing a policy."
                   icon="/assets/MSIG/icons/agent.png"
                   iconLabel="Jane, insurance agent"

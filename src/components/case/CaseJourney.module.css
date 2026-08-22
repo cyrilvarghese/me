@@ -13,18 +13,11 @@
 	margin-bottom: clamp(3.25rem, 8vh, 5.5rem);
 }
 
+/* Neutral, not red (Cyril, 2026-08-21): red here, on the PAIN tag AND on
+   every lit node spent the accent three times in one figure. The nodes
+   are where it means something. */
 .eyebrow {
-	color: var(--muted);
-}
-
-/* The count under the eyebrow — the claim the figure makes. Neutral
-   (Cyril, 2026-08-21): it was red, and red on the label AND the PAIN tag
-   AND every lit node spent the accent three times in one figure. The
-   nodes are where it means something. Brighter than the eyebrow above
-   it, because this is the line that says something. */
-.eyebrowNote {
 	color: var(--fg-soft);
-	margin-top: 0.45rem;
 }
 
 .heading {
