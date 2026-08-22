@@ -124,6 +124,20 @@ export const chapters: Chapter[] = [
       ratio: "1024 / 702",
       kind: "stickers",
       seed: 2029,
+      /* Hand-placed to match the lid on Cyril's earlier site: Android
+         at the top left, the Apple up top, C# big out right, JS tilted
+         at the foot, Unity along the bottom edge — spread to the
+         corners the way a lid actually gets stickered, and not one
+         size. The lid lands first; the stickers pop on in no particular
+         order. */
+      cards: [
+        { left: 0, top: 0, width: 100, rotate: 0, z: 0, from: { x: 0, y: 29 } },
+        { left: 9, top: 16, width: 15, rotate: 0, z: 1, from: { x: 0, y: 0 }, pop: true, delay: 0.55 },
+        { left: 37, top: 10, width: 11, rotate: 3, z: 2, from: { x: 0, y: 0 }, pop: true, delay: 0.35 },
+        { left: 12, top: 58, width: 16, rotate: -7, z: 3, from: { x: 0, y: 0 }, pop: true, delay: 0.8 },
+        { left: 64, top: 16, width: 19, rotate: 0, z: 4, from: { x: 0, y: 0 }, pop: true, delay: 0.45 },
+        { left: 52, top: 61, width: 27, rotate: -2, z: 5, from: { x: 0, y: 0 }, pop: true, delay: 0.65 },
+      ],
       shots: [
         {
           src: "/assets/about/02/laptop-bg.webp",
@@ -134,14 +148,14 @@ export const chapters: Chapter[] = [
         {
           src: "/assets/about/02/07yvn4bEF23BVkjs81ulVOWxU.avif",
           ready: true,
-          alt: "C# logo sticker",
+          alt: "Android logo sticker",
           ratio: "910 / 1024",
           bare: true,
         },
         {
           src: "/assets/about/02/A4Evyl1cAcRHnE64a94y8o0sxg.avif",
           ready: true,
-          alt: "Android logo sticker",
+          alt: "Apple logo sticker",
           ratio: "994 / 1024",
           bare: true,
         },
@@ -155,7 +169,7 @@ export const chapters: Chapter[] = [
         {
           src: "/assets/about/02/ftJpmglXSbEPQzXpqvgFxvUF2ZA.avif",
           ready: true,
-          alt: "Apple logo sticker",
+          alt: "C# logo sticker",
           ratio: "905 / 1024",
           bare: true,
         },
