@@ -1,5 +1,5 @@
 import type { Shot } from "@/components/about/Cluster";
-import type { LayoutKind } from "@/lib/cluster-layout";
+import type { Card, LayoutKind } from "@/lib/cluster-layout";
 
 /** The long version of the About section: the route a reader takes when
     the home page's five-rung timeline is not enough.
@@ -35,6 +35,9 @@ export type Chapter = {
     /** fixes this cluster's arrangement — change it to reshuffle one
         chapter without touching any of the others */
     seed: number;
+    /** hand-placed cards, one per shot in order, when the composition
+        is art-directed rather than derived (the seed goes unused) */
+    cards?: Card[];
     shots: Shot[];
   };
 };
@@ -68,6 +71,7 @@ export const chapters: Chapter[] = [
           ready: true,
           alt: "Mike Mignola's Hellboy, pistol drawn",
           ratio: "288 / 359",
+          poster: true,
         },
         {
           /* the two AVIFs are Samurai Jack and Dexter's Laboratory —
@@ -76,30 +80,35 @@ export const chapters: Chapter[] = [
           ready: true,
           alt: "Samurai Jack poster",
           ratio: "533 / 800",
+          poster: true,
         },
         {
           src: "/assets/about/01/01-3.webp",
           ready: true,
           alt: "Batman: The Animated Series — Batman on a rooftop under lightning",
           ratio: "345 / 460",
+          poster: true,
         },
         {
           src: "/assets/about/01/01-4.avif",
           ready: true,
           alt: "Dexter's Laboratory poster",
           ratio: "696 / 1024",
+          poster: true,
         },
         {
           src: "/assets/about/01/01-5.webp",
           ready: true,
           alt: "The Prince of Egypt — a chariot in a desert canyon",
           ratio: "258 / 384",
+          poster: true,
         },
         {
           src: "/assets/about/01/01-6.webp",
           ready: true,
           alt: "Miyazaki's Spirited Away — Chihiro among the lanterns",
           ratio: "184 / 273",
+          poster: true,
         },
       ],
     },
@@ -168,14 +177,25 @@ export const chapters: Chapter[] = [
       "Learning to draw properly changed how I look at everything since — and I learned it from some remarkable people.",
     ],
     gallery: {
-      ratio: "4 / 3",
+      ratio: "3 / 2",
       kind: "pile",
       seed: 3313,
+      /* Hand-placed to match the sabbatical spread on Cyril's earlier
+         site: the light page up top, the open spread beside it, the
+         held-open book tilted on the left, the wide spread along the
+         foot — and the animation clip lands last, on top of the pile. */
+      cards: [
+        { left: 17, top: 0, width: 24, rotate: 0, z: 1, from: { x: 0, y: -29 } },
+        { left: 44, top: 2, width: 40, rotate: -2, z: 3, from: { x: 45, y: -20 } },
+        { left: 1, top: 22, width: 26, rotate: -8, z: 2, from: { x: -64, y: 0 } },
+        { left: 30, top: 55, width: 40, rotate: -2, z: 4, from: { x: 0, y: 29 } },
+        { left: 58, top: 42, width: 30, rotate: 6, z: 9, from: { x: 0, y: 0 }, pop: true, delay: 0.75 },
+      ],
       shots: [
         {
           src: "/assets/about/03/P6Fnb2gkFGIVjC4K31KxzzDHSw.webp",
           ready: true,
-          alt: "A sketchbook page of figure studies",
+          alt: "A sketchbook page of hand studies in sepia pencil",
           ratio: "512 / 683",
         },
         {
@@ -185,10 +205,10 @@ export const chapters: Chapter[] = [
           ratio: "512 / 381",
         },
         {
-          src: "/assets/about/03/carperntar-video.mp4",
+          src: "/assets/about/03/xWMamNX67rcWR7goXpnXqj2Us.webp",
           ready: true,
-          alt: "A short clip from that year's animation study",
-          ratio: "720 / 720",
+          alt: "A sketchbook held open on a page of ink gesture figures",
+          ratio: "512 / 683",
         },
         {
           src: "/assets/about/03/WaeerTBIVFUP6QC8yzfWZyfXJZY.webp",
@@ -197,10 +217,10 @@ export const chapters: Chapter[] = [
           ratio: "512 / 384",
         },
         {
-          src: "/assets/about/03/xWMamNX67rcWR7goXpnXqj2Us.webp",
+          src: "/assets/about/03/carperntar-video.mp4",
           ready: true,
-          alt: "A sketchbook page of figure studies",
-          ratio: "512 / 683",
+          alt: "A short clip from that year's animation study",
+          ratio: "720 / 720",
         },
       ],
     },
@@ -267,8 +287,8 @@ export const chapters: Chapter[] = [
       "The lasting lesson was about consensus: how an outside partner gets a room to a decision it will still hold to next week.",
     ],
     gallery: {
-      ratio: "3 / 2",
-      kind: "wall",
+      ratio: "4 / 3",
+      kind: "arc",
       seed: 6091,
       shots: [
         {

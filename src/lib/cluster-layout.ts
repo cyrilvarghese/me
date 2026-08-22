@@ -28,7 +28,9 @@ export type LayoutKind =
   /** screens stepping down the diagonal, big to small */
   | "cascade"
   /** card 0 is the surface; the rest pop onto it */
-  | "stickers";
+  | "stickers"
+  /** marks ringed loosely around the centre, popping in at random */
+  | "arc";
 
 export type Card = {
   /** all in % of the cluster box, so the box can be any size */
@@ -47,6 +49,10 @@ export type Card = {
   /** arrives by scaling up in place (a sticker slapped on) rather
       than by sliding — the translate above is zeroed */
   pop?: true;
+  /** seconds before this card's arrival starts. Seeded, so the
+      choreography is as stable as the placement; a card without one
+      falls back to the renderer's source-order stagger. */
+  delay?: number;
 };
 
 /** how far a card travels on the way in — far enough to have a
@@ -249,10 +255,11 @@ function stickers(count: number, ratios: number[], boxRatio: number, seed: numbe
   const cols = n <= 2 ? n : Math.ceil(Math.sqrt(n));
   const rows = Math.ceil(n / cols);
 
-  /* the region stickers land in: the middle of the surface, clear of
-     its edges, so none reads as peeling off */
-  const insetX = 14;
-  const insetY = 16;
+  /* the region stickers land in: most of the surface, clear of its
+     edges so none reads as peeling off — a lid is stickered all over,
+     not just across its middle */
+  const insetX = 11;
+  const insetY = 13;
   const regionW = surface.width - insetX * 2;
   const regionH = heightOf(surface.width, ratios[0], boxRatio) - insetY * 2;
   const cellW = regionW / cols;
@@ -265,7 +272,9 @@ function stickers(count: number, ratios: number[], boxRatio: number, seed: numbe
     const inRow = Math.min(cols, n - row * cols);
     const rowShift = ((cols - inRow) * cellW) / 2;
 
-    const width = Math.min(cellW * 0.72, 20);
+    /* big enough to read as the original stickers do, and not one
+       size — a real lid's stickers never match */
+    const width = Math.min(cellW * (0.78 + rnd() * 0.22), 26);
     const height = heightOf(width, ratios[i + 1], boxRatio);
     const left =
       surface.left + insetX + rowShift + col * cellW + (cellW - width) / 2 +
@@ -282,9 +291,50 @@ function stickers(count: number, ratios: number[], boxRatio: number, seed: numbe
       z: i + 1,
       from: { x: 0, y: 0 },
       pop: true,
+      /* after the surface lands, in no particular order — nobody
+         stickers a lid left to right */
+      delay: round(0.3 + rnd() * 0.5),
     });
   }
   return cards;
+}
+
+/** marks ringed loosely around the centre of the box — evenly spaced
+    around an ellipse, then pushed off it, each popping in on its own
+    seeded beat rather than in reading order */
+function arc(count: number, ratios: number[], boxRatio: number, seed: number): Card[] {
+  const rnd = prng(seed);
+  /* where the ring starts is the seed's choice too, so two arcs on one
+     page do not open at the same clock position */
+  const start = rnd() * Math.PI * 2;
+
+  return Array.from({ length: count }, (_, i) => {
+    const angle =
+      start +
+      (i / count) * Math.PI * 2 +
+      /* enough angular jitter to lose the protractor, not enough to
+         land two marks on each other */
+      (((rnd() - 0.5) * Math.PI) / count) * 0.8;
+    const rx = 30 + (rnd() - 0.5) * 8;
+    const ry = 26 + (rnd() - 0.5) * 6;
+    /* marks vary wildly in shape — capping the height, not just the
+       width, keeps a tall mark from carrying three times the mass of
+       a wide one and landing on its neighbour */
+    const width = Math.min(20 + rnd() * 7, (20 * ratios[i]) / boxRatio);
+    const height = heightOf(width, ratios[i], boxRatio);
+    const left = clamp(50 + Math.cos(angle) * rx - width / 2, 0, 100 - width);
+    const top = clamp(50 + Math.sin(angle) * ry - height / 2, 0, 100 - height);
+    return {
+      left: round(left),
+      top: round(top),
+      width: round(width),
+      rotate: 0,
+      z: i,
+      from: { x: 0, y: 0 },
+      pop: true,
+      delay: round(rnd() * 0.55),
+    };
+  });
 }
 
 /** Lay a cluster out. `ratios` are the shots' own width/height numbers
@@ -298,7 +348,8 @@ export function layout(
 ): Card[] {
   const count = ratios.length;
   if (count < 1) return [];
-  if (count === 1 && kind !== "stickers") return single(ratios[0], boxRatio);
+  if (count === 1 && kind !== "stickers" && kind !== "arc")
+    return single(ratios[0], boxRatio);
   switch (kind) {
     case "wall":
       return wall(count, ratios, boxRatio, seed);
@@ -310,5 +361,7 @@ export function layout(
       return cascade(count, ratios, boxRatio, seed);
     case "stickers":
       return stickers(count, ratios, boxRatio, seed);
+    case "arc":
+      return arc(count, ratios, boxRatio, seed);
   }
 }

@@ -12,6 +12,7 @@ const SAMPLES: { kind: LayoutKind; ratios: number[]; box: number; seed: number }
   { kind: "cascade", ratios: [16 / 10, 3 / 4, 4 / 3], box: 4 / 3, seed: 5051 },
   { kind: "cascade", ratios: [16 / 10, 16 / 10], box: 4 / 3, seed: 7013 },
   { kind: "stickers", ratios: [3 / 2, 1, 1, 1, 1, 1], box: 3 / 2, seed: 2029 },
+  { kind: "arc", ratios: [292 / 132, 428 / 96, 416 / 88, 368 / 144, 152 / 192], box: 4 / 3, seed: 6091 },
 ];
 
 const heightOf = (width: number, shot: number, box: number) => (width * box) / shot;
@@ -78,8 +79,21 @@ describe("cluster layout", () => {
     expect(cards[0].rotate).toBe(0);
     for (const sticker of cards.slice(1)) {
       expect(sticker.pop).toBe(true);
-      expect(sticker.width).toBeLessThanOrEqual(20);
+      expect(sticker.width).toBeLessThanOrEqual(26);
     }
+  });
+
+  it("an arc pops on seeded beats, not in reading order", () => {
+    const s = SAMPLES.find((s) => s.kind === "arc")!;
+    const cards = layout(s.kind, s.ratios, s.box, s.seed);
+    const delays = cards.map((c) => c.delay);
+    for (const [i, card] of cards.entries()) {
+      expect(card.pop, `card ${i} pops`).toBe(true);
+      expect(card.delay).toBeGreaterThanOrEqual(0);
+      expect(card.delay).toBeLessThanOrEqual(1);
+    }
+    /* seeded randomness, not a metronome */
+    expect(new Set(delays).size).toBeGreaterThan(1);
   });
 
   it("empty in, empty out", () => {

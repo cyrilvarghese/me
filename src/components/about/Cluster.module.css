@@ -63,6 +63,25 @@
 	object-fit: cover;
 }
 
+/* the printed one-sheet: paper margin around the artwork, deeper at
+   the foot the way a printed poster's is; the keyline SVG below runs
+   just inside the sheet edge */
+.poster {
+	padding: 4.5% 4.5% 7%;
+	/* the site's warm white — the paper carries the accent tinge */
+	background: var(--fg);
+}
+
+/* rgba literal of --bg, not color-mix (Edge quirk, see about.module) */
+.posterRule {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	color: rgba(21, 17, 17, 0.5);
+	pointer-events: none;
+}
+
 /* a logo or a sticker is not a photograph: no frame, no paper, no
    shadow — the artwork's own silhouette is the card */
 .bare {

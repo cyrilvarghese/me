@@ -68,6 +68,7 @@ export default function AboutPage() {
                 ratio={c.gallery.ratio}
                 seed={c.gallery.seed}
                 kind={c.gallery.kind}
+                placed={c.gallery.cards}
               />
             </div>
             <RevealDiv className={styles.copy}>
@@ -106,6 +107,7 @@ export default function AboutPage() {
               ratio={sparetime.gallery.ratio}
               seed={sparetime.gallery.seed}
               kind={sparetime.gallery.kind}
+              placed={sparetime.gallery.cards}
             />
           </div>
           <RevealDiv className={styles.copy}>
