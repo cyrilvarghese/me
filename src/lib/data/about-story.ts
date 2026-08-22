@@ -196,16 +196,17 @@ export const chapters: Chapter[] = [
       kind: "pile",
       seed: 3313,
       /* Hand-placed to match the sabbatical spread on Cyril's earlier
-         site: the light page up top, the open spread beside it, the
-         held-open book tilted on the left, the wide spread along the
-         foot — and the animation clip lands last, on top of the pile,
-         at twice the size of anything under it. */
+         site: the animation clip up at the top left, the blue spread
+         beside it, the held-open book tilted at the bottom left, the
+         hands page laid over the book at the foot, the gesture spread
+         tilted out right. Order in `shots`: hands, blue spread, book,
+         gestures, clip. The clip lands last, on top. */
       cards: [
-        { left: 22, top: 0, width: 36, rotate: 0, z: 1, from: { x: 0, y: -29 } },
-        { left: 40, top: 2, width: 60, rotate: -2, z: 3, from: { x: 45, y: -20 } },
-        { left: 0, top: 18, width: 39, rotate: -8, z: 2, from: { x: -64, y: 0 } },
-        { left: 18, top: 52, width: 60, rotate: -2, z: 4, from: { x: 0, y: 29 } },
-        { left: 40, top: 40, width: 60, rotate: 6, z: 9, from: { x: 0, y: 0 }, pop: true, delay: 0.75 },
+        { left: 30, top: 55, width: 32, rotate: -3, z: 6, from: { x: 0, y: 29 } },
+        { left: 44, top: 0, width: 56, rotate: -3, z: 3, from: { x: 45, y: -20 } },
+        { left: 0, top: 44, width: 36, rotate: -8, z: 4, from: { x: -64, y: 0 } },
+        { left: 56, top: 60, width: 44, rotate: 8, z: 7, from: { x: 64, y: 10 } },
+        { left: 8, top: 6, width: 44, rotate: -8, z: 9, from: { x: 0, y: 0 }, pop: true, delay: 0.75 },
       ],
       shots: [
         {
