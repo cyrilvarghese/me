@@ -51,7 +51,10 @@
 	margin: 0;
 	width: 100%;
 	overflow: hidden;
-	border-radius: var(--radius-sm);
+	/* 4px, between the site's rungs (0 / 2px): a photograph's corner
+	   reads softer than a control's, and 2px vanishes under the shadow
+	   at card size (Cyril, 2026-08-22) */
+	border-radius: 4px;
 	border: 1px solid rgba(248, 244, 242, 0.14);
 	/* the pile only reads as separate pieces of paper if the cards cast
 	   something onto the ones beneath them */
