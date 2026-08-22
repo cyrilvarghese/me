@@ -274,12 +274,26 @@
 
 /* The pain itself, in the accent — it used to be neutral text behind a
    red "Pain" tag, which spent a whole label saying what the line already
-   is. --accent-lift, not --accent: this runs at caption size, where the
-   signal red measures 4.02:1 on this ground and misses AA. */
+   is.
+
+   Tuned for a coloured line on a dark ground (Cyril, 2026-08-21), where
+   the first version read thick and harsh:
+
+   400, not 500. globals.css already writes the rule down — Work Sans is
+   variable and light-on-dark gains optical weight, which is why body sits
+   at 350 rather than 400. By the same rule 500 here reads like 600.
+
+   --text-small, not --text-caption. 13px is the hardest size to hand a
+   coloured line, and this is the conclusion of the quote above it, which
+   sits on that rung too.
+
+   The tracking is the dark-mode allowance: light type on a dark ground
+   closes up, and +0.01em opens it back out. */
 .consequence {
 	margin-top: 0.6rem;
-	font-size: var(--text-caption);
-	font-weight: 500;
+	font-size: var(--text-small);
+	font-weight: 400;
+	letter-spacing: 0.01em;
 	color: var(--accent-lift);
 }
 

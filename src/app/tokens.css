@@ -13,13 +13,22 @@
 	--muted: #9e9493;
 	--accent: #ea0000;
 	--accent-deep: #c90000;
-	/* The rung of the ramp that may be text. --accent carries the whole
-	   signal language but measures 4.02:1 on --bg, just under the 4.5 AA
-	   floor, which is why red has been decorative here. Full red channel
-	   at the same 0° hue lifts it to 4.75:1 — the same colour, legal at
-	   body size. Use it for a phrase inside running copy; anything large
-	   or decorative still takes --accent. */
-	--accent-lift: #ff0d0d;
+	/* The rung of the ramp that may be TEXT. --accent carries the whole
+	   signal language but measures 4.02:1 on --bg, under the 4.5 AA floor,
+	   which is why red is decorative everywhere else.
+
+	   Two axes, not one. This was #ff0d0d, chosen only for contrast — full
+	   red channel at the same 0° hue, 4.75:1, legal and unreadable. On a
+	   dark ground saturation matters as much as ratio: a 100%-saturated red
+	   and the near-black around it focus at different depths in the eye, so
+	   the letter edges never resolve and the line buzzes. Dropping to 63%
+	   saturation fixes that AND reads better, 4.96:1.
+
+	   It is step 3 of the ramp the case-study-diagrams skill already
+	   defines (#b39a9a → #c98080 → #d95a5a → #ea0000), so this is shared
+	   language rather than a one-off. Use it for a phrase inside running
+	   copy; anything large or decorative still takes --accent. */
+	--accent-lift: #d95a5a;
 	--hairline: rgba(248, 244, 242, 0.1);
 	--hairline-red: rgba(234, 0, 0, 0.28);
 

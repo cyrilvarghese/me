@@ -104,7 +104,8 @@
 
 /* The one tag that carries the case — the domain, not the market. Red at
    label size, so --accent-lift rather than --accent: the signal red
-   measures 4.02:1 on this ground and misses AA, the lifted rung clears it. */
+   measures 4.02:1 on this ground and misses AA, and it is the saturated
+   one — see tokens.css, where the lift answers both. */
 .tagAccent {
 	color: var(--accent-lift);
 }

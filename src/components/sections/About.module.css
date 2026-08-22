@@ -102,8 +102,9 @@
 }
 
 /* The one phrase the paragraph is actually about, in the site's red.
-   --accent-lift, not --accent: this runs at body size, where the signal
-   red misses AA on this ground and the lifted rung clears it. */
+   --accent-lift, not --accent: the signal red misses AA at this size on
+   this ground, and it is the saturated one — see tokens.css, where the
+   lift trades saturation for legibility as well as ratio. */
 .spark {
 	color: var(--accent-lift);
 }
