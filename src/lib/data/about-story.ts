@@ -202,10 +202,10 @@ export const chapters: Chapter[] = [
          tilted out right. Order in `shots`: hands, blue spread, book,
          gestures, clip. The clip lands last, on top. */
       cards: [
-        { left: 30, top: 55, width: 32, rotate: -3, z: 6, from: { x: 0, y: 29 } },
+        { left: 30, top: 55, width: 32, rotate: -3, z: 8, from: { x: 0, y: 29 } },
         { left: 44, top: 0, width: 56, rotate: -3, z: 3, from: { x: 45, y: -20 } },
         { left: 0, top: 44, width: 36, rotate: -8, z: 4, from: { x: -64, y: 0 } },
-        { left: 56, top: 60, width: 44, rotate: 8, z: 7, from: { x: 64, y: 10 } },
+        { left: 43, top: 57, width: 57, rotate: 8, z: 7, from: { x: 64, y: 10 } },
         { left: 8, top: 6, width: 44, rotate: -8, z: 9, from: { x: 0, y: 0 }, pop: true, delay: 0.75 },
       ],
       shots: [
