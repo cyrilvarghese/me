@@ -43,17 +43,12 @@ export type JourneyStage = {
  */
 export default function CaseJourney({
   eyebrow,
-  eyebrowNote,
   heading,
   icon,
   iconLabel,
   stages,
 }: {
   eyebrow: string;
-  /** A second label under the eyebrow, in the accent — what the walk
-      below is showing. Optional: a journey without one just carries the
-      eyebrow, and nothing is rendered in its place. */
-  eyebrowNote?: string;
   heading: string;
   icon: string;
   iconLabel: string;
@@ -127,9 +122,12 @@ export default function CaseJourney({
       <div className={styles.head}>
         <div>
           <p className={`mono-label ${styles.eyebrow}`}>{eyebrow}</p>
-          {eyebrowNote && (
+          {/* Counted here rather than written into the data: it is the
+              claim the whole figure makes, and a hand-kept number drifts
+              the first time a stage is added. */}
+          {painCount > 0 && (
             <p className={`mono-label ${styles.eyebrowNote}`}>
-              {eyebrowNote} — {painCount} of {stages.length} steps
+              {painCount} of {stages.length} steps hurt
             </p>
           )}
         </div>
