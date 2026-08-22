@@ -10,6 +10,9 @@
 	left: var(--l);
 	top: var(--t);
 	width: var(--w);
+	/* paint order from the layout; :hover below lifts the card to the
+	   top of the pile, which only works because this is not inline */
+	z-index: var(--z);
 	/* the rest angle lives here rather than in the animation: the reveal
 	   below animates a translate only, so a reader on reduced motion —
 	   who never gets the tween — still sees the card at its angle */

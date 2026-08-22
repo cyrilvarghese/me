@@ -116,16 +116,17 @@ export default function Cluster({
           <div
             key={shot.src}
             className={styles.card}
-            /* custom properties, not a direct transform: a media query
-               cannot override an inline style, and the stacked layout
-               below has to be able to straighten these out */
+            /* custom properties, not direct styles: an inline style
+               outranks every class rule, so a media query could not
+               straighten the rotation and :hover could not lift the
+               card — both read these through var() instead */
             style={
               {
                 "--l": `${card.left}%`,
                 "--t": `${card.top}%`,
                 "--w": `${card.width}%`,
                 "--rot": `${card.rotate}deg`,
-                zIndex: card.z,
+                "--z": card.z,
               } as React.CSSProperties
             }
           >

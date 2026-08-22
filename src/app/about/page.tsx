@@ -63,13 +63,35 @@ export default function AboutPage() {
         {chapters.map((c) => (
           <li key={c.num} className={styles.chapter}>
             <div className={styles.figureCol}>
-              <Cluster
-                shots={c.gallery.shots}
-                ratio={c.gallery.ratio}
-                seed={c.gallery.seed}
-                kind={c.gallery.kind}
-                placed={c.gallery.cards}
-              />
+              {c.gallery.link ? (
+                /* the pictures lead somewhere: the whole cluster is the
+                   link, and the label beneath says where */
+                <a
+                  href={c.gallery.link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.figureLink}
+                >
+                  <Cluster
+                    shots={c.gallery.shots}
+                    ratio={c.gallery.ratio}
+                    seed={c.gallery.seed}
+                    kind={c.gallery.kind}
+                    placed={c.gallery.cards}
+                  />
+                  <span className={`mono-label ${styles.figureCaption}`}>
+                    {c.gallery.link.label} →
+                  </span>
+                </a>
+              ) : (
+                <Cluster
+                  shots={c.gallery.shots}
+                  ratio={c.gallery.ratio}
+                  seed={c.gallery.seed}
+                  kind={c.gallery.kind}
+                  placed={c.gallery.cards}
+                />
+              )}
             </div>
             <RevealDiv className={styles.copy}>
               <p className={`mono-label ${styles.num}`}>{c.num}</p>

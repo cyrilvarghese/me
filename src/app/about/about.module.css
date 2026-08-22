@@ -178,6 +178,30 @@
 	max-width: 34rem;
 }
 
+/* the cluster as a link: no chrome of its own, the pictures are the
+   affordance and the caption underneath is the promise */
+.figureLink {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+}
+
+/* same voice as .link below the copy, centred under the pile; the
+   whole figure lights the caption on hover, not just the words */
+.figureCaption {
+	display: table;
+	margin: 1.5rem auto 0;
+	color: var(--accent-lift);
+	border-bottom: 1px solid var(--hairline-red);
+	padding-bottom: 0.2rem;
+	transition: color 150ms ease, border-color 150ms ease;
+}
+
+.figureLink:hover .figureCaption {
+	color: var(--accent);
+	border-bottom-color: var(--accent);
+}
+
 .copy {
 	max-width: 46ch;
 }

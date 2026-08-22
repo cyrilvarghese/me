@@ -39,6 +39,9 @@ export type Chapter = {
         is art-directed rather than derived (the seed goes unused) */
     cards?: Card[];
     shots: Shot[];
+    /** where the pictures themselves lead — the whole cluster becomes
+        the link, with the label set beneath it */
+    link?: { href: string; label: string };
   };
 };
 
@@ -240,6 +243,10 @@ export const chapters: Chapter[] = [
           ratio: "720 / 720",
         },
       ],
+      link: {
+        href: "https://photos.app.goo.gl/ypwLkp3iMQ2niitU6",
+        label: "View my sketchbook",
+      },
     },
   },
   {
