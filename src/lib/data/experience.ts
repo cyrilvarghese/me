@@ -13,26 +13,6 @@ export type Role = {
   tools: string[];
 };
 
-/** Shared rather than repeated: the Yuvabe and CaseChat work runs on the
-    same stack, and two copies of a list drift the moment one is edited.
-
-    Design engineering and front end, in that order — this is the work as
-    it is actually done, not a catalogue of everything the stack touches.
-    Corrected 2026-08-21 (Cyril): it claimed Svelte-TS, FastAPI and
-    LangChain, none of which are in play. */
-const AI_PRODUCT_TOOLS = [
-  "Figma",
-  "Design systems",
-  "User interviews",
-  "Usability testing",
-  "GTM strategy",
-  "Next.js",
-  "Tailwind",
-  "shadcn/ui",
-  "RAG",
-  "LLM APIs",
-];
-
 /** Reverse chronological, newest first — the order the timeline draws.
 
     Two roles in one title are joined with "and", three with a comma and
@@ -49,7 +29,22 @@ export const experience: Role[] = [
     title: "Design Engineer and Product Manager",
     org: "Yuvabe",
     body: "Leading UX, product and front-end engineering on CreativeOS, Yuvabe's flagship AI content generation platform.",
-    tools: AI_PRODUCT_TOOLS,
+    /* CreativeOS's stack, not CaseChat's — the two used to share one list,
+       which read as a single career-long stack rather than two products.
+       Design engineering and front end, in that order: the work as it is
+       actually done, not a catalogue of everything the stack touches. */
+    tools: [
+      "Figma",
+      "Design systems",
+      "User interviews",
+      "Usability testing",
+      "GTM strategy",
+      "Next.js",
+      "Tailwind",
+      "shadcn/ui",
+      "RAG",
+      "LLM APIs",
+    ],
   },
   {
     years: "2024 — 2026",
@@ -57,7 +52,20 @@ export const experience: Role[] = [
     title: "Founder, Design Engineer and CTPO",
     org: "CaseChat",
     body: "Built and shipped an AI simulator where medical students practise diagnosis, from first research through launch.",
-    tools: AI_PRODUCT_TOOLS,
+    /* CaseChat's own stack (Cyril, 2026-08-22): Svelte-TS, FastAPI and
+       LangChain are this product's, and were wrongly attributed to the
+       CreativeOS work while the two entries shared a list. */
+    tools: [
+      "Figma",
+      "User interviews",
+      "Usability testing",
+      "GTM strategy",
+      "Svelte-TS",
+      "FastAPI",
+      "RAG",
+      "LangChain",
+      "LLM APIs",
+    ],
   },
   {
     years: "2022 — 2024",
