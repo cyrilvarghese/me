@@ -53,23 +53,21 @@ export default function About() {
           <h2 className={`serif-display ${styles.title}`}>
             Where design meets code: creating products that scale from 0&rarr;1
           </h2>
+          {/* One highlight in the whole block, and it is the sentence the
+              section is about. There were three treatments here — this
+              phrase in red, the clause around it in bold, and the whole of
+              the next paragraph in bold again — which is enough emphasis
+              that none of it emphasised anything (Cyril, 2026-08-21). */}
           <p className={styles.lede}>
             From sketching stories as a kid to designing products as a designer, that
             same sense of{" "}
-            <strong>
-              <span className={styles.spark}>curiosity and wonder</span> still drives my
-              work
-            </strong>
+            <span className={styles.spark}>curiosity and wonder still drives my work</span>
             .
           </p>
           <p className={styles.lede}>
             With a background spanning product design, engineering and storytelling,
-            I&apos;m now a{" "}
-            <strong>
-              digital product design engineer exploring how AI can reshape the way we
-              learn, build and solve problems
-            </strong>
-            .
+            I&apos;m now a digital product design engineer exploring how AI can reshape
+            the way we learn, build and solve problems.
           </p>
         </div>
         {/* width/height are the real intrinsic size of the file: the box is
