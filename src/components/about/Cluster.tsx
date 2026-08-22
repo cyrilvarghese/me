@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import { EASE_OUT_CUBIC } from "@/lib/motion";
 import { layout, type LayoutKind } from "@/lib/cluster-layout";
 import styles from "./Cluster.module.css";
@@ -70,6 +70,9 @@ export default function Cluster({
     parseRatio(ratio),
     seed
   );
+  /* a video card must not run for a reader who asked for less motion —
+     the reveal contract handles the tweens, this handles the film */
+  const reducedMotion = useReducedMotion();
 
   return (
     <div className={styles.cluster} data-kind={kind} style={{ aspectRatio: ratio }}>
@@ -126,7 +129,19 @@ export default function Cluster({
                 style={{ aspectRatio: shot.ratio }}
               >
                 {shot.ready ? (
-                  <img src={shot.src} alt={shot.alt} className={styles.img} />
+                  /\.(mp4|webm)$/.test(shot.src) ? (
+                    <video
+                      src={shot.src}
+                      className={styles.img}
+                      autoPlay={!reducedMotion}
+                      loop
+                      muted
+                      playsInline
+                      aria-label={shot.alt}
+                    />
+                  ) : (
+                    <img src={shot.src} alt={shot.alt} className={styles.img} />
+                  )
                 ) : (
                   /* The frame is drawn at the exact shape its picture
                      will have, with the filename it wants inside it — so

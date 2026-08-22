@@ -11,7 +11,13 @@ import type { LayoutKind } from "@/lib/cluster-layout";
 
     Data rather than markup, for the reason capabilities.ts is: the page
     is one map over this array, so a chapter is added, cut or reordered
-    here and nowhere else. */
+    here and nowhere else.
+
+    The pictures live in `public/assets/about/<chapter>/` under the
+    names they arrived with — the arrays below point at the real files,
+    and each ratio is the file's own pixel dimensions, so the frame is
+    exactly the picture's shape. Chapter 05 borrows from the MSIG case
+    study's own assets rather than duplicating them. */
 export type Chapter = {
   /** two digits, drawn on the spine beside the chapter */
   num: string;
@@ -33,16 +39,13 @@ export type Chapter = {
   };
 };
 
-/** One numbered file per card, so uploading is "drop these in and flip
-    `ready`" rather than a naming decision per picture. The ratios are
-    the shapes the cards will be drawn at before the files exist — get
-    them roughly right and nothing moves when the pictures land. */
-const shots = (base: string, ratios: string[], alt: string): Shot[] =>
+/** placeholder frames for the one chapter whose pictures are still to
+    come — drawn at the shape they will have, named for the file they
+    are waiting for (see Cluster's slot) */
+const awaiting = (base: string, ratios: string[], alt: string): Shot[] =>
   ratios.map((ratio, i) => ({
     src: `/assets/about/${base}-${i + 1}.webp`,
     ready: false,
-    /* placeholder: alt says what is IN a picture, which nobody can write
-       from a filename — rewrite each of these when the file lands */
     alt: `${alt} (${i + 1})`,
     ratio,
   }));
@@ -55,14 +58,50 @@ export const chapters: Chapter[] = [
       "Films and cartoons shaped what I paid attention to early on, and drawing came with them. Most of my time went on learning to draw and making up stories worth drawing.",
     ],
     gallery: {
-      ratio: "4 / 3",
+      /* six portrait posters over three columns want a square wall */
+      ratio: "1 / 1",
       kind: "wall",
       seed: 1701,
-      shots: shots(
-        "01-childhood",
-        ["2 / 3", "2 / 3", "2 / 3", "2 / 3", "2 / 3", "2 / 3"],
-        "A film or series that shaped the drawing"
-      ),
+      shots: [
+        {
+          src: "/assets/about/01/01-1.webp",
+          ready: true,
+          alt: "Mike Mignola's Hellboy, pistol drawn",
+          ratio: "288 / 359",
+        },
+        {
+          /* the two AVIFs are Samurai Jack and Dexter's Laboratory —
+             swap these two alts if the order is reversed */
+          src: "/assets/about/01/01-2.avif",
+          ready: true,
+          alt: "Samurai Jack poster",
+          ratio: "533 / 800",
+        },
+        {
+          src: "/assets/about/01/01-3.webp",
+          ready: true,
+          alt: "Batman: The Animated Series — Batman on a rooftop under lightning",
+          ratio: "345 / 460",
+        },
+        {
+          src: "/assets/about/01/01-4.avif",
+          ready: true,
+          alt: "Dexter's Laboratory poster",
+          ratio: "696 / 1024",
+        },
+        {
+          src: "/assets/about/01/01-5.webp",
+          ready: true,
+          alt: "The Prince of Egypt — a chariot in a desert canyon",
+          ratio: "258 / 384",
+        },
+        {
+          src: "/assets/about/01/01-6.webp",
+          ready: true,
+          alt: "Miyazaki's Spirited Away — Chihiro among the lanterns",
+          ratio: "184 / 273",
+        },
+      ],
     },
   },
   {
@@ -72,18 +111,53 @@ export const chapters: Chapter[] = [
       "My first jobs were in large organisations and on the founding teams of early-stage startups, building interfaces for mobile and web. Design became the part I wanted to understand properly — its principles, and what they did to the software I was already writing.",
     ],
     gallery: {
-      ratio: "3 / 2",
+      /* the surface's own shape, so the lid fills the box exactly */
+      ratio: "1024 / 702",
       kind: "stickers",
       seed: 2029,
-      shots: shots(
-        "02-ropes",
-        ["3 / 2", "1 / 1", "1 / 1", "1 / 1", "1 / 1", "1 / 1"],
-        "A sticker from the stack of those years"
-      ).map((s, i) =>
-        i === 0
-          ? { ...s, alt: "The laptop those interfaces were built on" }
-          : { ...s, bare: true }
-      ),
+      shots: [
+        {
+          src: "/assets/about/02/laptop-bg.webp",
+          ready: true,
+          alt: "The laptop those interfaces were built on",
+          ratio: "1024 / 702",
+        },
+        {
+          src: "/assets/about/02/07yvn4bEF23BVkjs81ulVOWxU.avif",
+          ready: true,
+          alt: "C# logo sticker",
+          ratio: "910 / 1024",
+          bare: true,
+        },
+        {
+          src: "/assets/about/02/A4Evyl1cAcRHnE64a94y8o0sxg.avif",
+          ready: true,
+          alt: "Android logo sticker",
+          ratio: "994 / 1024",
+          bare: true,
+        },
+        {
+          src: "/assets/about/02/GjC5lyaVHH4xrfgXPvgcnwGpm4k.avif",
+          ready: true,
+          alt: "JavaScript logo sticker",
+          ratio: "512 / 512",
+          bare: true,
+        },
+        {
+          src: "/assets/about/02/ftJpmglXSbEPQzXpqvgFxvUF2ZA.avif",
+          ready: true,
+          alt: "Apple logo sticker",
+          ratio: "905 / 1024",
+          bare: true,
+        },
+        {
+          src: "/assets/about/02/wuq7cK6slPEDhD1CIAa02F65kTY.avif",
+          ready: true,
+          alt: "Unity logo sticker",
+          ratio: "512 / 186",
+          bare: true,
+        },
+      ],
     },
   },
   {
@@ -97,11 +171,38 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "pile",
       seed: 3313,
-      shots: shots(
-        "03-sabbatical",
-        ["3 / 2", "4 / 3", "3 / 2", "4 / 3"],
-        "A page from the sketchbooks of that year"
-      ),
+      shots: [
+        {
+          src: "/assets/about/03/P6Fnb2gkFGIVjC4K31KxzzDHSw.webp",
+          ready: true,
+          alt: "A sketchbook page of figure studies",
+          ratio: "512 / 683",
+        },
+        {
+          src: "/assets/about/03/Q1J6CMLsHssZzdqcSwJpxOh9p5w.webp",
+          ready: true,
+          alt: "An open sketchbook spread of figures in motion, in blue pencil",
+          ratio: "512 / 381",
+        },
+        {
+          src: "/assets/about/03/carperntar-video.mp4",
+          ready: true,
+          alt: "A short clip from that year's animation study",
+          ratio: "720 / 720",
+        },
+        {
+          src: "/assets/about/03/WaeerTBIVFUP6QC8yzfWZyfXJZY.webp",
+          ready: true,
+          alt: "A sketchbook spread of gesture drawings",
+          ratio: "512 / 384",
+        },
+        {
+          src: "/assets/about/03/xWMamNX67rcWR7goXpnXqj2Us.webp",
+          ready: true,
+          alt: "A sketchbook page of figure studies",
+          ratio: "512 / 683",
+        },
+      ],
     },
   },
   {
@@ -111,10 +212,17 @@ export const chapters: Chapter[] = [
       "The first headset I tried made the case on its own, so I learned to build VR and AR applications. Directing a story someone stands inside meant working out what a camera angle does to what a viewer feels — which turned out to be most of the craft.",
     ],
     gallery: {
-      ratio: "16 / 10",
+      ratio: "4 / 3",
       kind: "single",
       seed: 4177,
-      shots: shots("04-vr", ["16 / 10"], "An AR experience running on a tablet"),
+      shots: [
+        {
+          src: "/assets/about/04/RgZ2K4fmI2UoSDGbQO2Zfj9jY.gif",
+          ready: true,
+          alt: "The Mythokatha AR experience running on a tablet, characters standing on printed cards",
+          ratio: "640 / 480",
+        },
+      ],
     },
   },
   {
@@ -127,11 +235,28 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "cascade",
       seed: 5051,
-      shots: shots(
-        "05-product",
-        ["16 / 10", "3 / 4", "4 / 3"],
-        "Product work from those years"
-      ),
+      /* sketch → shipped, down the diagonal, from the MSIG case study's
+         own assets */
+      shots: [
+        {
+          src: "/assets/msig/cover-desk.webp",
+          ready: true,
+          alt: "The MSIG agent dashboard open on a laptop between two people",
+          ratio: "2100 / 1401",
+        },
+        {
+          src: "/assets/msig/e5nkT3tdjowEU0ttZEsvoSrxCLM.webp",
+          ready: true,
+          alt: "Four hand-drawn wireframes of the MSIG policy flow",
+          ratio: "1900 / 1300",
+        },
+        {
+          src: "/assets/msig/Dashboard.png",
+          ready: true,
+          alt: "The shipped MSIG dashboard — stats, renewals, payments, claims",
+          ratio: "2880 / 3430",
+        },
+      ],
     },
   },
   {
@@ -145,11 +270,43 @@ export const chapters: Chapter[] = [
       ratio: "3 / 2",
       kind: "wall",
       seed: 6091,
-      shots: shots(
-        "06-solo",
-        ["3 / 2", "3 / 2", "3 / 2", "3 / 2", "3 / 2"],
-        "A client of those years"
-      ).map((s) => ({ ...s, bare: true })),
+      shots: [
+        {
+          src: "/assets/about/06/dDb5U8I21mxn4b3ewPCbwTOVNc.webp",
+          ready: true,
+          alt: "Verizon logo",
+          ratio: "292 / 132",
+          bare: true,
+        },
+        {
+          src: "/assets/about/06/bUCkG9Q2056lmGFsvCDD6FJ7Nk.webp",
+          ready: true,
+          alt: "Azentio logo",
+          ratio: "428 / 96",
+          bare: true,
+        },
+        {
+          src: "/assets/about/06/NJZ9QyQ4OLsdEU0rfdF87rBXBU.webp",
+          ready: true,
+          alt: "Razorpay logo",
+          ratio: "416 / 88",
+          bare: true,
+        },
+        {
+          src: "/assets/about/06/5PCRX2I4SDsPme0XfVq60xJqM.webp",
+          ready: true,
+          alt: "MSIG logo",
+          ratio: "368 / 144",
+          bare: true,
+        },
+        {
+          src: "/assets/about/06/tJAn8PVGHVwMNV1rj7SubC504Y.webp",
+          ready: true,
+          alt: "1Finance logo",
+          ratio: "152 / 192",
+          bare: true,
+        },
+      ],
     },
   },
   {
@@ -160,10 +317,19 @@ export const chapters: Chapter[] = [
     ],
     link: { href: "https://mycasechat.com", label: "mycasechat.com" },
     gallery: {
-      ratio: "4 / 3",
-      kind: "cascade",
+      /* the wordmark's own shape — a wide mark, not a screen */
+      ratio: "833 / 207",
+      kind: "single",
       seed: 7013,
-      shots: shots("07-casechat", ["16 / 10", "16 / 10"], "The CaseChat clinic"),
+      shots: [
+        {
+          src: "/assets/about/07/O9k7SqksZ6IHj0Dx9m7sgog3YE.webp",
+          ready: true,
+          alt: "The CaseChat wordmark, two speech bubbles making a diagnosis",
+          ratio: "833 / 207",
+          bare: true,
+        },
+      ],
     },
   },
   {
@@ -177,7 +343,7 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "cascade",
       seed: 8093,
-      shots: shots("08-yuvabe", ["16 / 10", "16 / 10"], "The CreativeOS canvas"),
+      shots: awaiting("08-yuvabe", ["16 / 10", "16 / 10"], "The CreativeOS canvas"),
     },
   },
 ];
@@ -194,10 +360,25 @@ export const sparetime: Omit<Chapter, "num"> = {
     ratio: "4 / 3",
     kind: "pile",
     seed: 9067,
-    shots: shots(
-      "09-sparetime",
-      ["3 / 2", "4 / 3", "3 / 2", "4 / 3"],
-      "Drawing, and somewhere else"
-    ),
+    shots: [
+      {
+        src: "/assets/about/final/03tbGiggMDclL6ZqSDbeF5deA0.webp",
+        ready: true,
+        alt: "Looking up into a misty eucalyptus forest",
+        ratio: "512 / 384",
+      },
+      {
+        src: "/assets/about/final/GjlRCWKXbI5tbG03ZaJFsHrwg.webp",
+        ready: true,
+        alt: "A pencil sketch of a dog, ears out",
+        ratio: "517 / 548",
+      },
+      {
+        src: "/assets/about/final/ckRdcs10rMnXJXzlKeJbbYbnDM.webp",
+        ready: true,
+        alt: "Cyril drawing figure studies in a sketchbook",
+        ratio: "512 / 384",
+      },
+    ],
   },
 };

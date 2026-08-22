@@ -5,6 +5,8 @@ import { layout, MAX_ROTATE, type LayoutKind } from "./cluster-layout";
 const SAMPLES: { kind: LayoutKind; ratios: number[]; box: number; seed: number }[] = [
   { kind: "wall", ratios: [2 / 3, 2 / 3, 2 / 3, 2 / 3, 2 / 3, 2 / 3], box: 4 / 3, seed: 1701 },
   { kind: "wall", ratios: [3 / 2, 3 / 2, 3 / 2, 3 / 2, 3 / 2], box: 3 / 2, seed: 6091 },
+  /* the real posters are not one shape — row spacing must follow the tallest */
+  { kind: "wall", ratios: [288 / 359, 533 / 800, 345 / 460, 696 / 1024, 258 / 384, 184 / 273], box: 1, seed: 1701 },
   { kind: "single", ratios: [16 / 10], box: 16 / 10, seed: 4177 },
   { kind: "pile", ratios: [3 / 2, 4 / 3, 3 / 2, 4 / 3], box: 4 / 3, seed: 3313 },
   { kind: "cascade", ratios: [16 / 10, 3 / 4, 4 / 3], box: 4 / 3, seed: 5051 },

@@ -120,8 +120,9 @@ function wall(count: number, ratios: number[], boxRatio: number, seed: number): 
   const rnd = prng(seed);
   const cols = count <= 2 ? count : Math.ceil(Math.sqrt(count));
   const rows = Math.ceil(count / cols);
-  /* a wall is a set of like things — the first shape speaks for all */
-  const shotRatio = ratios[0];
+  /* a wall is a set of like things, but not one shape — the tallest
+     card sets the row spacing, or its neighbours land on it */
+  const shotRatio = Math.min(...ratios);
 
   /* only a full grid can shift whole columns; a short last row is
      centred, and staggering columns above it reads as misregistration */
