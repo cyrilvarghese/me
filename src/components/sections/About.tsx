@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { m } from "motion/react";
 import { experience } from "@/lib/data/experience";
 import styles from "./About.module.css";
@@ -206,6 +207,13 @@ export default function About() {
             I&apos;m now a digital product design engineer exploring how AI can reshape
             the way we learn, build and solve problems.
           </p>
+          {/* The five rungs below are the career; /about is the story
+              behind it. One quiet link rather than a nav item: the
+              header's scroll-spy is position-based, so a route in that
+              row would have nothing to mark as current. */}
+          <Link href="/about" className={`mono-label ${styles.more}`}>
+            The long version &rarr;
+          </Link>
         </div>
         {/* width/height are the real intrinsic size of the file: the box is
             reserved before the image lands, so the timeline below it never

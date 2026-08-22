@@ -222,6 +222,23 @@
 	margin-top: 1.1rem;
 }
 
+/* the way through to the long version — the label voice, so it reads as
+   a signpost rather than as one more sentence of the lede */
+.more {
+	display: inline-block;
+	margin-top: 1.75rem;
+	color: var(--accent-lift);
+	text-decoration: none;
+	border-bottom: 1px solid var(--hairline-red);
+	padding-bottom: 0.2rem;
+	transition: color 150ms ease, border-color 150ms ease;
+}
+
+.more:hover {
+	color: var(--accent);
+	border-bottom-color: var(--accent);
+}
+
 /* The one phrase the whole block is about, in the site's red — and the
    only emphasis in it. Colour alone: adding weight on top would be a
    second treatment doing the same job.

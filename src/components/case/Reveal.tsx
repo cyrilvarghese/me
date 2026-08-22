@@ -8,6 +8,11 @@ type Props = {
   className?: string;
   children: ReactNode;
   id?: string;
+  /** Seconds to hold this element back behind the one it belongs with —
+      a picture beside a paragraph reads better arriving just after it.
+      Only the delay is exposed: duration, easing, offset and the
+      once-only viewport stay the single contract in motion.ts. */
+  delay?: number;
   "aria-label"?: string;
 };
 
@@ -21,9 +26,14 @@ type Props = {
  *
  * `m`, never `motion.*` — LazyMotion runs in strict mode.
  */
-export function RevealSection({ className, children, ...rest }: Props) {
+export function RevealSection({ className, children, delay, ...rest }: Props) {
+  const props = reveal(className);
   return (
-    <m.section {...reveal(className)} {...rest}>
+    <m.section
+      {...props}
+      transition={delay ? { ...props.transition, delay } : props.transition}
+      {...rest}
+    >
       {children}
     </m.section>
   );
@@ -31,9 +41,14 @@ export function RevealSection({ className, children, ...rest }: Props) {
 
 /** Same reveal for a block whose root is a div — CaseFigure's head, where
     the drawing below it already has entry motion of its own. */
-export function RevealDiv({ className, children, ...rest }: Props) {
+export function RevealDiv({ className, children, delay, ...rest }: Props) {
+  const props = reveal(className);
   return (
-    <m.div {...reveal(className)} {...rest}>
+    <m.div
+      {...props}
+      transition={delay ? { ...props.transition, delay } : props.transition}
+      {...rest}
+    >
       {children}
     </m.div>
   );
