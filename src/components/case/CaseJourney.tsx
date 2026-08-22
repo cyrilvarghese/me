@@ -5,6 +5,17 @@ import { m } from "motion/react";
 import { reveal } from "@/lib/motion";
 import styles from "./CaseJourney.module.css";
 
+/** Read a CSS time custom property in milliseconds.
+    getComputedStyle normalises a time to seconds — "4000ms" comes back as
+    "4s" — so parseFloat alone reads 4, and timers built from it all fire
+    inside a frame of each other. */
+function cssMs(el: Element, prop: string, fallback: number) {
+  const raw = getComputedStyle(el).getPropertyValue(prop).trim();
+  const n = parseFloat(raw);
+  if (!Number.isFinite(n)) return fallback;
+  return raw.endsWith("ms") ? n : n * 1000;
+}
+
 export type JourneyStage = {
   label: string;
   quote?: string;
@@ -50,12 +61,19 @@ export default function CaseJourney({
 }) {
   const last = stages.length - 1;
   const railRef = useRef<HTMLDivElement>(null);
+  const notesRef = useRef<HTMLDivElement>(null);
   /* One observer for the whole rail rather than one per card: the stagger
-     is a CSS animation-delay keyed off each note's own --k, so all this
-     has to decide is the single moment the build starts. Once only — a
+     is driven off `step`, so all this has to decide is the single moment
+     the walk starts. Once only — a
      journey that re-ran every time it scrolled back into view would be
      the carousel again, in slower clothes. */
   const [lit, setLit] = useState(false);
+  /* which stop the dash has left for. Every position on the rail derives
+     from this, so a journey with five stops and one with six both walk
+     correctly — the CSS keyframes this replaced hard-coded six stops
+     (0/20/40/60/80/100%) and left Journey 02's dash stopping at 20%
+     while its second dot sat at 25% (Cyril, 2026-08-21). */
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     const el = railRef.current;
@@ -73,13 +91,70 @@ export default function CaseJourney({
     return () => io.disconnect();
   }, []);
 
-  /* the order a pain appears in, which is not its stage index — the two
-     stops with nothing to say are skipped rather than leaving a gap in
-     the count */
-  const painOrder = new Map<number, number>();
-  stages.forEach((s, i) => {
-    if (s.quote) painOrder.set(i, painOrder.size);
-  });
+  /* The walk itself: one leg every --leg, from the first stop to the
+     last. The dash and the trail are CSS transitions off `step`, so the
+     travel is the browser's to draw and this only has to say when. */
+  useEffect(() => {
+    if (!lit) return;
+    const rail = railRef.current;
+    if (!rail) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setStep(last);
+      return;
+    }
+    const leg = cssMs(rail, "--leg", 4000);
+    const timers = Array.from({ length: last }, (_, k) =>
+      window.setTimeout(() => setStep(k + 1), (k + 1) * leg),
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [lit, last]);
+
+  /* Phones only: walk the quote track along with the dash.
+     Desktop needs nothing here — every card is already on screen and the
+     stagger is pure CSS. A phone shows one card at a time, so something
+     has to move it, and it has to move on the same clock the dash walks
+     on or the two would drift apart within a leg.
+
+     The cadence is read off --leg rather than repeated here, so the CSS
+     stays the one place the rhythm is written.
+
+     The first touch ends it. After that the row is the reader's: the
+     cards are all still there to swipe back through, which is the reason
+     this scrolls the track rather than animating it to a resting
+     translate the reader could never scroll out of. */
+  useEffect(() => {
+    if (!lit) return;
+    const rail = railRef.current;
+    const track = notesRef.current;
+    if (!rail || !track) return;
+    if (!window.matchMedia("(max-width: 900px)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const leg = cssMs(rail, "--leg", 4000);
+    const cards = [...track.children] as HTMLElement[];
+    const home = cards[0]?.offsetLeft ?? 0;
+
+    const timers = cards
+      .slice(1)
+      .map((card, k) =>
+        window.setTimeout(
+          () =>
+            track.scrollTo({
+              left: card.offsetLeft - home,
+              behavior: "smooth",
+            }),
+          (k + 1) * leg,
+        ),
+      );
+
+    const stop = () => timers.forEach(clearTimeout);
+    track.addEventListener("pointerdown", stop, { once: true });
+    return () => {
+      stop();
+      track.removeEventListener("pointerdown", stop);
+    };
+  }, [lit]);
+
   /* The persona is one person saying all of these, so the icon is drawn
      once beside the heading rather than repeated against every quote —
      five copies of the same face reads as a row of holes, not as five
@@ -126,17 +201,27 @@ export default function CaseJourney({
             />
           </svg>
 
+          {/* the trail fills behind the traveller, and the traveller is the
+              same flat round-capped dash the diagrams use — a fat dot just
+              sits where a dash reads as motion */}
+          <span
+            className={styles.trail}
+            style={{ transform: `scaleX(${last ? step / last : 0})` }}
+            aria-hidden="true"
+          />
+          <span
+            className={styles.marker}
+            style={{ left: `${last ? (step / last) * 100 : 0}%` }}
+            aria-hidden="true"
+          />
+
           {stages.map((s, i) => (
             <div
               key={s.label}
               className={styles.stop}
-              style={
-                {
-                  left: `${(i / last) * 100}%`,
-                  "--k": painOrder.get(i) ?? 0,
-                } as React.CSSProperties
-              }
+              style={{ left: `${(i / last) * 100}%` }}
               data-pain={s.quote ? "" : undefined}
+              data-shown={i <= step ? "" : undefined}
               data-side={s.quote ? (i % 2 === 0 ? "up" : "down") : undefined}
             >
               <span className={styles.dot} aria-hidden="true" />
@@ -151,7 +236,7 @@ export default function CaseJourney({
               (the rail) rather than a zero-width post, and on a phone the
               whole layer becomes one snapping row without touching the
               rail above it. */}
-          <div className={styles.notes}>
+          <div className={styles.notes} ref={notesRef}>
             {stages.map((s, i) =>
               s.quote ? (
                 <div
@@ -160,30 +245,35 @@ export default function CaseJourney({
                   style={
                     {
                       left: `${(i / last) * 100}%`,
-                      "--k": painOrder.get(i) ?? 0,
                     } as React.CSSProperties
                   }
                   data-side={i % 2 === 0 ? "up" : "down"}
+                  data-shown={i <= step ? "" : undefined}
                   /* the end stops sit on the rail's edges, so their cards
                    align to the edge instead of centring off it */
                   data-edge={
                     i === 0 ? "first" : i === last ? "last" : undefined
                   }
                 >
-                  {/* the stage name travels with the quote — under six
-                    nodes on a phone there is no room to label them */}
-                  <span className={`mono-label ${styles.noteStage}`}>
-                    {s.label}
-                  </span>
-                  <p className={styles.quote}>&#8220;{s.quote}&#8221;</p>
-                  {s.consequence && (
-                    <p className={styles.consequence}>
-                      <span className={`mono-label ${styles.painTag}`}>
-                        Pain
-                      </span>
-                      {s.consequence}
-                    </p>
-                  )}
+                  {/* the reveal moves this inner box, so the note itself
+                      keeps the transform that centres it on its stop —
+                      the two would otherwise overwrite each other */}
+                  <div className={styles.noteIn}>
+                    {/* the stage name travels with the quote — under six
+                      nodes on a phone there is no room to label them */}
+                    <span className={`mono-label ${styles.noteStage}`}>
+                      {s.label}
+                    </span>
+                    <p className={styles.quote}>&#8220;{s.quote}&#8221;</p>
+                    {s.consequence && (
+                      <p className={styles.consequence}>
+                        <span className={`mono-label ${styles.painTag}`}>
+                          Pain
+                        </span>
+                        {s.consequence}
+                      </p>
+                    )}
+                  </div>
                 </div>
               ) : null,
             )}

@@ -70,8 +70,46 @@
 
 .rail {
 	--y: 7.5rem; /* the centreline: the band above it holds the up-notes */
+	/* The walk's cadence, carried over unchanged from the carousel this
+	   replaced (Cyril): 600ms to travel a leg, then 3400ms standing at
+	   the stop. One leg is 4s, and a quote lands every leg — the same
+	   rhythm the quotes used to change at.
+
+	   The keyframe percentages below are this ratio baked flat: a leg is
+	   20% of the walk, of which 17% is the stand and 3% the travel.
+	   Change these and those percentages have to move with them. */
+	--travel: 600ms;
+	--dwell: 3400ms;
+	--leg: 4000ms;
+	--walk: 20000ms; /* five legs */
 	position: relative;
 	height: 15.5rem;
+}
+
+/* the filled trail, drawn behind the traveller */
+.trail {
+	position: absolute;
+	top: calc(var(--y) - 0.9px);
+	left: 0;
+	right: 0;
+	height: 1.8px;
+	border-radius: 0.9px;
+	background: rgba(248, 244, 242, 0.55);
+	transform-origin: left center;
+	transform: scaleX(1);
+}
+
+/* the traveller: a short round-capped dash, flat because a flat mark
+   implies motion where a fat dot just sits */
+.marker {
+	position: absolute;
+	top: var(--y);
+	left: 100%;
+	width: 10px;
+	height: 2.6px;
+	margin: -1.3px 0 0 -5px;
+	border-radius: 1.3px;
+	background: var(--accent);
 }
 
 .track {
@@ -225,89 +263,57 @@
 }
 
 /* ---- the build ----
-   Each note arrives in journey order and then holds. --k is its place in
-   that order, so one delay expression staggers the whole rail. `both`
-   is what makes it hold: the end state stays painted. */
+   The dash walks a leg at a time (CaseJourney.tsx sets `step`); the rail
+   below just draws where it is. Transitions, not keyframes: a keyframe
+   set has to hard-code its stops, and these journeys do not agree on how
+   many they have — six for selling a policy, five for renewing one.
+
+   `data-shown` lands on a stop and its note the moment the dash leaves
+   for them, and the reveal runs for exactly one travel, so a quote
+   finishes arriving as the dash does. Then it holds: nothing here ever
+   takes `data-shown` away. */
+
+.trail,
+.marker {
+	transition: transform var(--travel) cubic-bezier(0.4, 0, 0.2, 1),
+		left var(--travel) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.noteIn {
+	transition: opacity var(--travel) ease, transform var(--travel) ease;
+}
 
 @media (prefers-reduced-motion: no-preference) {
-	.note,
-	.stop[data-pain] .dot {
-		opacity: 0;
-	}
-
-	.rail[data-lit] .note {
-		animation: msjNoteIn 520ms cubic-bezier(0.215, 0.61, 0.355, 1) both;
-		animation-delay: calc(var(--k) * 340ms);
-	}
-
-	.rail[data-lit] .stop[data-pain] .dot {
-		animation: msjDotIn 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
-		animation-delay: calc(var(--k) * 340ms);
-	}
-
-	.rail[data-lit] .stop[data-side]::before {
-		animation: msjStemIn 320ms ease-out both;
-		animation-delay: calc(var(--k) * 340ms + 120ms);
-	}
-
-	.stop[data-side]::before {
-		transform-origin: center;
-		opacity: 0;
-	}
-}
-
-@keyframes msjNoteIn {
-	from {
-		opacity: 0;
-		transform: translateX(-50%) translateY(6px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(-50%) translateY(0);
-	}
-}
-
-/* the edge cards are not centred, so they cannot borrow the -50% above */
-@keyframes msjNoteInEdge {
-	from {
+	.noteIn {
 		opacity: 0;
 		transform: translateY(6px);
 	}
-	to {
+
+	.note[data-shown] .noteIn {
 		opacity: 1;
 		transform: translateY(0);
 	}
-}
 
-@media (prefers-reduced-motion: no-preference) {
-	.rail[data-lit] .note[data-edge] {
-		animation-name: msjNoteInEdge;
+	/* a stop the dash has not reached yet is drawn but not lit */
+	.stop[data-pain] .dot {
+		background: var(--surface);
+		border-color: rgba(248, 244, 242, 0.28);
+		transition: background-color var(--travel) ease,
+			border-color var(--travel) ease;
 	}
-}
 
-@keyframes msjDotIn {
-	0% {
+	.stop[data-pain][data-shown] .dot {
+		background: var(--accent);
+		border-color: var(--accent);
+	}
+
+	.stop[data-side]::before {
 		opacity: 0;
-		transform: scale(0.4);
+		transition: opacity var(--travel) ease;
 	}
-	60% {
-		opacity: 1;
-		transform: scale(1.5);
-	}
-	100% {
-		opacity: 1;
-		transform: scale(1);
-	}
-}
 
-@keyframes msjStemIn {
-	from {
-		opacity: 0;
-		transform: scaleY(0.2);
-	}
-	to {
+	.stop[data-side][data-shown]::before {
 		opacity: 1;
-		transform: scaleY(1);
 	}
 }
 
@@ -395,9 +401,15 @@
 	   centres on its node. In this row that is 150px of shift onto the
 	   next card, so the build uses the un-centred keyframes here — the
 	   same ones the edge cards already needed. */
+	/* Every card is present from the start here and the TRACK moves
+	   instead, scrolled along by the same clock the dash walks on
+	   (CaseJourney.tsx). A card that stayed faded until the dash reached
+	   its stop would be blank when the reader swiped to it early. The
+	   dots still light as the dash arrives. */
 	@media (prefers-reduced-motion: no-preference) {
-		.rail[data-lit] .note {
-			animation-name: msjNoteInEdge;
+		.noteIn {
+			opacity: 1;
+			transform: none;
 		}
 	}
 }
