@@ -24,6 +24,15 @@ export type Capability = {
 /** Shared hinge position as a percentage of the square knife canvas (spec §10). */
 export const HINGE = { x: 50.5, y: 63 };
 
+/** The eyebrow over the six standing tools — the lineup's title, in the
+    mono voice every section opens with (Proof, About). The hero reads
+    "I work across product, design, engineering and AI"; this names what
+    the parts on the next screen are, so they arrive introduced rather
+    than cold (Cyril, 2026-08-22). One string for both tellings: the
+    pinned desktop stage (OutcomeTransition) and the phone's rows
+    (ToolList) cannot drift apart. */
+export const lineupTitle = "My skills, broken down by domain";
+
 export const capabilities: Capability[] = [
   {
     id: "research",

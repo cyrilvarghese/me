@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { capabilities, type CapabilityId } from "@/lib/data/capabilities";
+import { capabilities, lineupTitle, type CapabilityId } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
 import ToolLabels from "@/components/knife/ToolLabels";
@@ -285,6 +285,18 @@ export default function OutcomeTransition() {
                 0.26
               );
             });
+            // The lineup's title lands while the parts are still travelling
+            // to their columns (0.26–0.40): "broken down by domain" names
+            // what is forming as it forms, so the reader arrives from the
+            // hero's copy into an introduced screen rather than a cold one
+            // (Cyril, 2026-08-22). Settled by 0.34 — clear of the name-plate
+            // at 0.405 and of both holds (BEAT 1 at 0.5, BEAT 2 at 0.645).
+            tl.fromTo(
+              "[data-lineup-title]",
+              { autoAlpha: 0, y: -10 },
+              { autoAlpha: 1, y: 0, duration: 0.04, ease: "power2.out" },
+              0.3
+            );
             // BEAT 2 (0.645): the captions fill the band column by column.
             // They start at 0.52, not the instant the headline lands at
             // 0.485 — that left BEAT 1 on a zero-width boundary, where the
@@ -317,6 +329,9 @@ export default function OutcomeTransition() {
             // under the departing line (user, 2026-08-20) — do the circles
             // wrap each still-standing tool.
             tl.to("[data-col]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.67);
+            // the title leaves with them — the circles that follow are a
+            // different picture, and it is not theirs to head
+            tl.to("[data-lineup-title]", { autoAlpha: 0, duration: 0.04, ease: "power2.in" }, 0.67);
             capabilities.forEach((c, k) => {
               const s = START[c.id];
               tl.set(
@@ -488,6 +503,14 @@ export default function OutcomeTransition() {
             </div>
           </div>
         </div>
+
+        {/* the lineup's title, over the standing tools: the eyebrow half of
+            the eyebrow-over-title pair every section opens with. Its serif
+            half is the "different" line in .copy below. Hidden from AT with
+            the lineup it titles. */}
+        <p className={`mono-label ${styles.lineupTitle}`} data-lineup-title="" aria-hidden="true">
+          {lineupTitle}
+        </p>
 
         {/* the lineup captions: one column per standing tool (user sketch) */}
         <div className={styles.lineup} aria-hidden="true">

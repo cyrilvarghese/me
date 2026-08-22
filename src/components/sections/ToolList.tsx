@@ -1,4 +1,4 @@
-import { capabilities } from "@/lib/data/capabilities";
+import { capabilities, lineupTitle } from "@/lib/data/capabilities";
 import KnifeLayer from "@/components/knife/KnifeLayer";
 import knife from "@/components/knife/knife.module.css";
 import styles from "./ToolList.module.css";
@@ -21,6 +21,9 @@ import styles from "./ToolList.module.css";
 export default function ToolList() {
   return (
     <section className={styles.section} aria-label="The six tools">
+      {/* eyebrow over title, the pair every section opens with — the
+          desktop lineup carries the same two lines on its stage */}
+      <p className={`mono-label ${styles.eyebrow}`}>{lineupTitle}</p>
       <p className={`serif-display ${styles.heading}`}>
         One problem, many parts — a tool for each.
       </p>

@@ -21,6 +21,15 @@
 	}
 }
 
+/* Centred with the heading under it, not on the left rail the other
+   eyebrows share: this section's copy is centred over the rows. */
+.eyebrow {
+	color: var(--muted);
+	text-align: center;
+	padding-inline: var(--gutter);
+	margin-bottom: 1rem;
+}
+
 .heading {
 	font-size: var(--tool-display);
 	text-align: center;

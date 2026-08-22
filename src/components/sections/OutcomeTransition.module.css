@@ -96,6 +96,26 @@
 	transform: translateY(-5.8%);
 }
 
+/* ---- the lineup's title (Cyril, 2026-08-22) ---- */
+
+/* Over the standing tools, centred on the same band as the captions.
+   Where the tips are: the tools stand with their hinge LINEUP_LIFT (0.22)
+   of the box above centre, the hinge is at 63% of the canvas, so the
+   hinge sits 0.09 S above centre, and the longest tool reaches ~0.35 S
+   above that — tips at ~0.44 S. 0.53 S puts the line's foot a clear
+   2–3rem over the research ring at every height the stage takes (measured
+   41px at 900, 33px at 760). Same colour as every other section eyebrow. */
+.lineupTitle {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: calc(50% - 0.53 * min(58vh, 54vw, 660px));
+	width: min(92vw, 1200px);
+	text-align: center;
+	color: var(--muted);
+	pointer-events: none;
+}
+
 /* ---- the lineup captions (user sketch: parts standing side by side) ---- */
 
 .lineup {
@@ -211,6 +231,7 @@
 	.compassWrap,
 	.statement,
 	.interLine,
+	.lineupTitle,
 	.col {
 		opacity: 0;
 	}
@@ -285,6 +306,7 @@
 	.circles,
 	.bloom,
 	.lineup,
+	.lineupTitle,
 	.interLine {
 		display: none;
 	}
@@ -360,9 +382,11 @@
 		inset: 0;
 	}
 
-	/* the lineup, the merge and the compass close have no phone telling */
+	/* the lineup, the merge and the compass close have no phone telling —
+	   ToolList carries the lineup's title and line in the flow instead */
 	.circles,
 	.lineup,
+	.lineupTitle,
 	.copy,
 	.compassWrap,
 	.bloom {
