@@ -90,9 +90,6 @@ export default function RoomLight() {
       disabled={lit}
       aria-label={lit ? "The story is open" : "Open the story"}
     >
-      {/* the pulse is a ring behind the disc, not on it: a filter on the
-          image would freeze mid-ease inside the snapshot */}
-      <span className={styles.pulse} aria-hidden="true" />
       {/* Watterson's own characters under his words, and the switch */}
       <img
         src="/assets/about/quote.webp"

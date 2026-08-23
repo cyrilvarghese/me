@@ -33,90 +33,27 @@
 	filter: grayscale(1);
 }
 
-/* The invitation: a ring that swells out from behind the disc and
-   fades, again and again, until the disc is pressed. Behind rather than
-   on the image so the clip stays a clean circle and the pulse never
-   touches the snapshot. Sized to the disc so it reads as its breath,
-   not a spotlight. */
-.pulse {
-	position: absolute;
-	left: 50%;
-	top: 5rem;
-	width: 10rem;
-	height: 10rem;
-	border-radius: 50%;
-	border: 1px solid var(--accent);
-	transform: translate(-50%, -50%);
-	opacity: 0;
-	pointer-events: none;
-}
-
-/* The disc bounces like a ball: a gesture that says "press me" more
-   plainly than the pulse alone. The curve is a ball's, not a UI's —
-   it slows into the top of each hop (ease-out going up) and drops back
-   quickly (ease-in coming down), which is the asymmetry that separates
-   a bounce from a shiver. Two hops, then a long rest, so it reads as a
-   nudge every few seconds rather than a thing that will not sit still.
-   Stops the moment the room is open. */
+/* The disc floats: one slow rise and fall, the same height every time.
+   Not a bounce — nothing lands, nothing decays — just the drawing
+   lifting and settling like something breathing, which is enough to say
+   it is alive and waiting. Stops the moment the room is open. */
 @media (prefers-reduced-motion: no-preference) {
 	.room:not(:disabled) .art {
-		animation: bounce 3.2s infinite;
-		transform-origin: 50% 100%;
+		animation: float 2.8s ease-in-out infinite;
 	}
 }
 
-@keyframes bounce {
-	/* first hop: up on ease-out, down on ease-in */
-	0% {
-		transform: translateY(0);
-		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-	}
-	12% {
-		transform: translateY(-14px);
-		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-	}
-	/* a ball squashes a touch on landing; the eye reads it as weight */
-	24% {
-		transform: translateY(0) scaleY(0.96);
-		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-	}
-	/* second hop, smaller — it is losing energy */
-	33% {
-		transform: translateY(-6px) scaleY(1);
-		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-	}
-	42% {
-		transform: translateY(0);
-	}
-	/* rest until the cycle comes round */
+@keyframes float {
+	0%,
 	100% {
 		transform: translateY(0);
 	}
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	.room:not(:disabled) .pulse {
-		/* ease-out, because each pulse is a thing leaving — it should be
-		   quick to go and slow to vanish. 2.4s is long enough to be a
-		   heartbeat, not a blink, and the hold at the end is what keeps it
-		   from reading as an alarm. */
-		animation: pulse 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+	50% {
+		transform: translateY(-10px);
 	}
 }
 
-@keyframes pulse {
-	0% {
-		transform: translate(-50%, -50%) scale(1);
-		opacity: 0.55;
-	}
-	70%,
-	100% {
-		transform: translate(-50%, -50%) scale(1.55);
-		opacity: 0;
-	}
-}
-
-/* a hairline on the disc itself under the pointer; the pulse is the
+/* a hairline on the disc itself under the pointer; the float is the
    invitation at rest, this is the answer to reaching for it */
 .room:not(:disabled) .art {
 	box-shadow: 0 0 0 1px var(--hairline);
@@ -124,8 +61,8 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-	/* no transform here: the bounce owns .art's transform, and a second
-	   one on hover would fight it mid-hop. The ring warming is the answer
+	/* no transform here: the float owns .art's transform, and a second
+	   one on hover would fight it mid-rise. The ring warming is the answer
 	   to reaching for it. */
 	.room:not(:disabled):hover .art {
 		box-shadow: 0 0 0 1px var(--hairline-red);
