@@ -122,7 +122,11 @@ export default function Cluster({
         return (
           <div
             key={shot.src}
-            className={styles.card}
+            /* the bare flag is mirrored onto the card because a blend
+               mode set on the figure would be trapped: the card's own
+               rotate() makes it a stacking context, so the figure would
+               blend against nothing */
+            className={`${styles.card}${shot.bare ? ` ${styles.cardBare}` : ""}`}
             /* custom properties, not direct styles: an inline style
                outranks every class rule, so a media query could not
                straighten the rotation and :hover could not lift the

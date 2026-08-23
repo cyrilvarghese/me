@@ -32,6 +32,17 @@
 	--hairline: rgba(248, 244, 242, 0.1);
 	--hairline-red: rgba(234, 0, 0, 0.28);
 
+	/* the few things that are not ink on ground — paper, a card's edge
+	   and shadow, the veil behind a floating control, the keyline on a
+	   printed sheet, the selection lift. Tokens so a light room (below)
+	   can redraw them; the values are the literals the modules carried. */
+	--paper: #f8f4f2;
+	--card-edge: rgba(248, 244, 242, 0.14);
+	--shadow-card: 0 16px 34px rgba(0, 0, 0, 0.5);
+	--veil: rgba(21, 17, 17, 0.78);
+	--keyline: rgba(21, 17, 17, 0.5);
+	--selection: rgba(248, 244, 242, 0.2);
+
 	/* geometry — the system is square-cornered (Swiss); the only rounding
 	   is the 2px hairline used on knife plates and etched panels. Nothing
 	   on this site is pill-shaped. */
@@ -76,4 +87,33 @@
 	--space-section: clamp(6rem, 14vh, 10rem);
 	--gutter: clamp(1.25rem, 4vw, 4rem);
 	--content-max: 84rem;
+}
+
+/* The light room. The About page (Cyril, 2026-08-23): photographs,
+   paper and sketchbooks read on a light ground the way they do on a
+   desk, and a page of them on near-black needed a white wall and paper
+   sheets just to look like paper. The palette mirrors — the dark
+   ground's ink becomes the ground — and still carries the 2% tinge.
+
+   The reds are the one place the rules invert. --accent at 5.2:1 on this
+   ground passes as text, and --accent-lift does not (3.5:1), so the rung
+   that may be read is the deep one, 5.5:1, mapped onto the same token so
+   every lower-case red on the page re-rungs without a rule changing.
+   Set by about/layout.tsx on <html>, so the overscroll goes light too. */
+[data-theme="light"] {
+	--bg: #f8f4f2;
+	--surface: #ffffff;
+	--fg: #151111;
+	--fg-soft: #2a2222;
+	--muted: #6e6462;
+	--accent-lift: #c90000;
+	--hairline: rgba(21, 17, 17, 0.1);
+
+	--paper: #ffffff;
+	--card-edge: rgba(21, 17, 17, 0.08);
+	--shadow-card: 0 12px 28px rgba(21, 17, 17, 0.18);
+	--veil: rgba(248, 244, 242, 0.78);
+	--keyline: rgba(21, 17, 17, 0.35);
+	--selection: rgba(21, 17, 17, 0.12);
+	color-scheme: light;
 }

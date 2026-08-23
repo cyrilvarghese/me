@@ -1,6 +1,6 @@
 ---
 name: type-on-dark
-description: Use when choosing a colour for text on this site, setting a font weight or size for anything small, putting red or any accent on type, or when text on the dark ground reads harsh, buzzing, thick, or somehow wrong at a size that should be fine
+description: Use when choosing a colour for text on this site, setting a font weight or size for anything small, putting red or any accent on type, when working on the light room (/about, data-theme="light") where the readable red rung swaps, or when text reads harsh, buzzing, thick, or somehow wrong at a size that should be fine
 ---
 
 # Type on the dark ground
@@ -114,6 +114,39 @@ piece of text landed on and whether it is caps:
 
 Caps on `lift` is always wrong. Lower case on `accent` should only ever
 be the statements and the one About phrase.
+
+## The light room inverts the reds
+
+`/about` is light (Cyril, 2026-08-23) — `[data-theme="light"]` in
+`tokens.css`, bg `#f8f4f2`. **On that ground the two rules above swap,
+and the swap is done in the token, not in your rule.**
+
+| ink | on `--bg` dark `#151111` | on `--bg` light `#f8f4f2` |
+|---|---|---|
+| `--accent` `#ea0000` | 4.02* — decorative only | 4.27* — **still** decorative only |
+| `--accent-deep` `#c90000` | 3.11* | **5.52 — the readable rung here** |
+| `--accent-lift` `#d95a5a` | 4.96 — the readable rung | 3.46* — fails |
+| `--muted` `#6e6462` (light) | — | 5.25 |
+
+**`--accent` does not become text-legal on the light ground.** 4.27:1 is
+under the 4.5 floor, closer than on dark but still under it — the signal
+red stays decorative on both grounds, which is the one thing about it
+that never changes. What swaps is *which other rung* may be read:
+`--accent-lift` `#d95a5a` on dark, `--accent-deep` `#c90000` on light.
+
+The light block does that swap by remapping the `--accent-lift` token to
+`#c90000`, so every lower-case red already written against the token
+re-rungs on its own. **Never
+hard-code `#d95a5a` and never write a `[data-theme="light"]` override in
+a component** — if a red needs to change per ground, it belongs in the
+token block.
+
+What does *not* invert: the case split (caps `--accent`, lower case the
+lift token), one emphasis per block, and the 14px floor for coloured
+text. What does: the weight rule below — light type on dark gains
+optical weight, dark type on light does not, so a line that wanted 350
+on the dark ground can sit at 400 here. The body weight is currently
+shared; if a light page ever reads thin, that is the knob.
 
 ## Weight: subtract, do not add
 

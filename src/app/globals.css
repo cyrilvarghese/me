@@ -45,8 +45,18 @@ main {
    unset the browser paints its own blue, which belongs to no palette
    here, so this stays declared. */
 ::selection {
-	background: rgba(248, 244, 242, 0.2);
+	background: var(--selection);
 	color: var(--fg);
+}
+
+/* The ground changes once on this site — entering or leaving the About
+   page's light room — and a short fade makes that a cut rather than a
+   flicker. Under reduced motion it simply switches. */
+@media (prefers-reduced-motion: no-preference) {
+	html,
+	body {
+		transition: background-color 200ms ease, color 200ms ease;
+	}
 }
 
 a {

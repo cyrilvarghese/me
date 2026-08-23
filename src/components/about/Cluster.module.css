@@ -11,7 +11,7 @@
 .surface {
 	background: #fff;
 	border-radius: 4px;
-	box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5);
+	box-shadow: var(--shadow-card);
 }
 
 .card {
@@ -64,10 +64,10 @@
 	   reads softer than a control's, and 2px vanishes under the shadow
 	   at card size (Cyril, 2026-08-22) */
 	border-radius: 4px;
-	border: 1px solid rgba(248, 244, 242, 0.14);
+	border: 1px solid var(--card-edge);
 	/* the pile only reads as separate pieces of paper if the cards cast
 	   something onto the ones beneath them */
-	box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5);
+	box-shadow: var(--shadow-card);
 	background: var(--surface);
 }
 
@@ -83,17 +83,17 @@
    just inside the sheet edge */
 .poster {
 	padding: 4.5% 4.5% 7%;
-	/* the site's warm white — the paper carries the accent tinge */
-	background: var(--fg);
+	/* paper, not ink: on the dark ground this is the warm white, on the
+	   light one it is a shade above the ground so the sheet still shows */
+	background: var(--paper);
 }
 
-/* rgba literal of --bg, not color-mix (Edge quirk, see about.module) */
 .posterRule {
 	position: absolute;
 	inset: 0;
 	width: 100%;
 	height: 100%;
-	color: rgba(21, 17, 17, 0.5);
+	color: var(--keyline);
 	pointer-events: none;
 }
 
@@ -104,6 +104,20 @@
 	border-radius: 0;
 	box-shadow: none;
 	background: transparent;
+}
+
+/* Several of the client marks arrive on their own #fff chip, which on
+   this ground sits three percent off the page and reads as a faint
+   rectangle. Multiply drops that white into the ground and leaves the
+   mark.
+   On the card, not the figure: the card's rotate() makes it a stacking
+   context, so a blend set inside it has nothing to blend against. The
+   wall is the one kind that needs this — a sticker's ground is the lid
+   it was slapped on, not the page, and multiplying it there would
+   darken the artwork rather than drop a chip. Light room only: on the
+   dark ground multiply erases the mark instead of its chip. */
+[data-theme="light"] .cluster[data-kind="wall"] .cardBare {
+	mix-blend-mode: multiply;
 }
 
 /* the reserved frame: deliberate rather than broken, and it doubles as

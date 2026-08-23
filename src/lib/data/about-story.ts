@@ -312,9 +312,9 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "wall",
       seed: 6091,
-      /* three of the five marks come on white chips; on a white wall
-         the chips disappear and the marks read as a set */
-      surface: true,
+      /* No wall on this ground. The chips are #fff and the page is
+         #f8f4f2 — three percent apart, so the marks sit straight on the
+         page and the board that hid them on the dark ground is gone. */
       /* A grid, three over two, each mark sized for the same visual
          mass — equal widths would make the wordmarks slivers and the
          1Finance square a monolith. Order in `shots`: Verizon, Azentio,

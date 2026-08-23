@@ -20,11 +20,11 @@
 	justify-content: flex-start;
 }
 
-/* rgba literal of --bg, not color-mix: stylesheet color-mix silently
-   no-ops in Cyril's browser (header veil, hero scrim, CaseBack) */
+/* an rgba token, not color-mix: stylesheet color-mix silently no-ops
+   in Cyril's browser (header veil, hero scrim, CaseBack) */
 .back {
 	pointer-events: auto;
-	background: rgba(21, 17, 17, 0.78);
+	background: var(--veil);
 }
 
 /* ---- head ---- */
