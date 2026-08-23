@@ -97,6 +97,15 @@
 	pointer-events: none;
 }
 
+/* The lid is photographed with its own rounded corners, and the card's
+   4px is tighter than they are — so a sliver of the photograph's white
+   ground shows outside each one. 16px is where that sliver measures out
+   on the rendered page; 8 and 12 both still left an arc of it.
+   :not(.bare) so the stickers slapped on it keep their square box. */
+.cluster[data-kind="stickers"] .shot:not(.bare) {
+	border-radius: 16px;
+}
+
 /* a logo or a sticker is not a photograph: no frame, no paper, no
    shadow — the artwork's own silhouette is the card */
 .bare {
