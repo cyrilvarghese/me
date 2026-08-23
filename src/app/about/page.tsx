@@ -5,6 +5,7 @@ import { CV_URL, LINKEDIN_URL } from "@/lib/data/contact";
 import { RevealDiv } from "@/components/case/Reveal";
 import Cluster from "@/components/about/Cluster";
 import CopyEmail from "@/components/CopyEmail";
+import RoomLight from "@/components/about/RoomLight";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
@@ -49,13 +50,8 @@ export default function AboutPage() {
             and I think you&apos;ll be happier for the trouble.
           </blockquote>
           <figcaption className={`mono-label ${styles.quoteWho}`}>Bill Watterson</figcaption>
-          {/* the one drawing in the head: Watterson's own characters
-              under his words */}
-          <img
-            src="/assets/about/quote.webp"
-            alt="Calvin and Hobbes racing downhill in their wagon"
-            className={styles.quoteArt}
-          />
+          {/* the drawing is also the way into the light room */}
+          <RoomLight />
         </figure>
       </header>
 

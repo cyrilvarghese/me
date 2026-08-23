@@ -44,11 +44,6 @@ export default function RootLayout({
          without this the scroll-to-top animates mid view-transition */
       data-scroll-behavior="smooth"
       className={`${serif.variable} ${sans.variable} ${mono.variable}`}
-      /* about/layout.tsx puts data-theme on this element before React
-         hydrates (so the light room paints light on a hard load), and
-         React would otherwise report the attribute it did not render.
-         This silences mismatches on <html> only — nothing beneath it. */
-      suppressHydrationWarning
     >
       <body>
         <SmoothAnchors />

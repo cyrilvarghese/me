@@ -1,0 +1,80 @@
+/* The disc is the page's one control, so it carries no button chrome —
+   the drawing is the affordance and the label under it says what happens. */
+.room {
+	display: block;
+	margin: 1.75rem auto 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+.room:disabled {
+	cursor: default;
+}
+
+/* Watterson's characters on a light disc — the square source is white,
+   so the circle clip is what turns it into a mark rather than a patch */
+.art {
+	display: block;
+	width: 7.5rem;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border-radius: 50%;
+	/* The drawing waits with the page: no colour until the room is lit.
+	   Deliberately not transitioned — the view transition animates
+	   between two snapshots, so a filter still easing when the second one
+	   is captured would be frozen half-grey for the whole wipe. */
+	filter: grayscale(1);
+}
+
+/* the ring is the invitation: a hairline that warms under the pointer,
+   drawn on the button rather than the image so the clip stays circular */
+.room:not(:disabled) .art {
+	box-shadow: 0 0 0 1px var(--hairline);
+	transition: box-shadow 200ms ease, transform 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.room:not(:disabled):hover .art {
+		box-shadow: 0 0 0 1px var(--hairline-red);
+		transform: scale(1.03);
+	}
+}
+
+.room:focus-visible .art {
+	outline: 1px solid var(--accent);
+	outline-offset: 4px;
+}
+
+.hint {
+	display: block;
+	margin-top: 0.9rem;
+	color: var(--muted);
+	transition: opacity 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.room:not(:disabled):hover .hint {
+		color: var(--accent-lift);
+	}
+}
+
+/* once the room is lit the invitation has nothing left to offer; it goes
+   rather than sitting there naming a thing that already happened */
+.room:disabled .hint {
+	opacity: 0;
+}
+
+.room:disabled .art {
+	filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.art,
+	.hint {
+		transition: none;
+	}
+}

@@ -92,17 +92,6 @@
 	color: var(--muted);
 }
 
-/* Watterson's characters on a light disc — the square source is white,
-   so the circle clip is what turns it into a mark rather than a patch */
-.quoteArt {
-	display: block;
-	margin: 1.5rem auto 0;
-	width: 5.5rem;
-	aspect-ratio: 1;
-	object-fit: cover;
-	border-radius: 50%;
-}
-
 /* ---- the spine ---- */
 
 .chapters {
