@@ -292,67 +292,6 @@
 	justify-self: start;
 }
 
-/* the ask and its two references are one group, but the wider gap says
-   the button is the thing and the links are the footnote to it */
-.ctaMain {
-	grid-column: 2;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	gap: 1rem 2.5rem;
-}
-
-.ctaRefs {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 1rem 1.75rem;
-}
-
-/* the chapter link voice, minus the paragraph gap it carries there. The
-   rule moves off the anchor and onto the label, so it underlines the
-   words and not the mark in front of them. */
-.endLink {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	margin-top: 0;
-	border-bottom: none;
-	padding-bottom: 0;
-}
-
-/* the chapter link draws its rule with a border and padding; here that
-   padding would make the label box taller than the mark and centring
-   would drop the mark below the caps. A real underline sits outside the
-   box, so the two stay on one centre line. */
-.endLabel {
-	text-decoration: underline;
-	text-decoration-color: var(--hairline-red);
-	text-decoration-thickness: 1px;
-	text-underline-offset: 0.35em;
-	transition: text-decoration-color 150ms ease;
-}
-
-.endLink:hover .endLabel {
-	text-decoration-color: var(--accent);
-}
-
-/* Lucide's drawing on Lucide's grid, but not at Lucide's stroke: 2 units
-   at this size renders heavier than the mono letterforms beside it, and
-   the mark would read as the emphasis instead of the word. 1.5 lands
-   near 1px — the weight of the rule under the label. */
-.linkMark {
-	width: 1.25em;
-	height: 1.25em;
-	flex: none;
-	fill: none;
-	stroke: currentColor;
-	stroke-width: 1.5;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-}
-
 /* ---- stacked ---- */
 
 @media (max-width: 900px) {
@@ -395,7 +334,4 @@
 		row-gap: 1.75rem;
 	}
 
-	.ctaMain {
-		grid-column: 1;
 	}
-}

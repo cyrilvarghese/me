@@ -5,8 +5,7 @@ import { capabilities } from "@/lib/data/capabilities";
 import { gsap, useGSAP } from "@/lib/gsap";
 import KnifeCanvas from "@/components/knife/KnifeCanvas";
 import { ART_CENTRE_SHIFT } from "@/components/knife/art";
-import CopyEmail from "@/components/CopyEmail";
-import { CV_URL, LINKEDIN_URL } from "@/lib/data/contact";
+import ContactActions from "@/components/ContactActions";
 import styles from "./FinalCTA.module.css";
 
 const OPEN_ANGLES = Object.fromEntries(capabilities.map((c) => [c.id, c.openAngle]));
@@ -107,26 +106,7 @@ export default function FinalCTA() {
             Let&apos;s get <em>started.</em>
           </p>
           <div className={styles.ctas} data-final="ctas">
-            <CopyEmail />
-            {/* Ghost, not accent: the email is the ask, and these are the
-                two ways to read more before making it. Both leave the
-                site, so both open in their own tab. */}
-            <a
-              className="mono-label btn btn-ghost"
-              href={CV_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View CV
-            </a>
-            <a
-              className="mono-label btn btn-ghost"
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
+            <ContactActions />
           </div>
         </div>
       </div>

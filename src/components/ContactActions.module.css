@@ -1,0 +1,59 @@
+/* The closing ask, the same on every page: the email keeps the accent
+   border because it is the one thing the section is for, and the two
+   outbound references drop to the link voice so they stop competing
+   with it. Three weights, not three boxes. */
+.main {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem 2.5rem;
+}
+
+.refs {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem 1.75rem;
+}
+
+/* --accent-lift, not --accent: a link is lower case running text, and
+   the signal red misses AA at this size (type-on-dark). The underline
+   sits on the label alone so the glyph beside it stays clear of it. */
+.ref {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--accent-lift);
+	text-decoration: none;
+	transition: color 150ms ease;
+}
+
+.label {
+	text-decoration: underline;
+	text-decoration-color: var(--hairline-red);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.35em;
+	transition: text-decoration-color 150ms ease;
+}
+
+.ref:hover {
+	color: var(--accent);
+}
+
+.ref:hover .label {
+	text-decoration-color: var(--accent);
+}
+
+/* Lucide's file-text and linkedin (see ContactActions.tsx): 24-unit
+   grid, 1.5 stroke so it lands near the hairline it sits beside */
+.mark {
+	width: 1.25em;
+	height: 1.25em;
+	flex: none;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}

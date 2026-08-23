@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { ViewTransition } from "react";
 import type { CaseStudy } from "@/lib/data/cases";
-import CopyEmail from "@/components/CopyEmail";
+import ContactActions from "@/components/ContactActions";
 import CaseBack from "./CaseBack";
 import CaseVisual from "./CaseVisual";
 import { RevealDiv, RevealSection } from "./Reveal";
@@ -49,10 +48,7 @@ export default function CaseShell({
         <p className={`serif-display ${styles.ctaLine}`}>
           Have a problem that needs more than one perspective?
         </p>
-        <CopyEmail />
-        <Link href="/#work" className={`mono-label btn btn-ghost ${styles.backLink}`}>
-          ← All work
-        </Link>
+        <ContactActions />
       </RevealSection>
     </>
   );
