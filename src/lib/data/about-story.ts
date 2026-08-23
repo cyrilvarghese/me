@@ -281,19 +281,19 @@ export const chapters: Chapter[] = [
          own assets */
       shots: [
         {
-          src: "/assets/msig/nHwgrwHqa2DjUR57calWQgQG8.webp",
+          src: "/assets/MSIG/nHwgrwHqa2DjUR57calWQgQG8.webp",
           ready: true,
           alt: "The MSIG agent work queue — policies, cover notes and their statuses",
           ratio: "2880 / 2048",
         },
         {
-          src: "/assets/msig/e5nkT3tdjowEU0ttZEsvoSrxCLM.webp",
+          src: "/assets/MSIG/e5nkT3tdjowEU0ttZEsvoSrxCLM.webp",
           ready: true,
           alt: "Four hand-drawn wireframes of the MSIG policy flow",
           ratio: "1900 / 1300",
         },
         {
-          src: "/assets/msig/Dashboard.png",
+          src: "/assets/MSIG/Dashboard.png",
           ready: true,
           alt: "The shipped MSIG dashboard — stats, renewals, payments, claims",
           ratio: "2880 / 3430",
