@@ -150,29 +150,66 @@ export default function AboutPage() {
 
       <RevealDiv className={`section-shell ${styles.end}`}>
         <p className={`serif-display ${styles.thanks}`}>Thanks for reading this far.</p>
+        {/* Three weights, not four boxes: the way back holds the left
+            edge, the email keeps the accent border because it is the one
+            thing this section is for, and the two outbound references
+            drop to the chapter link voice so they stop competing with
+            the ask. */}
         <div className={styles.ctas}>
-          <CopyEmail />
-          <a
-            className="mono-label btn btn-ghost"
-            href={CV_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View CV
-          </a>
-          <a
-            className="mono-label btn btn-ghost"
-            href={LINKEDIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-          <Link className="mono-label btn btn-ghost" href="/">
+          <Link className={`mono-label btn btn-ghost ${styles.ctaHome}`} href="/">
             ← Home
           </Link>
+          <div className={styles.ctaMain}>
+            <CopyEmail />
+            <div className={styles.ctaRefs}>
+              <a
+                className={`mono-label ${styles.link} ${styles.endLink}`}
+                href={CV_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FileTextMark />
+                <span className={styles.endLabel}>View CV</span>
+              </a>
+              <a
+                className={`mono-label ${styles.link} ${styles.endLink}`}
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedInMark />
+                <span className={styles.endLabel}>LinkedIn</span>
+              </a>
+            </div>
+          </div>
         </div>
       </RevealDiv>
     </main>
+  );
+}
+
+/* Lucide's file-text and linkedin, geometry inlined rather than pulled in
+   as a dependency for two glyphs on a static export. Both keep Lucide's
+   own grid and stroke (24 units, 2 wide, round) so they stay a set, and
+   the stroke lands near the 1px hairline they sit beside. */
+function FileTextMark() {
+  return (
+    <svg className={styles.linkMark} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      <path d="M10 9H8" />
+      <path d="M16 13H8" />
+      <path d="M16 17H8" />
+    </svg>
+  );
+}
+
+function LinkedInMark() {
+  return (
+    <svg className={styles.linkMark} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect width="4" height="12" x="2" y="9" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
   );
 }
