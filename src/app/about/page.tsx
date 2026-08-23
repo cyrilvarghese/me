@@ -32,8 +32,10 @@ export default function AboutPage() {
   return (
     <main className={styles.page}>
       {/* the way back, held at the top of the column rather than the
-          window edge — same trick as CaseBack's dock */}
-      <div className={styles.dock} data-after-threshold>
+          window edge — same trick as CaseBack's dock. Not behind the
+          door: the way out is there whether or not the reader has come
+          in (Cyril, 2026-08-23). */}
+      <div className={styles.dock}>
         <div className={`section-shell ${styles.dockInner}`}>
           <Link href="/" className={`mono-label btn btn-ghost ${styles.back}`}>
             ← Home

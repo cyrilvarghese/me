@@ -51,6 +51,49 @@
 	pointer-events: none;
 }
 
+/* The disc bounces like a ball: a gesture that says "press me" more
+   plainly than the pulse alone. The curve is a ball's, not a UI's —
+   it slows into the top of each hop (ease-out going up) and drops back
+   quickly (ease-in coming down), which is the asymmetry that separates
+   a bounce from a shiver. Two hops, then a long rest, so it reads as a
+   nudge every few seconds rather than a thing that will not sit still.
+   Stops the moment the room is open. */
+@media (prefers-reduced-motion: no-preference) {
+	.room:not(:disabled) .art {
+		animation: bounce 3.2s infinite;
+		transform-origin: 50% 100%;
+	}
+}
+
+@keyframes bounce {
+	/* first hop: up on ease-out, down on ease-in */
+	0% {
+		transform: translateY(0);
+		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+	12% {
+		transform: translateY(-14px);
+		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	}
+	/* a ball squashes a touch on landing; the eye reads it as weight */
+	24% {
+		transform: translateY(0) scaleY(0.96);
+		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+	/* second hop, smaller — it is losing energy */
+	33% {
+		transform: translateY(-6px) scaleY(1);
+		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	}
+	42% {
+		transform: translateY(0);
+	}
+	/* rest until the cycle comes round */
+	100% {
+		transform: translateY(0);
+	}
+}
+
 @media (prefers-reduced-motion: no-preference) {
 	.room:not(:disabled) .pulse {
 		/* ease-out, because each pulse is a thing leaving — it should be
@@ -77,13 +120,15 @@
    invitation at rest, this is the answer to reaching for it */
 .room:not(:disabled) .art {
 	box-shadow: 0 0 0 1px var(--hairline);
-	transition: box-shadow 200ms ease, transform 200ms ease;
+	transition: box-shadow 200ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
+	/* no transform here: the bounce owns .art's transform, and a second
+	   one on hover would fight it mid-hop. The ring warming is the answer
+	   to reaching for it. */
 	.room:not(:disabled):hover .art {
 		box-shadow: 0 0 0 1px var(--hairline-red);
-		transform: scale(1.03);
 	}
 }
 
