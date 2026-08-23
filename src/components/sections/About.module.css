@@ -25,6 +25,14 @@
 	margin-bottom: clamp(3rem, 8vh, 5rem);
 }
 
+/* Portrait plus signpost. Centred, because a caption ranged left under
+   a circle hangs off nothing — the disc's own axis is the only edge in
+   this column to line up with. The page's left rail is the first
+   column's business; this one has no rail. */
+.portraitCol {
+	text-align: center;
+}
+
 /* The portrait is two stacked layers on one square box: a blurred
    backlight behind and the photograph over it. A separate element
    rather than a pseudo-element — an <img> has none. */
@@ -236,7 +244,7 @@
    a signpost rather than as one more sentence of the lede */
 .more {
 	display: inline-block;
-	margin-top: 1.75rem;
+	margin-top: 1.25rem;
 	color: var(--accent-lift);
 	text-decoration: none;
 	border-bottom: 1px solid var(--hairline-red);
@@ -397,9 +405,25 @@
 		gap: 2rem;
 	}
 
+	/* display: contents dissolves the wrapper so its two children become
+	   grid items in their own right — the portrait can keep order: -1 and
+	   lead the section, while the signpost stays where it has always been,
+	   last. text-align is still inherited through a contents box, so the
+	   column's centring is undone here rather than on .more. */
+	.portraitCol {
+		display: contents;
+		text-align: left;
+	}
+
 	.portraitFrame {
 		order: -1;
 		max-width: 15rem;
+	}
+
+	/* a grid item stretches; inline-block's shrink-wrap is what keeps the
+	   underline the width of the words */
+	.more {
+		justify-self: start;
 	}
 
 	.entry {

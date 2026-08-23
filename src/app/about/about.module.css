@@ -295,21 +295,23 @@
 /* ---- stacked ---- */
 
 @media (max-width: 900px) {
-	/* one column, picture first: the spine has nothing left to divide,
-	   and a rule down the side of a single column is decoration. And no
-	   panels — a stacked chapter is taller than a phone, and a viewport
-	   floor under it would only add empty scrolling between them. */
+	/* One column, picture first: the spine has nothing left to divide,
+	   and a rule down the side of a single column is decoration.
+
+	   The panel and the snap stay (Cyril, 2026-08-23). They were dropped
+	   here once on the grounds that a stacked chapter is taller than a
+	   phone — but the fan (Cluster) makes the pictures square and short,
+	   so a chapter fits, and without the floor the chapters ran into one
+	   another with nothing to tell the reader where one ended. */
 	.chapter {
 		grid-template-columns: 1fr;
-		row-gap: 1.75rem;
-		min-height: 0;
-		padding-block: 3rem;
-		scroll-snap-align: none;
-	}
-
-	.end {
-		min-height: 0;
-		scroll-snap-align: none;
+		row-gap: 2.25rem;
+		/* Tighter than the desktop's, not looser: the panel IS the gap
+		   now, and on one column the picture, the caption and the copy
+		   have to share a single screen. Padding this side of 3.5rem is
+		   what keeps the tallest chapter inside its 100dvh, and a panel
+		   that overflows cannot be snapped to. */
+		padding-block: clamp(2rem, 6vh, 3.5rem);
 	}
 
 	.chapter::before,
@@ -324,14 +326,10 @@
 	.figureCol > * {
 		max-width: none;
 	}
+
+	/* ranged left with the copy under it: centred, it floated away from
+	   the column edge every other block lines up on */
+	.figureCaption {
+		margin-inline: 0;
+	}
 }
-
-@media (max-width: 700px) {
-	/* nothing left to sit either side of: the back button keeps the left
-	   edge as a row of its own, the ask and its references stack under it */
-	.ctas {
-		grid-template-columns: 1fr;
-		row-gap: 1.75rem;
-	}
-
-	}

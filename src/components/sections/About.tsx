@@ -207,73 +207,78 @@ export default function About() {
             I&apos;m now a digital product design engineer exploring how AI can reshape
             the way we learn, build and solve problems.
           </p>
-          {/* The five rungs below are the career; /about is the story
-              behind it. One quiet link rather than a nav item: the
-              header's scroll-spy is position-based, so a route in that
-              row would have nothing to mark as current. */}
-          <Link href="/about" className={`mono-label ${styles.more}`}>
-            The long version &rarr;
-          </Link>
         </div>
         {/* width/height are the real intrinsic size of the file: the box is
             reserved before the image lands, so the timeline below it never
             jumps. next/image is not in play here — the export is static and
             images are unoptimized, so every asset is pre-sized by hand. */}
-        {/* A plain element, not an m.div: the nudge is a CSS keyframe
-            animation re-triggered from the scheduler above, and Framer
-            writing an inline transform to the same element would fight
-            it on every firing.
+        {/* The portrait and its signpost are one column. The five rungs
+            below are the career; /about is the story behind it, and the
+            photograph is the part of that story already on the page — so
+            the way through sits under it rather than at the end of the
+            lede. One quiet link rather than a nav item: the header's
+            scroll-spy is position-based, so a route in that row would
+            have nothing to mark as current. */}
+        <div className={styles.portraitCol}>
+          {/* A plain element, not an m.div: the nudge is a CSS keyframe
+              animation re-triggered from the scheduler above, and Framer
+              writing an inline transform to the same element would fight
+              it on every firing.
 
-            The frame is the link — the disc has carried cursor: pointer
-            since it grew the hover film, and an affordance that leads
-            nowhere is a promise the page does not keep. aria-label
-            rather than the photograph's alt: a link is named by where
-            it goes, and "Cyril at a pottery wheel" names what it shows. */}
-        <Link
-          href="/about"
-          ref={frameRef}
-          aria-label="About Cyril — the long version"
-          className={styles.portraitFrame}
-          onPointerEnter={playFilm}
-          onPointerLeave={stopFilm}
-        >
-          {/* the glow drifts on a keyframe animation of its own, and a
-              CSS animation beats an inline transform — so the lean is
-              written to this wrapper instead */}
-          <span ref={leanRef} className={styles.glowLean} aria-hidden="true">
-            <span className={styles.glow} />
-          </span>
-          <img
-            src="/assets/profile.webp"
-            width={1100}
-            height={1100}
-            alt='Cyril at a pottery wheel in a workshop, marked "me" in the photograph.'
-            className={styles.portrait}
-          />
-          {/* The same moment, moving. aria-hidden and untabbable: it says
-              nothing the photograph's alt text does not already say, so to
-              a screen reader it is not a second thing to announce.
+              The frame is the link — the disc has carried cursor: pointer
+              since it grew the hover film, and an affordance that leads
+              nowhere is a promise the page does not keep. aria-label
+              rather than the photograph's alt: a link is named by where
+              it goes, and "Cyril at a pottery wheel" names what it shows. */}
+          <Link
+            href="/about"
+            ref={frameRef}
+            aria-label="About Cyril — the long version"
+            className={styles.portraitFrame}
+            onPointerEnter={playFilm}
+            onPointerLeave={stopFilm}
+          >
+            {/* the glow drifts on a keyframe animation of its own, and a
+                CSS animation beats an inline transform — so the lean is
+                written to this wrapper instead */}
+            <span ref={leanRef} className={styles.glowLean} aria-hidden="true">
+              <span className={styles.glow} />
+            </span>
+            <img
+              src="/assets/profile.webp"
+              width={1100}
+              height={1100}
+              alt='Cyril at a pottery wheel in a workshop, marked "me" in the photograph.'
+              className={styles.portrait}
+            />
+            {/* The same moment, moving. aria-hidden and untabbable: it says
+                nothing the photograph's alt text does not already say, so to
+                a screen reader it is not a second thing to announce.
 
-              preload="none" keeps its 660KB off the initial load — a
-              phone can never hover, so it would be paid for and never
-              spent. poster is the photograph itself, so the first hover
-              cannot flash black while the first frame decodes. */}
-          <video
-            ref={filmRef}
-            className={styles.portraitFilm}
-            src="/assets/profile-hover-video.mp4"
-            poster="/assets/profile.webp"
-            width={1280}
-            height={720}
-            muted
-            playsInline
-            preload="none"
-            aria-hidden="true"
-            tabIndex={-1}
-          />
-          {/* above the film, so the glint survives the hover swap */}
-          <span ref={rimRef} className={styles.rim} aria-hidden="true" />
-        </Link>
+                preload="none" keeps its 660KB off the initial load — a
+                phone can never hover, so it would be paid for and never
+                spent. poster is the photograph itself, so the first hover
+                cannot flash black while the first frame decodes. */}
+            <video
+              ref={filmRef}
+              className={styles.portraitFilm}
+              src="/assets/profile-hover-video.mp4"
+              poster="/assets/profile.webp"
+              width={1280}
+              height={720}
+              muted
+              playsInline
+              preload="none"
+              aria-hidden="true"
+              tabIndex={-1}
+            />
+            {/* above the film, so the glint survives the hover swap */}
+            <span ref={rimRef} className={styles.rim} aria-hidden="true" />
+          </Link>
+          <Link href="/about" className={`mono-label ${styles.more}`}>
+            The long version &rarr;
+          </Link>
+        </div>
       </div>
 
       <ol className={styles.timeline}>
