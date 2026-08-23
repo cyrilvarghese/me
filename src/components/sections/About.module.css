@@ -30,11 +30,21 @@
    rather than a pseudo-element — an <img> has none. */
 .portraitFrame {
 	position: relative;
+	/* an <a>, so it needs telling: inline would collapse the aspect-ratio
+	   box and drop the grid `order` on the phone layout */
+	display: block;
 	width: 100%;
 	aspect-ratio: 1;
 	/* the plainest affordance there is, and the only one that says
 	   "this does something" before the reader commits the movement */
 	cursor: pointer;
+}
+
+/* the global a:focus-visible ring is square; the disc is not, and an
+   outline follows the radius it is given */
+.portraitFrame:focus-visible {
+	border-radius: 50%;
+	outline-offset: 6px;
 }
 
 /* The file is already square, padded in --bg rather than cropped, so

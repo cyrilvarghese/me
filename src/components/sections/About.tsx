@@ -33,7 +33,7 @@ const rand = (a: number, b: number) => a + Math.random() * (b - a);
 export default function About() {
   const filmRef = useRef<HTMLVideoElement>(null);
   const leanRef = useRef<HTMLSpanElement>(null);
-  const frameRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLAnchorElement>(null);
   const rimRef = useRef<HTMLSpanElement>(null);
   const raf = useRef<number | undefined>(undefined);
   const warmed = useRef(false);
@@ -219,12 +219,20 @@ export default function About() {
             reserved before the image lands, so the timeline below it never
             jumps. next/image is not in play here — the export is static and
             images are unoptimized, so every asset is pre-sized by hand. */}
-        {/* A plain div, not an m.div: the nudge is a CSS keyframe
+        {/* A plain element, not an m.div: the nudge is a CSS keyframe
             animation re-triggered from the scheduler above, and Framer
             writing an inline transform to the same element would fight
-            it on every firing. */}
-        <div
+            it on every firing.
+
+            The frame is the link — the disc has carried cursor: pointer
+            since it grew the hover film, and an affordance that leads
+            nowhere is a promise the page does not keep. aria-label
+            rather than the photograph's alt: a link is named by where
+            it goes, and "Cyril at a pottery wheel" names what it shows. */}
+        <Link
+          href="/about"
           ref={frameRef}
+          aria-label="About Cyril — the long version"
           className={styles.portraitFrame}
           onPointerEnter={playFilm}
           onPointerLeave={stopFilm}
@@ -265,7 +273,7 @@ export default function About() {
           />
           {/* above the film, so the glint survives the hover swap */}
           <span ref={rimRef} className={styles.rim} aria-hidden="true" />
-        </div>
+        </Link>
       </div>
 
       <ol className={styles.timeline}>
