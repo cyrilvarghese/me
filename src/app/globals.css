@@ -323,18 +323,44 @@ html[data-vt="room"]::view-transition-old(root) {
 }
 
 html[data-vt="room"]::view-transition-new(root) {
-	/* ease-out, because the light is arriving: most of the travel happens
-	   early and the tail reads as settling rather than as waiting. Well
-	   past the 300ms a control would take — this is a threshold crossed
-	   once a visit, and it is meant to be watched. */
-	animation: room-open 850ms cubic-bezier(0.23, 1, 0.32, 1) both;
+	/* The edge is a penumbra, not a cut. A mask whose gradient ramp IS
+	   the soft edge: the ramp's position is what animates (--edge), its
+	   width never changes, so the seam stays equally soft the whole way
+	   across rather than sharpening as it arrives. Mirrored about the
+	   spine so the light grows both ways at once. The ramp is 22vw — a
+	   fall-off wide enough to read as light, not a blurred wipe. */
+	--edge: 0vw;
+	mask-image: linear-gradient(
+		to right,
+		transparent calc(50% - var(--edge) - 22vw),
+		#000 calc(50% - var(--edge)),
+		#000 calc(50% + var(--edge)),
+		transparent calc(50% + var(--edge) + 22vw)
+	);
+	/* ease-out still, because the light is arriving — but the cubic, not
+	   the quint: the quint put four fifths of the travel in the first
+	   quarter second and the reveal read as a jump. The cubic starts at
+	   the same pace and keeps going; with more time it is watched rather
+	   than missed. A threshold crossed once a visit can afford it. */
+	animation: room-open 1500ms cubic-bezier(0.215, 0.61, 0.355, 1) both;
 }
 
+/* the mask's edge has to travel past the viewport edge plus the full
+   width of the ramp, or the corners are still dim when the transition
+   ends and the snapshot is swapped for the live page */
 @keyframes room-open {
 	from {
-		clip-path: inset(0 50% 0 50%);
+		--edge: 0vw;
 	}
 	to {
-		clip-path: inset(0 0 0 0);
+		--edge: 72vw;
 	}
+}
+
+/* a custom property only animates if the browser knows its type — an
+   untyped one flips at the halfway mark instead of interpolating */
+@property --edge {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0vw;
 }

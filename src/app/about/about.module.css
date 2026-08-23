@@ -40,6 +40,10 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	/* a snap target like every panel below it — a mandatory snap always
+	   settles on the nearest target, so without this the head could not
+	   be scrolled back to: the nearest target was chapter 01, every time */
+	scroll-snap-align: start;
 	/* the breathing room gives way before the content does: on a short
 	   window (a 720px laptop) 4rem each side pushed the door below the
 	   fold of a page that cannot scroll */
