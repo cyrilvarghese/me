@@ -323,44 +323,41 @@ html[data-vt="room"]::view-transition-old(root) {
 }
 
 html[data-vt="room"]::view-transition-new(root) {
-	/* The edge is a penumbra, not a cut. A mask whose gradient ramp IS
-	   the soft edge: the ramp's position is what animates (--edge), its
-	   width never changes, so the seam stays equally soft the whole way
-	   across rather than sharpening as it arrives. Mirrored about the
-	   spine so the light grows both ways at once. The ramp is 22vw — a
-	   fall-off wide enough to read as light, not a blurred wipe. */
-	--edge: 0vw;
-	mask-image: linear-gradient(
-		to right,
-		transparent calc(50% - var(--edge) - 22vw),
-		#000 calc(50% - var(--edge)),
-		#000 calc(50% + var(--edge)),
-		transparent calc(50% + var(--edge) + 22vw)
-	);
-	/* ease-out still, because the light is arriving — but the cubic, not
-	   the quint: the quint put four fifths of the travel in the first
-	   quarter second and the reveal read as a jump. The cubic starts at
-	   the same pace and keeps going; with more time it is watched rather
-	   than missed. A threshold crossed once a visit can afford it. */
-	animation: room-open 1500ms cubic-bezier(0.215, 0.61, 0.355, 1) both;
+	/* A drop of ink taking to paper.
+
+	   The mask is an SVG mask (RoomLight) rather than a CSS gradient,
+	   because its shape has to be filtered: feTurbulence and
+	   feDisplacementMap push the rim in and out along the paper's grain,
+	   so the boundary wicks the way absorbed ink does instead of drawing
+	   a clean circle. Filtering the pseudo-element itself would displace
+	   the SNAPSHOT — the type and the drawing warp along with the edge,
+	   which is the whole reason this is a mask and not a filter.
+
+	   Radius, centre and feather are all driven from the click (one rAF
+	   loop, so they cannot drift apart); nothing about the bloom is
+	   animated from here. */
+	mask-image: url(#ink-mask);
+	mask-mode: luminance;
+	/* A view transition lives exactly as long as its longest animation,
+	   and this one's motion is in the mask, not in CSS — so with no
+	   animation the whole thing ended on the first frame and dropped the
+	   snapshots before the blot had spread. This changes nothing visible;
+	   it holds the transition open while the ink does. Its duration is
+	   RoomLight's BLOOM_MS. */
+	animation: ink-hold 2200ms linear both;
 }
 
-/* the mask's edge has to travel past the viewport edge plus the full
-   width of the ramp, or the corners are still dim when the transition
-   ends and the snapshot is swapped for the live page */
-@keyframes room-open {
+/* the dark page holds still and fully opaque underneath, rather than
+   taking the default quarter-second fade out from under the blot */
+html[data-vt="room"]::view-transition-old(root) {
+	animation: ink-hold 2200ms linear both;
+}
+
+@keyframes ink-hold {
 	from {
-		--edge: 0vw;
+		opacity: 1;
 	}
 	to {
-		--edge: 72vw;
+		opacity: 1;
 	}
-}
-
-/* a custom property only animates if the browser knows its type — an
-   untyped one flips at the halfway mark instead of interpolating */
-@property --edge {
-	syntax: "<length>";
-	inherits: false;
-	initial-value: 0vw;
 }

@@ -27,9 +27,10 @@
 	object-fit: cover;
 	border-radius: 50%;
 	/* The drawing waits with the page: no colour until the room is lit.
-	   Deliberately not transitioned — the view transition animates
-	   between two snapshots, so a filter still easing when the second one
-	   is captured would be frozen half-grey for the whole wipe. */
+	   No transition on this state — the lit snapshot must carry the
+	   drawing fully coloured, so the colour arrives with the light; the
+	   delayed ease lives on :disabled below, where it plays on the live
+	   page after the bloom has handed over. */
 	filter: grayscale(1);
 }
 
@@ -107,6 +108,30 @@
 @media (prefers-reduced-motion: reduce) {
 	.art,
 	.hint {
+		transition: none;
+	}
+}
+
+/* the filter definition takes no space and paints nothing of its own */
+.filterHost {
+	position: absolute;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+}
+
+/* The drop's origin is the last thing to resolve — ink is thickest
+   where it landed, so the drawing regains its colour after the page
+   around it has. Set as a transition, not in the view transition: the
+   snapshot carries the greyscale, and the live page eases out of it
+   once the bloom has handed over. */
+.room:disabled .art {
+	filter: none;
+	transition: filter 900ms ease 1800ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.room:disabled .art {
 		transition: none;
 	}
 }
