@@ -1,5 +1,7 @@
 .page {
-	padding-block: clamp(6rem, 14vh, 9rem) var(--space-section);
+	/* no padding of its own: every panel below is a full viewport and
+	   carries its own centring */
+	padding: 0;
 }
 
 /* ---- the way back ---- */
@@ -29,8 +31,20 @@
 
 /* ---- head ---- */
 
+/* The threshold: one full viewport with the name, the quote and the
+   door, and nothing else visible until it is opened. dvh, not vh — on a
+   phone 100vh includes the strip under the browser bar, so a panel set
+   to it overflows by exactly that strip. */
 .head {
-	margin-bottom: clamp(4rem, 12vh, 8rem);
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/* the breathing room gives way before the content does: on a short
+	   window (a 720px laptop) 4rem each side pushed the door below the
+	   fold of a page that cannot scroll */
+	padding-block: clamp(1.5rem, 5vh, 4rem);
+	box-sizing: border-box;
 	/* centred, unlike every other section on this site: the page has a
 	   rule down its middle, and a head hugging the left edge reads
 	   against it (Cyril, 2026-08-22). The chapters below stay ranged
@@ -106,18 +120,21 @@
    left, the chapter on the right, which is the order Cyril's own
    account reads in. Equal 1fr columns are what put the rule exactly on
    the centre line without any positioning maths. */
+/* One chapter, one viewport. min-height rather than height so a
+   chapter whose copy runs long on a short window grows instead of
+   clipping — the snap still lands on its top edge. */
 .chapter {
-	/* the gap to the next chapter — one value, because the stop mark
-	   and the thread's end below both have to subtract it */
-	--chapter-gap: calc(clamp(4rem, 12vh, 8rem) + 100px);
 	position: relative;
+	min-height: 100dvh;
+	box-sizing: border-box;
+	padding-block: 4rem;
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	column-gap: clamp(2.5rem, 7vw, 6rem);
-	padding-bottom: var(--chapter-gap);
 	/* picture and chapter sit level either side of the rule — the row's
 	   middles align, the way the reference reads (Cyril, 2026-08-22) */
 	align-items: center;
+	scroll-snap-align: start;
 }
 
 /* the rule itself: static, and NOT inside either revealed column — a
@@ -137,20 +154,17 @@
 /* the last stop ends the thread at its own dot rather than letting it
    run on into the closing block */
 .last::before {
-	/* same padding subtraction as the dot below, so the thread stops
-	   exactly at the final stop */
-	bottom: calc(50% + var(--chapter-gap) / 2);
+	bottom: 50%;
 }
 
-/* the stop mark, at the row's vertical middle — level with the centred
-   chapter beside it rather than with the top of the column. The row's
-   padding-bottom (the gap to the next chapter, which the thread runs
-   through) is subtracted, or the dot sits below the middle it marks. */
+/* the stop mark, at the panel's vertical middle — level with the
+   centred chapter beside it. The padding is symmetric now, so the
+   middle is simply the middle. */
 .chapter::after {
 	content: "";
 	position: absolute;
 	left: 50%;
-	top: calc((100% - var(--chapter-gap)) / 2);
+	top: 50%;
 	width: 9px;
 	height: 9px;
 	border-radius: 50%;
@@ -245,9 +259,14 @@
 /* ---- the close ---- */
 
 .end {
-	border-top: 1px solid var(--hairline);
-	padding-top: clamp(3rem, 8vh, 5rem);
+	min-height: 100dvh;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-block: 4rem;
 	text-align: center;
+	scroll-snap-align: start;
 }
 
 .thanks {
@@ -334,10 +353,20 @@
 
 @media (max-width: 900px) {
 	/* one column, picture first: the spine has nothing left to divide,
-	   and a rule down the side of a single column is decoration */
+	   and a rule down the side of a single column is decoration. And no
+	   panels — a stacked chapter is taller than a phone, and a viewport
+	   floor under it would only add empty scrolling between them. */
 	.chapter {
 		grid-template-columns: 1fr;
 		row-gap: 1.75rem;
+		min-height: 0;
+		padding-block: 3rem;
+		scroll-snap-align: none;
+	}
+
+	.end {
+		min-height: 0;
+		scroll-snap-align: none;
 	}
 
 	.chapter::before,

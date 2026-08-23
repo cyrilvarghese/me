@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import styles from "./RoomLight.module.css";
 
+/** the panel the reveal carries the reader to — the story proper */
+export const FIRST_CHAPTER = "chapter-01";
+
 /**
  * The threshold into the About page's light room.
  *
@@ -25,14 +28,21 @@ export default function RoomLight() {
   const [lit, setLit] = useState(false);
   const done = useRef(false);
 
-  /* the light belongs to this page, not to the site: leaving takes it
-     with us, or Home comes back lit */
-  useEffect(
-    () => () => {
-      delete document.documentElement.dataset.theme;
-    },
-    []
-  );
+  /* The room is shut until it is asked for: the page is one panel, the
+     document does not scroll, and nothing below the quote is drawn.
+     Set from an effect rather than in the markup so a reader without
+     JavaScript is handed the whole page instead of a locked one.
+
+     Both marks belong to this page, not to the site — leaving takes
+     them with us, or Home comes back lit and locked. */
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.room = "shut";
+    return () => {
+      delete root.dataset.room;
+      delete root.dataset.theme;
+    };
+  }, []);
 
   const light = () => {
     if (done.current) return;
@@ -44,12 +54,21 @@ export default function RoomLight() {
     const apply = () =>
       flushSync(() => {
         root.dataset.theme = "light";
+        root.dataset.room = "open";
         setLit(true);
       });
+
+    /* the room lights first, then it takes the reader in — two beats,
+       so the turn is watched rather than scrolled past */
+    const enter = () => {
+      const first = document.getElementById(FIRST_CHAPTER);
+      first?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    };
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || typeof document.startViewTransition !== "function") {
       apply();
+      enter();
       return;
     }
 
@@ -59,6 +78,7 @@ export default function RoomLight() {
     const vt = document.startViewTransition(apply);
     vt.finished.finally(() => {
       delete root.dataset.vt;
+      enter();
     });
   };
 
@@ -68,8 +88,11 @@ export default function RoomLight() {
       className={styles.room}
       onClick={light}
       disabled={lit}
-      aria-label={lit ? "The page is lit" : "Light the page"}
+      aria-label={lit ? "The story is open" : "Open the story"}
     >
+      {/* the pulse is a ring behind the disc, not on it: a filter on the
+          image would freeze mid-ease inside the snapshot */}
+      <span className={styles.pulse} aria-hidden="true" />
       {/* Watterson's own characters under his words, and the switch */}
       <img
         src="/assets/about/quote.webp"
@@ -77,7 +100,7 @@ export default function RoomLight() {
         className={styles.art}
       />
       <span className={`mono-label ${styles.hint}`} aria-hidden="true">
-        Light the page
+        Open the story
       </span>
     </button>
   );

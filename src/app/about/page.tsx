@@ -5,7 +5,7 @@ import { CV_URL, LINKEDIN_URL } from "@/lib/data/contact";
 import { RevealDiv } from "@/components/case/Reveal";
 import Cluster from "@/components/about/Cluster";
 import CopyEmail from "@/components/CopyEmail";
-import RoomLight from "@/components/about/RoomLight";
+import RoomLight, { FIRST_CHAPTER } from "@/components/about/RoomLight";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
@@ -33,7 +33,7 @@ export default function AboutPage() {
     <main className={styles.page}>
       {/* the way back, held at the top of the column rather than the
           window edge — same trick as CaseBack's dock */}
-      <div className={styles.dock}>
+      <div className={styles.dock} data-after-threshold>
         <div className={`section-shell ${styles.dockInner}`}>
           <Link href="/" className={`mono-label btn btn-ghost ${styles.back}`}>
             ← Home
@@ -55,9 +55,11 @@ export default function AboutPage() {
         </figure>
       </header>
 
-      <ol className={`section-shell ${styles.chapters}`}>
-        {chapters.map((c) => (
-          <li key={c.num} className={styles.chapter}>
+      {/* everything from here down is behind the door: hidden while
+          the room is shut, revealed as one run of viewport panels */}
+      <ol className={`section-shell ${styles.chapters}`} data-after-threshold>
+        {chapters.map((c, i) => (
+          <li key={c.num} id={i === 0 ? FIRST_CHAPTER : undefined} className={styles.chapter}>
             <div className={styles.figureCol}>
               {c.gallery.link ? (
                 /* the pictures lead somewhere: the whole cluster is the
@@ -144,7 +146,7 @@ export default function AboutPage() {
         </li>
       </ol>
 
-      <RevealDiv className={`section-shell ${styles.end}`}>
+      <RevealDiv className={`section-shell ${styles.end}`} data-after-threshold>
         <p className={`serif-display ${styles.thanks}`}>Thanks for reading this far.</p>
         {/* Three weights, not four boxes: the way back holds the left
             edge, the email keeps the accent border because it is the one

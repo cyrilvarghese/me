@@ -1,8 +1,9 @@
 /* The disc is the page's one control, so it carries no button chrome —
    the drawing is the affordance and the label under it says what happens. */
 .room {
+	position: relative;
 	display: block;
-	margin: 1.75rem auto 0;
+	margin: 2.25rem auto 0;
 	padding: 0;
 	border: 0;
 	background: none;
@@ -18,8 +19,10 @@
 /* Watterson's characters on a light disc — the square source is white,
    so the circle clip is what turns it into a mark rather than a patch */
 .art {
+	position: relative;
 	display: block;
-	width: 7.5rem;
+	/* the largest thing on the threshold: it is the door */
+	width: 10rem;
 	aspect-ratio: 1;
 	object-fit: cover;
 	border-radius: 50%;
@@ -30,8 +33,48 @@
 	filter: grayscale(1);
 }
 
-/* the ring is the invitation: a hairline that warms under the pointer,
-   drawn on the button rather than the image so the clip stays circular */
+/* The invitation: a ring that swells out from behind the disc and
+   fades, again and again, until the disc is pressed. Behind rather than
+   on the image so the clip stays a clean circle and the pulse never
+   touches the snapshot. Sized to the disc so it reads as its breath,
+   not a spotlight. */
+.pulse {
+	position: absolute;
+	left: 50%;
+	top: 5rem;
+	width: 10rem;
+	height: 10rem;
+	border-radius: 50%;
+	border: 1px solid var(--accent);
+	transform: translate(-50%, -50%);
+	opacity: 0;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.room:not(:disabled) .pulse {
+		/* ease-out, because each pulse is a thing leaving — it should be
+		   quick to go and slow to vanish. 2.4s is long enough to be a
+		   heartbeat, not a blink, and the hold at the end is what keeps it
+		   from reading as an alarm. */
+		animation: pulse 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 0.55;
+	}
+	70%,
+	100% {
+		transform: translate(-50%, -50%) scale(1.55);
+		opacity: 0;
+	}
+}
+
+/* a hairline on the disc itself under the pointer; the pulse is the
+   invitation at rest, this is the answer to reaching for it */
 .room:not(:disabled) .art {
 	box-shadow: 0 0 0 1px var(--hairline);
 	transition: box-shadow 200ms ease, transform 200ms ease;
@@ -51,7 +94,7 @@
 
 .hint {
 	display: block;
-	margin-top: 0.9rem;
+	margin-top: 1.1rem;
 	color: var(--muted);
 	transition: opacity 200ms ease;
 }
@@ -62,8 +105,8 @@
 	}
 }
 
-/* once the room is lit the invitation has nothing left to offer; it goes
-   rather than sitting there naming a thing that already happened */
+/* once the room is open the invitation has nothing left to offer; it
+   goes rather than sitting there naming a thing that already happened */
 .room:disabled .hint {
 	opacity: 0;
 }

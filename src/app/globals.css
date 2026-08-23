@@ -286,6 +286,31 @@ button {
 
 /* ---- the About room ---- */
 
+/* Shut: the threshold is the whole page. The document is clamped to
+   one viewport and does not scroll, and nothing past the head is drawn,
+   so there is no scrollbar hinting at a page behind the door. Set by
+   RoomLight from an effect, which is why none of this applies to a
+   reader without JavaScript — they get the page whole. */
+html[data-room="shut"] {
+	height: 100dvh;
+	overflow: hidden;
+}
+
+html[data-room="shut"] [data-after-threshold] {
+	display: none;
+}
+
+/* Open: the page is a run of viewport panels, and the scroll settles on
+   one at a time. On the root rather than on <main>, because the root is
+   what the reader scrolls. Not on a phone — there the chapters stack
+   taller than the screen, and a mandatory snap would lock the reader
+   to the top of each one. */
+@media (min-width: 901px) {
+	html[data-room="open"] {
+		scroll-snap-type: y mandatory;
+	}
+}
+
 /* The page turns to light along its spine when the reader asks for it
    (components/about/RoomLight). A same-document transition, so the ground,
    the ink, the hairlines and every card shadow turn together — the whole
