@@ -196,20 +196,21 @@
 	text-decoration: none;
 }
 
-/* same voice as .link below the copy, centred under the pile; the
-   whole figure lights the caption on hover, not just the words */
+/* the .link voice, centred under the pile. display: table is the
+   shrink-wrap that lets margin: auto centre it — the voice sets no
+   display precisely so this can. */
 .figureCaption {
 	display: table;
 	margin: 1.5rem auto 0;
-	color: var(--accent-lift);
-	border-bottom: 1px solid var(--hairline-red);
-	padding-bottom: 0.2rem;
-	transition: color 150ms ease, border-color 150ms ease;
 }
 
-.figureLink:hover .figureCaption {
-	color: var(--accent);
-	border-bottom-color: var(--accent);
+/* the one thing globals cannot know: the whole figure lights the
+   caption, not just the words under the pointer */
+@media (hover: hover) and (pointer: fine) {
+	.figureLink:hover .figureCaption {
+		color: var(--accent);
+		border-bottom-color: var(--accent);
+	}
 }
 
 .copy {
@@ -241,21 +242,10 @@
 	margin-top: 1.1rem;
 }
 
-/* --accent-lift, not --accent: a link is lower case running text, and
-   the signal red misses AA at this size (type-on-dark) */
-.link {
+/* the voice is .link in globals.css; this is only where it sits */
+.chapterLink {
 	display: inline-block;
 	margin-top: 1.5rem;
-	color: var(--accent-lift);
-	text-decoration: none;
-	border-bottom: 1px solid var(--hairline-red);
-	padding-bottom: 0.2rem;
-	transition: color 150ms ease, border-color 150ms ease;
-}
-
-.link:hover {
-	color: var(--accent);
-	border-bottom-color: var(--accent);
 }
 
 /* ---- pictures, and the frames waiting for them ---- */

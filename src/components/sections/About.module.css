@@ -55,6 +55,29 @@
 	outline-offset: 6px;
 }
 
+/* The press, tuned to the size: .btn and .link use 0.97, which on a
+   ~380px disc would be 11px of travel — a lurch, not a press. 0.995
+   lands it at about the same pixel and a half everything else moves.
+   The transition is on transform alone; the nudge keyframes own this
+   element's animation, and the two do not collide. */
+.portraitFrame {
+	transition: transform 100ms ease;
+}
+
+.portraitFrame:active {
+	transform: scale(0.995);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.portraitFrame {
+		transition: none;
+	}
+
+	.portraitFrame:active {
+		transform: none;
+	}
+}
+
 /* The file is already square, padded in --bg rather than cropped, so
    nothing here has to choose what the circle keeps. Cropping a square
    out of the 3:2 original always put the woman on Cyril's right — she
@@ -240,21 +263,11 @@
 	margin-top: 1.1rem;
 }
 
-/* the way through to the long version — the label voice, so it reads as
-   a signpost rather than as one more sentence of the lede */
+/* the way through to the journey — .link in globals.css carries the
+   voice and the press; only where it sits is this component's business */
 .more {
 	display: inline-block;
 	margin-top: 1.25rem;
-	color: var(--accent-lift);
-	text-decoration: none;
-	border-bottom: 1px solid var(--hairline-red);
-	padding-bottom: 0.2rem;
-	transition: color 150ms ease, border-color 150ms ease;
-}
-
-.more:hover {
-	color: var(--accent);
-	border-bottom-color: var(--accent);
 }
 
 /* The one phrase the whole block is about, in the site's red — and the

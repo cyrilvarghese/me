@@ -17,32 +17,13 @@
 	gap: 1rem 1.75rem;
 }
 
-/* --accent-lift, not --accent: a link is lower case running text, and
-   the signal red misses AA at this size (type-on-dark). The underline
-   sits on the label alone so the glyph beside it stays clear of it. */
+/* colour, underline, hover and press are .link-mark / .link-label in
+   globals.css — the glyph variant of the link voice. What is left here
+   is the row: an icon and a label sharing a baseline. */
 .ref {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5rem;
-	color: var(--accent-lift);
-	text-decoration: none;
-	transition: color 150ms ease;
-}
-
-.label {
-	text-decoration: underline;
-	text-decoration-color: var(--hairline-red);
-	text-decoration-thickness: 1px;
-	text-underline-offset: 0.35em;
-	transition: text-decoration-color 150ms ease;
-}
-
-.ref:hover {
-	color: var(--accent);
-}
-
-.ref:hover .label {
-	text-decoration-color: var(--accent);
 }
 
 /* Lucide's file-text and linkedin (see ContactActions.tsx): 24-unit

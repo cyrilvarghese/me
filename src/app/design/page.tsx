@@ -200,6 +200,36 @@ export default function DesignSystemPage() {
           ×
         </span>
       </div>
+
+      <p className={`mono-label ${styles.sectionLabel}`}>Links — .link voices in globals.css</p>
+      <p className={styles.rule}>
+        A link in running copy is not a control, so it does not take the{" "}
+        <code>.btn</code> geometry. It is the lifted red on a hairline of the same hue, both
+        coming up to the signal red on hover: <code>--accent-lift</code> rather than{" "}
+        <code>--accent</code> because a link is lower case at reading size, where the signal red
+        misses AA. The light room re-rungs that token itself, so a link needs no{" "}
+        <code>[data-theme]</code> branch of its own.
+      </p>
+      <p className={styles.rule}>
+        The variant is <code>.link-mark</code>, for a link that carries a glyph — the rule moves
+        onto a <code>.link-label</code> child so the mark beside it stays clear of the line.{" "}
+        <code>.link</code> deliberately sets no <code>display</code>: the voice is colour and
+        motion, and where the link sits — inline, a block with a margin above it, centred under a
+        picture — belongs to the component.
+      </p>
+      <p className={styles.rule}>
+        Both press on <code>:active</code> with the same <code>scale(0.97)</code> over 100ms as{" "}
+        <code>.btn</code>, and both drop it under reduced motion. Press depth is constant{" "}
+        <em>travel</em>, not a constant ratio — 0.97 of a 15px line is about a pixel and a half.
+        Anything substantially larger tunes its own scale down to match, which is why About&apos;s
+        portrait disc presses at 0.995 rather than 0.97.
+      </p>
+      <div className={styles.controls}>
+        <span className="mono-label link">My journey so far &rarr;</span>
+        <span className="mono-label link-mark">
+          <span className="link-label">View CV</span>
+        </span>
+      </div>
     </main>
   );
 }

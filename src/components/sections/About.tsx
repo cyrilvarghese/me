@@ -233,7 +233,7 @@ export default function About() {
           <Link
             href="/about"
             ref={frameRef}
-            aria-label="About Cyril — the long version"
+            aria-label="Cyril’s journey so far"
             className={styles.portraitFrame}
             onPointerEnter={playFilm}
             onPointerLeave={stopFilm}
@@ -275,8 +275,8 @@ export default function About() {
             {/* above the film, so the glint survives the hover swap */}
             <span ref={rimRef} className={styles.rim} aria-hidden="true" />
           </Link>
-          <Link href="/about" className={`mono-label ${styles.more}`}>
-            The long version &rarr;
+          <Link href="/about" className={`mono-label link ${styles.more}`}>
+            My journey so far &rarr;
           </Link>
         </div>
       </div>

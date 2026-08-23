@@ -231,6 +231,85 @@ button {
 	}
 }
 
+/* ---- links ----
+   The way through in running copy, as opposed to a control. Three
+   components had written this rule independently — About's signpost,
+   the About page's chapter links, its figure caption — which is what
+   made it a voice rather than a local style.
+
+   --accent-lift, not --accent: a link is lower case at reading size and
+   the signal red misses AA there (type-on-dark). The light room
+   re-rungs the token to #c90000 on its own, so nothing here needs a
+   [data-theme] branch.
+
+   A border rather than text-decoration, so the offset is a padding that
+   can be seen and the hairline gets its own colour. No display: the
+   voice is colour and motion; where the link sits — inline, a block
+   with a margin above it, centred under a picture — stays with the
+   component, and a display here would fight it on load order. */
+.link {
+	color: var(--accent-lift);
+	border-bottom: 1px solid var(--hairline-red);
+	padding-bottom: 0.2rem;
+	transition: color 150ms ease, border-color 150ms ease, transform 100ms ease;
+}
+
+/* A link that carries a glyph. The rule belongs to the label alone, so
+   the mark beside it stays clear of the line — which is why this cannot
+   just be .link with an icon in it. */
+.link-mark {
+	color: var(--accent-lift);
+	transition: color 150ms ease, transform 100ms ease;
+}
+
+.link-mark .link-label {
+	text-decoration: underline;
+	text-decoration-color: var(--hairline-red);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.35em;
+	transition: text-decoration-color 150ms ease;
+}
+
+/* The same press as .btn — at reading size the two really are the same
+   size, and 0.97 of a 15px line is about a pixel and a half of travel.
+   Press depth is constant *travel*, not a constant ratio: anything much
+   larger tunes its own scale down to match (see .portraitFrame in
+   About, where 0.97 would be an 11px lurch). */
+.link:active,
+.link-mark:active {
+	transform: scale(0.97);
+}
+
+/* gated like .btn's hover: on a touch screen a tap would otherwise
+   leave the link stuck lit until something else is tapped */
+@media (hover: hover) and (pointer: fine) {
+	.link:hover {
+		color: var(--accent);
+		border-bottom-color: var(--accent);
+	}
+
+	.link-mark:hover {
+		color: var(--accent);
+	}
+
+	.link-mark:hover .link-label {
+		text-decoration-color: var(--accent);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.link,
+	.link-mark,
+	.link-mark .link-label {
+		transition: none;
+	}
+
+	.link:active,
+	.link-mark:active {
+		transform: none;
+	}
+}
+
 /* Starting state for Framer Motion whileInView reveals. Lives in CSS so
    reduced-motion users (and pre-hydration paint) get visible content —
    the media query simply never hides it for them. */

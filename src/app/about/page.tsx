@@ -79,7 +79,7 @@ export default function AboutPage() {
                     placed={c.gallery.cards}
                     surface={c.gallery.surface}
                   />
-                  <span className={`mono-label ${styles.figureCaption}`}>
+                  <span className={`mono-label link ${styles.figureCaption}`}>
                     {c.gallery.link.label} →
                   </span>
                 </a>
@@ -106,7 +106,7 @@ export default function AboutPage() {
               ))}
               {c.link &&
                 (c.link.href.startsWith("/") ? (
-                  <Link href={c.link.href} className={`mono-label ${styles.link}`}>
+                  <Link href={c.link.href} className={`mono-label link ${styles.chapterLink}`}>
                     {c.link.label} →
                   </Link>
                 ) : (
@@ -114,7 +114,7 @@ export default function AboutPage() {
                     href={c.link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`mono-label ${styles.link}`}
+                    className={`mono-label link ${styles.chapterLink}`}
                   >
                     {c.link.label} →
                   </a>

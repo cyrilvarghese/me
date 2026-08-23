@@ -18,22 +18,22 @@ export default function ContactActions() {
       <CopyEmail />
       <div className={styles.refs}>
         <a
-          className={`mono-label ${styles.ref}`}
+          className={`mono-label link-mark ${styles.ref}`}
           href={CV_URL}
           target="_blank"
           rel="noopener noreferrer"
         >
           <FileTextMark />
-          <span className={styles.label}>View CV</span>
+          <span className="link-label">View CV</span>
         </a>
         <a
-          className={`mono-label ${styles.ref}`}
+          className={`mono-label link-mark ${styles.ref}`}
           href={LINKEDIN_URL}
           target="_blank"
           rel="noopener noreferrer"
         >
           <LinkedInMark />
-          <span className={styles.label}>LinkedIn</span>
+          <span className="link-label">LinkedIn</span>
         </a>
       </div>
     </div>
