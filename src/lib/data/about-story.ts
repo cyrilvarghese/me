@@ -255,8 +255,9 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "single",
       seed: 4177,
-      /* at 0.7 of the box, centred — a tablet, not a wall */
-      cards: [{ left: 15, top: 15, width: 70, rotate: 0, z: 0, from: { x: 0, y: 29 } }],
+      /* most of the box, centred — a tablet held up, not a wall. 87.5
+         is 70 up by a quarter (Cyril, 2026-08-23) */
+      cards: [{ left: 6.25, top: 6.25, width: 87.5, rotate: 0, z: 0, from: { x: 0, y: 29 } }],
       shots: [
         {
           src: "/assets/about/04/RgZ2K4fmI2UoSDGbQO2Zfj9jY.gif",
@@ -379,6 +380,9 @@ export const chapters: Chapter[] = [
       ratio: "833 / 207",
       kind: "single",
       seed: 7013,
+      /* three quarters of the column: a mark this wide at full width
+         outweighed every picture beside it */
+      cards: [{ left: 12.5, top: 12.5, width: 75, rotate: 0, z: 0, from: { x: 0, y: 29 } }],
       shots: [
         {
           src: "/assets/about/07/O9k7SqksZ6IHj0Dx9m7sgog3YE.webp",
@@ -398,11 +402,20 @@ export const chapters: Chapter[] = [
     ],
     link: { href: "/work/creative-os", label: "Read the case study" },
     gallery: {
-      ratio: "4 / 3",
+      /* square, not 4:3: the cascade steps down, and three screens this
+         size need the height to step into */
+      ratio: "1 / 1",
       kind: "cascade",
       seed: 8093,
-      /* the canvas leads, then the two screens it opens — the product
-         itself rather than a photograph of someone using it */
+      /* Hand-placed: the canvas leads at two thirds of the box, and the
+         two screens it opens step down behind it, each nearly as large —
+         the product itself rather than a photograph of someone using
+         it. Order: canvas, image generation, video generation. */
+      cards: [
+        { left: 0, top: 0, width: 66, rotate: 0, z: 0, from: { x: -45, y: -20 } },
+        { left: 20, top: 30, width: 62, rotate: 0, z: 1, from: { x: 0, y: 20 } },
+        { left: 40, top: 60, width: 60, rotate: 0, z: 2, from: { x: 45, y: 20 } },
+      ],
       shots: [
         {
           src: "/assets/CreativeOS/canvas.webp",
