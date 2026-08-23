@@ -21,10 +21,6 @@ export type Shot = {
   poster?: boolean;
   /** the shot is a screen recording, shown in the device it ran on */
   frame?: "tablet";
-  /** keep this one in the fan on a phone. A pile that marks none keeps
-      all of them; one that marks any keeps only those, because five
-      cards fanned across 390px are five cards nobody can see. */
-  compact?: boolean;
 };
 
 /** longer than the 0.5s block reveal: these travel further than 10px,
@@ -185,16 +181,6 @@ export default function Cluster({
   const cards =
     placed ??
     layout(kind, shots.map((s) => parseRatio(s.ratio)), parseRatio(ratio), seed);
-
-  /* Which shots survive to the phone, and where each sits among them —
-     the fan's angle is struck from its own contiguous index, or the two
-     dropped cards would leave gaps in the arc. */
-  const anyCompact = shots.some((s) => s.compact);
-  const keeps = shots.map((s) => !anyCompact || !!s.compact);
-  const keptCount = keeps.filter(Boolean).length;
-  const keptIndex = keeps.map(
-    ((n) => (keep: boolean) => (keep ? n++ : -1))(0)
-  );
   return (
     <div
       className={`${styles.cluster}${surface ? ` ${styles.surface}` : ""}`}
@@ -211,9 +197,7 @@ export default function Cluster({
                mode set on the figure would be trapped: the card's own
                rotate() makes it a stacking context, so the figure would
                blend against nothing */
-            className={`${styles.card}${shot.bare ? ` ${styles.cardBare}` : ""}${
-              keeps[i] ? "" : ` ${styles.cardDropped}`
-            }`}
+            className={`${styles.card}${shot.bare ? ` ${styles.cardBare}` : ""}`}
             /* custom properties, not direct styles: an inline style
                outranks every class rule, so a media query could not
                straighten the rotation and :hover could not lift the
@@ -225,10 +209,6 @@ export default function Cluster({
                 "--w": `${card.width}%`,
                 "--rot": `${card.rotate}deg`,
                 "--z": card.z,
-                /* the card's place among the ones the phone keeps, so
-                   CSS can fan them without knowing how many there are */
-                "--i": keptIndex[i],
-                "--n": keptCount,
               } as React.CSSProperties
             }
           >

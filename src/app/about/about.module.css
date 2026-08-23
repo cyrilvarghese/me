@@ -306,6 +306,11 @@
 	.chapter {
 		grid-template-columns: 1fr;
 		row-gap: 2.25rem;
+		/* Pack the two rows together and centre them as a block. Without
+		   this the tracks stretch to fill the panel, and a chapter whose
+		   picture is short — a logo wall, a wordmark — opened a dead band
+		   between the picture and the copy that read as a mistake. */
+		align-content: center;
 		/* Tighter than the desktop's, not looser: the panel IS the gap
 		   now, and on one column the picture, the caption and the copy
 		   have to share a single screen. Padding this side of 3.5rem is

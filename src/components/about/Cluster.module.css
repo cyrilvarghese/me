@@ -193,42 +193,34 @@
 	opacity: 0.6;
 }
 
-/* Stacked: strewn paper needs room to overlap, and a phone has none.
-   The pile becomes a fan — cards squared up on one spot and splayed
-   from a pivot below them, the way a hand of cards opens. A two-up grid
-   was the old answer and it read as a broken gallery: five pictures of
-   four different shapes cannot line up, so every row was ragged.
+/* Stacked. Two moves, one for each kind that needs it.
 
-   The angle comes from the card's own place in the pile: --i and --n
-   are set by Cluster, so the spread stays symmetric whether the chapter
-   holds three pictures or five. The other kinds keep their composition —
-   they are packed inside the box in percentages, so they fit any width. */
+   The pile keeps its scattered composition and BREAKS THE COLUMN
+   (Cyril, 2026-08-23): it runs the full width of the screen and its
+   outer cards are allowed to hang past both edges, where main's
+   overflow clip trims them. A pile shrunk to fit the text column read
+   as a thumbnail of itself — at full bleed the drawings are big enough
+   to actually look at, and the crop is the point rather than a fault.
+
+   One picture has no composition to hold, so it simply takes the column
+   and the box shrinks to it, instead of sitting at some fraction of a
+   fixed-ratio box with the remainder left empty as a dead band. */
 @media (max-width: 900px) {
 	.cluster[data-kind="pile"] {
-		/* the fan is wider than it is tall; the box has to give the
-		   outermost cards somewhere to swing */
-		aspect-ratio: 1 / 1 !important;
+		/* 100vw from a centred column: pull back by half the difference.
+		   vw rather than % because the column, not the screen, is the
+		   containing block. */
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
 	}
 
-	/* the cards this pile does not keep for the phone (Shot.compact) */
-	.cluster[data-kind="pile"] .cardDropped {
-		display: none;
+	.cluster[data-kind="single"] {
+		aspect-ratio: auto !important;
 	}
 
-	.cluster[data-kind="pile"] .card {
-		left: 50%;
-		top: 14%;
-		/* Sized and splayed so the widest card in the fan still clears the
-		   box: a card any larger, or an arc any wider, swings the outer
-		   two past the page edge, where main's overflow clip cuts them in
-		   half. Measured at 390px, the narrowest width the site serves. */
-		width: 52%;
-		margin-left: -26%;
-		/* the pivot sits below the card, so rotation alone splays them
-		   along an arc instead of spinning each in place */
-		transform-origin: 50% 130%;
-		transform: rotate(calc((var(--i) - (var(--n) - 1) / 2) * 8deg));
-		/* left to right, front to back — a fan is dealt in order */
-		z-index: var(--i);
+	.cluster[data-kind="single"] .card {
+		position: static;
+		width: 100%;
+		transform: none;
 	}
 }

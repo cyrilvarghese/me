@@ -213,14 +213,12 @@ export const chapters: Chapter[] = [
           ready: true,
           alt: "A sketchbook page of hand studies in sepia pencil",
           ratio: "512 / 683",
-          compact: true,
         },
         {
           src: "/assets/about/03/Q1J6CMLsHssZzdqcSwJpxOh9p5w.webp",
           ready: true,
           alt: "An open sketchbook spread of figures in motion, in blue pencil",
           ratio: "512 / 381",
-          compact: true,
         },
         {
           src: "/assets/about/03/xWMamNX67rcWR7goXpnXqj2Us.webp",
@@ -239,7 +237,6 @@ export const chapters: Chapter[] = [
           ready: true,
           alt: "A short clip from that year's animation study",
           ratio: "720 / 720",
-          compact: true,
         },
       ],
       link: {
