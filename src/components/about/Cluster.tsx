@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { m, useReducedMotion } from "motion/react";
 import { EASE_OUT_CUBIC } from "@/lib/motion";
 import { layout, type Card, type LayoutKind } from "@/lib/cluster-layout";
@@ -19,6 +19,8 @@ export type Shot = {
   /** a printed one-sheet: paper margin around the artwork with a
       keyline where the art meets the margin */
   poster?: boolean;
+  /** the shot is a screen recording, shown in the device it ran on */
+  frame?: "tablet";
 };
 
 /** longer than the 0.5s block reveal: these travel further than 10px,
@@ -68,6 +70,75 @@ function Film({ src, alt }: { src: string; alt: string }) {
       playsInline
       aria-label={alt}
     />
+  );
+}
+
+/** The tablet, in viewBox units. Bezels are even all round and the
+    screen is exactly 4:3 — the shape of the recordings that go in it,
+    so nothing is cropped. `ratio` is the outer shape, which is what the
+    shot's own ratio has to be set to in the data. */
+const TABLET = {
+  w: 1008,
+  h: 778,
+  bezel: 44,
+  rx: 46,
+  screenRx: 8,
+  /* the shape the shot's `ratio` has to carry in the data, since the
+     figure's box is the whole device and not just its screen */
+  ratio: "1008 / 778",
+};
+
+/**
+ * A screen recording in the device it ran on.
+ *
+ * Inline SVG rather than a file: a standalone .svg is an isolated
+ * document that cannot read `tokens.css`, so its body could not follow
+ * the ground from the dark room to the light one. Drawn inline, the
+ * body is `--surface` and the edge is `--card-edge` on both.
+ *
+ * Structure stays neutral — a device is a frame, not the moment that
+ * matters, so no accent touches it (case-study-diagrams).
+ */
+function TabletFrame({ src, alt }: { src: string; alt: string }) {
+  const { w, h, bezel, rx, screenRx } = TABLET;
+  const sw = w - bezel * 2;
+  const sh = h - bezel * 2;
+  /* the clip is referenced by id, so it has to be unique per instance */
+  const clip = `${useId()}-screen`;
+
+  return (
+    <svg
+      className={styles.device}
+      viewBox={`0 0 ${w} ${h}`}
+      role="img"
+      aria-label={alt}
+    >
+      <defs>
+        <clipPath id={clip}>
+          <rect x={bezel} y={bezel} width={sw} height={sh} rx={screenRx} />
+        </clipPath>
+      </defs>
+      {/* inset by half the stroke, or the hairline is clipped in half
+          by the viewBox edge */}
+      <rect
+        className={styles.deviceBody}
+        x="0.5"
+        y="0.5"
+        width={w - 1}
+        height={h - 1}
+        rx={rx}
+      />
+      <image
+        href={src}
+        x={bezel}
+        y={bezel}
+        width={sw}
+        height={sh}
+        preserveAspectRatio="xMidYMid slice"
+        clipPath={`url(#${clip})`}
+      />
+      <circle className={styles.deviceCam} cx={w / 2} cy={bezel / 2} r="5.5" />
+    </svg>
   );
 }
 
@@ -168,10 +239,12 @@ export default function Cluster({
               <figure
                 className={`${styles.shot}${shot.bare ? ` ${styles.bare}` : ""}${
                   shot.poster ? ` ${styles.poster}` : ""
-                }`}
+                }${shot.frame ? ` ${styles.framed}` : ""}`}
                 style={{ aspectRatio: shot.ratio }}
               >
-                {shot.ready ? (
+                {shot.frame === "tablet" && shot.ready ? (
+                  <TabletFrame src={shot.src} alt={shot.alt} />
+                ) : shot.ready ? (
                   /\.(mp4|webm)$/.test(shot.src) ? (
                     <Film src={shot.src} alt={shot.alt} />
                   ) : (

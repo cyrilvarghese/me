@@ -262,7 +262,10 @@ export const chapters: Chapter[] = [
           src: "/assets/about/04/RgZ2K4fmI2UoSDGbQO2Zfj9jY.gif",
           ready: true,
           alt: "The Mythokatha AR experience running on a tablet, characters standing on printed cards",
-          ratio: "640 / 480",
+          /* the device's shape, not the recording's — the recording is
+             4:3 and the screen inside the frame is 4:3, so it fits */
+          ratio: "1008 / 778",
+          frame: "tablet",
         },
       ],
     },
@@ -398,20 +401,20 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "cascade",
       seed: 8093,
-      /* desk → canvas → one generation, from the CreativeOS case
-         study's own assets */
+      /* the canvas leads, then the two screens it opens — the product
+         itself rather than a photograph of someone using it */
       shots: [
-        {
-          src: "/assets/CreativeOS/cover-desk.webp",
-          ready: true,
-          alt: "The CreativeOS canvas open on a monitor at a desk",
-          ratio: "2100 / 1575",
-        },
         {
           src: "/assets/CreativeOS/canvas.webp",
           ready: true,
           alt: "The CreativeOS canvas — shots, prompts, references and generations wired into one run",
           ratio: "2554 / 1396",
+        },
+        {
+          src: "/assets/CreativeOS/img-gen.png",
+          ready: true,
+          alt: "CreativeOS image generation — model, aspect ratio and resolution beside the generated frame",
+          ratio: "2557 / 1393",
         },
         {
           src: "/assets/CreativeOS/video-gen.webp",

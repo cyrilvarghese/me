@@ -106,6 +106,43 @@
 	border-radius: 16px;
 }
 
+/* A device draws its own body, so the card underneath it gives up
+   every box it would otherwise paint — and stops clipping, since the
+   drop shadow below is drawn outside the viewBox. */
+.framed {
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	overflow: visible;
+}
+
+.device {
+	display: block;
+	width: 100%;
+	height: auto;
+	/* drop-shadow, not box-shadow: the shadow has to follow the device's
+	   rounded silhouette rather than the figure's square box. The token
+	   is offset/blur/colour with no spread, which is exactly what
+	   drop-shadow() takes. */
+	filter: drop-shadow(var(--shadow-card));
+	overflow: visible;
+}
+
+.deviceBody {
+	fill: var(--surface);
+	stroke: var(--card-edge);
+	stroke-width: 1;
+}
+
+/* the one detail that says "device" rather than "rounded rectangle";
+   neutral, because a frame is structure and structure is never the
+   accent (case-study-diagrams) */
+.deviceCam {
+	fill: var(--muted);
+	opacity: 0.55;
+}
+
 /* a logo or a sticker is not a photograph: no frame, no paper, no
    shadow — the artwork's own silhouette is the card */
 .bare {
