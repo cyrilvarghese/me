@@ -33,27 +33,34 @@
 	filter: grayscale(1);
 }
 
-/* The disc floats: one slow rise and fall, the same height every time.
-   Not a bounce — nothing lands, nothing decays — just the drawing
-   lifting and settling like something breathing, which is enough to say
-   it is alive and waiting. Stops the moment the room is open. */
+/* The disc bounces, and keeps bouncing: every hop the same height, no
+   rest between them, nothing decaying. What makes it a bounce rather
+   than a float is the asymmetry of the curve — a ball slows into the
+   top of its arc and comes down fast, so the two halves of the hop
+   get opposite easings. Stops the moment the room is open. */
 @media (prefers-reduced-motion: no-preference) {
 	.room:not(:disabled) .art {
-		animation: float 2.8s ease-in-out infinite;
+		animation: bounce 1.1s infinite;
 	}
 }
 
-@keyframes float {
-	0%,
+@keyframes bounce {
+	/* up: ease-out, decelerating into the apex */
+	0% {
+		transform: translateY(0);
+		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+	/* down: ease-in, accelerating into the ground */
+	50% {
+		transform: translateY(-12px);
+		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	}
 	100% {
 		transform: translateY(0);
 	}
-	50% {
-		transform: translateY(-10px);
-	}
 }
 
-/* a hairline on the disc itself under the pointer; the float is the
+/* a hairline on the disc itself under the pointer; the bounce is the
    invitation at rest, this is the answer to reaching for it */
 .room:not(:disabled) .art {
 	box-shadow: 0 0 0 1px var(--hairline);
@@ -61,8 +68,8 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-	/* no transform here: the float owns .art's transform, and a second
-	   one on hover would fight it mid-rise. The ring warming is the answer
+	/* no transform here: the bounce owns .art's transform, and a second
+	   one on hover would fight it mid-hop. The ring warming is the answer
 	   to reaching for it. */
 	.room:not(:disabled):hover .art {
 		box-shadow: 0 0 0 1px var(--hairline-red);
