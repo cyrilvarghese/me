@@ -219,6 +219,13 @@
 	margin-bottom: 1.25rem;
 }
 
+/* the chapter the story turns on — --accent-lift, not --accent: it is
+   sentence case, and the lifted rung is the one red that may be read
+   (type-on-dark). The number beside it is a label, not an emphasis. */
+.labelLift {
+	color: var(--accent-lift);
+}
+
 .para {
 	color: var(--fg-soft);
 }

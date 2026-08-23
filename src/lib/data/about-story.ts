@@ -23,6 +23,9 @@ export type Chapter = {
   num: string;
   /** names the chapter plainly — the fact of it, not a tease */
   label: string;
+  /** the label set in --accent-lift: the chapter the story turns on.
+      Sentence-case red, so the lifted rung (type-on-dark) */
+  lift?: boolean;
   /** one or two short paragraphs; the second is separate so it can breathe */
   body: string[];
   /** where the chapter points, when it points somewhere real */
@@ -181,6 +184,7 @@ export const chapters: Chapter[] = [
   {
     num: "03",
     label: "The sabbatical",
+    lift: true,
     body: [
       "A year off work to study storytelling, animation and figure drawing, with philosophy alongside it.",
       "Learning to draw properly changed how I look at everything since — and I learned it from some remarkable people.",
@@ -277,10 +281,10 @@ export const chapters: Chapter[] = [
          own assets */
       shots: [
         {
-          src: "/assets/msig/cover-desk.webp",
+          src: "/assets/msig/nHwgrwHqa2DjUR57calWQgQG8.webp",
           ready: true,
-          alt: "The MSIG agent dashboard open on a laptop between two people",
-          ratio: "2100 / 1401",
+          alt: "The MSIG agent work queue — policies, cover notes and their statuses",
+          ratio: "2880 / 2048",
         },
         {
           src: "/assets/msig/e5nkT3tdjowEU0ttZEsvoSrxCLM.webp",

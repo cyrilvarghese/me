@@ -97,7 +97,9 @@ export default function AboutPage() {
             </div>
             <RevealDiv className={styles.copy}>
               <p className={`mono-label ${styles.num}`}>{c.num}</p>
-              <h2 className={`serif-display ${styles.label}`}>{c.label}</h2>
+              <h2 className={`serif-display ${styles.label}${c.lift ? ` ${styles.labelLift}` : ""}`}>
+                {c.label}
+              </h2>
               {c.body.map((p) => (
                 <p key={p} className={styles.para}>
                   {p}
