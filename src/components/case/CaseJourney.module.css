@@ -64,22 +64,23 @@
 
 .rail {
 	--y: 7.5rem; /* the centreline: the band above it holds the up-notes */
-	/* The walk's cadence, carried over unchanged from the carousel this
-	   replaced (Cyril): 600ms to travel a leg, then 3400ms standing at
-	   the stop. One leg is 4s, and a quote lands every leg — the same
-	   rhythm the quotes used to change at.
+	/* The walk's cadence. It was 600ms travel + 3400ms stand, carried
+	   over from the carousel this replaced; at six stops that is a 20s
+	   build, and a reader arriving mid-band scrolled past before the
+	   fifth quote landed (Cyril, 2026-08-24). Halved throughout: 1.7s at
+	   a stop is still a beat to read one line, and the whole journey is
+	   over in 10s.
 
-	   The keyframe percentages below are this ratio baked flat: a leg is
-	   20% of the walk, of which 17% is the stand and 3% the travel.
-	   Change these and those percentages have to move with them. */
-	--travel: 600ms;
-	--dwell: 3400ms;
-	--leg: 4000ms;
+	   The ratio is deliberate — travel stays 15% of a leg, so the dash
+	   still reads as walking rather than snapping between stops. */
+	--travel: 300ms;
+	--dwell: 1700ms;
+	--leg: 2000ms;
 	/* how long the walk waits after the last arrow press before carrying
-	   on by itself — longer than a leg, so a reader who stopped to read
-	   is not immediately moved along again */
+	   on by itself. NOT halved: this one is measured in reading time, not
+	   in the walk's pace — someone who pressed back to re-read a quote
+	   needs the same nine seconds they always did. */
 	--resume: 9000ms;
-	--walk: 20000ms; /* five legs */
 	position: relative;
 	height: 15.5rem;
 }

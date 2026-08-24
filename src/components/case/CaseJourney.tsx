@@ -89,7 +89,14 @@ export default function CaseJourney({
           io.disconnect();
         }
       },
-      { threshold: 0.3 },
+      /* threshold 0, not 0.3. The rail box's top edge is the top of
+         the up-cards, so zero fires the instant the figure lands rather
+         than after a third of it is already past — the walk was starting
+         late AND running slow, and both cost the same reader the same
+         quotes (Cyril, 2026-08-24). No rootMargin: the section's own
+         reveal sits higher up the block and has already run by the time
+         the rail's edge arrives. */
+      { threshold: 0 },
     );
     io.observe(el);
     return () => io.disconnect();
