@@ -379,44 +379,6 @@ html[data-room="shut"] [data-after-threshold] {
 	display: none;
 }
 
-/* Open: the page is a run of viewport panels, and the scroll settles on
-   one at a time. On the root rather than on <main>, because the root is
-   what the reader scrolls.
-
-   On a phone too (Cyril, 2026-08-23). It was held back to desktop on
-   the grounds that a stacked chapter runs taller than the screen — but
-   the pile fans on a phone (Cluster) rather than stacking two-up, so a
-   chapter fits its panel and the snap has somewhere to land. */
-html[data-room="open"] {
-	scroll-snap-type: y mandatory;
-}
-
-/* Except where a tween can be trusted, which is a mouse or a trackpad
-   in front of a reader who has not asked for less motion: there the
-   glide takes the snap over (components/about/AboutSnap).
-
-   CSS snapping says only WHERE to land. It has no duration and no
-   easing to give — Chromium's snap animation is hardcoded and short —
-   so a wheel tick landed like a wall (Cyril, 2026-08-24). The panels
-   and the one-at-a-time reading are unchanged; only the arrival is.
-
-   Touch keeps the browser's, because a tween cannot be trusted against
-   the platform's own momentum, and so does a reduced reader, because a
-   glide is motion. */
-@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-	html[data-room="open"] {
-		scroll-snap-type: none;
-		/* ...and the glide cannot own the scroll through a smooth
-		   scroll-behavior: every frame the tween writes would itself be
-		   animated, which reads as lag going in and overshoot coming out
-		   (SmoothAnchors says the same thing about the scrubbed
-		   sections). The two smooth scrolls this page asks for by name —
-		   the door's scrollIntoView and any in-page anchor — pass their
-		   behaviour explicitly, so neither is touched by this. */
-		scroll-behavior: auto;
-	}
-}
-
 /* The page turns to light along its spine when the reader asks for it
    (components/about/RoomLight). A same-document transition, so the ground,
    the ink, the hairlines and every card shadow turn together — the whole
