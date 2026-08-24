@@ -67,15 +67,18 @@
 	/* The walk's cadence. It was 600ms travel + 3400ms stand, carried
 	   over from the carousel this replaced; at six stops that is a 20s
 	   build, and a reader arriving mid-band scrolled past before the
-	   fifth quote landed (Cyril, 2026-08-24). Halved throughout: 1.7s at
-	   a stop is still a beat to read one line, and the whole journey is
-	   over in 10s.
+	   fifth quote landed (Cyril, 2026-08-24). Travel halved once and the
+	   stand twice, so a leg is 1.15s and a six-stop journey is over in
+	   under six seconds.
 
-	   The ratio is deliberate — travel stays 15% of a leg, so the dash
-	   still reads as walking rather than snapping between stops. */
+	   The travel did NOT halve twice with it. Under about a quarter of a
+	   second the dash stops reading as something that walked to the next
+	   stop and starts reading as something switched off and on there —
+	   and the walk is what the figure is arguing. So it holds at 300ms
+	   and takes a larger share of a leg (26%) than it used to. */
 	--travel: 300ms;
-	--dwell: 1700ms;
-	--leg: 2000ms;
+	--dwell: 850ms;
+	--leg: 1150ms;
 	/* how long the walk waits after the last arrow press before carrying
 	   on by itself. NOT halved: this one is measured in reading time, not
 	   in the walk's pace — someone who pressed back to re-read a quote
