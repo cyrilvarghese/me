@@ -373,7 +373,8 @@ export const chapters: Chapter[] = [
     num: "07",
     label: "CaseChat",
     body: [
-      "CaseChat began with a childhood friend who became a doctor. It is an AI case-based learning platform where medical students practise clinical reasoning against simulated patients, and get told where the reasoning went wrong.",
+      "CaseChat began with a childhood friend who became a doctor. We both come from education, and we wanted medical learning to be something students do rather than something they read.",
+      "It is an AI case-based learning platform: students practise clinical reasoning against simulated patients, and get told where the reasoning went wrong.",
     ],
     gallery: {
       /* the wordmark's own shape — a wide mark, not a screen */

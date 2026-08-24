@@ -231,6 +231,16 @@
 
 .para {
 	color: var(--fg-soft);
+	/* 450, against the site's 350.
+
+	   The shared body weight is set for the dark ground, where light
+	   type gains optical weight and 400 already reads like 450
+	   (globals.css). None of that governs here: this room is white, and
+	   dark-on-light gains nothing back, so the dark page's ceiling is
+	   not this page's ceiling (Cyril, 2026-08-24). Work Sans is loaded
+	   as a full variable axis, so 450 is a real weight and not a
+	   rounding to 500. */
+	font-weight: 450;
 }
 
 .para + .para {
