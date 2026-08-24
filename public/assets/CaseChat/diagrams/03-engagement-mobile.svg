@@ -9,6 +9,12 @@
        below the red ray it produced, so cause sits under effect instead
        of beside it.
 
+       One left edge (Cyril, 2026-08-24). The plot's y-axis, the section
+       label, the version rail's nodes and the divider all start at x44 —
+       they were at 64, 30, 44 and 20, which read as four edges rather
+       than one drawing. The rays keep their right-hand ends, so the plot
+       simply gained the 20 units the axis gave up.
+
        Sizes are the wide file's unchanged. Both viewBoxes render at about
        1:1 (1100 at full width, 420 inside the 26rem cap), so 12 for the
        ticks and 14 for the finding are already the rungs they should be —
@@ -24,23 +30,23 @@
 
   <!-- Two rays from the same origin. Nothing was traded: the second is
        steeper on both axes at once, which is the finding. -->
-  <line x1="64" y1="250" x2="64" y2="44" stroke="currentColor" stroke-opacity=".3" marker-end="url(#ccA-03m)"/>
-  <line x1="64" y1="250" x2="386" y2="250" stroke="currentColor" stroke-opacity=".3" marker-end="url(#ccA-03m)"/>
-  <text x="78" y="36" font-size="12" fill="currentColor" opacity=".5">ENGAGEMENT</text>
+  <line x1="44" y1="250" x2="44" y2="44" stroke="currentColor" stroke-opacity=".3" marker-end="url(#ccA-03m)"/>
+  <line x1="44" y1="250" x2="386" y2="250" stroke="currentColor" stroke-opacity=".3" marker-end="url(#ccA-03m)"/>
+  <text x="58" y="36" font-size="12" fill="currentColor" opacity=".5">ENGAGEMENT</text>
   <text x="386" y="272" font-size="12" text-anchor="end" fill="currentColor" opacity=".5">EFFECTIVENESS</text>
 
-  <line class="cc-in" style="--d:.3s" x1="64" y1="250" x2="296" y2="182" stroke="currentColor" stroke-opacity=".4" stroke-dasharray="5 6" marker-end="url(#ccA-03m)"/>
+  <line class="cc-in" style="--d:.3s" x1="44" y1="250" x2="296" y2="182" stroke="currentColor" stroke-opacity=".4" stroke-dasharray="5 6" marker-end="url(#ccA-03m)"/>
   <!-- clear of the shallow ray above it (y219 at this x) and of the axis
        below it (y250) -->
   <text class="cc-in" style="--d:.5s" x="170" y="242" font-size="12" fill="currentColor" opacity=".5">where we started</text>
 
-  <line class="cc-draw" style="--len:288;--d:.5s" x1="64" y1="250" x2="300" y2="90" stroke="#ea0000" stroke-opacity=".85" marker-end="url(#ccR-03m)"/>
+  <line class="cc-draw" style="--len:302;--d:.5s" x1="44" y1="250" x2="300" y2="90" stroke="#ea0000" stroke-opacity=".85" marker-end="url(#ccR-03m)"/>
   <text class="cc-in" style="--d:1.2s" x="306" y="76" font-size="14" text-anchor="end" fill="#ea0000">where we ended up</text>
 
-  <line x1="20" y1="316" x2="400" y2="316" stroke="currentColor" stroke-opacity=".12"/>
+  <line x1="44" y1="316" x2="400" y2="316" stroke="currentColor" stroke-opacity=".12"/>
 
   <!-- What actually moved it, in the order it shipped. -->
-  <text x="30" y="354" font-size="12" fill="currentColor" opacity=".5">WHAT CHANGED</text>
+  <text x="44" y="354" font-size="12" fill="currentColor" opacity=".5">WHAT CHANGED</text>
 
   <line class="cc-draw" style="--len:70;--d:.4s" x1="44" y1="406" x2="44" y2="474" stroke="currentColor" stroke-opacity=".3"/>
   <line class="cc-draw" style="--len:70;--d:.7s" x1="44" y1="486" x2="44" y2="554" stroke="#ea0000" stroke-opacity=".6"/>
