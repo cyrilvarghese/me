@@ -5,6 +5,7 @@ import { RevealDiv } from "@/components/case/Reveal";
 import Cluster from "@/components/about/Cluster";
 import ContactActions from "@/components/ContactActions";
 import RoomLight, { FIRST_CHAPTER } from "@/components/about/RoomLight";
+import AboutSnap from "@/components/about/AboutSnap";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
@@ -30,6 +31,9 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className={styles.page}>
+      {/* the glide that lands the reader on one panel at a time */}
+      <AboutSnap />
+
       {/* the way back, held at the top of the column rather than the
           window edge — same trick as CaseBack's dock. Not behind the
           door: the way out is there whether or not the reader has come
@@ -42,7 +46,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <header className={`section-shell ${styles.head}`}>
+      <header className={`section-shell ${styles.head}`} data-panel>
         <p className={`mono-label ${styles.eyebrow}`}>About</p>
         <h1 className={`serif-display ${styles.name}`}>Cyril Philip Varghese</h1>
         <figure className={styles.quote}>
@@ -60,7 +64,12 @@ export default function AboutPage() {
           the room is shut, revealed as one run of viewport panels */}
       <ol className={`section-shell ${styles.chapters}`} data-after-threshold>
         {chapters.map((c, i) => (
-          <li key={c.num} id={i === 0 ? FIRST_CHAPTER : undefined} className={styles.chapter}>
+          <li
+            key={c.num}
+            id={i === 0 ? FIRST_CHAPTER : undefined}
+            className={styles.chapter}
+            data-panel
+          >
             <div className={styles.figureCol}>
               {c.gallery.link ? (
                 /* the pictures lead somewhere: the whole cluster is the
@@ -125,7 +134,7 @@ export default function AboutPage() {
 
         {/* the last stop on the same spine, and the one that stops being
             a career */}
-        <li className={`${styles.chapter} ${styles.last}`}>
+        <li className={`${styles.chapter} ${styles.last}`} data-panel>
           <div className={styles.figureCol}>
             <Cluster
               shots={sparetime.gallery.shots}
@@ -147,7 +156,7 @@ export default function AboutPage() {
         </li>
       </ol>
 
-      <RevealDiv className={`section-shell ${styles.end}`} data-after-threshold>
+      <RevealDiv className={`section-shell ${styles.end}`} data-after-threshold data-panel>
         <p className={`serif-display ${styles.thanks}`}>Thanks for reading this far.</p>
         {/* Three weights, not four boxes: the way back holds the left
             edge, the email keeps the accent border because it is the one
