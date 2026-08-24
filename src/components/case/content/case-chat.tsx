@@ -80,13 +80,22 @@ export default function CaseChatContent() {
         ]}
         meta={[
           {
-            label: "Role",
-            body:
-              "Founder & CPTO — design engineer and AI engineer.",
+            label: "What I owned",
+            lines: [
+              "Every function except the clinical one",
+              "The entire technology stack, written hands-on",
+              "Product — what got built, and in what order",
+              "All design and UX, from first research through to the interface",
+              "Sales and go-to-market",
+            ],
           },
           {
             label: "Team",
             body: "Two founders: myself as CPTO, Dr Gopikrishnan Anjaneyan as CCO.",
+          },
+          {
+            label: "Stack",
+            tags: ["Svelte-TS", "FastAPI", "LangChain", "RAG", "LLM APIs", "Figma"],
           },
         ]}
       />

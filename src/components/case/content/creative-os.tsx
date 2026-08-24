@@ -39,12 +39,21 @@ export default function CreativeOsContent() {
             body: "Agencies handling large volumes of social-media content.",
           },
           {
-            label: "Role",
-            body: "Owned product, UX and frontend engineering.",
+            label: "What I owned",
+            lines: [
+              "Product — what got built, and in what order",
+              "All design and UX, and the design system under it",
+              "The front end, written hands-on",
+              "Go-to-market",
+            ],
           },
           {
             label: "Team",
             body: "Two AI engineers and one product designer.",
+          },
+          {
+            label: "Stack",
+            tags: ["Next.js", "Tailwind", "shadcn/ui", "RAG", "LLM APIs", "Figma", "Design systems"],
           },
         ]}
       />

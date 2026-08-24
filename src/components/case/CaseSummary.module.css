@@ -111,6 +111,50 @@
 	margin: 0;
 }
 
+/* A fourth fact wraps onto a row of its own and left one column of copy
+   against two of empty page, which read as a mistake rather than as a
+   band. When the last item starts a row alone, it takes the full width
+   instead — `3n + 1` is exactly "first in its row", so this fires at 4
+   items and 7 and never at 2 or 3. */
+.metaItem:last-child:nth-child(3n + 1) {
+	grid-column: 1 / -1;
+}
+
+/* What the work actually was, one item per line under the title.
+
+   No marker. A disc here would be the only bulleted list on the site and
+   would read as a form, so the lines are separated by space instead —
+   which is why they stay phrases: a wrapped sentence and a new item look
+   the same without a marker, and only brevity tells them apart.
+
+   No colour and no weight of its own: it inherits --fg-soft from the dd
+   above, because the meta block's one job is to stay quieter than the
+   argument it sits under (type-on-dark — one emphasis per block). */
+.metaLines {
+	list-style: none;
+	margin: 0.7rem 0 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	/* Wider than it looks like it needs to be. With no marker, the only
+	   thing separating two items is space, so the gap has to beat the
+	   leading inside a wrapped item clearly — at 0.45rem the second line
+	   of one phrase and the first line of the next were the same
+	   distance apart, and the column read as prose. */
+	gap: 0.8rem;
+	line-height: 1.35;
+}
+
+/* The tools, in the voice this site already gives a run of short labels:
+   mono, muted, dot-separated, no boxes (CaseStudies.module.css, where
+   chips were tried and taken back out on 2026-08-21). Muted rather than
+   any red — --muted is 6.35:1 here and carries no saturation to buzz. */
+.metaTags {
+	margin: 0.7rem 0 0;
+	color: var(--muted);
+	line-height: 1.7;
+}
+
 @media (max-width: 768px) {
 	.meta {
 		grid-template-columns: 1fr;

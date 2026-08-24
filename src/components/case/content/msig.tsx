@@ -41,8 +41,28 @@ export default function MsigContent() {
           },
         ]}
         meta={[
-          { label: "Role", body: "Lead Product Designer." },
+          {
+            label: "What I owned",
+            lines: [
+              "End-to-end product design — concept, flows, and the final high-fidelity screens in Figma",
+              "User interviews with the people who work the system",
+              "Stakeholder workshops",
+              "Cross-functional work with the engineering and product teams",
+            ],
+          },
           { label: "Team", body: "Two product designers, twelve developers and one PM." },
+          {
+            label: "Tools",
+            tags: [
+              "Figma",
+              "FigJam",
+              "Storyboarding",
+              "Stakeholder workshops",
+              "User research",
+              "Usability testing",
+              "Design systems",
+            ],
+          },
         ]}
       />
 
