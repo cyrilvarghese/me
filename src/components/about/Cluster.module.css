@@ -41,6 +41,22 @@
 		transform: rotate(0deg) scale(1.03);
 		z-index: 20;
 	}
+
+	/* Except the lid, which is the one card the stickers are stuck TO.
+	   Lifting it sends it to the top of the pile, and the pile is the
+	   stickers — so the lid rose over its own logos and blanked them
+	   (Cyril, 2026-08-24). The stickers keep their lift; only the thing
+	   they sit on holds still.
+
+	   `:not(.cardBare)` is the lid: every sticker in this cluster is a
+	   bare mark and the photograph is not, which is how the rest of
+	   this file names it too (.shot:not(.bare) below). Restating the
+	   resting transform rather than `none`, because the rest angle IS
+	   a transform here (.card above). */
+	.cluster[data-kind="stickers"] .card:not(.cardBare):hover {
+		transform: rotate(var(--rot));
+		z-index: var(--z);
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
