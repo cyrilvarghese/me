@@ -47,7 +47,7 @@ export const experience: Role[] = [
     ],
   },
   {
-    years: "2024 — 2026",
+    years: "2024 — 2025",
     from: 2024,
     title: "Founder, Design Engineer and CTPO",
     org: "CaseChat",
