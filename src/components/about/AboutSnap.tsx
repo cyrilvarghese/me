@@ -3,8 +3,15 @@
 import { useEffect } from "react";
 import { gsap } from "@/lib/gsap";
 
-/** Wheel silence before a spent gesture is forgotten, in ms. */
-const QUIET_MS = 140;
+/** Wheel silence that retires a spent gesture, in ms. */
+const QUIET_MS = 150;
+
+/** How long a gesture has to still be pushing, measured from the moment
+    its glide began, before it is allowed to buy a second panel — and how
+    much of its own peak it has to still be delivering. Momentum from a
+    flick is well decayed by then; a hand that is still scrolling is not. */
+const SUSTAIN_MS = 700;
+const SUSTAIN_FRAC = 0.6;
 
 /** How long a scroll the wheel did NOT drive — a scrollbar dragged, a
     PageDown — has to hold still before the page settles, in ms. */
@@ -16,36 +23,43 @@ const SETTLE_MS = 120;
     glide to somewhere the reader never asked to go. */
 const NEAR = 24;
 
-/** Below this a wheel event is a tremor, not an intention. */
+/** Below this a wheel event is a tremor, and starts nothing. */
 const MIN_DELTA = 4;
 
 /**
  * The glide between chapters on the About page.
  *
  * The panels are one viewport each and the page comes to rest on one at
- * a time — that part was never in question. What was is the arrival.
+ * a time. CSS scroll snapping says only *where* to land, never how fast
+ * or along what curve, so the wheel is taken whole here instead: the tick
+ * never reaches the document, and one tween carries the entire panel.
  *
- * CSS scroll snapping says only *where* to land, never how fast or along
- * what curve, and Chromium's own snap animation is hardcoded and short,
- * so a single wheel tick landed like a wall. Softening it by letting the
- * browser scroll and then easing the remainder was worse, not better:
- * the page moved, stopped, paused, and moved again, which reads as a
- * stagger rather than as travel (Cyril, 2026-08-24).
+ * Two things make that hold, and both were learned the hard way
+ * (Cyril, 2026-08-24):
  *
- * So the wheel is taken whole. Nothing scrolls natively — the tick is
- * swallowed and one tween carries the entire panel, because a single
- * continuous motion is the only arrangement there is anything smooth to
- * feel in.
+ * ONE GESTURE, ONE PANEL. A trackpad keeps delivering for the best part
+ * of a second after the fingers lift, so the whole problem is knowing
+ * when a gesture has ended. Two rules do it. Every event is swallowed
+ * while a glide is spent, however small — a tail event under MIN_DELTA
+ * used to escape, scroll the document natively, and kill the tween
+ * through autoKill, which unlocked mid-panel and let the next event
+ * start a second glide from halfway. And the test for "still pushing"
+ * is against the gesture's PEAK, not the event before it: momentum
+ * decays in integer steps and plateaus constantly, so comparing
+ * neighbours read every plateau as a fresh push and bought a panel for
+ * each one.
  *
- * Three things stay the browser's, because a tween has no business in
- * any of them: touch and reduced-motion keep the native snap
- * (globals.css); a chapter grown taller than the window scrolls freely
- * inside itself, because it is read rather than crossed; and a scroll
- * the wheel did not drive is left alone until it stops, then settled.
+ * SMOOTH MEANS THE CURVE, NOT JUST THE TIME. power1.inOut, which is the
+ * ease the home page's own scroll snap settles on (OutcomeTransition) —
+ * it leaves and arrives at zero speed, so neither end is a lurch.
  *
- * The rule the home page learned the hard way holds here too
- * (OutcomeTransition): the page never moves against the scroll. One tick
- * down goes to the panel *ahead*, never back to the one just left.
+ * Three things stay the browser's: touch and reduced-motion keep the
+ * native snap (globals.css); a chapter grown taller than the window
+ * scrolls freely inside itself, because it is read rather than crossed;
+ * and a scroll the wheel did not drive is left alone until it stops.
+ *
+ * The page never moves against the scroll (OutcomeTransition): one tick
+ * down goes to the panel ahead, never back to the one just left.
  */
 export default function AboutSnap() {
   useEffect(() => {
@@ -56,13 +70,15 @@ export default function AboutSnap() {
 
     /* the gesture is spent: it has already been answered with a panel */
     let spent = false;
-    /* the tween itself has landed (the lock outlives it — see onWheel) */
+    /* the tween itself has landed (the gesture outlives it) */
     let landed = true;
     /* our own scroll writes are not a gesture, and must not arm a settle */
     let gliding = false;
-    /* the size of the last wheel event, which is how a gesture still
-       being made is told from the tail of one already answered */
-    let lastAbs = 0;
+    /* the biggest event this gesture has delivered, and when its glide
+       started — together these are how a hand still scrolling is told
+       from a trackpad still coasting */
+    let peak = 0;
+    let glideAt = 0;
     let forget = 0;
     let settleTimer = 0;
     let lastY = window.scrollY;
@@ -72,9 +88,9 @@ export default function AboutSnap() {
     /* Panel tops and bottoms, measured once and kept until the page
        changes shape. They move when the door opens (the chapters go
        from display:none to nine viewports) and on every resize, and
-       both of those change the document's height — so that is what the
-       cache is keyed on. Measuring per wheel event instead would force
-       a layout on every notch of the wheel. */
+       both change the document's height — so that is what the cache is
+       keyed on. Measuring per wheel event would force a layout on every
+       notch of the wheel. */
     let cache: { top: number; bottom: number }[] = [];
     let cachedHeight = -1;
     const panels = () => {
@@ -100,9 +116,8 @@ export default function AboutSnap() {
        viewport rather than clipping (about.module.css), and a panel
        taller than the window is READ by scrolling inside it. While
        there is still any of it to reach in the direction of travel the
-       wheel is handed straight back to the browser — carrying the
-       reader off mid-paragraph is not a smoother arrival, it is a lost
-       one. The snap picks up again on the panel below, which fits. */
+       wheel goes straight back to the browser — carrying the reader off
+       mid-paragraph is not a smoother arrival, it is a lost one. */
     const readingInside = (y: number, view: number, way: number) => {
       const here = [...panels()].reverse().find((p) => y >= p.top - NEAR);
       if (!here) return false;
@@ -119,17 +134,17 @@ export default function AboutSnap() {
         : [...tops].reverse().find((t) => t < y - NEAR);
     };
 
-    /* the gesture stays spent while the wheel is still delivering; only
-       silence retires it */
+    /* the gesture stays spent while the wheel is still delivering
+       anything at all; only silence retires it */
     const hold = () => {
       clearTimeout(forget);
       forget = window.setTimeout(() => {
         spent = false;
-        lastAbs = 0;
+        peak = 0;
       }, QUIET_MS);
     };
 
-    const glide = (to: number, ease: string) => {
+    const glide = (to: number) => {
       const y = window.scrollY;
       const target = gsap.utils.clamp(0, root.scrollHeight - window.innerHeight, to);
       const distance = Math.abs(target - y);
@@ -137,24 +152,31 @@ export default function AboutSnap() {
       spent = true;
       landed = false;
       gliding = true;
+      glideAt = performance.now();
       clearTimeout(forget);
       gsap.to(window, {
         scrollTo: { y: target, autoKill: true },
-        /* One panel lands a little over half a second: long enough to
-           read as travel between two places rather than as a cut, short
-           enough that a reader moving quickly is never waiting on it.
-           Scaled by distance so a scrollbar drag across three chapters
-           does not cross them at one notch's speed. */
-        duration: gsap.utils.clamp(0.35, 0.9, 0.28 + distance / (window.innerHeight * 3.4)),
-        ease,
+        /* One panel takes about eight tenths of a second. That is slow
+           for a UI animation and right for this: the thing moving is the
+           whole page, and a viewport crossed in half a second reads as a
+           cut rather than as travel. Scaled by distance so a scrollbar
+           drag across three chapters does not cross them at one notch's
+           speed. */
+        duration: gsap.utils.clamp(0.5, 1.2, 0.4 + distance / (window.innerHeight * 2.4)),
+        /* Leaves and arrives at zero speed. An `out` curve starts at its
+           maximum, which on a whole-viewport move is the lurch that read
+           as sudden; `inOut` has no abrupt end at either side. Same ease
+           the home page's snap settles on (OutcomeTransition). */
+        ease: "power1.inOut",
         overwrite: "auto",
         /* autoKill hands the scroll back if something else moves it — a
-           scrollbar dragged mid-glide. The wheel cannot trigger it any
-           more: it never reaches the document. */
+           scrollbar dragged mid-glide. The wheel cannot trigger it: it
+           never reaches the document. */
         onAutoKill() {
           gliding = false;
           landed = true;
           spent = false;
+          peak = 0;
           clearTimeout(forget);
           lastY = window.scrollY;
           arm();
@@ -163,8 +185,8 @@ export default function AboutSnap() {
           gliding = false;
           landed = true;
           lastY = window.scrollY;
-          /* the gesture is not retired here — the trackpad is usually
-             still coasting, and its tail must not buy a second panel */
+          /* not retired here — the trackpad is usually still coasting,
+             and its tail must not buy a second panel */
           hold();
         },
       });
@@ -175,32 +197,28 @@ export default function AboutSnap() {
       /* pinch-zoom is the browser's, always */
       if (e.ctrlKey) return;
       const abs = Math.abs(e.deltaY);
-      if (abs < MIN_DELTA) return;
 
       if (spent) {
-        /* swallow it either way: nothing may scroll behind the tween,
-           and nothing may scroll on the coast that follows it */
+        /* Everything is swallowed, however small. A tail event slipping
+           through here is what used to scroll the document behind the
+           tween and kill it through autoKill, halfway between panels. */
         e.preventDefault();
         hold();
-        /* Momentum from a flick decays event over event, so a delta no
-           larger than the one before it is the tail of the gesture that
-           has already been answered. Anything holding steady or growing
-           — a sustained two-finger scroll, the discrete notch of a
-           mouse wheel — is the reader still asking, and buys the next
-           panel as soon as the current one has landed. */
-        if (!landed || abs < lastAbs) {
-          lastAbs = abs;
-          return;
-        }
+        if (abs > peak) peak = abs;
+        if (!landed) return;
+        /* still going, long after the coast would have died: a hand,
+           not momentum. Anything else waits for silence. */
+        if (performance.now() - glideAt < SUSTAIN_MS) return;
+        if (abs < peak * SUSTAIN_FRAC) return;
         spent = false;
         clearTimeout(forget);
       }
 
+      if (abs < MIN_DELTA) return;
+
       const way = e.deltaY > 0 ? 1 : -1;
       const view = window.innerHeight;
       const y = window.scrollY;
-      lastAbs = abs;
-
       if (readingInside(y, view, way)) return;
 
       const to = ahead(y, way);
@@ -210,11 +228,8 @@ export default function AboutSnap() {
 
       e.preventDefault();
       dir = way;
-      /* ease-OUT, not the inOut a thing drifting across the screen would
-         take: this is answering an input, and a slow first 150ms after
-         the wheel moves reads as the page hesitating. Out leaves at once
-         and settles into the panel. */
-      glide(to, "power2.out");
+      peak = abs;
+      glide(to);
     };
 
     /* Everything the wheel did not do: a scrollbar dragged, a PageDown,
@@ -238,9 +253,7 @@ export default function AboutSnap() {
       if (readingInside(y, view, dir)) return;
       const to = ahead(y, dir);
       if (to === undefined) return;
-      /* inOut here: no input is being answered, the page is moving of
-         its own accord, so it accelerates and brakes */
-      glide(to, "power2.inOut");
+      glide(to);
     }
 
     const onScroll = () => {
