@@ -49,7 +49,7 @@ export const experience: Role[] = [
   {
     years: "2024 — 2025",
     from: 2024,
-    title: "Founder, Design Engineer and CTPO",
+    title: "Founder, Design Engineer and CPTO",
     org: "CaseChat",
     body: "Built and shipped an AI simulator where medical students practise diagnosis, from first research through launch.",
     /* CaseChat's own stack (Cyril, 2026-08-22): Svelte-TS, FastAPI and
