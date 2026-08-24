@@ -85,7 +85,7 @@ export default function CaseChatContent() {
               "Every function except the clinical one",
               "The entire technology stack, written hands-on",
               "Product — what got built, and in what order",
-              "All design and UX, from first research through to the interface",
+              "All design and UX, from research to the interface",
               "Sales and go-to-market",
             ],
           },

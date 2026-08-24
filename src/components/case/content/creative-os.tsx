@@ -42,7 +42,7 @@ export default function CreativeOsContent() {
             label: "What I owned",
             lines: [
               "Product — what got built, and in what order",
-              "All design and UX, and the design system under it",
+              "All design and UX, and the design system",
               "The front end, written hands-on",
               "Go-to-market",
             ],

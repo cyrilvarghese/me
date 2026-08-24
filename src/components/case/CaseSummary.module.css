@@ -122,27 +122,36 @@
 
 /* What the work actually was, one item per line under the title.
 
-   No marker. A disc here would be the only bulleted list on the site and
-   would read as a form, so the lines are separated by space instead —
-   which is why they stay phrases: a wrapped sentence and a new item look
-   the same without a marker, and only brevity tells them apart.
+   Marked, after a spell without (Cyril, 2026-08-24). Space alone had to
+   carry two jobs — hold a wrapped phrase together AND start the next
+   item — and it could only do one at a time: tight enough to cohere read
+   as prose, wide enough to separate read as scattered. A marker does the
+   separating, so the spacing is free to just be comfortable.
 
-   No colour and no weight of its own: it inherits --fg-soft from the dd
-   above, because the meta block's one job is to stay quieter than the
-   argument it sits under (type-on-dark — one emphasis per block). */
+   It also buys the hanging indent for nothing: list-style puts wrapped
+   lines under the TEXT rather than under the dot, so a phrase that runs
+   on is unmistakably still the same item.
+
+   The dot is --muted, not the accent. The meta block's one job is to
+   stay quieter than the argument it sits under, and the columns above
+   already spend the block's red on their rules (type-on-dark — one
+   emphasis per block). */
 .metaLines {
-	list-style: none;
+	list-style: disc;
 	margin: 0.7rem 0 0;
-	padding: 0;
+	/* room for the marker, which sits outside the text column */
+	padding: 0 0 0 1.05rem;
 	display: flex;
 	flex-direction: column;
-	/* Wider than it looks like it needs to be. With no marker, the only
-	   thing separating two items is space, so the gap has to beat the
-	   leading inside a wrapped item clearly — at 0.45rem the second line
-	   of one phrase and the first line of the next were the same
-	   distance apart, and the column read as prose. */
-	gap: 0.8rem;
-	line-height: 1.35;
+	gap: 0.55rem;
+	line-height: 1.5;
+}
+
+.metaLines li::marker {
+	color: var(--muted);
+	/* a disc at full body size reads as a control; 0.8em puts it at the
+	   weight of the dot this site already separates tags with */
+	font-size: 0.8em;
 }
 
 /* The tools, in the voice this site already gives a run of short labels:

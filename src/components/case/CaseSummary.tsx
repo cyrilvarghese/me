@@ -72,8 +72,6 @@ export default function CaseSummary({
               <dd className={styles.metaBody}>
                 {m.body}
                 {m.lines && (
-                  /* no bullets: this would be the only marked list on the
-                     page, and a disc in this column reads as a form */
                   <ul className={styles.metaLines}>
                     {m.lines.map((l) => (
                       <li key={l}>{l}</li>
