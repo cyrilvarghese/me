@@ -77,16 +77,21 @@
 	   and the walk is what the figure is arguing. So it held at 300ms
 	   and took a larger share of a leg (26%) than it used to.
 
-	   Then slower twice on the trot (Cyril, 2026-08-25): 15%, and 30%
-	   again on top of that — 300ms to 450ms. The stand is left where
-	   it was, so only the travel stretched: the walk keeps its cadence
-	   and just takes each leg at a more deliberate pace. --leg carries
-	   the whole 150ms because CaseJourney.tsx schedules the next step
-	   off it, and it has to stay travel + dwell or the dash leaves
-	   again before it has finished arriving. */
-	--travel: 450ms;
+	   Then 300ms to 675ms, found on a slider rather than argued at
+	   (Cyril, 2026-08-25) — three guesses in a row all landed short, so
+	   the number came off a temporary control in the panel instead. The
+	   stand is left where it was, so only the travel stretched: the walk
+	   keeps its cadence and just takes each leg at a walk. It is now
+	   44% of a leg, where it started at 15% — the dash spends more of
+	   the journey moving than standing, which is the opposite of the
+	   carousel this replaced and the point of it.
+
+	   --leg carries the whole 375ms because CaseJourney.tsx schedules
+	   the next step off it, and it has to stay travel + dwell or the
+	   dash leaves again before it has finished arriving. */
+	--travel: 675ms;
 	--dwell: 850ms;
-	--leg: 1300ms;
+	--leg: 1525ms;
 	/* how long the walk waits after the last arrow press before carrying
 	   on by itself. NOT halved: this one is measured in reading time, not
 	   in the walk's pace — someone who pressed back to re-read a quote
