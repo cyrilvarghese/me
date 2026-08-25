@@ -2,7 +2,7 @@
     the footer and the CTA drifted apart the moment one of them changed,
     which is how the site came to copy one address while displaying
     another. */
-export const EMAIL = "hi@cyril.design";
+export const EMAIL = "hi@cyril.build";
 
 /** The two places a visitor goes to read more, for the same reason the
     address is here: a link typed into a component is a link nobody finds
