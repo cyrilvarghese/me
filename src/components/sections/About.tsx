@@ -19,17 +19,6 @@ const viewport = { once: true, margin: "0px 0px -18% 0px" };
    light shifting rather than as something chasing the cursor. */
 const LEAN_PX = 16;
 
-/* The nudge's cadence. First one soon after the portrait is on screen,
-   the rest at a random gap inside this window — a fixed interval is a
-   metronome, and a metronome in the corner of the eye is exactly the
-   loop this section refuses everywhere else. It gives up after
-   NUDGE_MAX: a reader who has ignored four of them is not going to
-   hover, and a fifth is nagging. */
-const NUDGE_FIRST_MS = 1600;
-const NUDGE_GAP_MS: [number, number] = [4500, 9000];
-const NUDGE_MAX = 4;
-const rand = (a: number, b: number) => a + Math.random() * (b - a);
-
 export default function About() {
   const filmRef = useRef<HTMLVideoElement>(null);
   const leanRef = useRef<HTMLSpanElement>(null);
@@ -37,15 +26,11 @@ export default function About() {
   const rimRef = useRef<HTMLSpanElement>(null);
   const raf = useRef<number | undefined>(undefined);
   const warmed = useRef(false);
-  /* set the first time the reader actually hovers the portrait: the
-     nudge exists to be obeyed once, and then it has done its job */
-  const found = useRef(false);
 
   /* Where the reward lives: hovering the portrait plays a film, and
-     nothing on the page says so. These two together are the invitation —
-     the light leans toward the reader before they arrive (below), and
-     the disc breathes once when it first comes into view (in the JSX).
-     Neither of them labels itself. */
+     nothing on the page says so. The invitation is the light leaning
+     toward the reader before they arrive (below) — it does not label
+     itself, and the disc no longer moves to ask (Cyril, 2026-08-25). */
   const canHover = () =>
     window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
     !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -100,48 +85,6 @@ export default function About() {
     v.load();
   };
 
-  /* The nudge scheduler. It only runs while the portrait is actually on
-     screen — an IntersectionObserver rather than a plain timer, or the
-     disc spends the whole page hopping to nobody — and it stops for good
-     the moment the reader hovers it. The attribute comes off on
-     animationend so the next firing re-triggers the animation. */
-  useEffect(() => {
-    const frame = frameRef.current;
-    if (!frame || !canHover()) return;
-
-    let timer: number | undefined;
-    let fired = 0;
-
-    const schedule = (delay: number) => {
-      window.clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        if (found.current || fired >= NUDGE_MAX) return;
-        fired += 1;
-        frame.style.animationDuration = `${Math.round(rand(680, 860))}ms`;
-        frame.dataset.nudge = Math.random() < 0.5 ? "hop" : "tilt";
-        schedule(rand(NUDGE_GAP_MS[0], NUDGE_GAP_MS[1]));
-      }, delay);
-    };
-
-    const end = () => delete frame.dataset.nudge;
-    frame.addEventListener("animationend", end);
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !found.current) schedule(NUDGE_FIRST_MS);
-        else window.clearTimeout(timer);
-      },
-      { threshold: 0.6 }
-    );
-    io.observe(frame);
-
-    return () => {
-      window.clearTimeout(timer);
-      io.disconnect();
-      frame.removeEventListener("animationend", end);
-    };
-  }, []);
-
   useEffect(() => () => {
     if (raf.current !== undefined) cancelAnimationFrame(raf.current);
   }, []);
@@ -158,7 +101,6 @@ export default function About() {
      that from throwing, and the still photograph underneath is already
      the fallback. */
   const playFilm = () => {
-    found.current = true;
     const v = filmRef.current;
     if (!v || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     v.muted = true;
@@ -220,12 +162,7 @@ export default function About() {
             scroll-spy is position-based, so a route in that row would
             have nothing to mark as current. */}
         <div className={styles.portraitCol}>
-          {/* A plain element, not an m.div: the nudge is a CSS keyframe
-              animation re-triggered from the scheduler above, and Framer
-              writing an inline transform to the same element would fight
-              it on every firing.
-
-              The frame is the link — the disc has carried cursor: pointer
+          {/* The frame is the link — the disc has carried cursor: pointer
               since it grew the hover film, and an affordance that leads
               nowhere is a promise the page does not keep. aria-label
               rather than the photograph's alt: a link is named by where
