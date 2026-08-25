@@ -74,11 +74,19 @@
 	   The travel did NOT halve twice with it. Under about a quarter of a
 	   second the dash stops reading as something that walked to the next
 	   stop and starts reading as something switched off and on there —
-	   and the walk is what the figure is arguing. So it holds at 300ms
-	   and takes a larger share of a leg (26%) than it used to. */
-	--travel: 300ms;
+	   and the walk is what the figure is arguing. So it held at 300ms
+	   and took a larger share of a leg (26%) than it used to.
+
+	   Then slower twice on the trot (Cyril, 2026-08-25): 15%, and 30%
+	   again on top of that — 300ms to 450ms. The stand is left where
+	   it was, so only the travel stretched: the walk keeps its cadence
+	   and just takes each leg at a more deliberate pace. --leg carries
+	   the whole 150ms because CaseJourney.tsx schedules the next step
+	   off it, and it has to stay travel + dwell or the dash leaves
+	   again before it has finished arriving. */
+	--travel: 450ms;
 	--dwell: 850ms;
-	--leg: 1150ms;
+	--leg: 1300ms;
 	/* how long the walk waits after the last arrow press before carrying
 	   on by itself. NOT halved: this one is measured in reading time, not
 	   in the walk's pace — someone who pressed back to re-read a quote
@@ -312,10 +320,20 @@
    finishes arriving as the dash does. Then it holds: nothing here ever
    takes `data-shown` away. */
 
+/* ease-in-out, not the Material standard curve it used to run
+   (Cyril, 2026-08-25). Nothing here enters or leaves — the dash is an
+   on-screen element moving from one stop to the next, and that is the
+   case ease-in-out is for: it pushes off a node and brakes into the
+   next one, the way something that walked a leg would. cubic-bezier(0.4,
+   0, 0.2, 1) reads symmetric and is not — it front-loads the
+   acceleration and decelerates for most of the leg, so the dash left
+   fast and crept in. The quad curve is the gentlest of the in-out set,
+   which is what 300ms over a short run wants; the stronger ones spend
+   so long at the ends that a leg this brief reads as a snap. */
 .trail,
 .marker {
-	transition: transform var(--travel) cubic-bezier(0.4, 0, 0.2, 1),
-		left var(--travel) cubic-bezier(0.4, 0, 0.2, 1);
+	transition: transform var(--travel) cubic-bezier(0.455, 0.03, 0.515, 0.955),
+		left var(--travel) cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 .noteIn {
