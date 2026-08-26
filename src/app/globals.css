@@ -365,21 +365,7 @@ button {
 
 /* ---- the About room ---- */
 
-/* Shut: the threshold is the whole page. The document is clamped to
-   one viewport and does not scroll, and nothing past the head is drawn,
-   so there is no scrollbar hinting at a page behind the door. Set by
-   RoomLight from an effect, which is why none of this applies to a
-   reader without JavaScript — they get the page whole. */
-html[data-room="shut"] {
-	height: 100dvh;
-	overflow: hidden;
-}
-
-html[data-room="shut"] [data-after-threshold] {
-	display: none;
-}
-
-/* The page turns to light along its spine when the reader asks for it
+/* The page turns to light on the reader's first scroll
    (components/about/RoomLight). A same-document transition, so the ground,
    the ink, the hairlines and every card shadow turn together — the whole
    page is one snapshot, and nothing has to be rendered twice.
@@ -401,7 +387,7 @@ html[data-vt="room"]::view-transition-new(root) {
 	   the SNAPSHOT — the type and the drawing warp along with the edge,
 	   which is the whole reason this is a mask and not a filter.
 
-	   Radius, centre and feather are all driven from the click (one rAF
+	   Radius, centre and feather are all driven from RoomLight (one rAF
 	   loop, so they cannot drift apart); nothing about the bloom is
 	   animated from here. */
 	mask-image: url(#ink-mask);

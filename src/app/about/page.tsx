@@ -4,7 +4,7 @@ import { chapters, sparetime } from "@/lib/data/about-story";
 import { RevealDiv } from "@/components/case/Reveal";
 import Cluster from "@/components/about/Cluster";
 import ContactActions from "@/components/ContactActions";
-import RoomLight, { FIRST_CHAPTER } from "@/components/about/RoomLight";
+import RoomLight from "@/components/about/RoomLight";
 import styles from "./about.module.css";
 
 export const metadata: Metadata = {
@@ -31,9 +31,7 @@ export default function AboutPage() {
   return (
     <main className={styles.page}>
       {/* the way back, held at the top of the column rather than the
-          window edge — same trick as CaseBack's dock. Not behind the
-          door: the way out is there whether or not the reader has come
-          in (Cyril, 2026-08-23). */}
+          window edge — same trick as CaseBack's dock */}
       <div className={styles.dock}>
         <div className={`section-shell ${styles.dockInner}`}>
           <Link href="/" className={`mono-label btn btn-ghost ${styles.back}`}>
@@ -51,16 +49,14 @@ export default function AboutPage() {
             and I think you&apos;ll be happier for the trouble.
           </blockquote>
           <figcaption className={`mono-label ${styles.quoteWho}`}>Bill Watterson</figcaption>
-          {/* the drawing is also the way into the light room */}
+          {/* the drawing, and the point the light spreads from */}
           <RoomLight />
         </figure>
       </header>
 
-      {/* everything from here down is behind the door: hidden while
-          the room is shut, revealed as one run of viewport panels */}
-      <ol className={`section-shell ${styles.chapters}`} data-after-threshold>
-        {chapters.map((c, i) => (
-          <li key={c.num} id={i === 0 ? FIRST_CHAPTER : undefined} className={styles.chapter}>
+      <ol className={`section-shell ${styles.chapters}`}>
+        {chapters.map((c) => (
+          <li key={c.num} className={styles.chapter}>
             <div className={styles.figureCol}>
               {c.gallery.link ? (
                 /* the pictures lead somewhere: the whole cluster is the
@@ -147,7 +143,7 @@ export default function AboutPage() {
         </li>
       </ol>
 
-      <RevealDiv className={`section-shell ${styles.end}`} data-after-threshold>
+      <RevealDiv className={`section-shell ${styles.end}`}>
         <p className={`serif-display ${styles.thanks}`}>Thanks for reading this far.</p>
         {/* Three weights, not four boxes: the way back holds the left
             edge, the email keeps the accent border because it is the one

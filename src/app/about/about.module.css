@@ -32,17 +32,19 @@
 /* ---- head ---- */
 
 /* The threshold: one full viewport with the name, the quote and the
-   door, and nothing else visible until it is opened. dvh, not vh — on a
-   phone 100vh includes the strip under the browser bar, so a panel set
-   to it overflows by exactly that strip. */
+   drawing, and the chapters beginning below the fold — the reader
+   arrives on the quote alone, and scrolling off it is what turns the
+   page to light. dvh, not vh — on a phone 100vh includes the strip
+   under the browser bar, so a panel set to it overflows by exactly
+   that strip. */
 .head {
 	min-height: 100dvh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	/* the breathing room gives way before the content does: on a short
-	   window (a 720px laptop) 4rem each side pushed the door below the
-	   fold of a page that cannot scroll */
+	   window (a 720px laptop) 4rem each side pushed the drawing below
+	   the fold */
 	padding-block: clamp(1.5rem, 5vh, 4rem);
 	box-sizing: border-box;
 	/* centred, unlike every other section on this site: the page has a

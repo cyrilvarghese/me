@@ -1,113 +1,46 @@
-/* The disc is the page's one control, so it carries no button chrome —
-   the drawing is the affordance and the label under it says what happens. */
-.room {
-	position: relative;
-	display: block;
-	margin: 2.25rem auto 0;
-	padding: 0;
-	border: 0;
-	background: none;
-	color: inherit;
-	font: inherit;
-	cursor: pointer;
-}
-
-.room:disabled {
-	cursor: default;
-}
-
 /* Watterson's characters on a light disc — the square source is white,
-   so the circle clip is what turns it into a mark rather than a patch */
+   so the circle clip is what turns it into a mark rather than a patch.
+
+   Not a control any more: no bounce inviting a press, no hover ring, no
+   label naming what a click would do. It is a drawing under a quote,
+   and the place the ink happens to land when the reader scrolls on. */
 .art {
 	position: relative;
 	display: block;
-	/* the largest thing on the threshold: it is the door */
+	margin: 2.25rem auto 0;
+	/* the largest thing on the threshold */
 	width: 10rem;
 	aspect-ratio: 1;
 	object-fit: cover;
 	border-radius: 50%;
+	/* the disc is white and the ground is dark; the hairline is what
+	   stops it reading as a hole punched in the page */
+	box-shadow: 0 0 0 1px var(--hairline);
 	/* The drawing waits with the page: no colour until the room is lit.
 	   No transition on this state — the lit snapshot must carry the
 	   drawing fully coloured, so the colour arrives with the light; the
-	   delayed ease lives on :disabled below, where it plays on the live
+	   delayed ease lives on [data-lit] below, where it plays on the live
 	   page after the bloom has handed over. */
 	filter: grayscale(1);
 }
 
-/* The disc bounces, and keeps bouncing: every hop the same height, no
-   rest between them, nothing decaying. What makes it a bounce rather
-   than a float is the asymmetry of the curve — a ball slows into the
-   top of its arc and comes down fast, so the two halves of the hop
-   get opposite easings. Stops the moment the room is open. */
-@media (prefers-reduced-motion: no-preference) {
-	.room:not(:disabled) .art {
-		animation: bounce 1.1s infinite;
-	}
-}
+/* The drop's origin is the last thing to resolve — ink is thickest
+   where it landed, so the drawing regains its colour after the page
+   around it has. Set as a transition, not in the view transition: the
+   snapshot carries the greyscale, and the live page eases out of it
+   once the bloom has handed over.
 
-@keyframes bounce {
-	/* up: ease-out, decelerating into the apex */
-	0% {
-		transform: translateY(0);
-		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-	}
-	/* down: ease-in, accelerating into the ground */
-	50% {
-		transform: translateY(-12px);
-		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-	}
-	100% {
-		transform: translateY(0);
-	}
-}
-
-/* a hairline on the disc itself under the pointer; the bounce is the
-   invitation at rest, this is the answer to reaching for it */
-.room:not(:disabled) .art {
-	box-shadow: 0 0 0 1px var(--hairline);
-	transition: box-shadow 200ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-	/* no transform here: the bounce owns .art's transform, and a second
-	   one on hover would fight it mid-hop. The ring warming is the answer
-	   to reaching for it. */
-	.room:not(:disabled):hover .art {
-		box-shadow: 0 0 0 1px var(--hairline-red);
-	}
-}
-
-.room:focus-visible .art {
-	outline: 1px solid var(--accent);
-	outline-offset: 4px;
-}
-
-.hint {
-	display: block;
-	margin-top: 1.1rem;
-	color: var(--muted);
-	transition: opacity 200ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-	.room:not(:disabled):hover .hint {
-		color: var(--accent-lift);
-	}
-}
-
-/* once the room is open the invitation has nothing left to offer; it
-   goes rather than sitting there naming a thing that already happened */
-.room:disabled .hint {
-	opacity: 0;
-}
-
-.room:disabled .art {
+   The ring goes with it: on the light ground the disc is the same white
+   as the page, and an outline round it would be a border drawn for its
+   own sake. */
+.art[data-lit] {
+	box-shadow: none;
 	filter: none;
+	transition: filter 900ms ease 1800ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.art,
-	.hint {
+	.art[data-lit] {
 		transition: none;
 	}
 }
@@ -118,20 +51,4 @@
 	width: 0;
 	height: 0;
 	overflow: hidden;
-}
-
-/* The drop's origin is the last thing to resolve — ink is thickest
-   where it landed, so the drawing regains its colour after the page
-   around it has. Set as a transition, not in the view transition: the
-   snapshot carries the greyscale, and the live page eases out of it
-   once the bloom has handed over. */
-.room:disabled .art {
-	filter: none;
-	transition: filter 900ms ease 1800ms;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.room:disabled .art {
-		transition: none;
-	}
 }
