@@ -168,23 +168,24 @@
    otherwise (same quirk family as the header veil and hero scrim). */
 .glow {
 	position: absolute;
-	/* Spread wide and taken down to ~30% of its former strength (Cyril,
-	   2026-08-26): the earlier pass read as a lamp behind the picture.
+	/* Spread wide and taken down to ~15% of its former strength — 30% in
+	   one pass, then halved again (Cyril, 2026-08-26): the earlier pass
+	   read as a lamp behind the picture.
 	   The light is now barely visible on its own — you notice the ground
 	   is warmer near the portrait, not that there is a glow. Losing
 	   brightness costs it presence, so the reach buys that back: a much
 	   larger disc falling off all the way to its edge covers the same
 	   arc of ground at a fraction of the alpha. */
-	inset: -38%;
+	inset: -46%;
 	z-index: 0;
 	border-radius: 50%;
 	background: radial-gradient(
 		circle at 52% 38%,
-		rgba(234, 0, 0, 0.09),
-		rgba(248, 244, 242, 0.033) 52%,
+		rgba(234, 0, 0, 0.045),
+		rgba(248, 244, 242, 0.017) 52%,
 		rgba(21, 17, 17, 0) 100%
 	);
-	filter: blur(44px);
+	filter: blur(56px);
 	transform: translateZ(0);
 	animation: backlight 11s ease-in-out infinite alternate;
 }
