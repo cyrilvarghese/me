@@ -100,25 +100,4 @@
 	max-width: 22ch;
 }
 
-.cta {
-	border-top: 1px solid var(--hairline);
-	padding-block: clamp(4rem, 10vh, 7rem);
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 2rem;
-}
-
-/* the two controls are the same gesture at different weights — they sit
-   closer to each other than to the line above them. Voice and geometry
-   come from .btn / .btn-ghost; this is placement only. */
-.backLink {
-	margin-top: -1rem;
-}
-
-.ctaLine {
-	font-size: var(--text-h3);
-	max-width: 24ch;
-}
-
-/* the CTA uses the global .btn voice — nothing to add here */
+/* The case ends in CaseNext, which carries its own rule and spacing. */

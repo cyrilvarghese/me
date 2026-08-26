@@ -1,0 +1,109 @@
+/* The row keeps the hairline the closing section always had, so the body
+   of the case still ends on a rule. The bottom padding is the larger of
+   the two: nothing follows it now that the route drops the footer, and
+   a page that ends flush against its last line reads as truncated. */
+.close {
+	border-top: 1px solid var(--hairline);
+	padding-block: clamp(3rem, 7vh, 5rem) clamp(5rem, 12vh, 8rem);
+}
+
+.row {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 2rem;
+}
+
+/* The quiet half, in the header's nav voice (--muted → --fg) rather than
+   the link voice. Two reasons: this is a way out, not the thing the row
+   is for, and the eyebrow opposite is already carrying the one red this
+   block gets. */
+.all {
+	color: var(--muted);
+	transition: color 150ms ease, transform 100ms ease;
+	white-space: nowrap;
+}
+
+.next {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 0.7rem;
+	text-align: right;
+	/* 40ch, not the usual reading measure: the headlines run 55-70
+	   characters and at --text-h3 a narrower box broke them into four
+	   ragged lines. Two lines of large type read as one gesture; four
+	   read as a paragraph that has wandered into the footer. */
+	max-width: 40ch;
+	transition: transform 100ms ease;
+}
+
+/* Caps, so --accent: cap height and 0.14em of tracking are what let the
+   saturated red hold at 12px — the house exception in the type-on-dark
+   skill. Lower case here would have to be --accent-lift instead. */
+.eyebrow {
+	color: var(--accent);
+}
+
+.headline {
+	font-size: var(--text-h3);
+	color: var(--fg);
+	transition: color 150ms ease;
+}
+
+/* The arrow rides with the last word rather than sitting on a line of
+   its own — nbsp before it, so a wrap can never strand it. */
+.arrow {
+	color: var(--muted);
+	transition: color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.all:hover {
+		color: var(--fg);
+	}
+
+	.next:hover .headline,
+	.next:hover .arrow {
+		color: var(--accent-lift);
+	}
+}
+
+/* Shallower than .link's 0.97: press depth is constant travel, and the
+   headline is twice reading size (see globals.css). */
+.all:active,
+.next:active {
+	transform: scale(0.99);
+}
+
+/* Stacked, the next case goes first — it is the larger element and the
+   one the row exists for, and side by side it already sits on the side
+   the eye finishes on. */
+@media (max-width: 640px) {
+	.row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 2.5rem;
+	}
+
+	.next {
+		order: -1;
+		align-items: flex-start;
+		text-align: left;
+		max-width: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.all,
+	.next,
+	.headline,
+	.arrow {
+		transition: none;
+	}
+
+	.all:active,
+	.next:active {
+		transform: none;
+	}
+}

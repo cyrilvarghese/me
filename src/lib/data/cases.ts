@@ -68,3 +68,16 @@ export const cases: CaseStudy[] = [
     results: [{ value: "~8 min", label: "40% reduction in quote issuance" }],
   },
 ];
+
+/** The case that follows this one, as a ring: the last hands back to the
+    first. The closing row on a case page is the only caller — a reader
+    who reaches the bottom of the last study should still be offered
+    somewhere to go, and the alternative (offering nothing) makes the
+    third case a dead end for no reason the reader can see.
+
+    Returns undefined for a slug that is not a case, which the route
+    cannot produce (dynamicParams = false) but a hand-written link can. */
+export function nextCase(slug: string): CaseStudy | undefined {
+  const i = cases.findIndex((c) => c.slug === slug);
+  return i === -1 ? undefined : cases[(i + 1) % cases.length];
+}

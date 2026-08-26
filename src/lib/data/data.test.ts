@@ -16,7 +16,7 @@ import {
   PEEK_SCALE_COMPACT,
   bladeDelay,
 } from "./scroll";
-import { cases } from "./cases";
+import { cases, nextCase } from "./cases";
 import { experience } from "./experience";
 
 describe("capabilities", () => {
@@ -83,6 +83,23 @@ describe("cases", () => {
       expect(c.cover).toMatch(/^\/assets\//);
       expect(existsSync(join("public", c.cover))).toBe(true);
     }
+  });
+
+  // the closing row on a case page offers the next one, so the walk has
+  // to be a ring: the last case hands back to the first rather than to
+  // nothing. Every case gets a next, and none of them is itself.
+  it("nextCase walks the array and wraps", () => {
+    expect(nextCase("creative-os")).toBe(cases[1]);
+    expect(nextCase(cases[cases.length - 1].slug)).toBe(cases[0]);
+    for (const c of cases) {
+      const n = nextCase(c.slug);
+      expect(n).toBeDefined();
+      expect(n!.slug).not.toBe(c.slug);
+    }
+  });
+
+  it("nextCase returns undefined for a slug that is not a case", () => {
+    expect(nextCase("not-a-case")).toBeUndefined();
   });
 });
 

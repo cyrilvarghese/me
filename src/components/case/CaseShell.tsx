@@ -1,13 +1,13 @@
 import { ViewTransition } from "react";
 import type { CaseStudy } from "@/lib/data/cases";
-import ContactActions from "@/components/ContactActions";
 import CaseBack from "./CaseBack";
+import CaseNext from "./CaseNext";
 import CaseVisual from "./CaseVisual";
-import { RevealDiv, RevealSection } from "./Reveal";
+import { RevealDiv } from "./Reveal";
 import styles from "./CaseShell.module.css";
 
 /** Shared detail template: the morph-target hero (the card's visual,
-    now the whole viewport), free per-case sections, closing CTA.
+    now the whole viewport), free per-case sections, closing row.
     default="none" MUST keep its explicit share="morph" — dropping share
     silently kills the pair (Next view-transitions guide). */
 export default function CaseShell({
@@ -44,12 +44,7 @@ export default function CaseShell({
 
       {children}
 
-      <RevealSection className={`section-shell ${styles.cta}`}>
-        <p className={`serif-display ${styles.ctaLine}`}>
-          Have a problem that needs more than one perspective?
-        </p>
-        <ContactActions />
-      </RevealSection>
+      <CaseNext slug={caseStudy.slug} />
     </>
   );
 }
