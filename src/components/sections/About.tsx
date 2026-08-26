@@ -141,7 +141,7 @@ export default function About() {
           <p className={styles.lede}>
             From sketching stories as a kid to designing products as a designer, that
             same sense of{" "}
-            <span className={styles.spark}>curiosity and wonder still drives my work</span>
+            <span className={styles.spark}>curiosity and wonder drives my work</span>
             .
           </p>
           <p className={styles.lede}>
