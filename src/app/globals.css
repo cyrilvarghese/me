@@ -333,13 +333,14 @@ button {
    apply. Same physics the runtime would use, minus interruptibility that a
    click-through morph never exercises.
 
-   motion spring { visualDuration: 0.35, bounce: 0.15 }. The 0.35 is
+   motion spring { visualDuration: 0.35, bounce: 0.27 }. The 0.35 is
    time-to-target, so the picture lands sooner than the old 420ms ease did;
-   the rest is a settle under a percent past the mark. Retune in
-   lib/morph-spring.test.ts, which regenerates this and fails if it drifts. */
+   what follows is meant to be seen — 3.5% past the mark, then a rebound that
+   dips just under it before settling. Retune in lib/morph-spring.test.ts,
+   which regenerates this and fails if the stylesheet drifts. */
 ::view-transition-group(.morph) {
-	animation-duration: 650ms;
-	animation-timing-function: linear(0, 0.0824, 0.2537, 0.4405, 0.6071, 0.7402, 0.8387, 0.907, 0.9517, 0.979, 0.9946, 1.0024, 1.0056, 1.0063, 1.0057, 1.0045, 1.0034, 1.0024, 1.0015, 1.001, 1.0005, 1);
+	animation-duration: 600ms;
+	animation-timing-function: linear(0, 0.0882, 0.2768, 0.4859, 0.6722, 0.8175, 0.9193, 0.9832, 1.0179, 1.0324, 1.0346, 1.0302, 1.0233, 1.0161, 1.0099, 1.0053, 1.0021, 1.0002, 0.9992, 1);
 }
 
 /* the manual reverse morph (CaseBack) pairs by name, not class — keep
@@ -348,8 +349,8 @@ button {
 ::view-transition-group(case-visual-creative-os),
 ::view-transition-group(case-visual-case-chat),
 ::view-transition-group(case-visual-msig) {
-	animation-duration: 650ms;
-	animation-timing-function: linear(0, 0.0824, 0.2537, 0.4405, 0.6071, 0.7402, 0.8387, 0.907, 0.9517, 0.979, 0.9946, 1.0024, 1.0056, 1.0063, 1.0057, 1.0045, 1.0034, 1.0024, 1.0015, 1.001, 1.0005, 1);
+	animation-duration: 600ms;
+	animation-timing-function: linear(0, 0.0882, 0.2768, 0.4859, 0.6722, 0.8175, 0.9193, 0.9832, 1.0179, 1.0324, 1.0346, 1.0302, 1.0233, 1.0161, 1.0099, 1.0053, 1.0021, 1.0002, 0.9992, 1);
 }
 
 /* the fixed header must never appear to move: pin its group, hide the

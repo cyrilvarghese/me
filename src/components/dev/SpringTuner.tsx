@@ -22,7 +22,7 @@ const SELECTORS = [
 ].join(",\n");
 
 /** what is committed in globals.css, so "Reset" means something */
-const SHIPPED = { visualDuration: 0.35, bounce: 0.15 };
+const SHIPPED = { visualDuration: 0.35, bounce: 0.27 };
 
 function sample(visualDuration: number, bounce: number) {
   const generated = spring({ keyframes: [0, 1], visualDuration, bounce }).toString();

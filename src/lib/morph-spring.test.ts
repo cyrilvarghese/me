@@ -13,7 +13,7 @@ import { spring } from "motion";
    source of truth: it regenerates the curve from the config below and fails
    if the stylesheet has drifted. Retuning means editing MORPH_SPRING, running
    the suite, and pasting what the failure prints. */
-const MORPH_SPRING = { visualDuration: 0.35, bounce: 0.15 };
+const MORPH_SPRING = { visualDuration: 0.35, bounce: 0.27 };
 
 const generated = spring({ keyframes: [0, 1], ...MORPH_SPRING }).toString();
 const [, duration, easing] = generated.match(/^(\d+ms) (linear\(.+\))$/)!;
@@ -34,10 +34,13 @@ describe("the case-study morph spring", () => {
     expect(Number.parseInt(duration)).toBeLessThanOrEqual(800);
   });
 
-  it("overshoots enough to read as weight, not enough to read as wobble", () => {
-    const peak = Math.max(...easing.match(/[\d.]+/g)!.map(Number));
-    expect(peak).toBeGreaterThan(1);
-    expect(peak).toBeLessThan(1.01);
+  /* Cyril picked a bounce you are meant to notice, so the bound is no longer
+     "barely there" — it is "springs visibly, without looking broken". */
+  it("springs visibly past the mark rather than easing onto it", () => {
+    const stops = easing.match(/[\d.]+/g)!.map(Number);
+    const peak = Math.max(...stops);
+    expect(peak).toBeGreaterThan(1.01);
+    expect(peak).toBeLessThan(1.06);
   });
 
   it("drives the forward morph — the card opening into the page", () => {
