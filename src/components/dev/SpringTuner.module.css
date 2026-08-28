@@ -1,0 +1,136 @@
+/* Dev-only panel. Every colour and size here is an existing token or ladder
+   rung — this tool makes no new type decisions, it only borrows the site's. */
+
+.panel {
+	position: fixed;
+	right: var(--gutter);
+	bottom: var(--gutter);
+	z-index: 200;
+	width: max-content;
+	background: var(--surface);
+	border: var(--control-border) solid var(--hairline);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-card);
+}
+
+.toggle {
+	display: block;
+	width: 100%;
+	padding: 0.5rem 0.75rem;
+	background: none;
+	border: 0;
+	border-bottom: var(--control-border) solid var(--hairline);
+	color: var(--accent);
+	font-size: var(--text-label);
+	letter-spacing: var(--track-label);
+	text-align: left;
+	cursor: pointer;
+}
+
+.panel[data-open="false"] .toggle {
+	border-bottom: 0;
+}
+
+.body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+	padding: 0.85rem 0.75rem 0.75rem;
+}
+
+.graph {
+	display: block;
+	width: 260px;
+	height: 96px;
+	background: var(--bg);
+	border: var(--control-border) solid var(--hairline);
+}
+
+/* the value the spring is settling onto; the trace rides above it by the
+   overshoot and comes back down */
+.target {
+	stroke: var(--hairline);
+	stroke-width: 1;
+	stroke-dasharray: 3 3;
+}
+
+.trace {
+	fill: none;
+	stroke: var(--accent-lift);
+	stroke-width: 2;
+	stroke-linejoin: round;
+}
+
+.control {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.name {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	color: var(--muted);
+	font-size: var(--text-fine);
+	letter-spacing: var(--track-label);
+}
+
+.value {
+	color: var(--fg);
+	font-weight: 400;
+}
+
+.control input[type="range"] {
+	width: 100%;
+	accent-color: var(--accent);
+	cursor: pointer;
+}
+
+.readout {
+	color: var(--fg-soft);
+	font-size: var(--text-fine);
+	letter-spacing: 0;
+}
+
+.warn {
+	color: var(--accent-lift);
+	font-size: var(--text-fine);
+	letter-spacing: 0;
+	max-width: 260px;
+}
+
+.actions {
+	display: flex;
+	gap: 0.4rem;
+}
+
+.action {
+	flex: 1;
+	padding: 0.45rem 0.5rem;
+	background: none;
+	color: var(--fg);
+	border: var(--control-border) solid var(--hairline);
+	border-radius: var(--radius);
+	font-size: var(--text-fine);
+	letter-spacing: var(--track-label);
+	cursor: pointer;
+}
+
+.action:hover:not(:disabled) {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: var(--paper);
+}
+
+.action:disabled {
+	color: var(--muted);
+	cursor: default;
+}
+
+.hint {
+	color: var(--muted);
+	font-size: var(--text-fine);
+	letter-spacing: 0;
+	max-width: 260px;
+}
