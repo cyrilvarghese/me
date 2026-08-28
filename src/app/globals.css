@@ -327,16 +327,29 @@ button {
 	pointer-events: none;
 }
 
+/* The morph is a spring, sampled. ::view-transition-group is a pseudo-element
+   in the overlay tree — no JS can reach it, so motion's spring solver is run
+   ahead of time and its curve baked into a linear() easing, which CSS can
+   apply. Same physics the runtime would use, minus interruptibility that a
+   click-through morph never exercises.
+
+   motion spring { visualDuration: 0.35, bounce: 0.15 }. The 0.35 is
+   time-to-target, so the picture lands sooner than the old 420ms ease did;
+   the rest is a settle under a percent past the mark. Retune in
+   lib/morph-spring.test.ts, which regenerates this and fails if it drifts. */
 ::view-transition-group(.morph) {
-	animation-duration: 420ms;
+	animation-duration: 650ms;
+	animation-timing-function: linear(0, 0.0824, 0.2537, 0.4405, 0.6071, 0.7402, 0.8387, 0.907, 0.9517, 0.979, 0.9946, 1.0024, 1.0056, 1.0063, 1.0057, 1.0045, 1.0034, 1.0024, 1.0015, 1.001, 1.0005, 1);
 }
 
 /* the manual reverse morph (CaseBack) pairs by name, not class — keep
-   its pace identical to the forward morph */
+   its pace identical to the forward morph, spring and all. Out of step,
+   the card springs open and eases shut. */
 ::view-transition-group(case-visual-creative-os),
 ::view-transition-group(case-visual-case-chat),
 ::view-transition-group(case-visual-msig) {
-	animation-duration: 420ms;
+	animation-duration: 650ms;
+	animation-timing-function: linear(0, 0.0824, 0.2537, 0.4405, 0.6071, 0.7402, 0.8387, 0.907, 0.9517, 0.979, 0.9946, 1.0024, 1.0056, 1.0063, 1.0057, 1.0045, 1.0034, 1.0024, 1.0015, 1.001, 1.0005, 1);
 }
 
 /* the fixed header must never appear to move: pin its group, hide the
