@@ -343,14 +343,18 @@ button {
 	animation-timing-function: linear(0, 0.0882, 0.2768, 0.4859, 0.6722, 0.8175, 0.9193, 0.9832, 1.0179, 1.0324, 1.0346, 1.0302, 1.0233, 1.0161, 1.0099, 1.0053, 1.0021, 1.0002, 0.9992, 1);
 }
 
-/* the manual reverse morph (CaseBack) pairs by name, not class — keep
-   its pace identical to the forward morph, spring and all. Out of step,
-   the card springs open and eases shut. */
-::view-transition-group(case-visual-creative-os),
-::view-transition-group(case-visual-case-chat),
-::view-transition-group(case-visual-msig) {
-	animation-duration: 600ms;
-	animation-timing-function: linear(0, 0.0882, 0.2768, 0.4859, 0.6722, 0.8175, 0.9193, 0.9832, 1.0179, 1.0324, 1.0346, 1.0302, 1.0233, 1.0161, 1.0099, 1.0053, 1.0021, 1.0002, 0.9992, 1);
+/* The way back does not spring: opening is the moment worth performing,
+   closing should get out of the way. Plain UA `ease`, at the duration the
+   morph ran at before any of this.
+
+   Scoped to the flag CaseBack raises for the length of the reverse, and it
+   has to be. These names match BOTH trips — React pairs the opening by name
+   *and* by the "morph" class, CaseBack pairs it by name alone — so unscoped,
+   this rule would quietly take the spring off the opening too. */
+html[data-vt="back"]::view-transition-group(case-visual-creative-os),
+html[data-vt="back"]::view-transition-group(case-visual-case-chat),
+html[data-vt="back"]::view-transition-group(case-visual-msig) {
+	animation-duration: 420ms;
 }
 
 /* the fixed header must never appear to move: pin its group, hide the

@@ -57,6 +57,11 @@ export default function CaseBack({ slug }: { slug: string }) {
       return;
     }
 
+    /* The way back does not spring (globals.css). These vt names match both
+       trips — React pairs the opening by name AND class, this pairs it by
+       name alone — so the reverse rules key off a flag only the reverse
+       raises. Same device RoomLight uses for the About bloom. */
+    root.dataset.vt = "back";
     hero.style.viewTransitionName = name;
     const vt = document.startViewTransition(async () => {
       router.back();
@@ -86,6 +91,7 @@ export default function CaseBack({ slug }: { slug: string }) {
       document
         .querySelectorAll<HTMLElement>(`[data-case-visual="${slug}"]`)
         .forEach((el) => el.style.removeProperty("view-transition-name"));
+      delete root.dataset.vt;
       restoreBehavior();
     });
   };
