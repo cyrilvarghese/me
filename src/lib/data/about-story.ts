@@ -319,20 +319,20 @@ export const chapters: Chapter[] = [
           frame: "tablet",
         },
         {
-          src: "/assets/about/05/work-queue.webp",
+          src: "/assets/about/05/dashboard-top.webp",
           ready: true,
-          alt: "The MSIG agent work queue on a laptop — policies, cover notes and their statuses",
-          /* the laptop's outer shape; its screen is ~1.9 against the
-             crop's 1.97, so the slice shaves ~2% off each side */
+          alt: "The shipped MSIG dashboard on a laptop — revenue against target, renewals, payments and claims",
+          /* the laptop's outer shape; the crop is 1.73 against the
+             screen's ~1.9, so the slice shaves ~9% top and bottom */
           ratio: "1300 / 582",
           frame: "laptop",
         },
         {
-          src: "/assets/about/05/dashboard-top.webp",
+          src: "/assets/about/05/work-queue.webp",
           ready: true,
-          alt: "The shipped MSIG dashboard on a desktop monitor — revenue against target, renewals, payments and claims",
-          /* the monitor's outer shape; the crop is 1.73 against the
-             screen's 1.78, so the slice shaves ~3% top and bottom */
+          alt: "The MSIG agent work queue on a desktop monitor — policies, cover notes and their statuses",
+          /* the monitor's outer shape; the crop is 1.97 against the
+             screen's 1.78, so the slice shaves ~5% off each side */
           ratio: "1200 / 800",
           frame: "monitor",
         },
