@@ -278,7 +278,10 @@ export const chapters: Chapter[] = [
       "Designing in VR led me to product design, which is the one place the analytical half and the storytelling half are both the job. Five years in, that has not worn off.",
     ],
     gallery: {
-      ratio: "4 / 3",
+      /* square, not 4:3: three devices with the monitor on top is a
+         portrait composition, and the wide box was what forced the front
+         pair up into the dashboard's pixels */
+      ratio: "1 / 1",
       kind: "cascade",
       seed: 5051,
       /* sketch → shipped, and the cards GROW along the way rather than
@@ -296,20 +299,21 @@ export const chapters: Chapter[] = [
          the sources are the MSIG case study's own assets. */
       cards: [
         /* A desk, not a pile (Cyril's reference, 2026-08-30): the shipped
-           dashboard stands on a monitor centered at the back, the sketch
-           sits in a tablet front-left, the queue runs on a laptop
-           front-right — every screen in a device, everything square, and
-           big: the monitor runs 15–85, the front pair reach both box
-           edges and share one bottom edge at ~91.4, overlapping the
-           display's lower corners the way things on a desk sit in front
-           of the screen. */
+           dashboard stands on a monitor across the top, the sketch on a
+           tablet front-left, the queue on a laptop front-right. The
+           overlaps are bezel-deep only — the tablet's top edge lands on
+           the monitor's bottom bezel (its screen pixels end at ~43.6),
+           and the laptop starts below the stand entirely — so no device
+           ever covers another's content. The front pair share one bottom
+           edge at 82.6, and the stand's foot shows in the gap between
+           them. */
         /* the sketch, in the tablet — front-left */
-        { left: 0, top: 42, width: 48, rotate: 0, z: 3, from: { x: -26, y: 14 }, delay: 0.12 },
+        { left: 0, top: 44, width: 50, rotate: 0, z: 3, from: { x: -26, y: 14 }, delay: 0.12 },
         /* the queue, on the laptop — front-right */
-        { left: 44, top: 58, width: 56, rotate: 0, z: 2, from: { x: 26, y: 14 }, delay: 0.24 },
+        { left: 42, top: 56.6, width: 58, rotate: 0, z: 2, from: { x: 26, y: 14 }, delay: 0.24 },
         /* the shipped dashboard, on the monitor at the back — first in,
            the way the desk was there before the papers landed on it */
-        { left: 15, top: 0, width: 70, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
+        { left: 11, top: 0, width: 78, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
       ],
       shots: [
         {
