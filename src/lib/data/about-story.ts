@@ -278,10 +278,7 @@ export const chapters: Chapter[] = [
       "Designing in VR led me to product design, which is the one place the analytical half and the storytelling half are both the job. Five years in, that has not worn off.",
     ],
     gallery: {
-      /* square, not 4:3: three devices with the monitor on top is a
-         portrait composition, and the wide box was what forced the front
-         pair up into the dashboard's pixels */
-      ratio: "1 / 1",
+      ratio: "4 / 3",
       kind: "cascade",
       seed: 5051,
       /* sketch → shipped, and the cards GROW along the way rather than
@@ -298,22 +295,19 @@ export const chapters: Chapter[] = [
          can actually read. Crops live in `public/assets/about/05/`;
          the sources are the MSIG case study's own assets. */
       cards: [
-        /* A desk, not a pile (Cyril's reference, 2026-08-30): the shipped
-           dashboard stands on a monitor across the top, the sketch on a
-           tablet front-left, the queue on a laptop front-right. The
-           overlaps are bezel-deep only — the tablet's top edge lands on
-           the monitor's bottom bezel (its screen pixels end at ~43.6),
-           and the laptop starts below the stand entirely — so no device
-           ever covers another's content. The front pair share one bottom
-           edge at 82.6, and the stand's foot shows in the gap between
-           them. */
-        /* the sketch, in the tablet — front-left */
-        { left: 0, top: 44, width: 50, rotate: 0, z: 3, from: { x: -26, y: 14 }, delay: 0.12 },
-        /* the queue, on the laptop — front-right */
-        { left: 42, top: 56.6, width: 58, rotate: 0, z: 2, from: { x: 26, y: 14 }, delay: 0.24 },
-        /* the shipped dashboard, on the monitor at the back — first in,
-           the way the desk was there before the papers landed on it */
-        { left: 11, top: 0, width: 78, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
+        /* The shipped screen IS the picture (Cyril, 2026-08-30): the
+           monitor takes 80 of the box, and the tablet and laptop sit
+           small at its feet, one per side. Overlaps stay bezel-deep —
+           the tablet's top edge lands on the monitor's bottom bezel
+           (screen pixels end at ~59.6), the laptop clears the stand's
+           foot (ends x59.9) — and both flankers share one bottom edge
+           at 92.9, with the stand centered in the gap between them. */
+        /* the sketch, on the tablet at the left foot */
+        { left: 0, top: 60, width: 32, rotate: 0, z: 2, from: { x: -26, y: 14 }, delay: 0.12 },
+        /* the queue, on the laptop at the right foot */
+        { left: 60, top: 69, width: 40, rotate: 0, z: 3, from: { x: 26, y: 14 }, delay: 0.24 },
+        /* the shipped dashboard, on the monitor — the big one, first in */
+        { left: 10, top: 0, width: 80, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
       ],
       shots: [
         {
