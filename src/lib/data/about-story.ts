@@ -295,14 +295,19 @@ export const chapters: Chapter[] = [
          can actually read. Crops live in `public/assets/about/05/`;
          the sources are the MSIG case study's own assets. */
       cards: [
-        /* the pencil, tucked top-left and tilted — the only card a hand
+        /* One diagonal, top-left to bottom-right, growing the whole way —
+           the reading order IS the layout, so nothing looks strewn: even
+           steps (~18 across, ~25 down), each card overlapping the last
+           one's corner, each entering along the diagonal it sits on. */
+        /* the pencil, first and smallest, tilted — the only card a hand
            put down, so the only one off-square */
-        { left: 0, top: 4, width: 31, rotate: -3, z: 1, from: { x: -30, y: 14 }, delay: 0 },
-        /* the queue, stepping in under it */
-        { left: 6, top: 54, width: 54, rotate: 0, z: 2, from: { x: -22, y: 26 }, delay: 0.12 },
-        /* the shipped dashboard, largest and in front, its lower-left
-           corner just kissing the queue */
-        { left: 34, top: 8, width: 64, rotate: 0, z: 3, from: { x: 30, y: -16 }, delay: 0.24 },
+        { left: 0, top: 0, width: 34, rotate: -3, z: 1, from: { x: -26, y: -14 }, delay: 0 },
+        /* the queue steps down-right, its top-left corner over the
+           sketch's foot */
+        { left: 17, top: 30, width: 58, rotate: 0, z: 2, from: { x: -24, y: 18 }, delay: 0.12 },
+        /* the shipped dashboard, largest and in front, closing the
+           diagonal flush with the box's bottom-right corner */
+        { left: 34, top: 48, width: 66, rotate: 0, z: 3, from: { x: 26, y: 18 }, delay: 0.24 },
       ],
       shots: [
         {
