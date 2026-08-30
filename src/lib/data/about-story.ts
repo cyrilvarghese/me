@@ -281,26 +281,47 @@ export const chapters: Chapter[] = [
       ratio: "4 / 3",
       kind: "cascade",
       seed: 5051,
-      /* sketch → shipped, down the diagonal, from the MSIG case study's
-         own assets */
+      /* sketch → shipped, and the cards GROW along the way rather than
+         shrinking: the generated cascade walks down by 0.82 a step,
+         which reads as depth on a pile of paper but backwards here —
+         the shipped screen is the one that earned the room.
+
+         All three are tight crops, not whole applications (Cyril,
+         2026-08-25). Chapter 5 is the only gallery on the page holding
+         dense UI, and the box is 34rem: a 1440px app squeezed into a
+         337px card is an 8× reduction, which turns 13px labels into one
+         physical pixel. Cropped to one region each and re-encoded at
+         ~2× the card's rendered width, the same cards carry text you
+         can actually read. Crops live in `public/assets/about/05/`;
+         the sources are the MSIG case study's own assets. */
+      cards: [
+        /* the pencil, tucked top-left and tilted — the only card a hand
+           put down, so the only one off-square */
+        { left: 0, top: 4, width: 31, rotate: -3, z: 1, from: { x: -30, y: 14 }, delay: 0 },
+        /* the queue, stepping in under it */
+        { left: 6, top: 54, width: 54, rotate: 0, z: 2, from: { x: -22, y: 26 }, delay: 0.12 },
+        /* the shipped dashboard, largest and in front, its lower-left
+           corner just kissing the queue */
+        { left: 34, top: 8, width: 64, rotate: 0, z: 3, from: { x: 30, y: -16 }, delay: 0.24 },
+      ],
       shots: [
         {
-          src: "/assets/MSIG/nHwgrwHqa2DjUR57calWQgQG8.webp",
+          src: "/assets/about/05/wireframe.webp",
+          ready: true,
+          alt: "A hand-drawn wireframe of the MSIG policy flow, its steps numbered down a rail",
+          ratio: "648 / 538",
+        },
+        {
+          src: "/assets/about/05/work-queue.webp",
           ready: true,
           alt: "The MSIG agent work queue — policies, cover notes and their statuses",
-          ratio: "2880 / 2048",
+          ratio: "2600 / 1320",
         },
         {
-          src: "/assets/MSIG/e5nkT3tdjowEU0ttZEsvoSrxCLM.webp",
+          src: "/assets/about/05/dashboard-top.webp",
           ready: true,
-          alt: "Four hand-drawn wireframes of the MSIG policy flow",
-          ratio: "1900 / 1300",
-        },
-        {
-          src: "/assets/MSIG/Dashboard.png",
-          ready: true,
-          alt: "The shipped MSIG dashboard — stats, renewals, payments, claims",
-          ratio: "2880 / 3430",
+          alt: "The shipped MSIG dashboard — revenue against target, renewals, payments and claims",
+          ratio: "2200 / 1270",
         },
       ],
     },
