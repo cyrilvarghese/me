@@ -145,18 +145,22 @@
 	overflow: visible;
 }
 
+/* NO fill here: the body is a glossy black gradient the component sets
+   as a per-instance attribute, and a class fill would override it. The
+   stroke is a lighter edge than the body — on a dark slab the hairline
+   that sells the material is the lit rim, not a darker outline. */
 .deviceBody {
-	fill: var(--surface);
-	stroke: var(--card-edge);
+	stroke: #453a39;
 	stroke-width: 1;
 }
 
 /* the one detail that says "device" rather than "rounded rectangle";
    neutral, because a frame is structure and structure is never the
-   accent (case-study-diagrams) */
+   accent (case-study-diagrams). A literal, not --muted: the bezel is
+   glossy black on both grounds now, so the dot never re-rungs with the
+   theme. */
 .deviceCam {
-	fill: var(--muted);
-	opacity: 0.55;
+	fill: #4a3e3d;
 }
 
 /* a logo or a sticker is not a photograph: no frame, no paper, no

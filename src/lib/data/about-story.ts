@@ -295,26 +295,31 @@ export const chapters: Chapter[] = [
          can actually read. Crops live in `public/assets/about/05/`;
          the sources are the MSIG case study's own assets. */
       cards: [
-        /* One diagonal, top-left to bottom-right, growing the whole way —
-           the reading order IS the layout, so nothing looks strewn: even
-           steps (~18 across, ~25 down), each card overlapping the last
-           one's corner, each entering along the diagonal it sits on. */
-        /* the pencil, first and smallest, tilted — the only card a hand
-           put down, so the only one off-square */
-        { left: 0, top: 0, width: 34, rotate: -3, z: 1, from: { x: -26, y: -14 }, delay: 0 },
-        /* the queue steps down-right, its top-left corner over the
-           sketch's foot */
-        { left: 17, top: 30, width: 58, rotate: 0, z: 2, from: { x: -24, y: 18 }, delay: 0.12 },
-        /* the shipped dashboard, largest and in front, closing the
-           diagonal flush with the box's bottom-right corner */
-        { left: 34, top: 48, width: 66, rotate: 0, z: 3, from: { x: 26, y: 18 }, delay: 0.24 },
+        /* A desk, not a pile (Cyril's reference, 2026-08-30): the shipped
+           dashboard stands on a monitor centered at the back, the sketch
+           sits in a tablet front-left, the queue card flanks front-right —
+           everything square, big, and registered: the monitor is centered
+           on the box (18–82), the front pair share one bottom edge at
+           90.8, and the 4% gutter between them frames the monitor's
+           stand. The tablet's corner overlaps the display; the queue
+           starts just below it, clear of the foot. */
+        /* the sketch, in the tablet — front-left */
+        { left: 0, top: 43.5, width: 46, rotate: 0, z: 3, from: { x: -26, y: 14 }, delay: 0.12 },
+        /* the queue, the plain card flanking front-right */
+        { left: 50, top: 57, width: 50, rotate: 0, z: 2, from: { x: 26, y: 14 }, delay: 0.24 },
+        /* the shipped dashboard, on the monitor at the back — first in,
+           the way the desk was there before the papers landed on it */
+        { left: 18, top: 0, width: 64, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
       ],
       shots: [
         {
           src: "/assets/about/05/wireframe.webp",
           ready: true,
-          alt: "A hand-drawn wireframe of the MSIG policy flow, its steps numbered down a rail",
-          ratio: "648 / 538",
+          alt: "A hand-drawn wireframe of the MSIG policy flow, on a tablet",
+          /* the device's shape, not the crop's — the drawing is near 4:3
+             and the tablet screen is 4:3, so the slice barely trims it */
+          ratio: "1008 / 778",
+          frame: "tablet",
         },
         {
           src: "/assets/about/05/work-queue.webp",
@@ -325,8 +330,11 @@ export const chapters: Chapter[] = [
         {
           src: "/assets/about/05/dashboard-top.webp",
           ready: true,
-          alt: "The shipped MSIG dashboard — revenue against target, renewals, payments and claims",
-          ratio: "2200 / 1270",
+          alt: "The shipped MSIG dashboard on a desktop monitor — revenue against target, renewals, payments and claims",
+          /* the monitor's outer shape; the crop is 1.73 against the
+             screen's 1.78, so the slice shaves ~3% top and bottom */
+          ratio: "1200 / 800",
+          frame: "monitor",
         },
       ],
     },

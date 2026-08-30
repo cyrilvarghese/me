@@ -19,8 +19,8 @@ export type Shot = {
   /** a printed one-sheet: paper margin around the artwork with a
       keyline where the art meets the margin */
   poster?: boolean;
-  /** the shot is a screen recording, shown in the device it ran on */
-  frame?: "tablet";
+  /** the shot is a screen, shown in the device it ran on */
+  frame?: "tablet" | "monitor";
 };
 
 /** longer than the 0.5s block reveal: these travel further than 10px,
@@ -99,12 +99,30 @@ const TABLET = {
  * Structure stays neutral — a device is a frame, not the moment that
  * matters, so no accent touches it (case-study-diagrams).
  */
+/** The glossy black body, shared by every device: a vertical fall from
+    warm charcoal to near-black (both carry the ~2% accent tinge — never
+    plain black), lit by one diagonal sheen across the glass. SVG paint,
+    not CSS: the gradient is referenced by a per-instance id, and a CSS
+    `fill` on the class would override the attribute that points at it. */
+const BODY_TOP = "#2b2323";
+const BODY_BOTTOM = "#161111";
+
+function GlossDefs({ uid }: { uid: string }) {
+  return (
+    <linearGradient id={`${uid}-body`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stopColor={BODY_TOP} />
+      <stop offset="1" stopColor={BODY_BOTTOM} />
+    </linearGradient>
+  );
+}
+
 function TabletFrame({ src, alt }: { src: string; alt: string }) {
   const { w, h, bezel, rx, screenRx } = TABLET;
   const sw = w - bezel * 2;
   const sh = h - bezel * 2;
-  /* the clip is referenced by id, so it has to be unique per instance */
-  const clip = `${useId()}-screen`;
+  /* clips and gradients are referenced by id, so they have to be unique
+     per instance */
+  const uid = useId();
 
   return (
     <svg
@@ -114,14 +132,19 @@ function TabletFrame({ src, alt }: { src: string; alt: string }) {
       aria-label={alt}
     >
       <defs>
-        <clipPath id={clip}>
+        <GlossDefs uid={uid} />
+        <clipPath id={`${uid}-screen`}>
           <rect x={bezel} y={bezel} width={sw} height={sh} rx={screenRx} />
+        </clipPath>
+        <clipPath id={`${uid}-face`}>
+          <rect x="0.5" y="0.5" width={w - 1} height={h - 1} rx={rx} />
         </clipPath>
       </defs>
       {/* inset by half the stroke, or the hairline is clipped in half
           by the viewBox edge */}
       <rect
         className={styles.deviceBody}
+        fill={`url(#${uid}-body)`}
         x="0.5"
         y="0.5"
         width={w - 1}
@@ -135,9 +158,99 @@ function TabletFrame({ src, alt }: { src: string; alt: string }) {
         width={sw}
         height={sh}
         preserveAspectRatio="xMidYMid slice"
-        clipPath={`url(#${clip})`}
+        clipPath={`url(#${uid}-screen)`}
+      />
+      {/* the gloss: one light band falling off the top edge, over glass
+          and bezel alike, clipped to the body's silhouette */}
+      <path
+        d={`M0 0 L${w} 0 L${w} ${0.16 * h} L0 ${0.3 * h} Z`}
+        fill="#ffffff"
+        opacity="0.05"
+        clipPath={`url(#${uid}-face)`}
       />
       <circle className={styles.deviceCam} cx={w / 2} cy={bezel / 2} r="5.5" />
+    </svg>
+  );
+}
+
+/** The desktop display, in viewBox units. Screen is 16:9 inside an even
+    bezel; the neck and foot below make the outer box 3:2, which is the
+    shape the shot's `ratio` has to carry in the data. */
+const MONITOR = {
+  w: 1200,
+  h: 800,
+  bezel: 26,
+  rx: 22,
+  screenRx: 8,
+  /* display block: screen 1148×645 plus the bezel all round */
+  displayH: 697,
+  ratio: "1200 / 800",
+};
+
+/** A shipped screen on the desk it shipped to — same inline-SVG reasoning
+    and same glossy body as the tablet. */
+function MonitorFrame({ src, alt }: { src: string; alt: string }) {
+  const { w, bezel, rx, screenRx, displayH } = MONITOR;
+  const sw = w - bezel * 2;
+  const sh = displayH - bezel * 2;
+  const uid = useId();
+
+  return (
+    <svg
+      className={styles.device}
+      viewBox={`0 0 ${MONITOR.w} ${MONITOR.h}`}
+      role="img"
+      aria-label={alt}
+    >
+      <defs>
+        <GlossDefs uid={uid} />
+        <clipPath id={`${uid}-screen`}>
+          <rect x={bezel} y={bezel} width={sw} height={sh} rx={screenRx} />
+        </clipPath>
+        <clipPath id={`${uid}-face`}>
+          <rect x="0.5" y="0.5" width={w - 1} height={displayH - 1} rx={rx} />
+        </clipPath>
+      </defs>
+      {/* stand first, so the display's own edge draws over the neck */}
+      <path
+        className={styles.deviceBody}
+        fill={`url(#${uid}-body)`}
+        d={`M552 ${displayH - 2} L648 ${displayH - 2} L634 775 L566 775 Z`}
+      />
+      <rect
+        className={styles.deviceBody}
+        fill={`url(#${uid}-body)`}
+        x="452"
+        y="775"
+        width="296"
+        height="24"
+        rx="12"
+      />
+      <rect
+        className={styles.deviceBody}
+        fill={`url(#${uid}-body)`}
+        x="0.5"
+        y="0.5"
+        width={w - 1}
+        height={displayH - 1}
+        rx={rx}
+      />
+      <image
+        href={src}
+        x={bezel}
+        y={bezel}
+        width={sw}
+        height={sh}
+        preserveAspectRatio="xMidYMid slice"
+        clipPath={`url(#${uid}-screen)`}
+      />
+      <path
+        d={`M0 0 L${w} 0 L${w} 130 L0 250 Z`}
+        fill="#ffffff"
+        opacity="0.05"
+        clipPath={`url(#${uid}-face)`}
+      />
+      <circle className={styles.deviceCam} cx={w / 2} cy={bezel / 2} r="4.5" />
     </svg>
   );
 }
@@ -244,6 +357,8 @@ export default function Cluster({
               >
                 {shot.frame === "tablet" && shot.ready ? (
                   <TabletFrame src={shot.src} alt={shot.alt} />
+                ) : shot.frame === "monitor" && shot.ready ? (
+                  <MonitorFrame src={shot.src} alt={shot.alt} />
                 ) : shot.ready ? (
                   /\.(mp4|webm)$/.test(shot.src) ? (
                     <Film src={shot.src} alt={shot.alt} />
