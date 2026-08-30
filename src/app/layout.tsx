@@ -32,20 +32,11 @@ export const metadata: Metadata = {
     "I work across product, design, engineering and AI to turn ambiguous problems into shipped systems.",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  /* Dev-only morph tuner. The gate has to sit on the IMPORT, not on the
-     JSX: a "use client" module named by a static import is registered as a
-     client reference and webpack keeps its chunk even when the element is
-     unreachable. Behind a folded constant the dynamic import is dropped
-     outright, so nothing of it reaches the export. */
-  const SpringTuner =
-    process.env.NODE_ENV === "development"
-      ? (await import("@/components/dev/SpringTuner")).default
-      : null;
   return (
     <html
       lang="en"
@@ -57,7 +48,6 @@ export default async function RootLayout({
       <body>
         <SmoothAnchors />
         <MotionProvider>{children}</MotionProvider>
-        {SpringTuner && <SpringTuner />}
       </body>
     </html>
   );
