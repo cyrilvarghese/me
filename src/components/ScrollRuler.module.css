@@ -69,6 +69,9 @@
 	pointer-events: auto;
 	white-space: nowrap;
 	color: var(--muted);
+	/* explicit because beat marks are <a> without href — the browser only
+	   gives real links the pointer on its own */
+	cursor: pointer;
 	transition: color 150ms ease;
 }
 

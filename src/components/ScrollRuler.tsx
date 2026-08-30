@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { gsap } from "@/lib/gsap";
 import { sectionArrival } from "@/lib/section-anchor";
 import styles from "./ScrollRuler.module.css";
 
@@ -32,8 +33,15 @@ export default function ScrollRuler() {
      one of 48 evenly spaced positions, the playhead stops wherever the
      section actually starts, and rounding one to the other leaves the
      mark half a tick from the line that is supposed to meet it. Their own
-     positions make the dash, the word and the playhead agree. */
-  const [marks, setMarks] = useState<{ id: string; name: string; y: number }[]>([]);
+     positions make the dash, the word and the playhead agree.
+
+     `to` is set only on marks born from a named beat (see the
+     data-ruler-beats parsing below): a beat lives at a scroll offset
+     inside a pin spacer, not at an element, so its mark carries the
+     target scrollY itself instead of an anchor href. */
+  const [marks, setMarks] = useState<
+    { id: string; name: string; y: number; to?: number }[]
+  >([]);
 
   useEffect(() => {
     const rail = railRef.current;
@@ -59,7 +67,7 @@ export default function ScrollRuler() {
       if (max <= 0) return;
       const H = rail.clientHeight;
       const majors = new Set<number>();
-      const found: { id: string; name: string; y: number }[] = [];
+      const found: { id: string; name: string; y: number; to?: number }[] = [];
       const index = (f: number) =>
         Math.round(Math.min(1, Math.max(0, f)) * (TICKS - 1));
       const add = (f: number) => majors.add(index(f));
@@ -76,9 +84,18 @@ export default function ScrollRuler() {
         }
         const range = s.offsetHeight - window.innerHeight;
         if (s.dataset.rulerBeats && range > 0) {
+          // a beat is "0.416" or "0.416:Skills" — the bare form is a major
+          // tick, the named form also gets a mark like the section names
           for (const b of s.dataset.rulerBeats.split(",")) {
-            const f = parseFloat(b);
-            if (!Number.isNaN(f)) add((top + f * range) / max);
+            const [frac, beatName] = b.split(":");
+            const f = parseFloat(frac);
+            if (Number.isNaN(f)) continue;
+            const at = top + f * range;
+            add(at / max);
+            if (beatName) {
+              const bf = Math.min(1, Math.max(0, at / max));
+              found.push({ id: `beat-${beatName}`, name: beatName, y: bf * (H - 2), to: at });
+            }
           }
         }
       });
@@ -164,18 +181,45 @@ export default function ScrollRuler() {
           focusable child inside it would be a keyboard trap with no
           accessible name. The header carries the same three links for
           anyone not using a pointer. */}
-      {marks.map((m) => (
-        <a
-          key={m.id}
-          href={`#${m.id}`}
-          className={styles.mark}
-          style={{ transform: `translateY(${m.y}px)` }}
-          tabIndex={-1}
-        >
-          <i className={styles.markDash} />
-          <span className={styles.markName}>{m.name}</span>
-        </a>
-      ))}
+      {marks.map((m) => {
+        const to = m.to;
+        return (
+          <a
+            key={m.id}
+            /* section marks travel by hash so SmoothAnchors owns the glide;
+               a beat mark has no element to name, so it glides itself with
+               the same tuning, and jumps instead under reduced motion */
+            href={to === undefined ? `#${m.id}` : undefined}
+            onClick={
+              to === undefined
+                ? undefined
+                : () => {
+                    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                      window.scrollTo(0, to);
+                      return;
+                    }
+                    const distance = Math.abs(to - window.scrollY);
+                    gsap.to(window, {
+                      scrollTo: { y: to, autoKill: true },
+                      duration: gsap.utils.clamp(
+                        0.5,
+                        1.2,
+                        0.4 + distance / (window.innerHeight * 6)
+                      ),
+                      ease: "power2.inOut",
+                      overwrite: "auto",
+                    });
+                  }
+            }
+            className={styles.mark}
+            style={{ transform: `translateY(${m.y}px)` }}
+            tabIndex={-1}
+          >
+            <i className={styles.markDash} />
+            <span className={styles.markName}>{m.name}</span>
+          </a>
+        );
+      })}
       <div ref={markerRef} className={styles.marker} />
     </div>
   );

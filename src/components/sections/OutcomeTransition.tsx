@@ -67,8 +67,17 @@ const BEATS = [0.5, 0.645, 0.85, 0.985, 1.29];
 /** The rail's tick marks for this section, as fractions of its own scroll
     range — derived from BEATS so the two can never drift. The trigger runs
     from 100vh to 100vh + 420vh × DUR, and the ruler measures against
-    offsetHeight - innerHeight, which is 100vh + 420vh × DUR. */
-const RULER_BEATS = BEATS.map((t) => ((100 + 420 * t) / (100 + 420 * DUR)).toFixed(3)).join(",");
+    offsetHeight - innerHeight, which is 100vh + 420vh × DUR.
+
+    A beat may carry a word (fraction:Name) and the rail names it the way
+    it names the sections. "Skills" sits on the captions-up beat — the one
+    frame where the whole lineup is standing AND readable — not on the
+    tools-standing beat before it, which holds the same picture minus the
+    words that make it worth stopping for. */
+const RULER_BEATS = BEATS.map((t, i) => {
+  const f = ((100 + 420 * t) / (100 + 420 * DUR)).toFixed(3);
+  return i === 1 ? `${f}:Skills` : f;
+}).join(",");
 
 /**
  * The metaphor turns (user direction, 2026-08-15): the tool kit comes
