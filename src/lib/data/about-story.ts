@@ -297,19 +297,19 @@ export const chapters: Chapter[] = [
       cards: [
         /* A desk, not a pile (Cyril's reference, 2026-08-30): the shipped
            dashboard stands on a monitor centered at the back, the sketch
-           sits in a tablet front-left, the queue card flanks front-right —
-           everything square, big, and registered: the monitor is centered
-           on the box (18–82), the front pair share one bottom edge at
-           90.8, and the 4% gutter between them frames the monitor's
-           stand. The tablet's corner overlaps the display; the queue
-           starts just below it, clear of the foot. */
+           sits in a tablet front-left, the queue runs on a laptop
+           front-right — every screen in a device, everything square, and
+           big: the monitor runs 15–85, the front pair reach both box
+           edges and share one bottom edge at ~91.4, overlapping the
+           display's lower corners the way things on a desk sit in front
+           of the screen. */
         /* the sketch, in the tablet — front-left */
-        { left: 0, top: 43.5, width: 46, rotate: 0, z: 3, from: { x: -26, y: 14 }, delay: 0.12 },
-        /* the queue, the plain card flanking front-right */
-        { left: 50, top: 57, width: 50, rotate: 0, z: 2, from: { x: 26, y: 14 }, delay: 0.24 },
+        { left: 0, top: 42, width: 48, rotate: 0, z: 3, from: { x: -26, y: 14 }, delay: 0.12 },
+        /* the queue, on the laptop — front-right */
+        { left: 44, top: 58, width: 56, rotate: 0, z: 2, from: { x: 26, y: 14 }, delay: 0.24 },
         /* the shipped dashboard, on the monitor at the back — first in,
            the way the desk was there before the papers landed on it */
-        { left: 18, top: 0, width: 64, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
+        { left: 15, top: 0, width: 70, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
       ],
       shots: [
         {
@@ -324,8 +324,11 @@ export const chapters: Chapter[] = [
         {
           src: "/assets/about/05/work-queue.webp",
           ready: true,
-          alt: "The MSIG agent work queue — policies, cover notes and their statuses",
-          ratio: "2600 / 1320",
+          alt: "The MSIG agent work queue on a laptop — policies, cover notes and their statuses",
+          /* the laptop's outer shape; its screen is ~1.9 against the
+             crop's 1.97, so the slice shaves ~2% off each side */
+          ratio: "1300 / 582",
+          frame: "laptop",
         },
         {
           src: "/assets/about/05/dashboard-top.webp",

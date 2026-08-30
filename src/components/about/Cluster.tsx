@@ -20,7 +20,7 @@ export type Shot = {
       keyline where the art meets the margin */
   poster?: boolean;
   /** the shot is a screen, shown in the device it ran on */
-  frame?: "tablet" | "monitor";
+  frame?: "tablet" | "monitor" | "laptop";
 };
 
 /** longer than the 0.5s block reveal: these travel further than 10px,
@@ -255,6 +255,87 @@ function MonitorFrame({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+/** The laptop, in viewBox units. The screen is ~1.9 — a shade wider than
+    a real 16:10 lid, chosen so the wide queue crop loses only a few
+    percent to the slice; the display sits on a full-width deck with the
+    thumb notch that says "laptop" at a glance. */
+const LAPTOP = {
+  w: 1300,
+  h: 582,
+  /* the lid: inset from the deck's ends */
+  lidX: 150,
+  lidW: 1000,
+  lidH: 548,
+  bezel: 24,
+  rx: 20,
+  screenRx: 8,
+  deckH: 33,
+  ratio: "1300 / 582",
+};
+
+function LaptopFrame({ src, alt }: { src: string; alt: string }) {
+  const { w, h, lidX, lidW, lidH, bezel, rx, screenRx, deckH } = LAPTOP;
+  const sw = lidW - bezel * 2;
+  const sh = lidH - bezel * 2;
+  const uid = useId();
+
+  return (
+    <svg
+      className={styles.device}
+      viewBox={`0 0 ${w} ${h}`}
+      role="img"
+      aria-label={alt}
+    >
+      <defs>
+        <GlossDefs uid={uid} />
+        <clipPath id={`${uid}-screen`}>
+          <rect x={lidX + bezel} y={bezel} width={sw} height={sh} rx={screenRx} />
+        </clipPath>
+        <clipPath id={`${uid}-face`}>
+          <rect x={lidX + 0.5} y="0.5" width={lidW - 1} height={lidH - 1} rx={rx} />
+        </clipPath>
+      </defs>
+      <rect
+        className={styles.deviceBody}
+        fill={`url(#${uid}-body)`}
+        x={lidX + 0.5}
+        y="0.5"
+        width={lidW - 1}
+        height={lidH - 1}
+        rx={rx}
+      />
+      <image
+        href={src}
+        x={lidX + bezel}
+        y={bezel}
+        width={sw}
+        height={sh}
+        preserveAspectRatio="xMidYMid slice"
+        clipPath={`url(#${uid}-screen)`}
+      />
+      <path
+        d={`M${lidX} 0 L${lidX + lidW} 0 L${lidX + lidW} 110 L${lidX} 210 Z`}
+        fill="#ffffff"
+        opacity="0.05"
+        clipPath={`url(#${uid}-face)`}
+      />
+      <circle className={styles.deviceCam} cx={w / 2} cy={bezel / 2} r="4" />
+      {/* the deck, full width under the lid; the gradient restarts on its
+          own bounding box, so it catches its own light */}
+      <rect
+        className={styles.deviceBody}
+        fill={`url(#${uid}-body)`}
+        x="0.5"
+        y={lidH}
+        width={w - 1}
+        height={deckH}
+        rx={deckH / 2}
+      />
+      <rect x={w / 2 - 65} y={lidH} width="130" height="9" rx="4.5" fill="#0f0c0c" />
+    </svg>
+  );
+}
+
 /**
  * A handful of pictures laid out by what they are, and the way they
  * arrive.
@@ -359,6 +440,8 @@ export default function Cluster({
                   <TabletFrame src={shot.src} alt={shot.alt} />
                 ) : shot.frame === "monitor" && shot.ready ? (
                   <MonitorFrame src={shot.src} alt={shot.alt} />
+                ) : shot.frame === "laptop" && shot.ready ? (
+                  <LaptopFrame src={shot.src} alt={shot.alt} />
                 ) : shot.ready ? (
                   /\.(mp4|webm)$/.test(shot.src) ? (
                     <Film src={shot.src} alt={shot.alt} />
