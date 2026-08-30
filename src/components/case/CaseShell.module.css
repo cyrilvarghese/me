@@ -39,13 +39,17 @@
 	   comes straight off the kicker.
 
 	   rgba literals, not color-mix — the latter no-ops in Cyril's Edge */
+	/* dialed down 25% across every stop (Cyril, 2026-08-30) — the band no
+	   longer reaches --bg proper, so the photograph stays faintly present
+	   behind the text. Watch the red kicker if this ever lightens further:
+	   at the old 0.97 stop it already sat near its 4.50:1 ceiling. */
 	background: linear-gradient(
 		transparent,
-		rgba(21, 17, 17, 0.40) 22%,
-		rgba(21, 17, 17, 0.80) 40%,
-		rgba(21, 17, 17, 0.97) 52%,
-		rgba(21, 17, 17, 1) 66%,
-		rgba(21, 17, 17, 1)
+		rgba(21, 17, 17, 0.30) 22%,
+		rgba(21, 17, 17, 0.60) 40%,
+		rgba(21, 17, 17, 0.73) 52%,
+		rgba(21, 17, 17, 0.75) 66%,
+		rgba(21, 17, 17, 0.75)
 	);
 	pointer-events: none;
 	/* own compositor layer: a translucent overlay painted against the
