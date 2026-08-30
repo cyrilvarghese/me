@@ -295,19 +295,18 @@ export const chapters: Chapter[] = [
          can actually read. Crops live in `public/assets/about/05/`;
          the sources are the MSIG case study's own assets. */
       cards: [
-        /* The shipped screen IS the picture (Cyril, 2026-08-30): the
-           monitor takes 80 of the box, and the tablet and laptop sit
-           small at its feet, one per side. Overlaps stay bezel-deep —
-           the tablet's top edge lands on the monitor's bottom bezel
-           (screen pixels end at ~59.6), the laptop clears the stand's
-           foot (ends x59.9) — and both flankers share one bottom edge
-           at 92.9, with the stand centered in the gap between them. */
-        /* the sketch, on the tablet at the left foot */
-        { left: 0, top: 60, width: 32, rotate: 0, z: 2, from: { x: -26, y: 14 }, delay: 0.12 },
-        /* the queue, on the laptop at the right foot */
-        { left: 60, top: 69, width: 40, rotate: 0, z: 3, from: { x: 26, y: 14 }, delay: 0.24 },
+        /* The monitor is the picture and the small devices lean over it,
+           placed to Cyril's marker (2026-08-30): tablet mid-left across
+           the display's left edge, laptop high-right poking above the
+           top bezel. These overlaps are the composition — the flankers
+           sit ON the big screen the way mockups sit on a poster — and
+           the tablet's bottom lands flush with the monitor's foot. */
+        /* the sketch, on the tablet — mid-left, over the display edge */
+        { left: 0, top: 52, width: 32, rotate: 0, z: 2, from: { x: -26, y: 14 }, delay: 0.12 },
+        /* the queue, on the laptop — high-right, above the bezel line */
+        { left: 54, top: 4, width: 46, rotate: 0, z: 3, from: { x: 26, y: -14 }, delay: 0.24 },
         /* the shipped dashboard, on the monitor — the big one, first in */
-        { left: 10, top: 0, width: 80, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
+        { left: 10, top: 14, width: 80, rotate: 0, z: 1, from: { x: 0, y: -18 }, delay: 0 },
       ],
       shots: [
         {
