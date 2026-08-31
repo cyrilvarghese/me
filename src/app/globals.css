@@ -333,14 +333,14 @@ button {
    apply. Same physics the runtime would use, minus interruptibility that a
    click-through morph never exercises.
 
-   motion spring { visualDuration: 0.35, bounce: 0.27 }. The 0.35 is
+   motion spring { visualDuration: 0.2625, bounce: 0.27 }. The 0.2625 is
    time-to-target, so the picture lands sooner than the old 420ms ease did;
    what follows is meant to be seen — 3.5% past the mark, then a rebound that
    dips just under it before settling. Retune in lib/morph-spring.test.ts,
    which regenerates this and fails if the stylesheet drifts. */
 ::view-transition-group(.morph) {
-	animation-duration: 600ms;
-	animation-timing-function: linear(0, 0.0882, 0.2768, 0.4859, 0.6722, 0.8175, 0.9193, 0.9832, 1.0179, 1.0324, 1.0346, 1.0302, 1.0233, 1.0161, 1.0099, 1.0053, 1.0021, 1.0002, 0.9992, 1);
+	animation-duration: 450ms;
+	animation-timing-function: linear(0, 0.1491, 0.4272, 0.684, 0.8663, 0.9723, 1.021, 1.0347, 1.0311, 1.0217, 1.0124, 1.0055, 1.0014, 0.9995, 1);
 }
 
 /* The way back does not spring: opening is the moment worth performing,

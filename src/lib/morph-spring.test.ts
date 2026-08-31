@@ -12,7 +12,7 @@ import { spring } from "motion";
    file is the source of truth: it regenerates the curve from the config below
    and fails if the stylesheet has drifted. Retuning means editing MORPH_SPRING,
    running the suite, and pasting what the failure prints. */
-const MORPH_SPRING = { visualDuration: 0.35, bounce: 0.27 };
+const MORPH_SPRING = { visualDuration: 0.2625, bounce: 0.27 };
 
 /** the way back: no spring, no timing function, UA `ease` */
 const BACK_DURATION = "420ms";
@@ -35,7 +35,7 @@ function ruleBody(sel: string): string {
 
 describe("the case-study morph spring", () => {
   it("arrives before the old 420ms ease did, and settles after", () => {
-    // visualDuration 0.35 is time-to-target; the rest is the settle
+    // visualDuration is time-to-target; the rest is the settle
     expect(Number.parseInt(duration)).toBeGreaterThan(420);
     expect(Number.parseInt(duration)).toBeLessThanOrEqual(800);
   });
